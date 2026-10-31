@@ -1,15 +1,14 @@
 # product-spec — progress
 
 ## Current state
-- HEAD: 02da5c4 (documenter review-2 follow-up), pushed
-- Step: 8 — review-2 follow-up: planner (F-02 ledger, F-03) → documenter (F-01, F-02 ADRs, F-05) → review-2-followup.md
-- Live agents: reviewer-code-ps (af8de1feda5e0d867, follow-up pass)
-- Next action: review-2-followup.md → close-out (done.md, CO-18…27, README, PR)
-- Blockers: none. PO offline; autonomy: §0.1 defaults in assumptions.md (A-1…A-14)
-- Uncommitted: planner MEMORY.md (PO stages). Close-out files committed; PR not yet created (waits on review-2-followup PASSED)
+- HEAD: close-out committed on `feature/product-spec`, pushed; PR into develop opened (see last handoff line)
+- Step: 9 — close-out done
+- Live agents: none
+- Next action: user merges the PR after green CI; PO rules A-1…A-14 (CO-23)
+- Blockers: none
+- Uncommitted: .claude/agent-memory/planner/MEMORY.md (PO stages)
 - Trailers: each agent names its actual model (PO 2026-10-31); pushed trailers left as-is
-- Close-out CO rows drafted: CO-18 taxonomy pipeline · 19 BJJGraph licence · 20 frontend.md/CLAUDE.md on SQLCipher · 21 revisit R-30 · 22 ToS R-33 · 23 PO rules A-1…A-14 + quote autonomy · 24 tombstone purge · 25 secure-store/backup APIs · 26 resources.author · 27 coral/red belts
-- Sprint type: docs-only. Steps 4–6 skipped. F-04 (verify rows at 7812738 vs HEAD) accepted: nothing generator-relevant changed.
+- Sprint type: docs-only. Steps 4–6 skipped. F-04 (verify rows at 7812738) accepted: no generator-relevant change since.
 
 ## Handoffs
 - 0 open — branch already cut from origin/develop (PO), brief at a9e9394; carry-over open rows CO-01…CO-10, CO-12…CO-14 read
@@ -26,3 +25,5 @@
 - 8 reviewer-code (af8de1feda5e0d867) — REVIEW PASSED (M2 m3) — f130815; F-02 inferred-ruling ADRs → planner ledger + documenter; F-01/F-05 documenter; F-03 planner; F-04 accepted
 - 8a planner (a7dd243c0cbaa4f80) — PLAN COMPLETE (review-2 F-02 ledger, F-03) — 9e791a5; 0004 (a) privacy.md:8,11; 0017 A-12; 0010 A-13 (window ruled R-08); 0011 A-14 (stable ids ruled R-28)
 - 8b documenter (ad61bd0512351f3a2) — DOCS COMPLETE (review-2 F-01, F-02, F-05) — 02da5c4
+- 8c reviewer-code (af8de1feda5e0d867) — REVIEW PASSED (follow-up pass; m1 F-04 accepted) — 7e09142
+- 9 orchestrator — close-out: done.md, CO-18…CO-27, README status — 61126b7; PR opened
