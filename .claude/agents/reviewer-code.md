@@ -77,6 +77,11 @@ one is **B**. No web-only API, no `.web.tsx`, no `react-native-web`. One-handed 
 actual, `needs_work` only on actual, completion needs an actual focus). No personal data in
 logs or outside the database.
 
+**3b. UX acceptance criteria** (ruling R-26, `docs/decisions.md`) — the shipped screens: ≤ 2 taps
+from Home to start logging and a ≤ 30 s happy path (count the taps in the flow / Maestro steps);
+one-handed portrait; destructive actions undoable, not dialog-confirmed; only type + one focus
+required; empty states name the next step. A screen that breaks one is **B**.
+
 **4. Privacy** (`.claude/rules/privacy.md`) — no network call with user data, no analytics or
 crash SDK without an ADR, no third-party identifier, export/erase not made harder, fictional
 fixtures only → any breach is **B**.
