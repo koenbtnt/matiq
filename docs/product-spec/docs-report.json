@@ -1,0 +1,72 @@
+{
+  "sprint": "product-spec",
+  "agent": "documenter-ps",
+  "date": "2026-10-31",
+  "sha": "7812738",
+  "result": "DOCS COMPLETE",
+  "artefacts": [
+    {
+      "artefact": "docs/data-model/dictionary.md, erd.md",
+      "kind": "generated",
+      "changed": false,
+      "source": "snapshot 0000 + descriptions.json"
+    },
+    {
+      "artefact": "docs/data-model/changelog.md",
+      "kind": "generated",
+      "changed": false,
+      "source": "_journal.json"
+    },
+    {
+      "artefact": "docs/adr/0003-0017 + README",
+      "kind": "written",
+      "changed": true,
+      "source": "decisions.md, plan \u00a70"
+    },
+    {
+      "artefact": "docs/architecture 01,02,03,05,07,08,09,10,12 + README",
+      "kind": "written",
+      "changed": true,
+      "source": "PRODUCT, decisions, rules"
+    },
+    {
+      "artefact": "docs/architecture 04,06,11",
+      "kind": "written (partial)",
+      "changed": true,
+      "source": "PRODUCT, plan \u00a712, assumptions"
+    },
+    {
+      "artefact": "docs/requirements/product-spec.md",
+      "kind": "written",
+      "changed": true,
+      "source": "PRODUCT \u00a74/\u00a76/\u00a77"
+    }
+  ],
+  "delegated_rows": [
+    {
+      "command": "node scripts/docs/gen-data-model.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/docs/gen-changelog.mjs",
+      "exit": 0
+    }
+  ],
+  "adrs": 15,
+  "stories": 12,
+  "undescribed": [],
+  "blocked": null,
+  "pending_po": [
+    "A-1",
+    "A-2",
+    "A-3",
+    "A-4",
+    "A-5",
+    "A-6",
+    "A-7",
+    "A-8",
+    "A-9",
+    "A-10",
+    "A-11"
+  ]
+}
