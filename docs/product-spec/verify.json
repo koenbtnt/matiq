@@ -1,0 +1,18 @@
+[
+  {
+    "agent": "documenter",
+    "sha": "7812738",
+    "date": "2026-10-31",
+    "command": "node scripts/docs/gen-data-model.mjs",
+    "exit": 0,
+    "notes": "1 table (app_meta), 0 undescribed; output identical to HEAD"
+  },
+  {
+    "agent": "documenter",
+    "sha": "7812738",
+    "date": "2026-10-31",
+    "command": "node scripts/docs/gen-changelog.mjs",
+    "exit": 0,
+    "notes": "1 migration; output identical to HEAD"
+  }
+]
