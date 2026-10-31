@@ -1,5 +1,16 @@
 # Component catalogue
 
+## Changes since review 1 (2026-10-31)
+
+| finding | section | what changed |
+|---|---|---|
+| S1 | `RULES.md` R-A2 → new R-A4; this file § Text input, Contrast | The placeholder mitigation is now its own rule (R-A4): a visible label on every input, and the placeholder never carries required information, until DSR-1 is answered. The R-C5 pointer for the placeholder is removed from R-A2. The § Text input wording matches R-A4. |
+| S2 | this file § Privacy and scope conflicts, § Open requests; `RULES.md` § 0 R-S5 | Gym check-in and schedule, coach content, instructional video, and notifications and reminders are DSR-26 to DSR-29 in both tables, each with its pending direction. New R-S5: they are not built until the PO rules. The grilling direction is recorded as pending, not as a decision. The avatar row is marked "not parked". |
+| S3 | `RULES.md` R-M1, § 9; this file § Icon button, DSR-16 | 44 pt is the binding floor. The 48 dp Android clause is marked "artifact value, pending DSR-16 / PO ruling (Q18)". |
+| S4 | `tokens.json` `size` + `_citations`; `RULES.md` R-S3; this file § Navigation | `size.tab-log-action` (52) and its citation are removed, leaving 71 size tokens. R-S3 records why a key-screen value that contradicts the board is not a token. § Navigation names the 52 as non-token (DSR-15). |
+| S5 | `RULES.md` R-T6 | Re-cited as the mitigation for the 1.78:1 Emerald vs kids-green pair (`docs/design-system-contrast.md:96, :111`), and narrowed to "no `accent-*` inside a belt component". |
+| N3 | `RULES.md` R-A2 | The garbled sentence is rewritten: "several belt fills below 3:1 against surfaces". |
+
 Derived by the design intake on 2026-10-31 from `artifact/matiq-design.html` § 05 and `artifact/canvas/*.dc.html` (canvas v13, Emerald accent).
 
 Citation shorthand:
@@ -55,7 +66,7 @@ States: the artifact shows *default*, *selected/active*, *focused* and *disabled
 
 - **States:** default. Pressed, disabled: DSR-6.
 - **Accessibility:** an i18n `accessibilityLabel` is required (C:39 "Notifications").
-- **Platform:** 44 is below the 48 dp Android minimum. **⚠ DSR-16**: extend the hit area with `hitSlop` to 48 dp (RULES R-M1).
+- **Platform:** 44 meets the binding 44 pt floor (RULES R-M1). It is below the artifact's 48 dp Android value, which is pending DSR-16 / PO ruling.
 
 ### Text input and textarea
 - **Purpose:** free text (gym, partner, notes).
@@ -72,7 +83,7 @@ States: the artifact shows *default*, *selected/active*, *focused* and *disabled
 - **Contrast:**
   - Light placeholder is 2.80:1 (DSR-1).
   - The boundary is below 3:1 in both themes (DSR-2).
-  - The visible label is therefore mandatory.
+  - Therefore, until DSR-1 is answered (RULES R-A4), every input has a visible label, and the placeholder never carries required information (example or hint only).
 - **Platform:** the native keyboard. Notes use a multiline input. iOS: keyboard avoidance with the bottom action bar. Android: `adjustResize`. Neither keyboard behaviour is in the artifact (DSR-23).
 
 ### Search field
@@ -267,7 +278,7 @@ All cards are `bg-surface`, `radius-lg`, 1 `border-default` (M:176), except the 
   - Top 1 `border-default`.
   - Icons `icon-tab-ios` 26 above a `tab-label` 10/600 label.
   - Active `accent-text` with `aria-current`, inactive `text-secondary`.
-  - Log is a `tab-log-action` 52 accent circle raised 4 (Home:26-29). The board's log action is 56 (**⚠ DSR-15**).
+  - Log is a 52 accent circle raised 4 (Home:26-29). The board's log action is `log-action` 56 (C:45). The 52 is not a token (**⚠ DSR-15**, RULES R-S3).
 - **Android:**
   - `tabbar-height-android` 80, `bg-surface`.
   - Indicator pill `tab-pill-width` 56 × `tab-pill-height` 32, radius 16, `accent-tint` when active.
@@ -396,15 +407,17 @@ All cards are `bg-surface`, `radius-lg`, 1 `border-default` (M:176), except the 
 
 ## Privacy and scope conflicts (for the user and Orchestrator)
 
-These elements imply data or network use that v1 does not allow (`.claude/rules/privacy.md`: on-device only, no network carrying user data, no accounts). They are catalogued as drawn, and none of them is buildable as drawn until a product ruling exists.
+These elements imply data or network use that v1 does not allow (`.claude/rules/privacy.md`: on-device only, no network carrying user data, no accounts). They are catalogued as drawn. **DSR-26 to DSR-29 are parked: they are not built until the PO rules (RULES R-S5).**
 
-| element | source | conflict |
-|---|---|---|
-| "Check in" button and "Schedule" on the class card; "Home gym · Schedule & check-in" row | Home:82-83; C:204, :379 | A gym check-in or schedule implies a gym service or account. |
-| Coach: "Coach [Name]", the "COACH" badge, "From your coach", "Coach note: your coach adds notes here after class" | Home:78; C:158; Lib:62; Tech:130 | Coach-authored content implies sharing, accounts and sync. |
-| Instructional video with a play button | Tech:20-31 | The video source is not defined: bundled, or remote? Remote content is a network call (it carries no user data, but it needs a ruling). |
-| Notifications bell, "Class reminder" switch | Home:42; C:79-80 | Local notifications are allowed. Push notifications are not. Not defined. |
-| Athlete avatar with initials and name | C:149-152 | Personal data. Fine on-device, but no account id. |
+**Pending ruling** (product-spec grilling, 2026-10-31): the current direction is to park gym and coach, to use a reference link the user pastes per technique instead of embedded video, and to add reminders as local notifications later in v1. This is a direction, not a decision.
+
+| DSR | element | source | conflict | pending direction |
+|---|---|---|---|---|
+| DSR-26 | "Check in" button and "Schedule" on the class card; "Home gym · Schedule & check-in" row. The class card's compact buttons (`button-compact-height`) exist for this card. | Home:82-83; C:204, :379 | A gym check-in or schedule implies a gym service or account. | parked |
+| DSR-27 | Coach content: "Coach [Name]", the "COACH" badge, "From your coach", "Coach note: your coach adds notes here after class". | Home:78; C:158; Lib:62; Tech:130 | Coach-authored content implies sharing, accounts and sync. | parked |
+| DSR-28 | Instructional video: the video hero with its play button (`video-hero-height`, `play-button`) and the duration badge. | Tech:20-31 | The video source is not defined: bundled, or remote? Remote content is a network call (it carries no user data, but it needs a ruling). | a pasted reference link per technique instead |
+| DSR-29 | Notifications bell and "Class reminder" switch. | Home:42; C:79-80 | Local notifications are allowed. Push notifications are not. Neither is defined. | local notifications, later in v1 |
+| — | Athlete avatar with initials and name. | C:149-152 | Personal data, but fine on-device with no account id. Not parked. | — |
 
 ---
 
@@ -429,7 +442,7 @@ Design-system requests for the user. Change the canvas, re-export, and re-run th
 | DSR-13 | Off-grid spacing values (not multiples of 4, or not in the scale): 6, 10, 14, 18, 22 and 34, plus 62 top padding. They are used for gaps, padding and row heights (64, 72). Map each one to `space-*` or add tokens. | C:55, :62, :108, :115, :149, :216; Home:35, :69, :103; Lib:40, :65; Log:91; Prog:22 |
 | DSR-14 | Off-scale radii: 6 (badge), 10 (segment, stepper button, icon tile, iOS search), 14 (segment track, stepper / switch container, toast, Home stat tile), 9 and 12 (period toggle), 2 and 3 (belt M / S, swatch), 20 (picker chip, the pill rule). | C:66-74, :116, :121, :137, :142, :217, :243; Home:89; Prog:59-61; Log:30 |
 | DSR-15 | Components-board vs key-screen conflicts, each needing one answer:<ul><li>log action 56 vs 52 (C:45 / Home:27)</li><li>tab bar 82 vs 84 high (C:262 / Home:21), and `bg-surface` vs `tabbar` fill</li><li>segment 36 vs 40 (C:67 / Log:40)</li><li>stepper padding 6 vs 4 (C:73 / Log:48)</li><li>class-card buttons 44 / 15 vs 48 / 16 (C:204 / Home:82)</li><li>unselected technique chip 14/500 vs 14/600 (C:110 / Log:77)</li><li>sheet `bg-raised` vs `bg-surface` (C:232 / Log:20)</li><li>stat tile radius 16 vs 14 (C:185 / Home:89)</li><li>belt 28-high variant and the S belt with stripes (C/Main:98; Prog:23; C:154)</li><li>kids split-belt geometry</li><li>belt-tag swatch ring missing (Tech:40)</li><li>position progress fill `text-primary` vs accent for progress (Lib:52 / M:74)</li></ul> | as cited |
-| DSR-16 | Hit areas: 44-pt components (icon button, stepper, search, intensity, compact buttons) are below the artifact's own 48 dp Android minimum. Chips and segments are 36, the period toggle 32, the toast Undo 40, the picker chips 40, and the text links ("See all", "Done", "Cancel") have no height. Confirm the `hitSlop` approach (RULES R-M1) or resize. | M:154; C:23 |
+| DSR-16 | Hit areas: 44-pt components (icon button, stepper, search, intensity, compact buttons) are below the artifact's own 48 dp Android minimum. Chips and segments are 36, the period toggle 32, the toast Undo 40, the picker chips 40, and the text links ("See all", "Done", "Cancel") have no height. Confirm the `hitSlop` approach (RULES R-M1) or resize, and rule whether 48 dp on Android is binding (PO question Q18). Until then the floor is 44 pt. | M:154; C:23 |
 | DSR-17 | **Progression states** (improving / needs work / flagged) as tokens and a component, with the "why is this flagged" explanation pattern. The artifact has none, and the starter's `focus-improving` / `focus-needs-work` pairings are therefore dropped. | — |
 | DSR-18 | **Planned vs actual focus** in session logging: a visual distinction (not colour alone) and a component. | — |
 | DSR-19 | **Rating input** and rating display (per focus area): reuse the intensity picker, or a new component. | Log:64-70 (closest) |
@@ -439,3 +452,7 @@ Design-system requests for the user. Change the canvas, re-export, and re-run th
 | DSR-23 | Platform details not drawn: keyboard avoidance with the bottom action bar, Android list-row chevron, Android back on sheets, date-picker presentation within the Log sheet. | M:185-191 |
 | DSR-24 | Destinations not drawn: notifications, filters sheet, promotion history, save to plan, schedule, "See all". | Home:42, :83, :100; Lib:27; Prog:37; Tech:65 |
 | DSR-25 | The app icon / wordmark mark (accent tile with a mini belt, C/Main:23-30) as an exported asset. | C/Main:23-30 |
+| DSR-26 | **Parked:** gym check-in and schedule (§ Privacy and scope conflicts). PO ruling pending. | Home:82-83; C:204, :379 |
+| DSR-27 | **Parked:** coach content (COACH badge, "From your coach", coach notes). PO ruling pending. | Home:78; C:158; Lib:62; Tech:130 |
+| DSR-28 | **Parked:** instructional video (pending direction: a reference link the user pastes per technique). PO ruling pending. The link presentation would need a component. | Tech:20-31 |
+| DSR-29 | **Parked:** notifications and reminders (pending direction: local notifications later in v1). PO ruling pending. | Home:42; C:79-80 |

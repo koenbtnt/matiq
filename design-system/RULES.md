@@ -11,8 +11,9 @@ in `mobile/src/theme/tokens.ts`. Gaps and conflicts are `DSR-n` in `components.m
 |---|---|---|
 | R-S1 | The artifact is the source of truth. `tokens.json`, `components.md` and this file are derived copies. No agent edits `artifact/`. A missing value is a design-system request, not an invention. | `README.md`; M:7 |
 | R-S2 | Where the export and the canvas default differ, the canvas default with accent `green` wins. The other accents (blue, orange, teal, gold, mono, volt) are rejected and are not part of the system. | M:39 |
-| R-S3 | Component styles and states come from `canvas/Components.dc.html`. A key-screen value that differs from the Components board does not become a token. It is an open request (DSR-11, DSR-13 to DSR-15). | M:164 |
+| R-S3 | Component styles and states come from `canvas/Components.dc.html`. A key-screen value that differs from the Components board does not become a token. It is an open request (DSR-11, DSR-13 to DSR-15). The reason: the board is the exact-style source (M:164), so a key-screen one-off that contradicts it is an unresolved conflict, not a variant. Turning it into a token would choose a winner silently. For example, the tab-bar Log action at 52 (Home:27) against the board's 56 (C:45) has no token until DSR-15 is answered; `size.logAction` 56 is the board value. Key-screen sizes that the board does not contradict (week-day, date-tile, video-hero…) remain tokens. | M:164; review-1 S4 |
 | R-S4 | Theming notes about SwiftUI asset catalogs and Compose `MatiqColors` do not apply. Tokens reach the UI only through `tokens.ts`. | C/Theming:128-129; `artifact/README.md` |
+| R-S5 | **Parked scope:** nothing in `components.md` § Privacy and scope conflicts (DSR-26 to DSR-29) is built until the PO rules on it. That covers gym check-in and schedule, coach content, instructional video, and notifications and reminders. Their tokens and variants exist only because the artifact draws them: `button-compact-height` for the class card, `video-hero-height`, `play-button`, the COACH badge. A sprint spec may not use them for these elements before the ruling. **Pending ruling** (product-spec grilling, 2026-10-31): the current direction is to park gym and coach, to replace embedded video with a reference link the user pastes per technique, and to add reminders as local notifications later in v1. This is a direction, not a decision. | `.claude/rules/privacy.md`; review-1 S2 |
 
 ## 1 · Principles
 
@@ -32,7 +33,7 @@ in `mobile/src/theme/tokens.ts`. Gaps and conflicts are `DSR-n` in `components.m
 | R-T3 | An accent **fill** (`accent-fill`) always carries a dark label (`accent-on` `#0B0C0E`) in both themes. Accent **text and lines** (`accent-text`, `accent-border`, `accent-graphic`) use the darker light-theme shade. | M:88; M:71-74 |
 | R-T4 | Belts do not change with the theme. The white belt always has a `border-strong` hairline, and so does the black belt (edge column). | M:89; M:97, M:101 |
 | R-T5 | **Elevation without shadows.** Dark steps surfaces up (`bg-base` → `bg-surface` → `bg-raised`). Light puts white `bg-surface` cards on the off-white `bg-base`, with `border-default` hairlines. No shadow token exists, and none may be added in code. | M:90; M:158 |
-| R-T6 | Emerald doubles as **success**. Keep it clearly distinct from kids green `#2FA35A`: never place `accent-*` inside a belt component, or a belt colour next to an accent fill, as a pair. | M:91; C/AccentOptions:73 |
+| R-T6 | Emerald doubles as **success**. Keep it clearly distinct from kids green `#2FA35A` (M:91). The artifact holds the two distinct by brightness (C/AccentOptions:73), but they measure only 1.78:1. As the mitigation for that pair, **no `accent-*` colour is used inside a belt component** (belt rank, belt swatch, belt tag, avatar ring). | M:91; C/AccentOptions:73; `docs/design-system-contrast.md:96, :111` |
 
 ## 3 · Colour use
 
@@ -68,7 +69,7 @@ in `mobile/src/theme/tokens.ts`. Gaps and conflicts are `DSR-n` in `components.m
 
 | # | Rule | Source |
 |---|---|---|
-| R-M1 | **Hit targets are ≥ 44 × 44 pt on iOS and ≥ 48 × 48 dp on Android** (`size.touchTarget`, `size.touchTargetAndroid`). The visual size may be smaller (chip 36, segment 36, period toggle 32, toast action 40). The hit area is then extended to the platform minimum with `hitSlop` or padding, never left below it. | M:154; C/Components:23 ("every interactive element meets the 44/48 target"); DSR-16 |
+| R-M1 | **The binding floor is a hit target ≥ 44 × 44 pt on both platforms** (`size.touchTarget`, `.claude/rules/frontend.md`). The artifact's **≥ 48 × 48 dp on Android** (`size.touchTargetAndroid`) is the artifact value, **pending DSR-16 / PO ruling** (grilling Q18). Until the ruling it is a target, not a gate. The visual size may be smaller than the target (chip 36, segment 36, period toggle 32, toast action 40). The hit area is then extended with `hitSlop` or padding, and never left below 44 pt. | M:154; C/Components:23 ("every interactive element meets the 44/48 target"); `.claude/rules/frontend.md`; DSR-16 |
 | R-M2 | Inputs are 48 high. Buttons are 48 high, and the primary button is 56. | C/Components:56; M:167-171 |
 | R-M3 | **Motion:** state changes use 200 ms ease-out (`motion.durationState`). Sheets use a 320 ms spring (`motion.durationSheet`, spring parameters DSR-10). The toast shows for 4 s and is always undoable. **Respect Reduce Motion:** with it on, state changes and sheets do not animate. | M:155; C/Components:248 |
 | R-M4 | **Haptics:** a light tick on every stepper change (iOS `.selection`, Android `CLOCK_TICK`) and a success notification on save (iOS `.success`, Android `CONFIRM`). No other haptics without a design-system change. | M:156, M:191 |
@@ -90,13 +91,14 @@ in `mobile/src/theme/tokens.ts`. Gaps and conflicts are `DSR-n` in `components.m
 | # | Rule | Source |
 |---|---|---|
 | R-A1 | Text contrast is ≥ 4.5:1 (AA) at the size and weight used. Non-text UI and graphics are ≥ 3:1, or the information is carried by text or an icon as well. **Computed, never asserted**: every pair is in `docs/design-system-contrast.md`, and a new pair is computed there before it is used. | placeholder rule; WCAG 1.4.3 / 1.4.11 |
-| R-A2 | The following known failures stay open until the user re-exports: light `text-placeholder` on `bg-raised` (2.80), and light `accent-border` / `accent-graphic` / `accent-fill` as state signals. Input boundaries are 1.1–1.2 in both themes. Some belt fills are against surfaces (DSR-1 to DSR-4). Until then each of these components must carry its state in text or an icon (R-C5). | `docs/design-system-contrast.md` |
+| R-A2 | The following known non-text failures stay open until the user re-exports (DSR-2 to DSR-4): light `accent-border` / `accent-graphic` / `accent-fill` as state signals, input boundaries at 1.1–1.2:1 in both themes, and several belt fills below 3:1 against surfaces. Until then each of these components must carry its state in text or an icon (R-C5). | `docs/design-system-contrast.md` |
+| R-A4 | **Placeholder (DSR-1):** light `text-placeholder` on `bg-raised` is 2.80:1. Until DSR-1 is answered, **every input has a visible label** (`caption` above the field), and **the placeholder never carries required information**: it is only an example or hint, and nothing the user needs is stated there alone. | `docs/design-system-contrast.md`; C/Components:55; review-1 S1 |
 | R-A3 | Every control has an `accessibilityRole` and an i18n `accessibilityLabel`. Toggles expose `accessibilityState` (selected / checked / disabled). Charts are `role="image"` with a text summary. | C/Components:39, :80; C/Progress:65; `.claude/rules/frontend.md` |
 
 ## 9 · Generic rules kept from the placeholder
 
 - Tokens only in `mobile/` (`.claude/rules/frontend.md`). `mobile/src/theme/tokens.ts` is generated, never hand-edited.
-- Hit targets ≥ 44 pt (iOS) / 48 dp (Android). Inputs are 48 pt tall, and buttons ≥ 48 (primary 56) (R-M1, R-M2).
+- Hit targets ≥ 44 pt (binding floor); 48 dp on Android is pending DSR-16. Inputs are 48 pt tall, and buttons ≥ 48 (primary 56) (R-M1, R-M2).
 - Text contrast is ≥ 4.5:1 (AA) at the size and weight used, computed and never asserted (R-A1).
 - Status and progression are never conveyed by colour alone, always with text or an icon with a label (R-C5).
 - Phone-first, one-handed, portrait: the primary action is within thumb reach at 390 px and 430 px (R-1).
