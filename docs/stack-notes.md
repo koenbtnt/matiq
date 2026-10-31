@@ -35,6 +35,8 @@ machine and say so. Never a credential or personal data.
 | Expo plugin (Claude Code) | expo@claude-plugins-official | 24 skills (`/expo:expo-router`, `/expo:eas-*`, …), a bundled Expo MCP server (docs, EAS builds, store reviews) and two hooks. Enabled project-wide in `.claude/settings.json`. | plugin directory listing | 2026-10-31 |
 | skills CLI | skills@latest | `npx skills@latest add <owner/repo> -a claude-code -s <one-skill> -y` copies the skill into `.claude/skills/<name>/` (no `.agents/` layer in this CLI version); the `-s` flag takes one name per invocation (a comma list matches nothing); `skills-lock.json` at the repo root pins source path and hash; `npx skills@latest experimental_install` restores from the lock. | run on this machine | 2026-10-31 |
 
+- Token generator (`scripts/sync-design-tokens.mjs`): per-style `fontFamily` resolves weight -> family map key (400..800); a weight the family lacks falls back to the nearest defined (ties heavier). `fontStretch` has no RN style: comment only (DSR-12). `maxFontSizeMultiplier` is a `<Text>` prop, exported as `textMaxScale`. Semantic pairs naming a non-existent colour token abort generation.
+
 ## Facts gathered for sprint `product-spec` (PO grilling session, 2026-10-31)
 
 | library | version | fact | source | date |
