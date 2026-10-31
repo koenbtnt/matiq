@@ -116,7 +116,6 @@ export const size = {
   buttonCompactHeight: 44, // Compact buttons inside the class card.
   iconButton: 44, // Icon button diameter.
   logAction: 56, // Log action button diameter (Components board).
-  tabLogAction: 52, // Log action inside the tab bar (key screens).
   inputHeight: 48, // Text input height.
   textareaHeight: 84, // Notes textarea height.
   searchHeight: 44, // Search field height.
