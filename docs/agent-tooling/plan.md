@@ -68,3 +68,20 @@ file is the in-repo summary and the control ledger. ADR 0002 records the decisio
 ## 4. Carry-over opened here
 
 CO-01 … CO-14 in `docs/carry-over.md`.
+
+## 5. Verification (2026-10-31, `chore/harness-setup`)
+
+| Check | Result |
+|---|---|
+| `npm run test:hooks` | 168/168 (incl. rule 5 secret files, data-coder/frontend/tester/designer scopes, Maestro and Drizzle validation-guard fixtures) |
+| `cd mobile && npx tsc --noEmit` | 0 errors |
+| `cd mobile && npx jest --watchAll=false --ci` | 4 suites, 13 tests passed (migrations ×3 on better-sqlite3, descriptions ×2, i18n ×7, home screen ×1) |
+| `cd mobile && npx expo-doctor` | 20/20 |
+| `cd mobile && npx drizzle-kit generate` | No schema changes; `git diff -- drizzle/` empty |
+| `node scripts/sync-design-tokens.mjs --check` · `node scripts/check-token-adherence.mjs` | in sync · ok |
+| `node scripts/docs/gen-data-model.mjs` · `gen-changelog.mjs` | 1 table, 0 undescribed · 1 migration |
+| `cd mobile && npx expo prebuild --platform android --no-install` | exit 0, tree clean |
+| App boot | `npx expo start --go --ios --port 8083` → Expo Go on iPhone 18 Pro renders `home.title`, `home.subtitle`, `db.ready` after `useMigrations` (screenshot checked) |
+| Maestro smoke flow | not run — Maestro not installed (P2) |
+| `gh repo view koenbtnt/matiq --json defaultBranchRef` | `develop` |
+| PR | `chore/harness-setup → develop`, https://github.com/koenbtnt/matiq/pull/1 |
