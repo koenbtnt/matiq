@@ -4,7 +4,7 @@
 - HEAD: c26af5d (feature/foundation, stacked on feature/product-spec / PR #4)
 - Step: 3 — review 1 recheck
 - Live agents: reviewer-design-foundation (recheck)
-- Next action: REVIEW PASSED → data-coder + frontend-coder phase A (parallel)
+- Next action: REVIEW PASSED → data-coder + frontend-coder phase A (parallel; data-coder does ALL npm installs for both in its first commit, frontend-coder waits on that commit before using new packages; app.json keys split per plan §0 work split)
 - Blockers: none. INFRA UNAVAILABLE: CocoaPods, Maestro, EAS CLI, Android SDK (PO actions, reported at close-out)
 - Uncommitted: none
 
