@@ -61,12 +61,12 @@ Every bullet is dated and tagged with the ruling it derives from (`docs/product-
 - 2026-10-31 · S-05 · Design source = the PO's Claude Artifact exported to `design-system/artifact/`, intake by the designer. "I will create a Claude Aretifact for the design" · "Export to design-system/, I extract tokens (Recommended)". Open design requests (`design-system/components.md § Open requests`, CO-15 fonts, CO-16 DSR rulings — DSR-12 and DSR-15 block sprint 1) are resolved before the sprint that uses them.
 - 2026-10-31 · S-07 · English copy only, every string through i18n keys. "English now, i18n-ready".
 - 2026-10-31 · R-18 · Hit targets 44 pt on iOS and 48 dp on Android; smaller elements extended with `hitSlop`. "yes". `.claude/rules/frontend.md` and `design-system/RULES.md` to be amended by the PO/designer at the next intake.
-- 2026-10-31 · R-26 · Binding UX acceptance criteria: log a session in ≤ 30 s and ≤ 2 taps from Home; every screen one-handed in portrait; destructive actions undoable (soft delete + undo toast) instead of confirm dialogs; only type + one focus required; empty states explain the next step; readable in light and dark. "yes". In both reviewer checklists (`.claude/agents/reviewer-design.md:90-93`, `.claude/agents/reviewer-code.md:80-83`, commit bec9bf3). The exact reading of "≤ 2 taps" is an assumption (`docs/product-spec/assumptions.md` A-7).
+- 2026-10-31 · R-26 · Binding UX acceptance criteria: log a session in ≤ 30 s and ≤ 2 taps from Home; every screen one-handed in portrait; destructive actions undoable (soft delete + undo toast) instead of confirm dialogs; only type + one focus required; empty states explain the next step; readable in light and dark. "yes". In both reviewer checklists (`.claude/agents/reviewer-design.md:90-94`, `.claude/agents/reviewer-code.md:80-83`, commit bec9bf3). The exact reading of "≤ 2 taps" is an assumption (`docs/product-spec/assumptions.md` A-7).
 
 ## Privacy and publishing
 
 - 2026-10-31 · R-12 (see Data) · Encryption at rest from the start (R-24), app lock later (R-25); export/import/erase in v1.
-- 2026-10-31 · R-24 (see Data) · No user data leaves the device; EAS artefacts carry none (`.claude/rules/privacy.md`). The SQLCipher key uses a this-device-only keychain class (plan fact, D-22).
+- 2026-10-31 · R-24 (see Data) · No user data leaves the device; EAS artefacts carry none (`.claude/rules/privacy.md`). The SQLCipher key uses a this-device-only keychain class (with A-11, assumed, pending PO; plan D-22).
 - 2026-10-31 · R-27 (see Product) · Export format is the future upload format; versioned.
 - 2026-10-31 · R-28 (see Data) · Licences: GrappleMap public domain; grapple-flows CC BY 4.0 — attribution shown in the app; BJJGraph (PolyForm Noncommercial) not imported without a licence.
 - 2026-10-31 · R-33 (see Product) · No scraping of instructional sites in v1; terms-of-service assessment first.

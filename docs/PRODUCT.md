@@ -405,7 +405,7 @@ Ruled shape (R-08 "Yes Deterministic, but in the future the algo might be change
 ## §9 Data, privacy, publishing readiness
 
 - **On device only** (`.claude/rules/privacy.md`; S-02): no backend, no account, no sync, no network call carrying user data; the only outbound action is opening a Resource URL in the browser (R-29).
-- **Encryption at rest** (R-24): SQLCipher through `expo-sqlite`'s `useSQLCipher`; key generated on first launch, kept in Keychain/Keystore via `expo-secure-store` with a this-device-only accessibility class so it never syncs to a cloud keychain; development, smoke checks and Maestro on dev-client builds only (R-31); Jest on plain better-sqlite3.
+- **Encryption at rest** (R-24): SQLCipher through `expo-sqlite`'s `useSQLCipher`; key generated on first launch, kept in Keychain/Keystore via `expo-secure-store` with a this-device-only accessibility class so it never syncs to a cloud keychain (with A-11, assumed, pending PO — plan §0.1 #11); development, smoke checks and Maestro on dev-client builds only (R-31); Jest on plain better-sqlite3.
 - **OS backups** (R-12 "no cloud backup"): database and key excluded from iCloud / Android auto-backup — assumed, pending PO (plan §0.1 #11); the JSON export is the user's backup.
 - **Export / import / erase** (R-12): JSON export of every table including tombstones, versioned (`export_schema_version`) and documented as the future upload format (R-27); the exported file is plaintext once shared — protection assumed, pending PO (plan §0.1 #10); import semantics assumed, pending PO (plan §0.1 #2; default: merge by id, newest `updated_at` wins); erase-all closes the database, deletes the database, WAL and SHM files and the key, creates a new key and reseeds — the one hard-delete path, recorded as R-12's exception to the no-hard-delete rule (plan §11). Both ship before any store release.
 - **No analytics, crash-reporting or advertising SDK** without a dated ruling and an ADR; no third-party identifiers.
@@ -414,7 +414,7 @@ Ruled shape (R-08 "Yes Deterministic, but in the future the algo might be change
 
 ## §10 Non-functional requirements
 
-UX acceptance criteria (R-00, R-26 "yes", R-18 "yes"), each testable and present in both reviewer checklists (`.claude/agents/reviewer-design.md:90-93`, `.claude/agents/reviewer-code.md:80-83`). NF-04, NF-09, NF-11 and NF-12 derive from `.claude/rules/*`, not from R-26.
+UX acceptance criteria (R-00, R-26 "yes", R-18 "yes"), each testable and present in both reviewer checklists (`.claude/agents/reviewer-design.md:90-94`, `.claude/agents/reviewer-code.md:80-83`). NF-04, NF-11 and NF-12 derive from `.claude/rules/*`, and NF-09 is a planner target; none of these four is R-26.
 
 | id | requirement | test |
 |---|---|---|
