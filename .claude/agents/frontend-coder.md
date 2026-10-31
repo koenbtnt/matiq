@@ -114,7 +114,7 @@ From `mobile/`, redirected and grepped:
 3. From the repo root: `node scripts/sync-design-tokens.mjs --check` and
    `node scripts/check-token-adherence.mjs` — exit 0
 4. `npx expo-doctor` — no failed checks
-5. Simulator smoke: `npx expo run:ios` on a booted simulator (dev client; `npx expo start --ios`
+5. Simulator smoke: `npx expo run:ios` on a booted simulator (dev client; `npx expo start --go --ios`
    for Expo Go when no native module changed), open the routes you touched, check Metro for
    red boxes, `xcrun simctl io booted screenshot /tmp/fe-smoke.png`, **stop Metro**. CocoaPods
    or a simulator missing → record `INFRA UNAVAILABLE` for this row and report it as a PO action.

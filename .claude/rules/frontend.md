@@ -42,6 +42,6 @@ From `mobile/`, output redirected to a file and grepped, never streamed:
 2. `npx jest --watchAll=false` — zero failures
 3. From the repo root: `node scripts/sync-design-tokens.mjs --check` and `node scripts/check-token-adherence.mjs` — exit 0
 4. `npx expo-doctor` — no failed checks
-5. Phase B only — simulator smoke: `npx expo run:ios` on a booted simulator (or `npx expo start --ios` for Expo Go), open the routes you touched, `xcrun simctl io booted screenshot`, then **stop Metro**.
+5. Phase B only — simulator smoke: `npx expo run:ios` on a booted simulator (or `npx expo start --go --ios` for Expo Go), open the routes you touched, `xcrun simctl io booted screenshot`, then **stop Metro**.
 
 A failing test is fixed at its root — fixture, clock, data or the bug. Never loosen a validation or an assertion to make a test pass.

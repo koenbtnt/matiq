@@ -49,7 +49,7 @@ node scripts/sync-design-tokens.mjs --check                        # mobile/src/
 node scripts/check-token-adherence.mjs                             # no hex/px/font literals in UI code
 cd mobile && npx drizzle-kit generate && git diff --exit-code -- drizzle/   # migrations in sync with the schema
 cd mobile && npx expo-doctor                                       # config and dependency health
-cd mobile && npx expo start --ios                                  # Expo Go on the simulator (no CocoaPods needed)
+cd mobile && npx expo start --go --ios                                  # Expo Go on the simulator (no CocoaPods needed)
 cd mobile && npx expo run:ios                                      # dev-client build (CocoaPods; CO-14)
 maestro test e2e/maestro/flows                                     # E2E on the booted simulator (Maestro install: P2)
 npm run test:hooks                                                 # exit-code tests for .claude/hooks (scripts/claude/hooks.test.sh)

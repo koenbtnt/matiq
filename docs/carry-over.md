@@ -15,4 +15,4 @@
 | CO-11 | setup | GitHub rulesets on `develop` and `main` (require PR, block force-push/deletion) and `ci-ok` as a required check after the first green run. | PO | open |
 | CO-12 | setup | Agent-memory lines tagged "cadence, unverified here": confirm or delete after the first frontend sprint. | frontend-coder / tester | open |
 | CO-13 | setup | Prune the SDK 58 template's unused dependencies in `mobile/package.json` (`@expo/ui`, `expo-image`, `expo-symbols`, `expo-glass-effect`, `expo-web-browser`, `expo-device`, …) once the foundation sprint knows what the screens use; `npx expo-doctor` must stay green. | frontend-coder (foundation) | open |
-| CO-14 | setup | Install CocoaPods (`brew install cocoapods`) so `npx expo run:ios` dev-client builds work; Expo Go (`npx expo start --ios`) is enough until a native module is added. | PO | open |
+| CO-14 | setup | Install CocoaPods (`brew install cocoapods`) so `npx expo run:ios` dev-client builds work; Expo Go (`npx expo start --go --ios`) is enough until a native module is added. | PO | open |
