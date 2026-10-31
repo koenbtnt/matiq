@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>matiq — Theming</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 1200px; height: 1800px; box-sizing: border-box; padding: 64px; background: {{tk.bgBase}}; color: {{tk.text1}}; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 48px">
+
+  <header style="display: flex; flex-direction: column; gap: 8px">
+    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.accentText}}">06 · Theming</span>
+    <h1 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 40px; line-height: 44px; letter-spacing: -0.01em">One token set, two themes</h1>
+    <p style="margin: 0; font-size: 16px; line-height: 24px; color: {{tk.text2}}; max-width: 760px">Every artboard reads semantic tokens, never raw hex. The app follows the system appearance by default, with a System / Light / Dark override in Settings. Preview any artboard with its Theme and Accent tweaks.</p>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{previews}}" as="p" hint-placeholder-count="2">
+      <div style="background: {{p.bgBase}}; color: {{p.text1}}; border: 1px solid {{p.border}}; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{p.text2}}">{{p.label}}</span>
+        <div style="background: {{p.bgSurface}}; border: 1px solid {{p.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{p.accentText}}">Next class · 18:30</span>
+          <span style="font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 20px; line-height: 24px">Fundamentals</span>
+          <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px">
+            <div style="height: 6px; border-radius: 3px; background: {{p.accentGraphic}}"></div><div style="height: 6px; border-radius: 3px; background: {{p.accentGraphic}}"></div><div style="height: 6px; border-radius: 3px; background: {{p.accentGraphic}}"></div><div style="height: 6px; border-radius: 3px; background: {{p.border}}"></div><div style="height: 6px; border-radius: 3px; background: {{p.border}}"></div>
+          </div>
+          <button type="button" style="height: 48px; border: 0; border-radius: 24px; background: {{p.accent}}; color: {{p.onAccent}}; font-size: 16px; font-weight: 700">Log session</button>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <span style="height: 32px; padding: 0 14px; border-radius: 16px; background: {{p.invBg}}; color: {{p.invFg}}; display: inline-flex; align-items: center; font-size: 13px; font-weight: 600">All</span>
+          <span style="height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid {{p.accentBorder}}; background: {{p.accentTint}}; color: {{p.accentText}}; display: inline-flex; align-items: center; font-size: 13px; font-weight: 600">Knee cut</span>
+          <span style="height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid {{p.border}}; display: inline-flex; align-items: center; font-size: 13px">Guard</span>
+        </div>
+        <div style="display: flex; height: 16px; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px {{p.borderStrong}}">
+          <div style="flex: 1; background: #EDEDE8"></div>
+          <div style="width: 40px; background: #0B0C0E; display: flex; justify-content: flex-end; gap: 3px; padding: 0 5px"><div style="width: 3px; background: #FFFFFF"></div><div style="width: 3px; background: #FFFFFF"></div></div>
+          <div style="width: 8px; background: #EDEDE8"></div>
+        </div>
+      </div>
+    </sc-for>
+    <div style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+      <span style="font-size: 14px; font-weight: 600">Theme rules</span>
+      <sc-for list="{{rules}}" as="r" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid {{tk.border}}">
+          <span style="font-size: 13px; font-weight: 600">{{r.k}}</span>
+          <span style="font-size: 13px; line-height: 19px; color: {{tk.text2}}">{{r.v}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 20px; line-height: 24px">Semantic tokens · accent: {{tk.accentName}}</h2>
+    <div style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; overflow: hidden">
+      <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr) 200px 200px; gap: 24px; padding: 12px 24px; background: {{tk.bgRaised}}; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: {{tk.text2}}">
+        <span>Token</span><span>Use</span><span>Dark</span><span>Light</span>
+      </div>
+      <sc-for list="{{tokens}}" as="t" hint-placeholder-count="20">
+        <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr) 200px 200px; gap: 24px; align-items: center; padding: 9px 24px; border-top: 1px solid {{tk.border}}; font-size: 14px">
+          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 13px">{{t.k}}</span>
+          <span style="color: {{tk.text2}}">{{t.use}}</span>
+          <span style="display: flex; align-items: center; gap: 10px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: {{tk.text2}}"><span style="width: 24px; height: 24px; border-radius: 6px; background: {{t.d}}; box-shadow: 0 0 0 1px {{tk.borderStrong}}"></span>{{t.dl}}</span>
+          <span style="display: flex; align-items: center; gap: 10px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: {{tk.text2}}"><span style="width: 24px; height: 24px; border-radius: 6px; background: {{t.l}}; box-shadow: 0 0 0 1px {{tk.borderStrong}}"></span>{{t.ll}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["green","blue","orange","teal","gold","mono","volt"],"default":"green"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":1200,"height":1800}}'>
+class Component extends DCLogic {
+  palette(theme, accent) {
+    const N = {
+      dark: { bgBase: '#0B0C0E', bgSurface: '#15171A', bgRaised: '#1E2125', border: '#2A2E33', borderStrong: '#3A3F45', borderStronger: '#4A4F56', text1: '#F4F4F1', text2: '#A3A8B0', text3: '#6A6F77', invBg: '#F4F4F1', invFg: '#0B0C0E', danger: '#FF5C7A', dangerTint: 'rgba(255,92,122,0.14)', warning: '#FFB547', warningTint: 'rgba(255,181,71,0.16)', info: '#6FA8FF', infoTint: 'rgba(111,168,255,0.16)', tabbar: 'rgba(21,23,26,0.96)', scrim: '#000000' },
+      light: { bgBase: '#F6F6F3', bgSurface: '#FFFFFF', bgRaised: '#EEEEEA', border: '#DCDCD6', borderStrong: '#C9C9C2', borderStronger: '#A9AAA3', text1: '#0B0C0E', text2: '#5A5F67', text3: '#9A9EA4', invBg: '#15171A', invFg: '#F6F6F3', danger: '#C4223F', dangerTint: '#FCE3E8', warning: '#8F5600', warningTint: '#FCEBD2', info: '#1F5BD1', infoTint: '#E2EBFC', tabbar: 'rgba(255,255,255,0.96)', scrim: '#B9B9B4' }
+    };
+    const A = {
+      green: { name: 'Emerald', brand: '#2EDB7F',
+        dark: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#5FE69C', accentBorder: '#2EDB7F', accentGraphic: '#2EDB7F', accentTint: 'rgba(46,219,127,0.16)' },
+        light: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#0B7A3E', accentBorder: '#17B061', accentGraphic: '#17B061', accentTint: '#DCF8E8' } },
+      blue: { name: 'Azure', brand: '#3BA3FF',
+        dark: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#6CBBFF', accentBorder: '#3BA3FF', accentGraphic: '#3BA3FF', accentTint: 'rgba(59,163,255,0.16)', info: '#B4BAC4', infoTint: 'rgba(180,186,196,0.14)' },
+        light: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#0A5BB5', accentBorder: '#1E86EB', accentGraphic: '#1E86EB', accentTint: '#DFEFFF', info: '#4A5059', infoTint: '#E8E9EC' } },
+      orange: { name: 'Signal Orange', brand: '#FF6A2B',
+        dark: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#FF8A57', accentBorder: '#FF6A2B', accentGraphic: '#FF6A2B', accentTint: 'rgba(255,106,43,0.16)' },
+        light: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#B23D0B', accentBorder: '#E2551A', accentGraphic: '#E2551A', accentTint: '#FFE8DD' } },
+      teal: { name: 'Mat Teal', brand: '#2DD4BF',
+        dark: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#5EE6D3', accentBorder: '#2DD4BF', accentGraphic: '#2DD4BF', accentTint: 'rgba(45,212,191,0.16)' },
+        light: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#0B6E62', accentBorder: '#129C8A', accentGraphic: '#129C8A', accentTint: '#DDF6F2' } },
+      gold: { name: 'Champion Gold', brand: '#FFC53D',
+        dark: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#FFD36B', accentBorder: '#FFC53D', accentGraphic: '#FFC53D', accentTint: 'rgba(255,197,61,0.16)' },
+        light: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#7A5000', accentBorder: '#C98A00', accentGraphic: '#B07800', accentTint: '#FFF1CC' } },
+      mono: { name: 'Monochrome', brand: '#F4F4F1',
+        dark: { accent: '#F4F4F1', onAccent: '#0B0C0E', accentText: '#F4F4F1', accentBorder: '#F4F4F1', accentGraphic: '#F4F4F1', accentTint: '#2A2E33' },
+        light: { accent: '#0B0C0E', onAccent: '#F6F6F3', accentText: '#0B0C0E', accentBorder: '#0B0C0E', accentGraphic: '#0B0C0E', accentTint: '#E4E4DF' } },
+      volt: { name: 'Volt', brand: '#D6FF3D',
+        dark: { accent: '#D6FF3D', onAccent: '#0B0C0E', accentText: '#D6FF3D', accentBorder: '#D6FF3D', accentGraphic: '#D6FF3D', accentTint: 'rgba(214,255,61,0.14)' },
+        light: { accent: '#0B0C0E', onAccent: '#D6FF3D', accentText: '#4A6300', accentBorder: '#8DB000', accentGraphic: '#6E8F00', accentTint: '#EDF7CF' } }
+    };
+    const t = theme === 'light' ? 'light' : 'dark';
+    const a = A[accent] || A.green;
+    return Object.assign({ theme: t, accentName: a.name, brand: a.brand }, N[t], a[t]);
+  }
+  renderVals() {
+    const theme = this.props.theme ?? 'dark';
+    const accent = this.props.accent ?? 'green';
+    const tk = this.palette(theme, accent);
+    const d = this.palette('dark', accent);
+    const l = this.palette('light', accent);
+    const tok = (k, use, key) => ({ k, use, d: d[key], l: l[key], dl: d[key].startsWith('rgba') ? 'fill @ 16%' : d[key], ll: l[key] });
+    return {
+      theme,
+      tk,
+      previews: [Object.assign({ label: 'Dark' }, d), Object.assign({ label: 'Light' }, l)],
+      rules: [
+        { k: 'Accent fills keep a dark label', v: 'Primary buttons use the accent fill with ink text in both themes; accent text and lines get a darker shade on light.' },
+        { k: 'Belts are invariant', v: 'Rank colors never change; light surfaces add a hairline so the white belt stays visible.' },
+        { k: 'Elevation', v: 'Dark steps surfaces up. Light uses white cards on an off-white base with hairlines.' },
+        { k: 'iOS', v: 'Asset-catalog color sets (Any / Dark), read in SwiftUI as Color("bg.surface").' },
+        { k: 'Android', v: 'MatiqColors via CompositionLocal, mapped onto M3 light/darkColorScheme; isSystemInDarkTheme().' }
+      ],
+      tokens: [
+        tok('bg.base', 'App background', 'bgBase'),
+        tok('bg.surface', 'Cards, sheets, tab bar', 'bgSurface'),
+        tok('bg.raised', 'Inputs, highlighted cards', 'bgRaised'),
+        tok('border.default', 'Hairlines, dividers', 'border'),
+        tok('border.strong', 'Outlined buttons, inactive bars', 'borderStrong'),
+        tok('text.primary', 'Titles, body', 'text1'),
+        tok('text.secondary', 'Metadata, labels', 'text2'),
+        tok('text.disabled', 'Disabled labels', 'text3'),
+        tok('inverse.bg', 'Selected segment, toast', 'invBg'),
+        tok('inverse.fg', 'Text on inverse', 'invFg'),
+        tok('accent.fill', 'Primary button, Log tab', 'accent'),
+        tok('accent.on', 'Label on accent.fill', 'onAccent'),
+        tok('accent.text', 'Links, active tab, overlines', 'accentText'),
+        tok('accent.border', 'Selected chip, focus ring', 'accentBorder'),
+        tok('accent.graphic', 'Charts, intensity, progress', 'accentGraphic'),
+        tok('accent.tint', 'Selected chip, Drilled badge', 'accentTint'),
+        tok('feedback.danger', 'Destructive, injury', 'danger'),
+        tok('feedback.warning', 'Comp, warnings', 'warning'),
+        tok('feedback.info', 'Gi tag, New badge', 'info'),
+        tok('scrim', 'Behind sheets', 'scrim')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
