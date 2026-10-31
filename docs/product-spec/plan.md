@@ -38,15 +38,15 @@ Sprint 0, docs-only. Planner: planner-ps · 2026-10-31 · sole source: `docs/pro
 | D-05 | Focus = `{focus_kind, focus_ref_id}`, kind check `POSITION\|SUBJECT` per `.claude/rules/data.md:24` ("the kind set is data-extensible"); `TECHNIQUE` arrives in v1.x by widening the check — **provisional** | R-04, R-30 | yes |
 | D-06 | `positions` = nodes (self-FK variants), `techniques` = typed edges (`to` null iff SUBMISSION), `aliases` keyed `{target_kind, target_id}` | R-23, R-34 | yes |
 | D-07 | Imported rows carry `origin ∈ seed\|user`, `source`, `source_id`, `source_version`, `user_edited_at`; re-import upserts only `origin = 'seed'` rows with `user_edited_at IS NULL AND deleted_at IS NULL` (`.claude/rules/data.md:25`) | R-23, R-28 | yes |
-| D-08 | Seed ids are UUIDs minted once by the converter and fixed in the seed file; `app_meta.taxonomy_release` records the installed release | R-28 | yes |
+| D-08 | Seed ids are UUIDs minted once by the converter and fixed in the seed file (mechanism assumed, §0.1 #14); `app_meta.taxonomy_release` records the installed release | R-28 | yes |
 | D-09 | `tier ∈ CORE\|EXTENDED` on positions/techniques; setting `library.showExtended` (default off) | R-28 | yes |
 | D-10 | Per-focus signals: `rating`, `needs_work`, `comment`, `hit_count`, `caught_count`; per session: `rating`, `duration_minutes`, `intensity`, `energy`, `context_note`, `what_worked`, `what_failed` | R-05, R-19 | yes |
-| D-11 | Review columns live on `sessions` (one review per session, same screen); no `session_reviews` table — planner decision on brief §5 step 4 + legacy 1 : 1 reviews, not a ruling quote | brief §5, §6 | yes |
+| D-11 | Review columns live on `sessions` (one review per session, same screen); no `session_reviews` table — planner decision on brief §5 step 4 + legacy 1 : 1 reviews, assumed, pending PO (§0.1 #12) | brief §5, §6 | yes |
 | D-12 | `rounds` + session-level `submissions` (`round_id` nullable, `technique_id` nullable) from v1; aggregates on `sessions` always; detailed-round UI gated by `log.detailedRounds` | R-06, R-19 | yes |
 | D-13 | `session_techniques` (technique attached to a session, optionally to a focus row) captured from v1 | R-04 | yes |
 | D-14 | `cycles` (1–3 focuses, default 28 days) + `cycle_focuses`; one active cycle at a time (§0.1 #5) | R-07 | yes |
 | D-15 | `slots` generate PLANNED sessions 14 days ahead; generator reads tombstones (`deleted_at` not null) to avoid resurrecting skipped instances | R-20 | yes |
-| D-16 | Algorithm `progression/v1`: four states, rolling window, five signals, ordered rules, full explanation; defaults are the planner's proposal | S-06, R-08, R-17 | yes |
+| D-16 | Algorithm `progression/v1`: four states, rolling window, five signals, ordered rules, full explanation; numeric defaults beyond R-08's 8-week window are assumed (§0.1 #13) | S-06, R-08, R-17 | yes |
 | D-17 | `algorithm_params` rows carry `algorithm_version`, `value`, `default_value`, bounds; `settings.algorithm.version` names the active version | R-22 | yes |
 | D-18 | Suggestion sources = 4 switches + `suggest.max` (3) in `settings` | R-09, R-21 | no |
 | D-19 | `rank_entries` (scale ADULT\|KIDS, belt, stripes, awarded_on); current rank = latest live row; `rank.scale` setting | R-10 | yes |
@@ -91,6 +91,9 @@ Sprint 0, docs-only. Planner: planner-ps · 2026-10-31 · sole source: `docs/pro
 | 9 | Does a rename keep the old name as an alias? (R-14 rules only "rename follows the id") | yes, as a pre-ticked option on the rename sheet |
 | 10 | Export file protection — R-12 "securely encrypted" vs a JSON file that leaves the sandbox | v1 exports plaintext JSON through the OS share sheet only (no copy kept in the sandbox) with a warning line; an optional passphrase (AES-GCM) is v1.x |
 | 11 | OS backups of the database (iCloud / Android auto-backup) — R-12 rules "no cloud backup" | exclude `matiq.db` and the key from OS backups (iOS backup-exclusion attribute, Android `allowBackup=false`); the user's backup is the JSON export |
+| 12 | Review stored as columns on `sessions` vs a `session_reviews` table (brief §5 prose, legacy 1 : 1 table; no ruling) | columns on `sessions` (`rating`, `what_worked`, `what_failed`, `reviewed_at`), one review per session (D-11) |
+| 13 | Numeric defaults of algorithm v1 other than the ruled 8-week window (R-08): `staleDays`, `minSessions`, thresholds, weights, `hitCaughtMinEvents` | §4.3 values, "tuned once real data exists" (brief §7 prose) |
+| 14 | Mechanism behind R-28 "our own stable ids": converter-minted UUIDs fixed in the seed file vs repository-minted ids per install (`data.md:23`) | converter-minted, fixed across releases (D-08, §11) |
 
 ---
 
@@ -112,7 +115,7 @@ Quoted text in double quotes is the PO's words from the brief's rulings table un
 - **D-08** Seed ids. R-28 "under our own stable ids": the converter mints a UUID v4 per (source, source_id) once and keeps it in the seed file across taxonomy releases, so two installs and a future upload share ids. The repository still mints ids for user rows (`.claude/rules/data.md`). Architectural.
 - **D-09** Core vs extended. R-28 "Curated core (≈40–60 positions, ≈150 techniques) visible by default; full converted graph as an optional 'extended library'". Architectural.
 - **D-10** Signals. R-05 as accepted plus the PO's additions "Per focus the possible to comment as well. Add energy level, belt of sparring partner as free additional context"; R-19 fixes energy 1–5, a free context note and a partner belt per detailed round; whether the session-level belt is its own field is §0.1 #8. Architectural.
-- **D-11** Reviews on the session row. Brief prose §5 step 4 ("Review — the same screen in review mode", which cites R-26's no-dialog criterion) plus the legacy `session_reviews` being 1 : 1 in practice: the review folds into `sessions` (`rating`, `what_worked`, `what_failed`, `reviewed_at`). Planner decision, no ruling quote. Architectural.
+- **D-11** Reviews on the session row. Brief prose §5 step 4 ("Review — the same screen in review mode", which cites R-26's no-dialog criterion) plus the legacy `session_reviews` being 1 : 1 in practice: the review folds into `sessions` (`rating`, `what_worked`, `what_failed`, `reviewed_at`). Planner decision, assumed, pending PO (2026-10-31; §0.1 #12, A-12). Architectural.
 - **D-12** Rounds and submissions. R-06 "Aggregates per session (rounds, optional submissions landed/taken, optionally tied to a technique)" and "they should also be able to log 1 specific round and the rest globally"; R-19 "zero, one or more" detailed rounds, toggle off by default. Hence `submissions` rows hang off the session (`round_id` nullable) so a technique can be tied with the toggle off; the aggregate counts on `sessions` stay authoritative. Architectural.
 - **D-13** Technique attachments. R-04: "Technique attachments are captured from v1 (focus logs, round submissions) so v1.x has data". Architectural.
 - **D-14** Cycles. R-07 "Yes Both": 1–3 focuses, default 4 weeks. Architectural.
@@ -254,7 +257,7 @@ Domain functions are pure (`clock`, `newId` injected); repositories wrap them in
 | v1.x | technique-level progression (one migration widening the `focus_kind` check to TECHNIQUE), app lock, graph visualisation with progression overlay, watch list | `focus_kind` check widened | — |
 | v2 | coach tier (backend + accounts, ADR; CO-08), instructional import (R-33), S&C session family | tenant column via additive migration | — |
 
-## §8 Progression algorithm v1 (planner's proposal, R-08/R-17/R-22)
+## §8 Progression algorithm v1 (shape per R-08/R-17/R-22; numeric defaults other than the 8-week window are the planner's, assumed, pending PO — §0.1 #13, A-13)
 
 Window: sessions with `local_date` within the last `windowWeeks × 7` days, soft-deleted sessions and focus rows excluded. Inputs per focus f:
 - `n` = COMPLETED sessions with a live focus row for f with `is_actual = 1`; `nr` = those with a non-null `rating`.
@@ -268,7 +271,7 @@ Rules, first match wins: (1) `n = 0` or `daysSince > staleDays` → **Not traine
 
 ## §9 Open questions
 
-See §0.1 (#1–#11), every item taken at its default — assumed, pending PO (2026-10-31) — and ledgered in `docs/product-spec/assumptions.md` with what changes if the PO rules otherwise. PRODUCT.md marks each as "assumed, pending PO (plan §0.1 #n)"; decisions.md carries no bullet for an assumption.
+See §0.1 (#1–#14), every item taken at its default — assumed, pending PO (2026-10-31) — and ledgered in `docs/product-spec/assumptions.md` with what changes if the PO rules otherwise. PRODUCT.md marks each as "assumed, pending PO (plan §0.1 #n)"; decisions.md carries no bullet for an assumption.
 
 ## §10 Recorded decisions carried forward
 
@@ -286,7 +289,7 @@ See §0.1 (#1–#11), every item taken at its default — assumed, pending PO (2
 | D | rule | deviation | justification | follow-up |
 |---|---|---|---|---|
 | D-21 | `.claude/rules/data.md:23` "No hard-delete code path" | `data.eraseAll` deletes the database files and the key | R-12 rules "erase-all in Settings in v1" and `.claude/rules/privacy.md` requires "a full local erase"; the file-level delete is the only way to remove WAL content and free pages | none — recorded here; the rule's intent (no row-level hard delete) holds everywhere else |
-| D-08 | `.claude/rules/data.md:23` "UUID v4 … generated in the repository" | seed rows arrive with ids minted once by the converter | R-28 "our own stable ids": two installs and a future upload must share taxonomy ids | none — user rows still get repository-minted ids |
+| D-08 | `.claude/rules/data.md:23` "UUID v4 … generated in the repository" | seed rows arrive with ids minted once by the converter | R-28 "our own stable ids": two installs and a future upload must share taxonomy ids; the converter-minting mechanism itself is assumed, pending PO (§0.1 #14, A-14) | none — user rows still get repository-minted ids |
 
 ## §12 Carry-over candidates (for the orchestrator's close-out; PO-owned files are marked)
 
