@@ -1,10 +1,10 @@
 # Sprint 1 — foundation — progress
 
 ## Current state
-- HEAD: c26af5d (feature/foundation, stacked on feature/product-spec / PR #4)
-- Step: 3 — review 1 recheck
-- Live agents: reviewer-design-foundation (recheck)
-- Next action: REVIEW PASSED → data-coder + frontend-coder phase A (parallel; data-coder does ALL npm installs for both in its first commit, frontend-coder waits on that commit before using new packages; app.json keys split per plan §0 work split)
+- HEAD: 2542b66 (feature/foundation, stacked on feature/product-spec / PR #4)
+- Step: 4 — data-coder + frontend-coder phase A
+- Live agents: data-coder-foundation, frontend-coder-foundation-a
+- Next action: gate CODING COMPLETE + UI PHASE COMPLETE + data-contracts.md → frontend-coder phase B + tester authoring. Install ownership: data-coder does all npm installs first; app.json keys per plan §0 split
 - Blockers: none. INFRA UNAVAILABLE: CocoaPods, Maestro, EAS CLI, Android SDK (PO actions, reported at close-out)
 - Uncommitted: none
 
@@ -16,3 +16,4 @@
 - main — data.md:42 amended (A-15 backed) — d0131d3; planner told
 - designer-foundation — DESIGN COMPLETE (R1 rework, no new D-A) — 7103704; name match with plan §4 to confirm
 - planner-foundation — PLAN COMPLETE (R1 rework, no new A-rows) — c26af5d
+- reviewer-design-foundation — REVIEW PASSED (recheck; R1-06 open major → data-coder brief, R2-02 → data-coder, R2-01/R2-03 fixed in ledger) — 2542b66
