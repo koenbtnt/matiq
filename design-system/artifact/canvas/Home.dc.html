@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>matiq — Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input::placeholder,textarea::placeholder{color:#8A8F97}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: {{tk.bgBase}}; color: {{tk.text1}}; font-family: Inter, system-ui, sans-serif">
+  
+
+  <nav aria-label="Main" style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: {{tk.tabbar}}; border-top: 1px solid {{tk.border}}; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-top: 8px; box-sizing: border-box">
+    <a href="{{nav.home}}" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.accentText}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+    <a href="{{nav.library}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11"></path></svg>Library</a>
+    <a href="{{nav.log}}" aria-label="Log session" style="display: flex; justify-content: center; text-decoration: none">
+      <span style="width: 52px; height: 52px; border-radius: 26px; background: {{tk.accent}}; color: {{tk.onAccent}}; display: flex; align-items: center; justify-content: center; margin-top: -4px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      </span></a>
+    <a href="{{nav.progress}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V5M19 20v-6"></path></svg>Progress</a>
+    <button type="button" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; background: transparent; border: 0; padding: 0; font-size: 10px; font-weight: 600; justify-content: flex-start">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"></path></svg>Profile</button>
+  </nav>
+<div style="padding: 62px 20px 0; display: flex; flex-direction: column; gap: 18px">
+
+    <header style="display: flex; justify-content: space-between; align-items: flex-start">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Saturday, 31 October</span>
+        <h1 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 28px; line-height: 32px; letter-spacing: -0.01em">Oss, [Name]</h1>
+      </div>
+      <button type="button" aria-label="Notifications" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid {{tk.border}}; background: {{tk.bgSurface}}; color: {{tk.text1}}; display: flex; align-items: center; justify-content: center; padding: 0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4zM10 21h4"></path></svg>
+      </button>
+    </header>
+
+    <section aria-label="This week" style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 15px; font-weight: 600">This week <span style="color: {{tk.text2}}; font-weight: 500">· 3 of 4</span></span>
+        <span style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: {{tk.accentText}}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 4 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.3 2 1.5 3 2.5 3C11 9 10 6 12 3z"></path></svg>
+          6-week streak
+        </span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="font-size: 11px; font-weight: 600; color: {{tk.text2}}">{{d.l}}</span>
+            <div style="width: 36px; height: 36px; border-radius: 18px; box-sizing: border-box; background: {{d.bg}}; border: 1.5px solid {{d.border}}; color: {{tk.onAccent}}; display: flex; align-items: center; justify-content: center">
+              <sc-if value="{{d.done}}" hint-placeholder-val="{{ true }}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Next class" style="background: {{tk.bgRaised}}; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.accentText}}">Next class · Today 11:00</span>
+        <span style="height: 24px; padding: 0 8px; border-radius: 6px; background: {{tk.infoTint}}; color: {{tk.info}}; display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: 0.06em">GI</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 22px; line-height: 26px">Open Mat</span>
+        <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: {{tk.text2}}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
+          [Your gym] · 90 min · Coach [Name]
+        </span>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <button type="button" style="flex: 1; height: 48px; border: 0; border-radius: 24px; background: {{tk.accent}}; color: {{tk.onAccent}}; font-size: 16px; font-weight: 700">Check in</button>
+        <button type="button" style="flex: 1; height: 48px; border: 1px solid {{tk.borderStrong}}; border-radius: 24px; background: transparent; color: {{tk.text1}}; font-size: 16px; font-weight: 600">Schedule</button>
+      </div>
+    </section>
+
+    <section aria-label="October" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
+        <div style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{tk.text2}}">{{s.k}}</span>
+          <span style="font-family: Archivo, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 26px; line-height: 28px; font-variant-numeric: tabular-nums">{{s.v}}</span>
+          <span style="font-size: 11px; color: {{tk.text2}}">October</span>
+        </div>
+      </sc-for>
+    </section>
+
+    <section aria-label="Recent sessions" style="display: flex; flex-direction: column; gap: 4px">
+      <div style="display: flex; justify-content: space-between; align-items: center; height: 32px">
+        <h2 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 18px">Recent</h2>
+        <a href="{{nav.progress}}" style="font-size: 14px; font-weight: 600; text-decoration: none; color: {{tk.accentText}}">See all</a>
+      </div>
+      <sc-for list="{{recent}}" as="r" hint-placeholder-count="2">
+        <div style="display: flex; align-items: center; gap: 12px; min-height: 64px; border-bottom: 1px solid {{tk.border}}">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: none">
+            <span style="font-size: 9px; font-weight: 700; color: {{tk.text2}}; letter-spacing: 0.06em">{{r.dow}}</span>
+            <span style="font-family: Archivo, sans-serif; font-weight: 800; font-size: 16px; line-height: 18px">{{r.day}}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; flex: 1">
+            <span style="font-size: 15px; font-weight: 600">{{r.title}}</span>
+            <span style="font-size: 13px; color: {{tk.text2}}">{{r.meta}}</span>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color: {{tk.text2}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+        </div>
+      </sc-for>
+    </section>
+  </div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["green","blue","orange","teal","gold","mono","volt"],"default":"green"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  palette(theme, accent) {
+    const N = {
+      dark: { bgBase: '#0B0C0E', bgSurface: '#15171A', bgRaised: '#1E2125', border: '#2A2E33', borderStrong: '#3A3F45', borderStronger: '#4A4F56', text1: '#F4F4F1', text2: '#A3A8B0', text3: '#6A6F77', invBg: '#F4F4F1', invFg: '#0B0C0E', danger: '#FF5C7A', dangerTint: 'rgba(255,92,122,0.14)', warning: '#FFB547', warningTint: 'rgba(255,181,71,0.16)', info: '#6FA8FF', infoTint: 'rgba(111,168,255,0.16)', tabbar: 'rgba(21,23,26,0.96)', scrim: '#000000' },
+      light: { bgBase: '#F6F6F3', bgSurface: '#FFFFFF', bgRaised: '#EEEEEA', border: '#DCDCD6', borderStrong: '#C9C9C2', borderStronger: '#A9AAA3', text1: '#0B0C0E', text2: '#5A5F67', text3: '#9A9EA4', invBg: '#15171A', invFg: '#F6F6F3', danger: '#C4223F', dangerTint: '#FCE3E8', warning: '#8F5600', warningTint: '#FCEBD2', info: '#1F5BD1', infoTint: '#E2EBFC', tabbar: 'rgba(255,255,255,0.96)', scrim: '#B9B9B4' }
+    };
+    const A = {
+      green: { name: 'Emerald', brand: '#2EDB7F',
+        dark: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#5FE69C', accentBorder: '#2EDB7F', accentGraphic: '#2EDB7F', accentTint: 'rgba(46,219,127,0.16)' },
+        light: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#0B7A3E', accentBorder: '#17B061', accentGraphic: '#17B061', accentTint: '#DCF8E8' } },
+      blue: { name: 'Azure', brand: '#3BA3FF',
+        dark: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#6CBBFF', accentBorder: '#3BA3FF', accentGraphic: '#3BA3FF', accentTint: 'rgba(59,163,255,0.16)', info: '#B4BAC4', infoTint: 'rgba(180,186,196,0.14)' },
+        light: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#0A5BB5', accentBorder: '#1E86EB', accentGraphic: '#1E86EB', accentTint: '#DFEFFF', info: '#4A5059', infoTint: '#E8E9EC' } },
+      orange: { name: 'Signal Orange', brand: '#FF6A2B',
+        dark: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#FF8A57', accentBorder: '#FF6A2B', accentGraphic: '#FF6A2B', accentTint: 'rgba(255,106,43,0.16)' },
+        light: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#B23D0B', accentBorder: '#E2551A', accentGraphic: '#E2551A', accentTint: '#FFE8DD' } },
+      teal: { name: 'Mat Teal', brand: '#2DD4BF',
+        dark: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#5EE6D3', accentBorder: '#2DD4BF', accentGraphic: '#2DD4BF', accentTint: 'rgba(45,212,191,0.16)' },
+        light: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#0B6E62', accentBorder: '#129C8A', accentGraphic: '#129C8A', accentTint: '#DDF6F2' } },
+      gold: { name: 'Champion Gold', brand: '#FFC53D',
+        dark: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#FFD36B', accentBorder: '#FFC53D', accentGraphic: '#FFC53D', accentTint: 'rgba(255,197,61,0.16)' },
+        light: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#7A5000', accentBorder: '#C98A00', accentGraphic: '#B07800', accentTint: '#FFF1CC' } },
+      mono: { name: 'Monochrome', brand: '#F4F4F1',
+        dark: { accent: '#F4F4F1', onAccent: '#0B0C0E', accentText: '#F4F4F1', accentBorder: '#F4F4F1', accentGraphic: '#F4F4F1', accentTint: '#2A2E33' },
+        light: { accent: '#0B0C0E', onAccent: '#F6F6F3', accentText: '#0B0C0E', accentBorder: '#0B0C0E', accentGraphic: '#0B0C0E', accentTint: '#E4E4DF' } },
+      volt: { name: 'Volt', brand: '#D6FF3D',
+        dark: { accent: '#D6FF3D', onAccent: '#0B0C0E', accentText: '#D6FF3D', accentBorder: '#D6FF3D', accentGraphic: '#D6FF3D', accentTint: 'rgba(214,255,61,0.14)' },
+        light: { accent: '#0B0C0E', onAccent: '#D6FF3D', accentText: '#4A6300', accentBorder: '#8DB000', accentGraphic: '#6E8F00', accentTint: '#EDF7CF' } }
+    };
+    const t = theme === 'light' ? 'light' : 'dark';
+    const a = A[accent] || A.green;
+    return Object.assign({ theme: t, accentName: a.name, brand: a.brand }, N[t], a[t]);
+  }
+  renderVals() {
+    const theme = this.props.theme ?? 'dark';
+    const tk = this.palette(theme, this.props.accent ?? 'green');
+    const sfx = theme === 'light' ? 'Light' : '';
+    const day = (l, s) => ({
+      l,
+      done: s === 'done',
+      bg: s === 'done' ? tk.accent : tk.bgRaised,
+      border: s === 'done' ? tk.accent : s === 'today' ? tk.accentBorder : tk.bgRaised
+    });
+    return {
+      theme,
+      tk,
+      nav: { home: `Home${sfx}.dc.html`, library: `Library${sfx}.dc.html`, log: `LogSession${sfx}.dc.html`, progress: `Progress${sfx}.dc.html`, technique: `Technique${sfx}.dc.html` },
+      days: [day('M', 'done'), day('T', 'rest'), day('W', 'done'), day('T', 'rest'), day('F', 'done'), day('S', 'today'), day('S', 'rest')],
+      stats: [
+        { k: 'Mat hours', v: '14.5' },
+        { k: 'Sessions', v: '11' },
+        { k: 'Rolls', v: '38' }
+      ],
+      recent: [
+        { dow: 'FRI', day: '30', title: 'No-Gi · Advanced', meta: '60 min · 5 rolls · Intensity 4/5' },
+        { dow: 'WED', day: '28', title: 'Gi · Fundamentals', meta: '90 min · Knee cut, Toreando' },
+        { dow: 'MON', day: '26', title: 'Gi · Drilling', meta: '75 min · Scissor sweep' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

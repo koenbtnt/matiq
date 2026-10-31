@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>matiq — Log session</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input::placeholder,textarea::placeholder{color:#8A8F97}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: {{tk.scrim}}; color: {{tk.text1}}; font-family: Inter, system-ui, sans-serif">
+  <div style="position: absolute; left: 10px; right: 10px; top: 40px; height: 20px; border-radius: 20px 20px 0 0; background: {{tk.bgRaised}}; opacity: 0.6"></div>
+  <div role="dialog" aria-label="Log session" style="position: absolute; left: 0; right: 0; top: 52px; bottom: 0; background: {{tk.bgSurface}}; border-radius: 24px 24px 0 0; display: flex; flex-direction: column">
+    <div style="width: 36px; height: 5px; border-radius: 3px; background: {{tk.borderStronger}}; align-self: center; margin-top: 8px"></div>
+    <header style="display: grid; grid-template-columns: 80px minmax(0, 1fr) 80px; align-items: center; height: 52px; padding: 0 12px">
+      <a href="{{nav.home}}" style="font-size: 16px; font-weight: 500; color: {{tk.text2}}; text-decoration: none; padding: 12px 8px">Cancel</a>
+      <h1 style="margin: 0; text-align: center; font-size: 17px; font-weight: 600">Log session</h1>
+      <span></span>
+    </header>
+
+    <div style="padding: 8px 20px 0; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; gap: 8px">
+        <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 20px; background: {{tk.bgRaised}}; color: {{tk.text1}}; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"></path></svg>Today · 18:30</button>
+        <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 20px; background: {{tk.bgRaised}}; color: {{tk.text1}}; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>[Your gym]</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Type</span>
+        <div style="display: flex; padding: 4px; border-radius: 14px; background: {{tk.bgRaised}}; gap: 4px">
+          <sc-for list="{{types}}" as="t" hint-placeholder-count="4">
+            <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="flex: 1; height: 40px; border: 0; border-radius: 10px; background: {{t.bg}}; color: {{t.fg}}; font-size: 14px; font-weight: 600">{{t.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Duration</span>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: {{tk.bgRaised}}; border-radius: 14px; padding: 4px">
+            <button type="button" aria-label="Less time" onClick="{{durDown}}" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: {{tk.border}}; color: {{tk.text1}}; font-size: 22px">−</button>
+            <span style="font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums">{{duration}}<span style="font-family: Inter, sans-serif; font-size: 12px; font-weight: 500; color: {{tk.text2}}"> min</span></span>
+            <button type="button" aria-label="More time" onClick="{{durUp}}" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: {{tk.border}}; color: {{tk.text1}}; font-size: 22px">+</button>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Rolls</span>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: {{tk.bgRaised}}; border-radius: 14px; padding: 4px">
+            <button type="button" aria-label="Fewer rolls" onClick="{{rollDown}}" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: {{tk.border}}; color: {{tk.text1}}; font-size: 22px">−</button>
+            <span style="font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums">{{rolls}}</span>
+            <button type="button" aria-label="More rolls" onClick="{{rollUp}}" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: {{tk.border}}; color: {{tk.text1}}; font-size: 22px">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Intensity · {{intensityLabel}}</span>
+        <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px">
+          <sc-for list="{{levels}}" as="l" hint-placeholder-count="5">
+            <button type="button" onClick="{{l.pick}}" aria-label="Intensity {{l.n}}" style="height: 44px; border: 0; border-radius: 12px; background: {{l.bg}}; color: {{l.fg}}; font-family: Archivo, sans-serif; font-weight: 800; font-size: 16px">{{l.n}}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Techniques drilled</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <sc-for list="{{techniques}}" as="t" hint-placeholder-count="5">
+            <button type="button" onClick="{{t.toggle}}" aria-pressed="{{t.on}}" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px">
+              <sc-if value="{{t.on}}" hint-placeholder-val="{{ false }}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>
+              </sc-if>{{t.label}}</button>
+          </sc-for>
+          <button type="button" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px dashed {{tk.borderStronger}}; background: transparent; color: {{tk.text2}}; font-size: 14px; font-weight: 500">+ Add</button>
+        </div>
+      </div>
+
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Notes
+        <textarea placeholder="What clicked? What to fix next time?" style="height: 84px; box-sizing: border-box; resize: none; border-radius: 12px; border: 1px solid {{tk.border}}; background: {{tk.bgRaised}}; color: {{tk.text1}}; padding: 12px 14px; font: 400 15px/22px Inter, sans-serif; letter-spacing: 0; text-transform: none"></textarea>
+      </label>
+    </div>
+
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 20px 34px; background: {{tk.bgSurface}}; border-top: 1px solid {{tk.border}}">
+      <a href="{{nav.home}}" style="height: 56px; border-radius: 28px; background: {{tk.accent}}; color: {{tk.onAccent}}; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none">Save session</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["green","blue","orange","teal","gold","mono","volt"],"default":"green"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { type: 'Gi', duration: 90, rolls: 5, intensity: 3, picked: ['Knee cut', 'Toreando'] };
+  }
+  palette(theme, accent) {
+    const N = {
+      dark: { bgBase: '#0B0C0E', bgSurface: '#15171A', bgRaised: '#1E2125', border: '#2A2E33', borderStrong: '#3A3F45', borderStronger: '#4A4F56', text1: '#F4F4F1', text2: '#A3A8B0', text3: '#6A6F77', invBg: '#F4F4F1', invFg: '#0B0C0E', danger: '#FF5C7A', dangerTint: 'rgba(255,92,122,0.14)', warning: '#FFB547', warningTint: 'rgba(255,181,71,0.16)', info: '#6FA8FF', infoTint: 'rgba(111,168,255,0.16)', tabbar: 'rgba(21,23,26,0.96)', scrim: '#000000' },
+      light: { bgBase: '#F6F6F3', bgSurface: '#FFFFFF', bgRaised: '#EEEEEA', border: '#DCDCD6', borderStrong: '#C9C9C2', borderStronger: '#A9AAA3', text1: '#0B0C0E', text2: '#5A5F67', text3: '#9A9EA4', invBg: '#15171A', invFg: '#F6F6F3', danger: '#C4223F', dangerTint: '#FCE3E8', warning: '#8F5600', warningTint: '#FCEBD2', info: '#1F5BD1', infoTint: '#E2EBFC', tabbar: 'rgba(255,255,255,0.96)', scrim: '#B9B9B4' }
+    };
+    const A = {
+      green: { name: 'Emerald', brand: '#2EDB7F',
+        dark: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#5FE69C', accentBorder: '#2EDB7F', accentGraphic: '#2EDB7F', accentTint: 'rgba(46,219,127,0.16)' },
+        light: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#0B7A3E', accentBorder: '#17B061', accentGraphic: '#17B061', accentTint: '#DCF8E8' } },
+      blue: { name: 'Azure', brand: '#3BA3FF',
+        dark: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#6CBBFF', accentBorder: '#3BA3FF', accentGraphic: '#3BA3FF', accentTint: 'rgba(59,163,255,0.16)', info: '#B4BAC4', infoTint: 'rgba(180,186,196,0.14)' },
+        light: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#0A5BB5', accentBorder: '#1E86EB', accentGraphic: '#1E86EB', accentTint: '#DFEFFF', info: '#4A5059', infoTint: '#E8E9EC' } },
+      orange: { name: 'Signal Orange', brand: '#FF6A2B',
+        dark: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#FF8A57', accentBorder: '#FF6A2B', accentGraphic: '#FF6A2B', accentTint: 'rgba(255,106,43,0.16)' },
+        light: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#B23D0B', accentBorder: '#E2551A', accentGraphic: '#E2551A', accentTint: '#FFE8DD' } },
+      teal: { name: 'Mat Teal', brand: '#2DD4BF',
+        dark: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#5EE6D3', accentBorder: '#2DD4BF', accentGraphic: '#2DD4BF', accentTint: 'rgba(45,212,191,0.16)' },
+        light: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#0B6E62', accentBorder: '#129C8A', accentGraphic: '#129C8A', accentTint: '#DDF6F2' } },
+      gold: { name: 'Champion Gold', brand: '#FFC53D',
+        dark: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#FFD36B', accentBorder: '#FFC53D', accentGraphic: '#FFC53D', accentTint: 'rgba(255,197,61,0.16)' },
+        light: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#7A5000', accentBorder: '#C98A00', accentGraphic: '#B07800', accentTint: '#FFF1CC' } },
+      mono: { name: 'Monochrome', brand: '#F4F4F1',
+        dark: { accent: '#F4F4F1', onAccent: '#0B0C0E', accentText: '#F4F4F1', accentBorder: '#F4F4F1', accentGraphic: '#F4F4F1', accentTint: '#2A2E33' },
+        light: { accent: '#0B0C0E', onAccent: '#F6F6F3', accentText: '#0B0C0E', accentBorder: '#0B0C0E', accentGraphic: '#0B0C0E', accentTint: '#E4E4DF' } },
+      volt: { name: 'Volt', brand: '#D6FF3D',
+        dark: { accent: '#D6FF3D', onAccent: '#0B0C0E', accentText: '#D6FF3D', accentBorder: '#D6FF3D', accentGraphic: '#D6FF3D', accentTint: 'rgba(214,255,61,0.14)' },
+        light: { accent: '#0B0C0E', onAccent: '#D6FF3D', accentText: '#4A6300', accentBorder: '#8DB000', accentGraphic: '#6E8F00', accentTint: '#EDF7CF' } }
+    };
+    const t = theme === 'light' ? 'light' : 'dark';
+    const a = A[accent] || A.green;
+    return Object.assign({ theme: t, accentName: a.name, brand: a.brand }, N[t], a[t]);
+  }
+  renderVals() {
+    const theme = this.props.theme ?? 'dark';
+    const tk = this.palette(theme, this.props.accent ?? 'green');
+    const sfx = theme === 'light' ? 'Light' : '';
+    const s = this.state;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    const labels = ['', 'Flow', 'Light', 'Steady', 'Hard', 'Comp pace'];
+    return {
+      theme,
+      tk,
+      nav: { home: `Home${sfx}.dc.html`, library: `Library${sfx}.dc.html`, log: `LogSession${sfx}.dc.html`, progress: `Progress${sfx}.dc.html`, technique: `Technique${sfx}.dc.html` },
+      types: ['Gi', 'No-Gi', 'Open mat', 'Comp'].map((label) => ({
+        label,
+        on: s.type === label,
+        bg: s.type === label ? tk.invBg : 'transparent',
+        fg: s.type === label ? tk.invFg : tk.text2,
+        pick: () => this.setState({ type: label })
+      })),
+      duration: s.duration,
+      rolls: s.rolls,
+      durDown: () => this.setState({ duration: clamp(s.duration - 15, 15, 240) }),
+      durUp: () => this.setState({ duration: clamp(s.duration + 15, 15, 240) }),
+      rollDown: () => this.setState({ rolls: clamp(s.rolls - 1, 0, 20) }),
+      rollUp: () => this.setState({ rolls: clamp(s.rolls + 1, 0, 20) }),
+      intensityLabel: labels[s.intensity],
+      levels: [1, 2, 3, 4, 5].map((n) => ({
+        n,
+        bg: n <= s.intensity ? tk.accent : tk.bgRaised,
+        fg: n <= s.intensity ? tk.onAccent : tk.text2,
+        pick: () => this.setState({ intensity: n })
+      })),
+      techniques: ['Knee cut', 'Toreando', 'Leg drag', 'Scissor sweep', 'Armbar'].map((label) => {
+        const on = s.picked.includes(label);
+        return {
+          label, on,
+          border: on ? tk.accentBorder : tk.border,
+          bg: on ? tk.accentTint : 'transparent',
+          fg: on ? tk.accentText : tk.text1,
+          toggle: () => this.setState({ picked: on ? s.picked.filter((x) => x !== label) : s.picked.concat(label) })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

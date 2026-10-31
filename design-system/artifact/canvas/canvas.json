@@ -1,0 +1,46 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Main.dc.html": { "h": 2300, "title": "Foundations", "w": 1200, "x": 0, "y": 0 },
+    "Components.dc.html": { "h": 2500, "title": "Components", "w": 1200, "x": 1280, "y": 0 },
+    "Theming.dc.html": { "h": 1800, "title": "Theming", "w": 1200, "x": 2560, "y": 0 },
+    "AccentOptions.dc.html": { "h": 1100, "title": "Accent options", "w": 1200, "x": 3840, "y": 0 },
+    "Home.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Home · Today", "w": 390, "x": 0, "y": 2900 },
+    "LogSession.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Log session", "w": 390, "x": 470, "y": 2900 },
+    "Library.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Technique library", "w": 390, "x": 940, "y": 2900 },
+    "Technique.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Technique detail", "w": 390, "x": 1410, "y": 2900 },
+    "Progress.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Progress & belt", "w": 390, "x": 1880, "y": 2900 },
+    "HomeLight.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Home · light", "w": 390, "x": 0, "y": 4144 },
+    "LogSessionLight.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Log session · light", "w": 390, "x": 470, "y": 4144 },
+    "LibraryLight.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Technique library · light", "w": 390, "x": 940, "y": 4144 },
+    "TechniqueLight.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Technique detail · light", "w": 390, "x": 1410, "y": 4144 },
+    "ProgressLight.dc.html": { "h": 844, "is_interactive": true, "radius": 44, "title": "Progress & belt · light", "w": 390, "x": 1880, "y": 4144 }
+  },
+  "createdOnFiles": { "at": "2026-10-31T12:00:00Z", "v": 1 },
+  "designSystems": [],
+  "launch": { "view": "canvas" },
+  "notes": {
+    "t1": { "kind": "title1", "maxW": 5040, "text": "matiq — foundations, components, theming & accent", "w": 240, "x": 0, "y": -300 },
+    "t2": { "kind": "title1", "maxW": 2270, "text": "Key screens · dark theme", "w": 240, "x": 0, "y": 2600 },
+    "t3": { "kind": "title1", "maxW": 2270, "text": "Key screens · light theme", "w": 240, "x": 0, "y": 3844 }
+  },
+  "order": [
+    "Main.dc.html",
+    "Components.dc.html",
+    "Theming.dc.html",
+    "AccentOptions.dc.html",
+    "Home.dc.html",
+    "LogSession.dc.html",
+    "Library.dc.html",
+    "Technique.dc.html",
+    "Progress.dc.html",
+    "HomeLight.dc.html",
+    "LogSessionLight.dc.html",
+    "LibraryLight.dc.html",
+    "TechniqueLight.dc.html",
+    "ProgressLight.dc.html"
+  ],
+  "pages": [],
+  "title": "matiq Design System"
+}

@@ -1,0 +1,123 @@
+name: CI
+
+# Maestro E2E does not run here (no macOS runner / simulator yet — docs/carry-over.md CO-01); the tester runs it
+# locally and records every run in docs/<sprint-slug>/verify.md.
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: ['feature/**', 'chore/**', 'hotfix/**']
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# pull-requests: read is required by dorny/paths-filter on pull_request events.
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  # ADR 0001: main only takes the release PR from develop or a hotfix/* branch.
+  # Rulesets cannot restrict a PR's source branch; this job can.
+  release-source:
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Source branch is develop or hotfix/*
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          case "$HEAD_REF" in
+            develop|hotfix/*) echo "ok: $HEAD_REF → main" ;;
+            *) echo "::error::PRs into main come from develop (release) or hotfix/* only, not '$HEAD_REF'. Target develop."; exit 1 ;;
+          esac
+
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      mobile: ${{ steps.filter.outputs.mobile }}
+      claude: ${{ steps.filter.outputs.claude }}
+    steps:
+      - uses: actions/checkout@v7
+      # dorny/paths-filter v4.0.3, pinned by sha
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d
+        id: filter
+        with:
+          filters: |
+            mobile:
+              - 'mobile/**'
+              - 'design-system/**'
+              - 'scripts/sync-design-tokens.mjs'
+              - 'scripts/check-token-adherence.mjs'
+              - '.github/workflows/**'
+            claude:
+              - '.claude/hooks/**'
+              - '.claude/agents/**'
+              - '.claude/settings.json'
+              - 'scripts/claude/**'
+              - '.github/workflows/**'
+
+  mobile:
+    needs: changes
+    if: needs.changes.outputs.mobile == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: mobile/.nvmrc
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Install
+        working-directory: mobile
+        run: npm ci
+      - name: Typecheck
+        working-directory: mobile
+        run: npx tsc --noEmit
+      - name: Jest
+        working-directory: mobile
+        run: npx jest --ci --watchAll=false
+      - name: Design tokens are in sync
+        run: node scripts/sync-design-tokens.mjs --check
+      - name: Tokens only in UI code
+        run: node scripts/check-token-adherence.mjs
+      - name: Migrations are in sync with the schema
+        working-directory: mobile
+        run: |
+          npx drizzle-kit generate
+          git diff --exit-code -- drizzle/
+      - name: Expo doctor
+        working-directory: mobile
+        run: npx expo-doctor
+      - name: Prebuild config check (android, no install)
+        working-directory: mobile
+        run: npx expo prebuild --platform android --no-install
+
+  # Exit-code tests for the Claude Code guards (.claude/hooks): bash, jq and python3 are on ubuntu-latest.
+  claude:
+    needs: changes
+    if: needs.changes.outputs.claude == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Hook tests
+        run: bash scripts/claude/hooks.test.sh
+
+  ci-ok:
+    needs: [release-source, changes, mobile, claude]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fail when a required job failed or was cancelled
+        run: |
+          echo '${{ toJSON(needs) }}' | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          if echo '${{ toJSON(needs) }}' | jq -e '[.[] | .result] | any(. == "failure" or . == "cancelled")' >/dev/null; then
+            exit 1
+          fi

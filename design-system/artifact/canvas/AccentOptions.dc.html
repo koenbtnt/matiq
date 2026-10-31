@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>matiq — Accent options</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 1200px; height: 1100px; box-sizing: border-box; padding: 64px; background: #0B0C0E; color: #F4F4F1; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 40px">
+
+  <header style="display: flex; flex-direction: column; gap: 8px">
+    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A3A8B0">Decision · Accent color</span>
+    <h1 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 40px; line-height: 44px; letter-spacing: -0.01em">Five accent directions</h1>
+    <p style="margin: 0; font-size: 16px; line-height: 24px; color: #A3A8B0; max-width: 820px">Same neutrals, same components — only the accent changes. Each stays clear of the belt colors so rank stays readable. Every artboard has an Accent tweak to preview a direction in context.</p>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px">
+    <sc-for list="{{options}}" as="o" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-height: 120px">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <span style="width: 28px; height: 28px; border-radius: 8px; background: {{o.d.accent}}; box-shadow: 0 0 0 1px #3A3F45"></span>
+            <span style="font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 20px">{{o.d.accentName}}</span>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: {{o.d.accentText}}">{{o.tag}}</span>
+          <span style="font-size: 13px; line-height: 19px; color: #A3A8B0">{{o.why}}</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #A3A8B0">
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 4px; background: {{o.d.accent}}"></span>fill {{o.d.accent}}</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 4px; background: {{o.l.accentText}}; box-shadow: 0 0 0 1px #3A3F45"></span>light txt {{o.l.accentText}}</span>
+        </div>
+
+        <sc-for list="{{o.themes}}" as="k" hint-placeholder-count="2">
+          <div style="background: {{k.bgBase}}; color: {{k.text1}}; border: 1px solid {{k.border}}; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{k.accentText}}">Next class · 18:30</span>
+              <span style="font-size: 10px; font-weight: 600; color: {{k.text2}}">{{k.label}}</span>
+            </div>
+            <span style="font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 18px; line-height: 22px">Fundamentals</span>
+            <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px">
+              <div style="height: 5px; border-radius: 3px; background: {{k.accentGraphic}}"></div><div style="height: 5px; border-radius: 3px; background: {{k.accentGraphic}}"></div><div style="height: 5px; border-radius: 3px; background: {{k.accentGraphic}}"></div><div style="height: 5px; border-radius: 3px; background: {{k.border}}"></div><div style="height: 5px; border-radius: 3px; background: {{k.border}}"></div>
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap">
+              <span style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid {{k.accentBorder}}; background: {{k.accentTint}}; color: {{k.accentText}}; display: inline-flex; align-items: center; font-size: 12px; font-weight: 600">Knee cut</span>
+              <span style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid {{k.border}}; display: inline-flex; align-items: center; font-size: 12px">Guard</span>
+            </div>
+            <div style="display: flex; height: 10px; border-radius: 2px; overflow: hidden; box-shadow: 0 0 0 1px {{k.borderStrong}}">
+              <div style="flex: 1; background: #2E62F0"></div>
+              <div style="width: 26px; background: #0B0C0E; display: flex; justify-content: flex-end; gap: 2px; padding: 0 3px"><div style="width: 2px; background: #FFFFFF"></div><div style="width: 2px; background: #FFFFFF"></div></div>
+              <div style="width: 5px; background: #2E62F0"></div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <button type="button" style="flex: 1; height: 40px; border: 0; border-radius: 20px; background: {{k.accent}}; color: {{k.onAccent}}; font-size: 14px; font-weight: 700">Log session</button>
+              <span style="width: 40px; height: 40px; border-radius: 20px; background: {{k.bgSurface}}; border: 1px solid {{k.border}}; color: {{k.accentText}}; display: flex; align-items: center; justify-content: center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V5M19 20v-6"></path></svg>
+              </span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+
+  <p style="margin: 0; font-size: 13px; line-height: 20px; color: #A3A8B0; max-width: 900px">Ruled out: red (clashes with danger and the black-belt bar), royal blue and purple (identical to belt colors), yellow-green volt (your feedback). Emerald #2EDB7F vs kids green belt #2FA35A: much brighter, so the two stay distinct. Champion Gold is still available in every artboard's Accent tweak.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":1100}}'>
+class Component extends DCLogic {
+  palette(theme, accent) {
+    const N = {
+      dark: { bgBase: '#0B0C0E', bgSurface: '#15171A', bgRaised: '#1E2125', border: '#2A2E33', borderStrong: '#3A3F45', borderStronger: '#4A4F56', text1: '#F4F4F1', text2: '#A3A8B0', text3: '#6A6F77', invBg: '#F4F4F1', invFg: '#0B0C0E', danger: '#FF5C7A', dangerTint: 'rgba(255,92,122,0.14)', warning: '#FFB547', warningTint: 'rgba(255,181,71,0.16)', info: '#6FA8FF', infoTint: 'rgba(111,168,255,0.16)', tabbar: 'rgba(21,23,26,0.96)', scrim: '#000000' },
+      light: { bgBase: '#F6F6F3', bgSurface: '#FFFFFF', bgRaised: '#EEEEEA', border: '#DCDCD6', borderStrong: '#C9C9C2', borderStronger: '#A9AAA3', text1: '#0B0C0E', text2: '#5A5F67', text3: '#9A9EA4', invBg: '#15171A', invFg: '#F6F6F3', danger: '#C4223F', dangerTint: '#FCE3E8', warning: '#8F5600', warningTint: '#FCEBD2', info: '#1F5BD1', infoTint: '#E2EBFC', tabbar: 'rgba(255,255,255,0.96)', scrim: '#B9B9B4' }
+    };
+    const A = {
+      green: { name: 'Emerald', brand: '#2EDB7F',
+        dark: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#5FE69C', accentBorder: '#2EDB7F', accentGraphic: '#2EDB7F', accentTint: 'rgba(46,219,127,0.16)' },
+        light: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#0B7A3E', accentBorder: '#17B061', accentGraphic: '#17B061', accentTint: '#DCF8E8' } },
+      blue: { name: 'Azure', brand: '#3BA3FF',
+        dark: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#6CBBFF', accentBorder: '#3BA3FF', accentGraphic: '#3BA3FF', accentTint: 'rgba(59,163,255,0.16)', info: '#B4BAC4', infoTint: 'rgba(180,186,196,0.14)' },
+        light: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#0A5BB5', accentBorder: '#1E86EB', accentGraphic: '#1E86EB', accentTint: '#DFEFFF', info: '#4A5059', infoTint: '#E8E9EC' } },
+      orange: { name: 'Signal Orange', brand: '#FF6A2B',
+        dark: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#FF8A57', accentBorder: '#FF6A2B', accentGraphic: '#FF6A2B', accentTint: 'rgba(255,106,43,0.16)' },
+        light: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#B23D0B', accentBorder: '#E2551A', accentGraphic: '#E2551A', accentTint: '#FFE8DD' } },
+      teal: { name: 'Mat Teal', brand: '#2DD4BF',
+        dark: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#5EE6D3', accentBorder: '#2DD4BF', accentGraphic: '#2DD4BF', accentTint: 'rgba(45,212,191,0.16)' },
+        light: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#0B6E62', accentBorder: '#129C8A', accentGraphic: '#129C8A', accentTint: '#DDF6F2' } },
+      gold: { name: 'Champion Gold', brand: '#FFC53D',
+        dark: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#FFD36B', accentBorder: '#FFC53D', accentGraphic: '#FFC53D', accentTint: 'rgba(255,197,61,0.16)' },
+        light: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#7A5000', accentBorder: '#C98A00', accentGraphic: '#B07800', accentTint: '#FFF1CC' } },
+      mono: { name: 'Monochrome', brand: '#F4F4F1',
+        dark: { accent: '#F4F4F1', onAccent: '#0B0C0E', accentText: '#F4F4F1', accentBorder: '#F4F4F1', accentGraphic: '#F4F4F1', accentTint: '#2A2E33' },
+        light: { accent: '#0B0C0E', onAccent: '#F6F6F3', accentText: '#0B0C0E', accentBorder: '#0B0C0E', accentGraphic: '#0B0C0E', accentTint: '#E4E4DF' } },
+      volt: { name: 'Volt', brand: '#D6FF3D',
+        dark: { accent: '#D6FF3D', onAccent: '#0B0C0E', accentText: '#D6FF3D', accentBorder: '#D6FF3D', accentGraphic: '#D6FF3D', accentTint: 'rgba(214,255,61,0.14)' },
+        light: { accent: '#0B0C0E', onAccent: '#D6FF3D', accentText: '#4A6300', accentBorder: '#8DB000', accentGraphic: '#6E8F00', accentTint: '#EDF7CF' } }
+    };
+    const t = theme === 'light' ? 'light' : 'dark';
+    const a = A[accent] || A.green;
+    return Object.assign({ theme: t, accentName: a.name, brand: a.brand }, N[t], a[t]);
+  }
+  renderVals() {
+    const opt = (key, tag, why) => {
+      const d = this.palette('dark', key);
+      const l = this.palette('light', key);
+      return { key, tag, why, d, l, themes: [Object.assign({ label: 'Dark' }, d), Object.assign({ label: 'Light' }, l)] };
+    };
+    return {
+      options: [
+        opt('green', 'Your pick · now default', 'Fresh, healthy, "go". A true emerald — no yellow cast like volt — and brighter than the kids green belt. Doubles naturally as success.'),
+        opt('blue', 'Cool alternative', 'Trustworthy, clean, sporty. Sky-toned so it never reads as a blue belt; info messages turn neutral grey to avoid overlap.'),
+        opt('orange', 'Warm alternative', 'Warm, energetic, combat-sport. Strong on both themes and clear of every adult belt color.'),
+        opt('teal', 'Calm & technical', 'Health-app feel that suits recovery and progress tracking. Very legible on dark.'),
+        opt('mono', 'Minimal · no accent', 'Ink and white only. Belts become the only color in the app — very premium, less playful.')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

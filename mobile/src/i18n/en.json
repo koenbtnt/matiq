@@ -1,0 +1,13 @@
+{
+  "app": {
+    "preparing": "Preparing your mat…",
+    "migrationError": "Could not prepare the database: {{message}}"
+  },
+  "home": {
+    "title": "matIQ",
+    "subtitle": "Plan. Train. Log. Review."
+  },
+  "db": {
+    "ready": "Database ready"
+  }
+}

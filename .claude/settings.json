@@ -1,0 +1,75 @@
+{
+  "enabledMcpjsonServers": [
+    "maestro"
+  ],
+  "enabledPlugins": {
+    "expo@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit)",
+      "Bash(npx jest --watchAll=false)",
+      "Bash(npx jest --ci --watchAll=false)",
+      "Bash(node scripts/sync-design-tokens.mjs --check)",
+      "Bash(node scripts/check-token-adherence.mjs)",
+      "Bash(npm run test:hooks)",
+      "Bash(npx expo-doctor)",
+      "Bash(git fetch origin)",
+      "Bash(git fetch -q origin)",
+      "Bash(xcrun simctl list:*)",
+      "Bash(maestro --help)",
+      "mcp__Claude_Browser__read_page",
+      "mcp__Claude_Browser__find",
+      "mcp__Claude_Browser__get_page_text",
+      "mcp__Claude_Browser__tabs_context",
+      "mcp__Claude_Browser__preview_list",
+      "mcp__Claude_Browser__preview_logs",
+      "mcp__Claude_Browser__read_console_messages",
+      "mcp__Claude_Browser__read_network_requests",
+      "mcp__terminal__read_terminal"
+    ]
+  },
+  "worktree": {
+    "symlinkDirectories": [
+      "node_modules",
+      "mobile/node_modules"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/bash-guard.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-context.sh",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/precompact-snapshot.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

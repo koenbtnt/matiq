@@ -1,0 +1,14 @@
+{
+  "name": "matiq-root",
+  "private": true,
+  "description": "Root scripts only — the app lives in mobile/, Maestro flows in e2e/. No root dependencies.",
+  "scripts": {
+    "test:hooks": "bash scripts/claude/hooks.test.sh",
+    "tokens:check": "node scripts/sync-design-tokens.mjs --check",
+    "tokens:sync": "node scripts/sync-design-tokens.mjs",
+    "tokens:adherence": "node scripts/check-token-adherence.mjs",
+    "docs:data-model": "node scripts/docs/gen-data-model.mjs",
+    "docs:changelog": "node scripts/docs/gen-changelog.mjs",
+    "e2e:ios": "maestro test e2e/maestro/flows"
+  }
+}

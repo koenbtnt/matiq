@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Expo / React Native (mobile/)
+mobile/.expo/
+mobile/android/
+mobile/ios/
+mobile/dist/
+mobile/web-build/
+mobile/.metro-health-check*
+mobile/*.orig.*
+mobile/expo-env.d.ts
+
+# Secrets and signing material — never committed (.claude/rules/privacy.md, bash-guard rule 5)
+.env
+.env.*
+!.env.example
+mobile/.env
+mobile/.env.*
+!mobile/.env.example
+*.jks
+*.keystore
+*.p8
+*.p12
+*.mobileprovision
+*.pem
+google-services.json
+GoogleService-Info.plist
+
+# Test and build output
+coverage/
+e2e/maestro/.output/
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+
+# Claude Code — personal, never shared
+.claude/settings.local.json
+.claude/session-log.md
+.claude/worktrees/
