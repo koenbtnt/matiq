@@ -42,6 +42,8 @@ treated as CSS px for the large-text threshold (≥ 24 regular or ≥ 18.67 at 7
 | feedback-info on feedback-info-tint (on bg-raised) | #1F5BD1 on #E2EBFC | 5.04 | #6FA8FF on #2B3748 | 5.00 | GI tag 11/700 (next-class card) | L pass · D pass (≥4.5) |
 | feedback-info on feedback-info-tint (on bg-base) | #1F5BD1 on #E2EBFC | 5.04 | #6FA8FF on #1B2535 | 6.40 | New badge 11/700 (library row) | L pass · D pass (≥4.5) |
 | #FFFFFF on rgba(11,12,14,0.8) (over bg-raised) | #FFFFFF on #38393A | 11.57 | #FFFFFF on #0F1013 | 19.02 | video duration 12/600 (Technique.dc.html:28) | L pass · D pass (≥4.5) |
+| feedback-warning on feedback-warning-tint (on bg-base) | #8F5600 on #FCEBD2 | 5.13 | #FFB547 on #322717 | 8.31 | Flagged badge 11/700 (Home suggestion rows; sprint foundation, design.md §9.1) | L pass · D pass (≥4.5) |
+| feedback-danger on feedback-danger-tint (on bg-base) | #C4223F on #FCE3E8 | 4.74 | #FF5C7A on #2D171D | 5.64 | destructive button 15/600 (bootstrap error screen; sprint foundation, design.md §9.1) | L pass · D pass (≥4.5) |
 
 **Text failures:**
 

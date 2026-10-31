@@ -2,7 +2,16 @@
 
 Designer: Thaleia · 2026-11-01 · branch `feature/foundation` · sprint 1. Input: `docs/foundation/plan.md` §0, §0.1, §4, §7, §8, §10. Sources: `design-system/RULES.md` (R-*), `design-system/components.md` (`cm:<line>`), `design-system/tokens.json` v1 (`_status: intake`) through `mobile/src/theme/tokens.ts` (`tk:<line>`), the artifact `design-system/artifact/canvas/*.dc.html` (`Log:`, `Home:`, `Lib:`), `docs/decisions.md` (R-18, R-26, R-28), `docs/product-spec/assumptions.md` A-7, `.claude/rules/frontend.md`.
 
-**Token notation.** A colour name such as `bgSurface` means `colors[scheme].bgSurface` (`tk:185-267`), where `scheme` is `useColorScheme()`. Light and dark use the same name (R-T2). `spacing[n]`, `radius.*`, `size.*`, `textStyle.*`, `semantic.*`, `motion.*` and `haptics.*` are the `tokens.ts` exports. `hit` means `Platform.select({ ios: size.touchTarget, android: size.touchTargetAndroid })` (44 pt / 48 dp, R-18). A pill radius is `height / 2` of its own size token (R-L2). Every number uses `fontVariant: fontVariantNumeric` (R-Y3), and every `<Text>` sets `maxFontSizeMultiplier={textMaxScale.<style>}` (`tk:56-82`).
+**Token notation.** A colour name such as `bgSurface` means `colors[scheme].bgSurface` (`tk:185-267`), where `scheme` is `useColorScheme()`. Light and dark use the same name (R-T2). `spacing[n]`, `radius.*`, `size.*`, `textStyle.*`, `semantic.*`, `motion.*` and `haptics.*` are the `tokens.ts` exports. `hit` means `Platform.select({ ios: size.touchTarget, android: size.touchTargetAndroid })` (44 pt / 48 dp, R-18). **Hit-slop rule (R1-09):** a control whose visual height `v` (or width) is below `hit` gets `hitSlop` = `(hit − v) / 2` on that axis, per platform. That gives:
+
+| visual | example | iOS slop | Android slop |
+|---|---|---|---|
+| 36 | `chipHeight`, `segmentHeight` | 4 | 6 |
+| 40 | `toastActionHeight` | 2 | 4 |
+| 44 | `stepperButton`, `iconButton`, `intensityButtonHeight`, `searchHeight`, `buttonCompactHeight` | 0 | 2 |
+| ≥ 48 | — | 0 | 0 |
+
+Chips and segments are at least `hit` wide (`minWidth: hit`), so they need no horizontal slop. Every "`hitSlop` to `hit`" below means this rule. **Wrapped chip rows (R1-10):** every `flexWrap` row of 36-high chips uses `columnGap: spacing[2]` and `rowGap: Platform.select({ ios: spacing[2], android: spacing[3] })`, which is ≥ `hit − size.chipHeight`, so neighbouring slops never overlap. A pill radius is `height / 2` of its own size token (R-L2). Every number uses `fontVariant: fontVariantNumeric` (R-Y3), and every `<Text>` sets `maxFontSizeMultiplier={textMaxScale.<style>}` (`tk:56-82`).
 
 ## §0 Summary for builders
 
@@ -29,15 +38,15 @@ Designer: Thaleia · 2026-11-01 · branch `feature/foundation` · sprint 1. Inpu
 
 **Copy table:** §6, 301 rows, all `<screen>.<element>`. Five obsolete keys are removed (§6.9). **testID table:** §7, with the Maestro flow for each id.
 
-**Data the UI consumes:** §10.4. **Requests to data-coder:** (1) `sessions.skip` / `sessions.undoSkip`, which are missing from plan §4 but needed by Home "Skip" (plan §8); (2) the hook result shape `{ data, error }`; (3) `matchedAlias` on `listPositions` / `listTechniques`; (4) `getPosition` returns `parent` and `children`; (5) a `type` filter on `useTechniqueSearch`; (6) the `SubmissionRow` shape.
+**Data the UI consumes:** the contract is plan §4. §10.4 lists the names this spec uses: `HookResult<T>`, `sessions.skip` / `undoSkip`, `useHome().suggestions`, `matchedAlias`, `getPosition` `parent` / `children`, the `useTechniqueSearch` `type` filter, `SubmissionRow` / `SubmissionInput`.
 
-**New packages (frontend-coder, §10.3):** `@react-native-community/datetimepicker` (R-N5) and `expo-haptics` (R-M4). Keep `expo-symbols`, an exception to the CO-13 prune. `app.json`: `predictiveBackGestureEnabled: true` (R-N4) and splash colours from `bgBase`.
+**New packages (frontend-coder, §10.3):** `@react-native-community/datetimepicker` (R-N5) and `expo-haptics` (R-M4). Keep `expo-symbols`, an exception to the CO-13 prune. `app.json`: splash colours from `bgBase`. `predictiveBackGestureEnabled` stays `false` (T-13 withdrawn).
 
 **Design-system requests to the user:** none new. The decisions above go back to the PO as DSR-6…25 answers (§11).
 
-**Contrast:** two new pairs, computed in §9.1, both pass. They must be mirrored into `docs/design-system-contrast.md`. That file is outside this commit's scope: the orchestrator named `design.md` only.
+**Contrast:** two new pairs, computed in §9.1. Both pass, and both are appended to `docs/design-system-contrast.md` (R1-03).
 
-**Binding conflicts found (§3, T-12…T-14):** R-M1 says "48 dp pending" while R-18 rules 48 dp, so R-18 is applied. `app.json` disables predictive back, against R-N4. Plan §4 has no `sessions.skip`, against plan §8. R-M3 says "always undoable", but there is no revert API for edits.
+**Binding conflicts found (§3):** R-M1 says "48 dp pending" while R-18 rules 48 dp, so R-18 is applied (T-12). R-M3 says "always undoable", but there is no revert API for edits (D-A10, accepted in review 1).
 
 ### §0.1 Designer assumptions — each assumed, pending PO (2026-11-01)
 
@@ -51,7 +60,7 @@ Designer: Thaleia · 2026-11-01 · branch `feature/foundation` · sprint 1. Inpu
 | D-A6 | Clearing an optional 1–5 value | tap the selected level again → unset | §4.3.3, §4.3.5 | a separate "Clear" ghost button per picker |
 | D-A7 | Untouched optional numbers | steppers show `0` (counts) / `–` (duration) and send `undefined`; the first touch sets a value (duration's first tap = 60, then ±15, range 15–240, `Log:155-158`) | §4.3.4-5 | defaults are stored (0 rounds, 60 min) |
 | D-A8 | Default date/time in plan mode | today at the next full hour (tomorrow when that crosses midnight); log mode = now; from a plan = its `startsAt` | §4.3.2 | plan mode defaults to now |
-| D-A9 | Dismissing a dirty Log sheet (Cancel, swipe-down, Android back) | dismiss at once + toast "Log discarded" with Undo, which reopens the sheet with the draft held in memory for `motion.durationToast` | §4.3.7 | a confirm dialog (against R-26 "undoable instead of confirm") |
+| D-A9 | Dismissing a dirty Log sheet (Cancel, swipe-down, Android back) | dismiss at once + toast "Log discarded" with Undo, which reopens the sheet with the draft held in memory for exactly as long as that toast is visible: `motion.durationToast`, or until the next toast or navigation when D-A11 applies. Dropping the toast drops the draft (R1-17) | §4.3.7 | a confirm dialog (against R-26 "undoable instead of confirm") |
 | D-A10 | Undo on save toasts (R-M3 "always undoable"): no revert API exists for completing a plan, edits or rank | Undo only when the save **created** a session or plan (Undo = `sessions.softDelete`); otherwise the toast has no action | §4.3.7, §4.4.6 | a `sessions.revert(snapshot)` / `rank.softDelete` API (data-coder) |
 | D-A11 | Toast timeout with a screen reader (WCAG 2.2.1) | when `AccessibilityInfo.isScreenReaderEnabled()` the toast stays until the next toast or navigation | §4.1.3 | 4 s for everyone |
 | D-A12 | Home greeting `Oss, [Name]` (Home:40) with no name stored | "Oss" alone | §4.4.1 | a name field (Settings, sprint 2) |
@@ -72,16 +81,28 @@ Designer: Thaleia · 2026-11-01 · branch `feature/foundation` · sprint 1. Inpu
 
 This spec covers the sprint-1 shell and three screens on a three-tab shell (plan F-18…F-24): Log Session in three modes, Home with a minimal Set-rank sheet, and a read-only Library with Position detail. It also covers the session detail the plan routes to, and the visible states of the bootstrap (§7). Out of scope, so there are no dead buttons: Settings, Progress, Technique detail (A-21), cycles and slots, the detailed-rounds UI (A-20), export and erase, reminders, the kids scale, and the parked artifact elements DSR-26…29 (R-S5): the gym picker chip `Log:30-33`, the notification bell `Home:42`, coach, video. Every value is a token, a cited rule, or a §8 row. The artifact is not changed.
 
-## §2 Changes since review
+## §2 Changes since review 1 (2026-11-01, rework round 1; `docs/foundation/review-1.md`)
 
-None: this is the first version.
+| finding | section | what changed |
+|---|---|---|
+| R1-02 | §4.3.3, §4.3.7, §4.6.7, §7 | testIDs `log.techniqueSearch.clear`, `log.notFound.cancel`, `library.error.retry` added and named in their sections |
+| R1-03 | §9.1, `docs/design-system-contrast.md` | both new pairs appended to the contrast doc's text table |
+| R1-08 | §0, T-13, §10.3 | T-13 withdrawn: `predictiveBackGestureEnabled` stays `false`; the predictive animation is a carry-over candidate |
+| R1-09 | § Token notation, T-02, §4.3.3, §4.6.1, §8 DSR-14/16, §9 | one hit-slop rule `(hit − v)/2` per axis and platform (36 → 4/6, 40 → 2/4, 44 → 0/2), applied per control |
+| R1-10 | § Token notation, §4.3.3, §4.3.4, §9 | wrapped chip rows: `rowGap` `spacing[2]` on iOS / `spacing[3]` on Android (≥ `hit − chipHeight`) |
+| R1-16 | §4.3.6 | path B = 3 taps (no rating); B′ = 4 with the rating |
+| R1-17 | §0.1 D-A9 | the draft lives exactly as long as its toast (incl. the D-A11 screen-reader case) |
+| R1-18 | §9 | reading order for Position detail, Session detail, Set-rank and the bootstrap error screen |
+| R1-19 | §8 | R-N3 row: large-only Log, `fitToContents` Set-rank, native scrim |
+| R1-20 | T-14, §4.4.4, §6.4, §7, §12 | Skip rendered; gating removed |
+| R1-01 (planner) | §0, §10.4 | §10.4's open requests replaced by a pointer to plan §4 with the names relied on; codes `COUNTS_REQUIRE_ACTUAL`, `TECHNIQUE_REQUIRES_ACTUAL` added to §6.2 |
 
 ## §3 Decisions
 
 | # | question (source) | decision | reason |
 |---|---|---|---|
 | T-01 | DSR-15: log action 56 (C:45) vs 52 (Home:27) (plan §11) | `size.logAction` 56, not raised | R-S3: the board wins; the 4-pt raise is not a token |
-| T-02 | DSR-15: segment 36 vs 40 (Log:40) (plan §11) | `size.segmentHeight` 36 in a track with `spacing[1]` padding (44 total); Android adds `hitSlop` 2 | R-S3; R-18 |
+| T-02 | DSR-15: segment 36 vs 40 (Log:40) (plan §11) | `size.segmentHeight` 36 in a track with `spacing[1]` padding (44 total); each segment gets vertical `hitSlop` 4 on iOS and 6 on Android (the hit-slop rule) | R-S3; R-18 |
 | T-03 | DSR-18: planned vs actual marker (plan §8, §11) | the text status line (Planned / Planned · not trained / Added) + a "Trained" selectable chip with check icon; §4.3.3 | R-C5: text + icon, never colour |
 | T-04 | DSR-19: rating input (plan §8 "reuse the intensity picker") | ScalePicker = the intensity picker (cm:134-139); overline "Rating · n of 5" | plan default; cm:448 offers reuse |
 | T-05 | DSR-7: error state (plan §11) | ErrorBanner in the bottom action bar: `semantic.buttonDestructive` pair + error glyph + `errors.<CODE>` text; polite announcement | the recorded pair passes (contrast doc :39) |
@@ -92,8 +113,8 @@ None: this is the first version.
 | T-10 | Sheet surface: `bgSurface` (Log:20) vs `bgRaised` (C:232) | `bgSurface` | inputs, steppers and pickers are `bgRaised`; on a raised sheet they would have no fill step (§8) |
 | T-11 | Off-grid / off-scale values (DSR-13/14) | round to the nearest token; ties go down (6→4, 10→8, 14→12, 18→16, 22→20); radius 14→`md`, 10→`sm`, 6→`sm`, 20→pill rule | one deterministic rule; denser fits 200 % text |
 | T-12 | Hit targets: RULES R-M1 / DSR-16 "48 dp pending" vs `docs/decisions.md` R-18 "44 pt on iOS and 48 dp on Android … 'yes'" and `frontend.md` | **48 dp Android is binding** (`hit`) | a dated PO ruling outranks the derived RULES (R-18 itself asks for the amendment) |
-| T-13 | `app.json` `"predictiveBackGestureEnabled": false` vs R-N4 "Android predictive back gesture … never disable the system back gesture" | set `true` (frontend-coder) | binding design rule; nothing in sprint 1 intercepts back |
-| T-14 | Plan §8 Home "Skip (sets SKIPPED, undoable)" vs plan §4, which has no skip function (product-spec §5 has `sessions.skip`) | request `sessions.skip` / `sessions.undoSkip` (§10.4); until then the Skip button is not rendered (no dead button) | no invented API |
+| T-13 | ~~`predictiveBackGestureEnabled`~~ **withdrawn (review 1 R1-08)** | `false` stays: per `ExpoConfig.d.ts:605` it only enables the predictive-back *animation*, and the system back gesture works with `false`, so R-N4 is met. The animation is a carry-over candidate for when an Android test path exists. | overturned by the reviewer and the orchestrator |
+| T-14 | Plan §8 Home "Skip (sets SKIPPED, undoable)" | Skip is rendered, and calls `sessions.skip` / `sessions.undoSkip` from plan §4 (added by the planner for R1-01) | product-spec §5 lists `sessions.skip` |
 
 ## §4 Screens
 
@@ -209,8 +230,8 @@ Untick keeps the row (F-20). The body's values stay in local state and are sent 
    - Label: overline `log.focus.rating.label` ("Rating"), or `log.focus.rating.value` ("Rating · 4 of 5") when set.
    - ScalePicker (cm:134-139; Log:64-70): a 5-column row, `gap: spacing[1]` (DSR-13 6→4). Each button: height `size.intensityButtonHeight`, radius `radius.md`, flex 1. Level ≤ value: `semantic.intensitySelected`. Above the value: `semantic.intensityUnselected`. The number is `textStyle.statUnit` (Archivo 800 16, DSR-11) + tabular.
    - Tap = set; tapping the current value = unset (D-A6).
-   - A11y: group `role="radiogroup"` with label `log.focus.rating.a11yGroup`; each button `role="radio"`, label `log.scale.option.a11y`, `accessibilityState={{ checked: n === value }}`. On Android, `hitSlop` 2 vertically.
-2. **A row**, `gap: spacing[2]`, `flexWrap: 'wrap'`, holding two controls:
+   - A11y: group `role="radiogroup"` with label `log.focus.rating.a11yGroup`; each button `role="radio"`, label `log.scale.option.a11y`, `accessibilityState={{ checked: n === value }}`. Vertical `hitSlop`: 0 on iOS, 2 on Android (44-high row).
+2. **A row**, `flexWrap: 'wrap'` with the wrapped-chip-row gaps, holding two controls:
    - Needs-work selectable chip (as Trained, label `log.focus.needsWork`, check when on; `role="checkbox"`, label `log.focus.needsWork.a11y`).
    - Ghost button `log.focus.details.show` / `.hide` (cm:46: transparent, `accentText`, `textStyle.button`, height `size.buttonHeight`, `paddingHorizontal: spacing[3]`), `accessibilityState={{ expanded }}`. D-A5: it starts expanded when the comment, a count or a technique has a value.
 3. **Details** (expanded):
@@ -229,10 +250,10 @@ Untick keeps the row (F-20). The body's values stay in local state and are sent 
      - A11y: the button labels are the `log.focus.hit.less.a11y`… keys. The value is `accessibilityRole="adjustable"` with `accessibilityActions` increment/decrement and `accessibilityValue={{ min, max, now }}` (cm:118).
    - **Techniques:**
      - Overline `log.focus.techniques.label`.
-     - A wrap row of chips, `gap: spacing[2]`: one selectable chip per attached technique (selected style + check; tap = detach; label `log.focus.technique.remove.a11y`).
+     - A wrap row of chips (the wrapped-chip-row gaps): one selectable chip per attached technique (selected style + check; tap = detach; label `log.focus.technique.remove.a11y`).
      - An Add chip `log.focus.techniques.add` (cm:152: `size.chipHeight`, dashed `size.borderWidth` `borderStronger`, `textSecondary`, `textStyle.chipRegular`). It opens **TechniqueAttach** inline below the row (D-A21):
        - a caption label `log.techniqueSearch.label`;
-       - a SearchField (§4.6.2 spec) with `autoFocus`, placeholder `log.techniqueSearch.placeholder`;
+       - a SearchField (§4.6.2 spec) with `autoFocus`, placeholder `log.techniqueSearch.placeholder`, and its clear IconButton (testID `log.techniqueSearch.clear`, label `common.clearSearch`);
        - up to 6 result ListRows (title `rowTitle`; subtitle caption = the §4.6.4 technique meta). Results with `fromPositionId` or `toPositionId` = this focus's `refId` sort first;
        - a ghost `log.techniqueSearch.close`.
        - Tap a result → attach, close the panel. No match → caption `log.techniqueSearch.empty`. Only one inline panel is open at a time.
@@ -246,7 +267,7 @@ Untick keeps the row (F-20). The body's values stay in local state and are sent 
    - Focused: `size.borderWidthFocus` `accentBorder`.
    - `accessibilityLabel` `log.search.a11y`; `returnKeyType="search"`.
 3. **Below the field**, one of three:
-   - Query empty: **QuickAddChips** (D-A4), shown when there is history. Up to two groups, each a caption label (`log.quickAdd.flagged`, `log.quickAdd.last`) over a wrap row of unselected selectable chips (label = name, `role="button"`, label `log.quickAdd.a11y`; tap → add the row, the chip disappears). With no history, the caption hint `log.search.hint` is shown instead.
+   - Query empty: **QuickAddChips** (D-A4), shown when there is history. Up to two groups, each a caption label (`log.quickAdd.flagged`, `log.quickAdd.last`) over a wrap row (the wrapped-chip-row gaps) of unselected selectable chips (label = name, `role="button"`, label `log.quickAdd.a11y`; tap → add the row, the chip disappears). With no history, the caption hint `log.search.hint` is shown instead.
    - Query non-empty: up to 8 **result rows** from `useFocusSearch` (ListRow, min height `hit`; title `rowTitle`; subtitle caption `log.search.result.alias` when `matchedAlias` is set, else `log.search.result.kind.<KIND>`; trailing Tag "Extended" per D-A14). Tap → add the row (actual in log/edit, planned in plan), clear the query, `Keyboard.dismiss()`. Already-added rows show a trailing check + `log.search.result.added` and are `disabled`.
    - Zero results: caption `log.search.empty` (DSR-8).
 4. `focus` param: that focus is pre-added (plan mode).
@@ -256,7 +277,7 @@ Untick keeps the row (F-20). The body's values stay in local state and are sent 
 Overline `log.sparring.label`. Column, `gap: spacing[3]`:
 - **Rounds:** a full-width Stepper, label overline `log.sparring.rounds`, range 0–20 (`Log:56-60`). Untouched it shows 0 and is sent as `undefined` (D-A7).
 - **Landed / Taken:** a 2-column grid of steppers, range 0–20, labels `log.sparring.landed` / `log.sparring.taken`.
-- **Named submissions** (optional, plan §8): two blocks, "Landed with" and "Caught by" (`log.sparring.landedWith`, `log.sparring.takenBy`). Each is a caption label over a wrap row of technique chips (selected style; tap = remove) + an Add chip `log.sparring.addSubmission`. The Add chip opens TechniqueAttach filtered to SUBMISSION techniques (D-A22). Each chip is one `SubmissionInput { direction, techniqueId }`.
+- **Named submissions** (optional, plan §8): two blocks, "Landed with" and "Caught by" (`log.sparring.landedWith`, `log.sparring.takenBy`). Each is a caption label over a wrap row (the wrapped-chip-row gaps) of technique chips (selected style; tap = remove) + an Add chip `log.sparring.addSubmission`. The Add chip opens TechniqueAttach filtered to SUBMISSION techniques (D-A22). Each chip is one `SubmissionInput { direction, techniqueId }`.
 - **Mismatch offer** (product-spec §6: aggregates authoritative, derivation offered, never silent): when the named count for a direction is greater than its stepper, show a caption `log.sparring.mismatch.landed` / `.taken` with a ghost `log.sparring.useCount`. The ghost sets the stepper to the named count.
 
 #### §4.3.5 Session (log / edit only)
@@ -275,7 +296,8 @@ Overline `log.session.label`. Column, `gap: spacing[4]`:
 |---|---|---|---|
 | A · planned session today with planned focuses | `tabs.log` (or `home.quickLog`) → sheet prefilled, focuses pre-ticked → `log.save` | **2** | ≤ 2 ✓ · ≈ 5 s |
 | A′ · same, rating one focus | `tabs.log` → `log.focus.<refId>.rating.4` → `log.save` | 3 | prefilled at 1 ✓ · ≈ 8 s |
-| B · no plan, trained a focus from last session | `tabs.log` → `log.quickAdd.<refId>` → `log.focus.<refId>.rating.4` → `log.save` | 4 | prefilled at 1 ✓ · ≈ 10 s |
+| B · no plan, trained a focus from last session | `tabs.log` → `log.quickAdd.<refId>` → `log.save` | **3** | prefilled at 1 ✓ · ≈ 7 s |
+| B′ · same, rating that focus | `tabs.log` → `log.quickAdd.<refId>` → `log.focus.<refId>.rating.4` → `log.save` | 4 | prefilled at 1 ✓ · ≈ 10 s |
 | C · first session ever | `tabs.log` → `log.search.input` → type "mount" → `log.search.result.<refId>` → `log.save` | 4 + typing | prefilled at 1 ✓ · ≈ 15 s |
 | Plan | `home.planEmpty.action` (or a suggestion) → `log.search.input`… → `log.save` | 3 + typing | — |
 
@@ -294,7 +316,7 @@ Everything under Focuses is optional and below the fold at 390 × 844 (plan §8)
 - **Delete:** `sessions.softDelete` → dismiss the sheet. If it was opened from `session/[id]`, also pop that screen (`router.dismissTo('/')`). Then toast `toast.sessionDeleted` / `toast.planDeleted` + Undo → `undoDelete` (NF-05). No confirm dialog (R-26, DSR-22).
 - **Dismiss** (Cancel, swipe-down on iOS, back on Android; R-N3, R-N4 — never blocked): if the form is dirty, show toast `toast.draftDiscarded` + Undo, which reopens the sheet with the draft (D-A9).
 - **Loading** (`useSession` or `useSessionTypes` pending): a LoadingState (§4.4.8) fills the scroll area; the action bar shows the disabled primary.
-- **Not found:** EmptyState `session.notFound.title` / `errors.SESSION_NOT_FOUND` + ghost `common.cancel`, which dismisses.
+- **Not found:** EmptyState `session.notFound.title` / `errors.SESSION_NOT_FOUND` + ghost `common.cancel` (testID `log.notFound.cancel`), which dismisses.
 
 ### §4.4 Home (`(tabs)/index`; plan F-22)
 
@@ -325,7 +347,7 @@ A ScrollView on `bgBase`, padded per §4, column `gap: spacing[4]` (Home:35 18 �
 - **Not logged yet:** the rows of `stalePlanned`, at most 5, with caption `home.stale.more` (D-A13).
 - **Row** (ListRow, cm:238-244): min height `size.listRowMinHeight`, `paddingVertical: spacing[2]`, bottom `size.borderWidth` `borderDefault`, row `gap: spacing[3]`, `flexWrap: 'wrap'`.
   - Text column (flex 1): title `rowTitle` = the type name; subtitle caption `textSecondary` = date · time.
-  - Trailing ghost buttons (height `size.buttonHeight`): `home.stale.logIt` and, once T-14 is served, `home.stale.skip`. Skip → `sessions.skip` → toast `toast.sessionSkipped` + Undo → `sessions.undoSkip`.
+  - Trailing ghost buttons (height `size.buttonHeight`): `home.stale.logIt` and `home.stale.skip` (T-14). Skip → `sessions.skip` → toast `toast.sessionSkipped` + Undo → `sessions.undoSkip`.
 - Hidden when the list is empty.
 
 **§4.4.5 Suggested focuses** (A-30; DSR-17).
@@ -410,7 +432,7 @@ A ScrollView on `bgBase`, padded per §4, column `gap: spacing[4]` (Home:35 18 �
   - Track: `bgRaised`, padding `spacing[1]`, gap `spacing[1]`, `radius.md` (DSR-14 14).
   - Segments: `size.segmentHeight`, `radius.sm` (DSR-14 10), flex 1, label `textStyle.chip`. Selected: `semantic.segmentSelected`. Unselected: transparent / `textSecondary`.
   - Options: `library.segment.positions` · `.techniques` · `.subjects`.
-  - A11y: `role="tablist"`, label `library.segment.a11y`; each segment `role="tab"`, `selected`; Android `hitSlop` 2.
+  - A11y: `role="tablist"`, label `library.segment.a11y`; each segment `role="tab"`, `selected`; vertical `hitSlop` 4 on iOS, 6 on Android (the hit-slop rule).
   - The segment is kept per viewer in memory only.
 - **List:** starts `spacing[4]` below the segments.
 
@@ -443,7 +465,7 @@ A ScrollView on `bgBase`, padded per §4, column `gap: spacing[4]` (Home:35 18 �
 - loading: LoadingState in place of the rows;
 - no match (query non-empty): EmptyState `library.empty.query.title` / `.body` (DSR-8; plan §8), padding `spacing[8]` vertical;
 - empty without a query: `library.empty.none.*`;
-- error: card `library.error` + `common.tryAgain`.
+- error: card `library.error` + secondary `common.tryAgain` (testID `library.error.retry`).
 
 **§4.6.8 Position detail** (`library/position/[id]`, push in the Library stack; data `usePosition(id)`).
 - **Header:** native stack header as §4.5, title = the canonical name.
@@ -563,6 +585,8 @@ All keys are added to `mobile/src/i18n/en.json`. Interpolations use i18next `{{n
 | `errors.ROUND_NO_DUPLICATE` | Two rounds share the same number. Save again. | Log banner (not reachable in sprint 1) |
 | `errors.ROUND_NOT_IN_SESSION` | A submission points at a round of another session. Save again. | Log banner (not reachable in sprint 1) |
 | `errors.SUBMISSION_DIRECTION_INVALID` | A submission must be landed or taken. | Log banner |
+| `errors.COUNTS_REQUIRE_ACTUAL` | Hit and caught counts can only be given to a focus you trained. Tick it as trained first. | Log banner (plan R1-05) |
+| `errors.TECHNIQUE_REQUIRES_ACTUAL` | Techniques can only be attached to a focus you trained. Tick it as trained first. | Log banner (plan R1-05) |
 | `errors.TAXONOMY_ROW_NOT_FOUND` | This entry is no longer in the library. | position detail |
 | `errors.RANK_BELT_INVALID_FOR_SCALE` | That belt isn't on the adult scale. Pick another belt. | rank banner |
 | `errors.RANK_STRIPES_INVALID` | Stripes go from 0 to 4, or up to 6 on a black belt. | rank banner |
@@ -707,7 +731,7 @@ All keys are added to `mobile/src/i18n/en.json`. Interpolations use i18next `{{n
 | `home.stale.title` | Not logged yet | section |
 | `home.stale.logIt` | Log it | ghost |
 | `home.stale.logIt.a11y` | Log {{type}} on {{date}} | a11y |
-| `home.stale.skip` | Skip | ghost (after T-14) |
+| `home.stale.skip` | Skip | ghost (`sessions.skip`) |
 | `home.stale.skip.a11y` | Skip {{type}} on {{date}} | a11y |
 | `home.stale.more_one` | {{count}} more not logged | caption |
 | `home.stale.more_other` | {{count}} more not logged | caption |
@@ -904,6 +928,8 @@ Dates, the weekday on the date tile and the time strings are formatted by `Intl.
 | `log.save` | primary | Log | log |
 | `log.save.reason` | disabled reason | Log | log |
 | `log.error` | ErrorBanner | Log | — |
+| `log.notFound.cancel` | not-found dismiss ghost | Log | — |
+| `log.techniqueSearch.clear` | technique search clear | Log | — |
 | `home.screen` | Home scroll root | Home | smoke |
 | `home.loading` | LoadingState | Home | — |
 | `home.error.retry` | Try again | Home | — |
@@ -916,7 +942,7 @@ Dates, the weekday on the date tile and the time strings are formatted by `Intl.
 | `home.planned.<sessionId>.logIt` | Log it | Home | — |
 | `home.stale.<sessionId>` | not-logged row | Home | — |
 | `home.stale.<sessionId>.logIt` | Log it | Home | — |
-| `home.stale.<sessionId>.skip` | Skip (after T-14) | Home | — |
+| `home.stale.<sessionId>.skip` | Skip | Home | — |
 | `home.suggestion.<refId>` | suggestion row | Home | log |
 | `home.recent.<sessionId>` | recent row | Home | log |
 | `home.recent.empty` | empty text | Home | smoke |
@@ -944,6 +970,7 @@ Dates, the weekday on the date tile and the time strings are formatted by `Intl.
 | `library.subject.<subjectId>` | subject row | Library | — |
 | `library.empty` | empty state | Library | lib |
 | `library.loading` | LoadingState | Library | — |
+| `library.error.retry` | error card Try again | Library | — |
 | `position.screen` | detail root | Position | lib |
 | `position.variantOf` | parent row | Position | — |
 | `position.variant.<positionId>` | child row | Position | — |
@@ -966,7 +993,7 @@ Dynamic ids: Maestro selects by `id: "home.recent\\..*"` + `index: 0`, or by a s
 | DSR-12, A-23 | Archivo width 110/115/125 % | `fontStretch` (cm:441) | normal width Archivo 700/800 (A-23) | `displayFontFamily` | width instances |
 | DSR-13 | off-grid spacing | 6, 10, 14, 18, 22, 34, 62; rows 64/72 (cm:442) | T-11 ties-down rule; 34 → bottom inset; 62 → top inset + `spacing[4]`; rows → `size.listRowMinHeight` | `spacing[1..5]`, `size.listRowMinHeight` | per-value swap |
 | DSR-14 | off-scale radii | 6, 10, 14, 20 (cm:443) | 14 → `radius.md`; 10 → `radius.sm`; 6 → `radius.sm`; 20 / any pill → h/2 (R-L2) | `radius.*` | per-value swap |
-| DSR-14/16 | picker chip (date/time, Android) | 40 high, radius 20 (cm:153) | `size.chipHeight` 36, h/2, `hitSlop` to `hit` | Chip picker | 40 high once tokenised |
+| DSR-14/16 | picker chip (date/time, Android) | 40 high, radius 20 (cm:153) | `size.chipHeight` 36, h/2, vertical `hitSlop` 4 on iOS / 6 on Android (the hit-slop rule) | Chip picker | 40 high once tokenised |
 | DSR-15 | log action / segment / tab-bar fill / sheet fill / stepper padding / class-card buttons / unselected chip / belt 28 | conflicts (cm:444) | 56 (T-01); 36 (T-02); iOS `tabbar`, Android `bgSurface` (cm:277, :283); sheet `bgSurface` (T-10); stepper padding `spacing[1]` (Log:48); compact 44/15 board; unselected `chipRegular` 14/500 board; belt L 32 | as cited | per-element swap |
 | DSR-16, R-18, T-12 | every hit area | 44 pt floor, 48 dp pending (R-M1) | `hit` = 44 pt iOS / 48 dp Android everywhere; smaller visuals use `hitSlop` | `size.touchTarget`, `size.touchTargetAndroid` | none: R-18 is ruled |
 | DSR-17 | needs-work flag and "why flagged" | no progression states (cm:446) | Flagged badge = `semantic.badgeComp` pair + flag glyph + text "Flagged" (R-17); why line `home.suggestion.why` on suggestions; computed states stay for Progress (sprint 2) | Badge, `badgeComp` | a dedicated `badge-flagged` pairing; one semantic swap |
@@ -985,6 +1012,7 @@ Dynamic ids: Maestro selects by `id: "home.recent\\..*"` + `index: 0`, or by a s
 | NOGI | No-gi marker | only GI has a pair (`tagGi`, R-C4) | neutral Tag "No-gi" | Tag | a NOGI badge pairing |
 | R-N1 | iOS TabView | native tab bar | JS custom `tabBar` drawn to cm:275-281 (a native tab bar cannot host the 56 centre action) | MainTabBar | NativeTabs, with Log as a tab |
 | R-N1, A-18 | five tabs | Home · Library · Log · Progress · Profile | three tabs (D-A2) | MainTabBar | placeholder tabs |
+| R-N3 (R1-19) | sheet detents and scrim | iOS `.sheet` with medium / large detents, `scrim` behind (M:178, M:187) | Log: large only (D-A23), because the form plus its action bar does not fit a medium detent. Set-rank: `fitToContents`, which is a detent sized to the content (iOS 16+; Android bottom sheet at content height). Scrim: the native formSheet dims the presenter itself (iOS system dimming, Android Material bottom-sheet scrim), so no `scrim` token is drawn | react-native-screens formSheet | add the medium detent with the action bar pinned (`unstable_sheetFooter`) and a JS scrim in `scrim` |
 | R-M3 | "always undoable" toast | cm:270 | Undo only where an API exists (D-A10) | Toast | add revert APIs |
 | R-Y1 | system font on font error | never system font | plan §7: continue with system fonts, logged | — | block on fonts |
 | R-M5 | icon stroke 1.75 / 2 / 2.25 | custom 24-grid strokes | symbol weight approximates the stroke (D-A18) | expo-symbols | exported SVG set |
@@ -996,7 +1024,16 @@ Dynamic ids: Maestro selects by `id: "home.recent\\..*"` + `index: 0`, or by a s
   - Log: header (Cancel, title) → sections top to bottom → action bar (reason/error, then Save). When the sheet opens, focus moves to the title (`AccessibilityInfo.setAccessibilityFocus`). When a row is added from search, focus moves to the new row's name.
   - Home: header → Quick log → next card → sections.
   - Library: title → search → segments → rows → footer.
-- **Targets:** every control ≥ `hit` (44 pt / 48 dp, R-18). Inputs are `size.inputHeight` 48; the search field is `size.searchHeight` 44 + `hitSlop` 2 on Android. The 36-pt chips and segments and the 40-pt toast action use `hitSlop` to `hit`. Rating buttons are 44 + 2 on Android, within a `spacing[1]` gap.
+  - Position detail (R1-18): back → title → aliases → tier tag → description → Variant-of row → Variants → From here (group overline, then rows) → Into here.
+  - Session detail: back → overline date → title → status tag → meta → Focuses (each card: name, Flagged, status, rating, comment, counts, techniques) → Sparring → Notes → action bar (Edit session / Log it).
+  - Set-rank sheet: Cancel → title → preview (live region) → Belt rows WHITE…BLACK → Stripes (−, value, +) → Awarded on → error banner → Save rank. When the sheet opens, focus moves to the title.
+  - Bootstrap error screen: title → body → code → (dev) Reset database → Try again. On mount, focus moves to the title.
+- **Targets:** every control ≥ `hit` (44 pt / 48 dp, R-18), by the hit-slop rule (§ Token notation):
+  - 36-high chips, segments and picker chips: vertical slop 4 / 6.
+  - The 40-high toast action: 2 / 4.
+  - 44-high stepper buttons, IconButtons, rating/intensity buttons, the search field and outlined compact buttons: 0 / 2.
+  - Inputs (`size.inputHeight` 48) and 48 / 56 buttons: none.
+  - Wrapped chip rows use the platform `rowGap`, so slops never overlap (R1-10). The rating row's `spacing[1]` column gap needs no horizontal slop, because each button is ≥ 60 wide at 390 pt.
 - **Status never by colour alone:**
   - Trained / Needs work: check icon + text.
   - Planned: the status text.
@@ -1031,7 +1068,7 @@ Recomputed controls, which match the doc: warning tint on `bgSurface` dark `#3A3
 - `feedbackInfo` on tint over `bgBase` / `bgSurface` (:41, :43)
 - `feedbackDanger` on tint over `bgSurface` (:39)
 
-The known non-text failures (light `accentBorder` / `accentFill`, input boundaries, belts) are carried by text or icons, per the rows in §8. **Action:** mirror the two rows above into `docs/design-system-contrast.md` (orchestrator/designer follow-up; outside this commit's scope).
+The known non-text failures (light `accentBorder` / `accentFill`, input boundaries, belts) are carried by text or icons, per the rows in §8. Both rows are appended to the text table of `docs/design-system-contrast.md` (review 1 R1-03).
 
 ## §10 Implementation notes for the frontend-coder
 
@@ -1084,23 +1121,23 @@ Sheets: `presentation: 'formSheet'`, `sheetCornerRadius: radius.xl`, `contentSty
 
 - Add with `npx expo install`: `@react-native-community/datetimepicker`, `expo-haptics`. Confirm the APIs from their `.d.ts` files (`display="compact"`, `DateTimePickerAndroid.open`, `design`; `Haptics.selectionAsync`, `notificationAsync(Success)`, `performAndroidHapticsAsync`) and append them to `docs/stack-notes.md`.
 - Keep `expo-symbols`. CO-13 prunes the rest.
-- `app.json`: `android.predictiveBackGestureEnabled: true` (T-13); splash `backgroundColor` `#F6F6F3` + `dark.backgroundColor` `#0B0C0E` (D-A20); `userInterfaceStyle: automatic` (already set).
+- `app.json`: `android.predictiveBackGestureEnabled` stays `false` (T-13 withdrawn; enabling the predictive-back animation is a carry-over candidate for the orchestrator's close-out); splash `backgroundColor` `#F6F6F3` + `dark.backgroundColor` `#0B0C0E` (D-A20); `userInterfaceStyle: automatic` (already set).
 
-### §10.4 Data the UI consumes (for `data-contracts.md`)
+### §10.4 Data the UI consumes: contract in plan §4
 
-| need | consumer | plan §4 today | request |
-|---|---|---|---|
-| hook result `{ data?: T; error?: DomainError }` (undefined data + no error = loading) | every screen's loading / error states | not specified | **define** |
-| `sessions.skip(id)` / `sessions.undoSkip(id)` → `SessionSummary`, codes `SESSION_NOT_FOUND`, `SESSION_NOT_PLANNED` | Home Skip (T-14) | missing | **add** (product-spec §5 lists `sessions.skip`) |
-| `useHome()` → `suggestions: { ref; name; source }[]` (forPlanning output) | Home §4.4.5, Log quick add | "via `useHome()`" | confirm field name |
-| `useHome().lastCompleted.localDate`, `.focuses` (actual, needsWork) | why line, quick-add chips | in `SessionDetail` | ✓ |
-| `listPositions({ query })` rows add `matchedAlias?`; same for `listTechniques` | `library.row.alias` | `matchedAlias` only on `FocusPickerRow` | **add** |
-| `getPosition(id)` adds `description?`, `tier`, `aliases`, `parent?: { id; canonicalName }`, `children: { id; canonicalName; tier }[]` | Position detail | "position + techniquesFrom/To" | **specify** |
-| `useTechniqueSearch(query, { type?: TechniqueType })` | submission chips (D-A22) | no filter | **add**, or the UI filters by `type` |
-| `SubmissionRow = { id; direction; techniqueId?; techniqueName? }`; `SubmissionInput = { direction; techniqueId? }` | Log sparring, detail | names only | **specify** |
-| `FocusRow.techniques`, `removed`, `isPlanned`, `isActual`, `rating`, `needsWork`, counts, `comment` | Log edit, detail | ✓ | — |
-| `useSessionTypes()`, `useSetting('library.showExtended')`, `useCurrentRank()`, `useSession(id)`, `usePosition(id)`, `useSubjects()`, `useFocusSearch(q)` (reads `showExtended` itself) | as named | ✓ | confirm `useFocusSearch` reads the setting |
-| `sessions.log` / `sessions.create` return the saved `id` | the Undo → `softDelete(id)` | ✓ (`SessionDetail`) | — |
+Plan §4 is the contract: the planner settled every request of the first version there (review 1 R1-01). Phase-A mocks are typed from plan §4. If a spelling below differs from plan §4, plan §4 wins and the UI follows. The names this spec relies on:
+
+| name (plan §4) | consumer |
+|---|---|
+| `HookResult<T> = { data?: T; error?: DomainError }` (no data and no error = loading) | every loading / error state (§4.4.8, §4.6.7, §4.3.7) |
+| `sessions.skip(id)` / `sessions.undoSkip(id)` → `SessionSummary` (`SESSION_NOT_FOUND`, `SESSION_NOT_PLANNED`) | Home Skip + toast Undo (§4.4.4) |
+| `sessions.home` / `useHome()` → `HomeData` incl. `suggestions: Suggestion[]` (`{ ref; name; source }`), `lastCompleted`, `lastUsedTypeId`; PLANNED partitioned by `local_date` (R1-04) | Home, Log quick add |
+| `matchedAlias?` on the `PositionRow` / `TechniqueRow` results of `listPositions` / `listTechniques` | `library.row.alias` |
+| `getPosition` → `PositionDetail` with `description?`, `tier`, `aliases`, `parent?`, `children`, `techniquesFrom` / `techniquesTo` | Position detail (§4.6.8) |
+| `type` filter on `listTechniques` / `useTechniqueSearch` | submission chips (D-A22) |
+| `SubmissionRow` / `SubmissionInput` (`direction`, `techniqueId?`, plus `techniqueName?` on the row) | Log sparring, detail |
+| `useFocusSearch(query)` reads `library.showExtended` itself | Log focus search |
+| new codes `COUNTS_REQUIRE_ACTUAL`, `TECHNIQUE_REQUIRES_ACTUAL` (R1-05) | Log banner (§6.2); the UI already sends counts and techniques only for actual rows (§4.3.3) |
 
 ## §11 Design-system requests
 
@@ -1117,7 +1154,8 @@ There are no new requests. For the next re-export, the user can answer DSR-6, 7,
 - [ ] A session cannot save without an actual focus (disabled Save + reason, §4.3.1).
 - [ ] Hit areas: `hit` 44 pt / 48 dp everywhere (T-12, §9).
 - [ ] Copy table covers every string in §4; testID table covers every interactive element and list row in §4.
-- [ ] Contrast: §9.1 new rows recomputed; mirrored into `docs/design-system-contrast.md` (follow-up).
+- [ ] Contrast: §9.1 new rows recomputed and present at the end of the text table in `docs/design-system-contrast.md`.
 - [ ] No parked element (DSR-26…29) appears.
-- [ ] §10.4 requests reach `data-contracts.md`; T-14 Skip is hidden until `sessions.skip` exists.
+- [ ] §10.4 names match plan §4 (the planner's R1-01 rework); Skip calls `sessions.skip` / `undoSkip`.
+- [ ] Hit-slop rule and wrapped-chip `rowGap` applied per control (§ Token notation, §9).
 - [ ] 390 / 430 pt, light / dark, iOS / Android differences are explicit (§4.1.2, §4.3.2, §4.4.9, §10.2).
