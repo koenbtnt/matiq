@@ -1,0 +1,11 @@
+{
+  "app_meta": {
+    "_": "Key/value store for app-level metadata (schema version markers, onboarding flags).",
+    "id": "UUID v4, generated on device",
+    "key": "Unique metadata key",
+    "value": "Metadata value as text",
+    "created_at": "ISO-8601 UTC creation time",
+    "updated_at": "ISO-8601 UTC last update",
+    "deleted_at": "ISO-8601 UTC soft-delete time, null while live"
+  }
+}

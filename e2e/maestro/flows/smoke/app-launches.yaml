@@ -1,0 +1,10 @@
+appId: nl.btnt.matiq
+name: Smoke - app launches and database is ready
+tags:
+  - smoke
+---
+- launchApp
+- assertVisible:
+    id: "home.title"
+- assertVisible:
+    id: "db.ready"

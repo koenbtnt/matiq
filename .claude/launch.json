@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "expo-dev-client",
+      "cwd": "mobile",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["expo", "start", "--dev-client", "--port", "8081"],
+      "port": 8081
+    },
+    {
+      "name": "expo-go-ios",
+      "cwd": "mobile",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["expo", "start", "--go", "--ios", "--port", "8081"],
+      "port": 8081
+    }
+  ]
+}
