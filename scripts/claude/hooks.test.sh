@@ -31,7 +31,7 @@ check() { # check EXPECTED NAME HOOK ARGS... <<< json
 }
 
 # The regexes exactly as the agent frontmatter carries them (.claude/agents/*.md). Update both together.
-DC_ALLOW='^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json)$|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)'
+DC_ALLOW='^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json|app[.]json)$|scripts/taxonomy/|data/taxonomy/|[.]github/workflows/|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)'
 DC_DENY='^mobile/drizzle/.*(snapshot|_journal)[.]json$'
 FE_ALLOW='^(mobile/|scripts/(sync-design-tokens|check-token-adherence)[.]mjs$|docs/[^/]+/verify[.](md|json)$|docs/stack-notes[.]md$|[.]github/workflows/)'
 FE_DENY='^(mobile/src/(db|domain|repositories)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/src/theme/tokens[.]ts$|e2e/|design-system/)'
@@ -40,7 +40,7 @@ DESIGN_ALLOW='^(docs/|design-system/(tokens[.]json|components[.]md|RULES[.]md)$)
 ORCH_ALLOW='^(docs/|README[.]md$)'                                            # orchestrator
 R1_ALLOW='^docs/[^/]+/review-1(-recheck|-followup(-[0-9]+)?)?[.]md$'          # reviewer-design
 R2_ALLOW='^docs/[^/]+/review-2(-recheck|-followup(-[0-9]+)?)?[.]md$'          # reviewer-code
-DOC_ALLOW='^(docs/(architecture|adr|data-model|requirements)/|docs/[^/]+/docs-report[.](md|json)$|docs/stack-notes[.]md$|scripts/docs/|README[.]md$)'  # documenter
+DOC_ALLOW='^(docs/(architecture|adr|data-model|requirements)/|docs/[^/]+/(docs-report[.](md|json)|verify[.](md|json))$|docs/stack-notes[.]md$|scripts/docs/|README[.]md$)'  # documenter
 TEST_ALLOW='^(e2e/|docs/[^/]+/(test-report[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)'  # tester
 
 echo "# path-guard: scopes"
@@ -115,6 +115,8 @@ check 0 "documenter: generator script"            path-guard.sh "$DOC_ALLOW" <<<
 check 0 "documenter: generated dictionary"        path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/data-model/dictionary.md")"
 check 0 "documenter: docs-report.json"            path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/docs-report.json")"
 check 0 "documenter: stack-notes"                 path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/stack-notes.md")"
+check 0 "documenter: verify.md (generator rows)"    path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/verify.md")"
+check 0 "documenter: verify.json"                   path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/verify.json")"
 check 2 "documenter: no docs/api here"            path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/api/openapi/x.json")"
 check 2 "documenter: sprint plan refused"         path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/plan.md")"
 check 2 "documenter: carry-over refused"          path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/carry-over.md")"

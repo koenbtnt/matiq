@@ -34,6 +34,7 @@ ships to iOS and Android. There is no web target.
   `Edit`/`Write` on `tokens.ts`); after a design intake you **run the generator** and commit the
   result. Nobody edits `design-system/artifact/`. A missing token or component goes back to the
   Orchestrator as a design-system request.
+- Fonts: Inter and Archivo load through `@expo-google-fonts/*` + `useFonts` in `mobile/app/_layout.tsx` (sprint 1 adds them, CO-15); screens use `textStyle.*` from `tokens.ts`, never a family literal.
 - `e2e/` belongs to the tester; `mobile/src/{db,domain,repositories}/` and `mobile/drizzle/` to
   the data-coder. Expo's own skills (`/expo:*`) are available on demand for SDK, Router, EAS and
   native-UI questions — load the one you need, not all.
@@ -114,10 +115,11 @@ From `mobile/`, redirected and grepped:
 3. From the repo root: `node scripts/sync-design-tokens.mjs --check` and
    `node scripts/check-token-adherence.mjs` — exit 0
 4. `npx expo-doctor` — no failed checks
-5. Simulator smoke: `npx expo run:ios` on a booted simulator (dev client; `npx expo start --go --ios`
-   for Expo Go when no native module changed), open the routes you touched, check Metro for
-   red boxes, `xcrun simctl io booted screenshot /tmp/fe-smoke.png`, **stop Metro**. CocoaPods
-   or a simulator missing → record `INFRA UNAVAILABLE` for this row and report it as a PO action.
+5. Simulator smoke on a **dev-client build**: `npx expo run:ios` on a booted simulator (the
+   database is SQLCipher, so Expo Go cannot run the app), open the routes you touched, check Metro
+   for red boxes, `xcrun simctl io booted screenshot /tmp/fe-smoke.png`, **stop Metro**. CocoaPods
+   or a simulator missing → record `INFRA UNAVAILABLE` for this row and report it as a PO action;
+   never substitute Expo Go or a mocked database.
 
 Append the rows to `docs/<sprint-slug>/verify.md` with the sha you ran at. Also append the same rows to `docs/<sprint-slug>/verify.json` (a JSON array of `{agent, sha, date, command, exit, notes}`, create the file if missing) — hooks and evals grade the JSON, people read the Markdown.
 

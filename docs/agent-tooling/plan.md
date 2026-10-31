@@ -64,6 +64,10 @@ file is the in-repo summary and the control ledger. ADR 0002 records the decisio
 | Hook exit-code tests | `scripts/claude/hooks.test.sh`, CI job `claude` | guards changed without a committed test (cadence) | never |
 | `.worktreeinclude`, `worktree.symlinkDirectories` | repo root, `settings.json` | hand-made `.env` symlinks in worktrees (sugar 2026-09-24) | when Claude Code copies ignored files itself |
 | Maestro local-only | `.claude/rules/e2e.md`, CO-01 | no macOS runner yet | when CO-01 closes |
+| Dev-client only (no Expo Go) | `CLAUDE.md`, `frontend.md`, `frontend-coder.md`, `launch.json` | SQLCipher from sprint 1 (ruling R-24, 2026-10-31) cannot run in Expo Go | never — while the DB is encrypted |
+| Seed JSON in sync with the vendored snapshot | data-coder verify row + CI step (`scripts/taxonomy/`) | ruling R-28: our own versioned taxonomy releases must be reproducible | never |
+| Documenter may write `verify.md`/`.json` | documenter frontmatter | sprint 0: the path guard blocked its generator rows and the orchestrator copied them by hand | never |
+| Data-coder owns `data/taxonomy/`, `scripts/taxonomy/`, `app.json` plugin entry, CI step | data-coder frontmatter | sprint 1 scope (R-24, R-28) | review after sprint 1 |
 
 ## 4. Carry-over opened here
 

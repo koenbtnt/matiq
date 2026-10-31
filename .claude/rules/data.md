@@ -35,3 +35,9 @@ sync seam). Loads when a data-layer file is touched.
 - Inputs: `plan.md §0` names the fields; `design.md §10` names what the UI consumes. `docs/<sprint-slug>/data-contracts.md` is the contract the frontend integrates against — write it as soon as the schema compiles.
 - Verify before any completion signal, from `mobile/`: `npx tsc --noEmit` · `npx jest --watchAll=false` · `npx drizzle-kit generate && git diff --exit-code -- drizzle/` (no schema changes, clean diff). Record the rows in `verify.md`.
 - Catalog seed data (positions, techniques, tags) is an idempotent repository call on first launch; fictional notes only.
+
+## Taxonomy seed pipeline (ruling R-28)
+
+- The vendored GrappleMap snapshot lives in `data/taxonomy/grapplemap/` (pinned to `Eelis/GrappleMap` master 2023-02-06, public domain, with a `SOURCE.md` naming commit, date and licence); curated overrides in `data/taxonomy/curated/*.json` (canonical names, aliases, edge types, the core set, gi additions; attribution for grapple-flows CC BY where used); the converter in `scripts/taxonomy/` (Node, deterministic, no network at build time; record boundaries and pose blocks per the GrappleMap format in `docs/stack-notes.md`; endpoint resolution by pose canonicalisation, reference `bjj3d` `build-data.ts`); output `mobile/src/db/seed/*.json`, committed.
+- The converter is a check like the migrations: CI and the data-coder's verify chain run it and `git diff --exit-code -- mobile/src/db/seed/` must be empty.
+- Seeded rows carry `origin = 'seed'`, `source = 'grapplemap@2023-02-06'` (or `curated@<version>`), `source_id`, `source_version`; the curated core is a flag on the row; the extended library is a user setting that widens pickers and search. The app seeds on first launch through one idempotent repository call.
