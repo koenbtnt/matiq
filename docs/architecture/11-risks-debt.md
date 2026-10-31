@@ -20,7 +20,7 @@ The ledger of known failures and deferred items is [docs/carry-over.md](../carry
 
 ## Assumptions ledger (pending PO)
 
-All eleven were taken at their default while the PO was offline (2026-10-31); none is a ruling. Full text and what changes if ruled otherwise: [docs/product-spec/assumptions.md](../product-spec/assumptions.md).
+All fourteen were taken at their default while the PO was offline (2026-10-31); none is a ruling. Full text and what changes if ruled otherwise: [docs/product-spec/assumptions.md](../product-spec/assumptions.md).
 
 | Id | Assumption (short) |
 |---|---|
@@ -35,3 +35,6 @@ All eleven were taken at their default while the PO was offline (2026-10-31); no
 | A-9 | Rename keeps the old name as an alias (pre-ticked) |
 | A-10 | Plaintext JSON export with a warning |
 | A-11 | DB and key excluded from OS backups; device-only key class |
+| A-12 | Review fields as columns on `sessions`, not a `session_reviews` table (ADR 0017) |
+| A-13 | Numeric algorithm defaults other than the ruled 8-week window (ADR 0010) |
+| A-14 | Seed ids minted by the converter and fixed in the seed file (ADR 0011) |

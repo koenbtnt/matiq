@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user)
+- **Deciders:** PO (user) for export/import/erase and encryption (R-12, R-27); import semantics, erase confirmation and export protection are assumptions A-2, A-10, pending PO (2026-10-31)
 - **Decision ids:** D-21 / R-12, R-27, R-26; assumptions A-2, A-10
 - **Source:** `docs/decisions.md` Data R-12, Privacy R-12/R-27; plan §0 D-21, §5, §6, §11.
 

@@ -2,9 +2,9 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user)
+- **Deciders:** PO (user) for R-24 / R-12; the key accessibility class and OS-backup exclusion are assumptions A-10, A-11, pending PO (2026-10-31)
 - **Decision ids:** D-22 / R-24, R-12, R-31; assumptions A-10, A-11
-- **Source:** `docs/decisions.md` Data R-24, R-12; plan §0 D-22, §0.1 #10, #11; `docs/product-spec/assumptions.md` A-10, A-11. Wording of the keychain class is being corrected by the planner in parallel.
+- **Source:** `docs/decisions.md` Data R-24, R-12; plan §0 D-22, §0.1 #10, #11; `docs/product-spec/assumptions.md` A-10, A-11.
 
 ## Ruling (quoted)
 

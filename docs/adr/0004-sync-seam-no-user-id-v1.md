@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user)
+- **Deciders:** PO via binding rules (`.claude/rules/privacy.md:8` "no backend, no account, no sync"; `privacy.md:11` "no account identifiers until an auth ADR exists") and ruling R-27
 - **Decision ids:** D-02 / S-03, S-12, R-01, R-16, R-27
 - **Source:** `docs/decisions.md` Product R-27, R-16; plan §0 D-02 (marked there as the planner's reading of brief prose for the `user_id` absence).
 
@@ -28,6 +28,11 @@ v1 has one user and no backend, but the PO intends a coach tier later (v2). Retr
 - Seam only: `id` UUID v4, `created_at`, `updated_at` (ISO UTC), `deleted_at` on every table (chosen).
 - Seam plus `user_id` column now: rejected, `.claude/rules/privacy.md` and the single-user scope give it no value; a tenant column arrives by additive migration in v2.
 - No seam: rejected, soft delete and stable ids are also needed for undo (R-26) and merge (R-14).
+
+## Binding rules
+
+- `.claude/rules/privacy.md:8`: v1 has no backend, no account, no sync; the sync seam is a schema convention, not a feature.
+- `.claude/rules/privacy.md:11`: no account identifiers until an auth ADR exists, hence no `user_id` column in v1.
 
 ## Decision outcome
 

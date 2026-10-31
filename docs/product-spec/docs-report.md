@@ -50,4 +50,12 @@ None (only `app_meta`, fully described). Owner if this changes: data-coder.
 
 ## Blocked
 
-None. Pending PO, carried as assumptions and not as rulings: A-1…A-11 (`docs/product-spec/assumptions.md`); ADR 0006 states A-10/A-11 as pending. The planner's parallel wording fix for the keychain class was not present at this sha; ADR 0006 cites A-11 and plan D-22 as written.
+None. Pending PO, carried as assumptions and not as rulings: A-1…A-14 (`docs/product-spec/assumptions.md`); ADR 0006 states A-10/A-11 as pending.
+
+## Review 2 follow-up (9e791a5)
+
+| Finding | Change |
+|---|---|
+| F-01 | stale "in parallel"/"not present" remarks removed from ADR 0006 and this report; the keychain wording fix is in 7812738 and ADR 0006 matches it |
+| F-02 | Deciders reworded in 0004, 0006, 0010, 0011, 0015, 0017; 0004 cites `privacy.md:8` and `:11`; A-12 (0017), A-13 (0010), A-14 (0011) marked assumed, pending PO (2026-10-31) |
+| F-05 | arc42 10 Reliability row matches `.github/workflows/ci.yml` step "Migrations are in sync with the schema" (`npx drizzle-kit generate` then `git diff --exit-code -- drizzle/`, in `mobile/`) |
