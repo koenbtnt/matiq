@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>matiq — Progress</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input::placeholder,textarea::placeholder{color:#8A8F97}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: {{tk.bgBase}}; color: {{tk.text1}}; font-family: Inter, system-ui, sans-serif">
+  <div style="padding: 62px 20px 0; display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 32px; line-height: 36px; letter-spacing: -0.01em">Progress</h1>
+
+    <section aria-label="Current rank" style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; height: 28px; border-radius: 4px; overflow: hidden">
+        <div style="flex: 1; background: #2E62F0"></div>
+        <div style="width: 76px; background: #0B0C0E; display: flex; justify-content: flex-end; align-items: stretch; gap: 5px; padding: 0 8px">
+          <div style="width: 6px; background: #FFFFFF"></div>
+          <div style="width: 6px; background: #FFFFFF"></div>
+          <div style="width: 6px; border: 1px dashed {{tk.borderStronger}}; box-sizing: border-box"></div>
+        </div>
+        <div style="width: 14px; background: #2E62F0"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 20px; line-height: 24px">Blue belt · 2 stripes</span>
+          <span style="font-size: 13px; color: {{tk.text2}}">Since 14 Mar 2025 · 1 y 7 m at rank</span>
+        </div>
+        <button type="button" aria-label="Promotion history" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid {{tk.border}}; background: {{tk.bgRaised}}; color: {{tk.text1}}; display: flex; align-items: center; justify-content: center; padding: 0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+        </button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <div style="background: {{tk.bgRaised}}; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+          <span style="font-family: Archivo, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums">86 h</span>
+          <span style="font-size: 12px; color: {{tk.text2}}">since last stripe</span>
+        </div>
+        <div style="background: {{tk.bgRaised}}; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+          <span style="font-family: Archivo, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums">142</span>
+          <span style="font-size: 12px; color: {{tk.text2}}">sessions at blue</span>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Mat hours" style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Mat hours</span>
+          <span style="font-family: Archivo, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 28px; line-height: 30px; font-variant-numeric: tabular-nums">{{total}}</span>
+        </div>
+        <div style="display: flex; padding: 3px; border-radius: 12px; background: {{tk.bgRaised}}; gap: 2px">
+          <sc-for list="{{periods}}" as="p" hint-placeholder-count="3">
+            <button type="button" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="height: 32px; padding: 0 12px; border: 0; border-radius: 9px; background: {{p.bg}}; color: {{p.fg}}; font-size: 13px; font-weight: 600">{{p.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div role="img" aria-label="{{chartLabel}}" style="display: flex; align-items: flex-end; gap: 8px; height: 120px; border-bottom: 1px solid {{tk.border}}">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="8">
+          <div style="flex: 1; height: {{b.h}}px; border-radius: 6px 6px 0 0; background: {{b.c}}"></div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="8">
+          <span style="flex: 1; text-align: center; font-size: 11px; color: {{tk.text2}}">{{b.l}}</span>
+        </sc-for>
+      </div>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <section aria-label="Gi versus No-Gi" style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Gi / No-Gi</span>
+        <div style="display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px">
+          <div style="width: 62%; background: {{tk.text1}}"></div>
+          <div style="flex: 1; background: {{tk.borderStronger}}"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">62% Gi</span><span style="color: {{tk.text2}}">38%</span></div>
+      </section>
+      <section aria-label="Submissions" style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{tk.text2}}">Taps given / taken</span>
+        <div style="display: flex; align-items: baseline; gap: 6px">
+          <span style="font-family: Archivo, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 24px; font-variant-numeric: tabular-nums">24</span>
+          <span style="font-size: 13px; color: {{tk.text2}}">/ 17 this month</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <nav aria-label="Main" style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: {{tk.tabbar}}; border-top: 1px solid {{tk.border}}; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-top: 8px; box-sizing: border-box">
+    <a href="{{nav.home}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+    <a href="{{nav.library}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11"></path></svg>Library</a>
+    <a href="{{nav.log}}" aria-label="Log session" style="display: flex; justify-content: center; text-decoration: none">
+      <span style="width: 52px; height: 52px; border-radius: 26px; background: {{tk.accent}}; color: {{tk.onAccent}}; display: flex; align-items: center; justify-content: center; margin-top: -4px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      </span></a>
+    <a href="{{nav.progress}}" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.accentText}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V5M19 20v-6"></path></svg>Progress</a>
+    <button type="button" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; background: transparent; border: 0; padding: 0; font-size: 10px; font-weight: 600; justify-content: flex-start">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"></path></svg>Profile</button>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["green","blue","orange","teal","gold","mono","volt"],"default":"green"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { period: 'Month' };
+  }
+  palette(theme, accent) {
+    const N = {
+      dark: { bgBase: '#0B0C0E', bgSurface: '#15171A', bgRaised: '#1E2125', border: '#2A2E33', borderStrong: '#3A3F45', borderStronger: '#4A4F56', text1: '#F4F4F1', text2: '#A3A8B0', text3: '#6A6F77', invBg: '#F4F4F1', invFg: '#0B0C0E', danger: '#FF5C7A', dangerTint: 'rgba(255,92,122,0.14)', warning: '#FFB547', warningTint: 'rgba(255,181,71,0.16)', info: '#6FA8FF', infoTint: 'rgba(111,168,255,0.16)', tabbar: 'rgba(21,23,26,0.96)', scrim: '#000000' },
+      light: { bgBase: '#F6F6F3', bgSurface: '#FFFFFF', bgRaised: '#EEEEEA', border: '#DCDCD6', borderStrong: '#C9C9C2', borderStronger: '#A9AAA3', text1: '#0B0C0E', text2: '#5A5F67', text3: '#9A9EA4', invBg: '#15171A', invFg: '#F6F6F3', danger: '#C4223F', dangerTint: '#FCE3E8', warning: '#8F5600', warningTint: '#FCEBD2', info: '#1F5BD1', infoTint: '#E2EBFC', tabbar: 'rgba(255,255,255,0.96)', scrim: '#B9B9B4' }
+    };
+    const A = {
+      green: { name: 'Emerald', brand: '#2EDB7F',
+        dark: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#5FE69C', accentBorder: '#2EDB7F', accentGraphic: '#2EDB7F', accentTint: 'rgba(46,219,127,0.16)' },
+        light: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#0B7A3E', accentBorder: '#17B061', accentGraphic: '#17B061', accentTint: '#DCF8E8' } },
+      blue: { name: 'Azure', brand: '#3BA3FF',
+        dark: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#6CBBFF', accentBorder: '#3BA3FF', accentGraphic: '#3BA3FF', accentTint: 'rgba(59,163,255,0.16)', info: '#B4BAC4', infoTint: 'rgba(180,186,196,0.14)' },
+        light: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#0A5BB5', accentBorder: '#1E86EB', accentGraphic: '#1E86EB', accentTint: '#DFEFFF', info: '#4A5059', infoTint: '#E8E9EC' } },
+      orange: { name: 'Signal Orange', brand: '#FF6A2B',
+        dark: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#FF8A57', accentBorder: '#FF6A2B', accentGraphic: '#FF6A2B', accentTint: 'rgba(255,106,43,0.16)' },
+        light: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#B23D0B', accentBorder: '#E2551A', accentGraphic: '#E2551A', accentTint: '#FFE8DD' } },
+      teal: { name: 'Mat Teal', brand: '#2DD4BF',
+        dark: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#5EE6D3', accentBorder: '#2DD4BF', accentGraphic: '#2DD4BF', accentTint: 'rgba(45,212,191,0.16)' },
+        light: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#0B6E62', accentBorder: '#129C8A', accentGraphic: '#129C8A', accentTint: '#DDF6F2' } },
+      gold: { name: 'Champion Gold', brand: '#FFC53D',
+        dark: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#FFD36B', accentBorder: '#FFC53D', accentGraphic: '#FFC53D', accentTint: 'rgba(255,197,61,0.16)' },
+        light: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#7A5000', accentBorder: '#C98A00', accentGraphic: '#B07800', accentTint: '#FFF1CC' } },
+      mono: { name: 'Monochrome', brand: '#F4F4F1',
+        dark: { accent: '#F4F4F1', onAccent: '#0B0C0E', accentText: '#F4F4F1', accentBorder: '#F4F4F1', accentGraphic: '#F4F4F1', accentTint: '#2A2E33' },
+        light: { accent: '#0B0C0E', onAccent: '#F6F6F3', accentText: '#0B0C0E', accentBorder: '#0B0C0E', accentGraphic: '#0B0C0E', accentTint: '#E4E4DF' } },
+      volt: { name: 'Volt', brand: '#D6FF3D',
+        dark: { accent: '#D6FF3D', onAccent: '#0B0C0E', accentText: '#D6FF3D', accentBorder: '#D6FF3D', accentGraphic: '#D6FF3D', accentTint: 'rgba(214,255,61,0.14)' },
+        light: { accent: '#0B0C0E', onAccent: '#D6FF3D', accentText: '#4A6300', accentBorder: '#8DB000', accentGraphic: '#6E8F00', accentTint: '#EDF7CF' } }
+    };
+    const t = theme === 'light' ? 'light' : 'dark';
+    const a = A[accent] || A.green;
+    return Object.assign({ theme: t, accentName: a.name, brand: a.brand }, N[t], a[t]);
+  }
+  renderVals() {
+    const theme = this.props.theme ?? 'dark';
+    const tk = this.palette(theme, this.props.accent ?? 'green');
+    const sfx = theme === 'light' ? 'Light' : '';
+    const period = this.state.period;
+    const data = {
+      Week: { labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'], values: [1.5, 0, 1.5, 0, 1, 1.5, 0] },
+      Month: { labels: ['W36', 'W37', 'W38', 'W39', 'W40', 'W41', 'W42', 'W43'], values: [3, 4.5, 2, 3.5, 5, 4, 3, 4.5] },
+      Year: { labels: ['M', 'A', 'M', 'J', 'J', 'A', 'S', 'O'], values: [12, 14, 9, 16, 11, 8, 13, 14.5] }
+    }[period];
+    const max = Math.max.apply(null, data.values);
+    const last = data.values.length - 1;
+    const total = data.values.reduce((a, b) => a + b, 0);
+    return {
+      theme,
+      tk,
+      nav: { home: `Home${sfx}.dc.html`, library: `Library${sfx}.dc.html`, log: `LogSession${sfx}.dc.html`, progress: `Progress${sfx}.dc.html`, technique: `Technique${sfx}.dc.html` },
+      total: total.toFixed(1) + ' h',
+      chartLabel: 'Mat hours per ' + (period === 'Week' ? 'day' : period === 'Month' ? 'week' : 'month') + ', ' + total.toFixed(1) + ' hours total',
+      periods: ['Week', 'Month', 'Year'].map((label) => ({
+        label,
+        on: period === label,
+        bg: period === label ? tk.invBg : 'transparent',
+        fg: period === label ? tk.invFg : tk.text2,
+        pick: () => this.setState({ period: label })
+      })),
+      bars: data.values.map((v, i) => ({
+        l: data.labels[i],
+        h: Math.max(4, Math.round((v / max) * 116)),
+        c: i === last ? tk.accentGraphic : tk.borderStrong
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>matiq — Library</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input::placeholder,textarea::placeholder{color:#8A8F97}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: {{tk.bgBase}}; color: {{tk.text1}}; font-family: Inter, system-ui, sans-serif">
+  <div style="padding: 62px 0 0; display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 0; padding: 0 20px; font-family: Archivo, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 32px; line-height: 36px; letter-spacing: -0.01em">Library</h1>
+
+    <div style="display: flex; gap: 8px; padding: 0 20px">
+      <label style="flex: 1; height: 44px; border-radius: 22px; background: {{tk.bgRaised}}; display: flex; align-items: center; gap: 10px; padding: 0 16px; color: {{tk.text2}}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"></path></svg>
+        <input type="search" aria-label="Search techniques" placeholder="Search techniques, positions…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: {{tk.text1}}; font: 400 15px Inter, sans-serif">
+      </label>
+      <button type="button" aria-label="Filters" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid {{tk.border}}; background: {{tk.bgSurface}}; color: {{tk.text1}}; display: flex; align-items: center; justify-content: center; padding: 0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M16 5v4M10 15v4"></path></svg>
+      </button>
+    </div>
+
+    <div style="display: flex; gap: 8px; padding: 0 20px; overflow: hidden">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+        <button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="flex: none; height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid {{c.border}}; background: {{c.bg}}; color: {{c.fg}}; font-size: 14px; font-weight: 600">{{c.label}}</button>
+      </sc-for>
+    </div>
+
+    <section aria-label="Positions" style="display: flex; flex-direction: column; gap: 10px; padding: 0 20px">
+      <h2 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 18px">Positions</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{positions}}" as="p" hint-placeholder-count="4">
+          <a href="{{nav.technique}}" style="background: {{tk.bgSurface}}; border: 1px solid {{tk.border}}; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: {{tk.text1}}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start">
+              <span style="font-family: Archivo, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 26px; line-height: 28px; color: {{tk.accentText}}; font-variant-numeric: tabular-nums">{{p.count}}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color: {{tk.text2}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 15px; font-weight: 600">{{p.name}}</span>
+              <span style="font-size: 12px; color: {{tk.text2}}">{{p.drilled}} drilled</span>
+            </div>
+            <div style="height: 4px; border-radius: 2px; background: {{tk.border}}; overflow: hidden">
+              <div style="height: 4px; width: {{p.pct}}%; background: {{tk.text1}}"></div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Continue learning" style="display: flex; flex-direction: column; gap: 4px; padding: 0 20px">
+      <div style="display: flex; justify-content: space-between; align-items: center; height: 32px">
+        <h2 style="margin: 0; font-family: Archivo, sans-serif; font-stretch: 110%; font-weight: 700; font-size: 18px">Continue learning</h2>
+        <span style="font-size: 13px; color: {{tk.text2}}">From your coach</span>
+      </div>
+      <sc-for list="{{continueList}}" as="t" hint-placeholder-count="3">
+        <a href="{{nav.technique}}" style="display: flex; align-items: center; gap: 12px; min-height: 72px; border-bottom: 1px solid {{tk.border}}; text-decoration: none; color: {{tk.text1}}">
+          <div style="width: 56px; height: 56px; border-radius: 12px; background: {{tk.bgRaised}}; display: flex; align-items: center; justify-content: center; flex: none; color: {{tk.text1}}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0">
+            <span style="font-size: 15px; font-weight: 600">{{t.name}}</span>
+            <span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: {{tk.text2}}">
+              <span style="width: 14px; height: 6px; border-radius: 2px; background: {{t.belt}}; box-shadow: 0 0 0 1px {{tk.borderStrong}}"></span>{{t.meta}}</span>
+          </div>
+          <span style="height: 24px; padding: 0 8px; border-radius: 6px; background: {{t.badgeBg}}; color: {{t.badgeFg}}; display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase">{{t.badge}}</span>
+        </a>
+      </sc-for>
+    </section>
+  </div>
+
+  <nav aria-label="Main" style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: {{tk.tabbar}}; border-top: 1px solid {{tk.border}}; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-top: 8px; box-sizing: border-box">
+    <a href="{{nav.home}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+    <a href="{{nav.library}}" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.accentText}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11"></path></svg>Library</a>
+    <a href="{{nav.log}}" aria-label="Log session" style="display: flex; justify-content: center; text-decoration: none">
+      <span style="width: 52px; height: 52px; border-radius: 26px; background: {{tk.accent}}; color: {{tk.onAccent}}; display: flex; align-items: center; justify-content: center; margin-top: -4px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      </span></a>
+    <a href="{{nav.progress}}" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; text-decoration: none; font-size: 10px; font-weight: 600">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V5M19 20v-6"></path></svg>Progress</a>
+    <button type="button" style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{tk.text2}}; background: transparent; border: 0; padding: 0; font-size: 10px; font-weight: 600; justify-content: flex-start">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"></path></svg>Profile</button>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["green","blue","orange","teal","gold","mono","volt"],"default":"green"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 'All' };
+  }
+  palette(theme, accent) {
+    const N = {
+      dark: { bgBase: '#0B0C0E', bgSurface: '#15171A', bgRaised: '#1E2125', border: '#2A2E33', borderStrong: '#3A3F45', borderStronger: '#4A4F56', text1: '#F4F4F1', text2: '#A3A8B0', text3: '#6A6F77', invBg: '#F4F4F1', invFg: '#0B0C0E', danger: '#FF5C7A', dangerTint: 'rgba(255,92,122,0.14)', warning: '#FFB547', warningTint: 'rgba(255,181,71,0.16)', info: '#6FA8FF', infoTint: 'rgba(111,168,255,0.16)', tabbar: 'rgba(21,23,26,0.96)', scrim: '#000000' },
+      light: { bgBase: '#F6F6F3', bgSurface: '#FFFFFF', bgRaised: '#EEEEEA', border: '#DCDCD6', borderStrong: '#C9C9C2', borderStronger: '#A9AAA3', text1: '#0B0C0E', text2: '#5A5F67', text3: '#9A9EA4', invBg: '#15171A', invFg: '#F6F6F3', danger: '#C4223F', dangerTint: '#FCE3E8', warning: '#8F5600', warningTint: '#FCEBD2', info: '#1F5BD1', infoTint: '#E2EBFC', tabbar: 'rgba(255,255,255,0.96)', scrim: '#B9B9B4' }
+    };
+    const A = {
+      green: { name: 'Emerald', brand: '#2EDB7F',
+        dark: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#5FE69C', accentBorder: '#2EDB7F', accentGraphic: '#2EDB7F', accentTint: 'rgba(46,219,127,0.16)' },
+        light: { accent: '#2EDB7F', onAccent: '#0B0C0E', accentText: '#0B7A3E', accentBorder: '#17B061', accentGraphic: '#17B061', accentTint: '#DCF8E8' } },
+      blue: { name: 'Azure', brand: '#3BA3FF',
+        dark: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#6CBBFF', accentBorder: '#3BA3FF', accentGraphic: '#3BA3FF', accentTint: 'rgba(59,163,255,0.16)', info: '#B4BAC4', infoTint: 'rgba(180,186,196,0.14)' },
+        light: { accent: '#3BA3FF', onAccent: '#0B0C0E', accentText: '#0A5BB5', accentBorder: '#1E86EB', accentGraphic: '#1E86EB', accentTint: '#DFEFFF', info: '#4A5059', infoTint: '#E8E9EC' } },
+      orange: { name: 'Signal Orange', brand: '#FF6A2B',
+        dark: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#FF8A57', accentBorder: '#FF6A2B', accentGraphic: '#FF6A2B', accentTint: 'rgba(255,106,43,0.16)' },
+        light: { accent: '#FF6A2B', onAccent: '#0B0C0E', accentText: '#B23D0B', accentBorder: '#E2551A', accentGraphic: '#E2551A', accentTint: '#FFE8DD' } },
+      teal: { name: 'Mat Teal', brand: '#2DD4BF',
+        dark: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#5EE6D3', accentBorder: '#2DD4BF', accentGraphic: '#2DD4BF', accentTint: 'rgba(45,212,191,0.16)' },
+        light: { accent: '#2DD4BF', onAccent: '#0B0C0E', accentText: '#0B6E62', accentBorder: '#129C8A', accentGraphic: '#129C8A', accentTint: '#DDF6F2' } },
+      gold: { name: 'Champion Gold', brand: '#FFC53D',
+        dark: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#FFD36B', accentBorder: '#FFC53D', accentGraphic: '#FFC53D', accentTint: 'rgba(255,197,61,0.16)' },
+        light: { accent: '#FFC53D', onAccent: '#0B0C0E', accentText: '#7A5000', accentBorder: '#C98A00', accentGraphic: '#B07800', accentTint: '#FFF1CC' } },
+      mono: { name: 'Monochrome', brand: '#F4F4F1',
+        dark: { accent: '#F4F4F1', onAccent: '#0B0C0E', accentText: '#F4F4F1', accentBorder: '#F4F4F1', accentGraphic: '#F4F4F1', accentTint: '#2A2E33' },
+        light: { accent: '#0B0C0E', onAccent: '#F6F6F3', accentText: '#0B0C0E', accentBorder: '#0B0C0E', accentGraphic: '#0B0C0E', accentTint: '#E4E4DF' } },
+      volt: { name: 'Volt', brand: '#D6FF3D',
+        dark: { accent: '#D6FF3D', onAccent: '#0B0C0E', accentText: '#D6FF3D', accentBorder: '#D6FF3D', accentGraphic: '#D6FF3D', accentTint: 'rgba(214,255,61,0.14)' },
+        light: { accent: '#0B0C0E', onAccent: '#D6FF3D', accentText: '#4A6300', accentBorder: '#8DB000', accentGraphic: '#6E8F00', accentTint: '#EDF7CF' } }
+    };
+    const t = theme === 'light' ? 'light' : 'dark';
+    const a = A[accent] || A.green;
+    return Object.assign({ theme: t, accentName: a.name, brand: a.brand }, N[t], a[t]);
+  }
+  renderVals() {
+    const theme = this.props.theme ?? 'dark';
+    const tk = this.palette(theme, this.props.accent ?? 'green');
+    const sfx = theme === 'light' ? 'Light' : '';
+    const cat = this.state.cat;
+    return {
+      theme,
+      tk,
+      nav: { home: `Home${sfx}.dc.html`, library: `Library${sfx}.dc.html`, log: `LogSession${sfx}.dc.html`, progress: `Progress${sfx}.dc.html`, technique: `Technique${sfx}.dc.html` },
+      cats: ['All', 'Guard', 'Passing', 'Sweeps', 'Submissions', 'Escapes'].map((label) => ({
+        label,
+        on: cat === label,
+        bg: cat === label ? tk.invBg : 'transparent',
+        fg: cat === label ? tk.invFg : tk.text1,
+        border: cat === label ? tk.invBg : tk.border,
+        pick: () => this.setState({ cat: label })
+      })),
+      positions: [
+        { name: 'Closed guard', count: 24, drilled: 15, pct: 62 },
+        { name: 'Half guard', count: 31, drilled: 9, pct: 29 },
+        { name: 'Mount', count: 18, drilled: 12, pct: 67 },
+        { name: 'Back control', count: 22, drilled: 6, pct: 27 }
+      ],
+      continueList: [
+        { name: 'Knee cut pass', meta: 'Half guard · Passing', belt: '#2E62F0', badge: 'Drilled', badgeBg: tk.accentTint, badgeFg: tk.accentText },
+        { name: 'Scissor sweep', meta: 'Closed guard · Sweeps', belt: '#EDEDE8', badge: 'New', badgeBg: tk.infoTint, badgeFg: tk.info },
+        { name: 'Armbar from guard', meta: 'Closed guard · Submissions', belt: '#EDEDE8', badge: 'New', badgeBg: tk.infoTint, badgeFg: tk.info }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

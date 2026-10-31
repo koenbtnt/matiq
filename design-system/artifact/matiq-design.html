@@ -1,0 +1,210 @@
+<!doctype html>
+<!--
+  matiq design system: static export of the Claude Design canvas.
+  Source canvas: https://claude.ai/artifact/BJQCTGcpWTzTV2wA6bwyiR (version 13, exported 2026-10-31)
+  Canvas source files (screens, components, exact styles): ./canvas/*.dc.html. Index: ./canvas/canvas.json
+  Accent decision: Emerald #2EDB7F, confirmed by the user on 2026-10-31 ("Yes, keep Emerald").
+  This file is the source of truth for the design intake (design-system/README.md). Agents never edit it.
+  To change the design, edit the canvas and re-export.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>matiq Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+:root { color-scheme: dark; }
+body { margin: 0; background: #0B0C0E; color: #F4F4F1; font: 15px/22px Inter, system-ui, sans-serif; }
+main { max-width: 1040px; margin: 0 auto; padding: 48px 24px 96px; }
+h1, h2 { font-family: Archivo, sans-serif; font-weight: 800; font-stretch: 115%; letter-spacing: -0.01em; }
+h1 { font-size: 40px; line-height: 44px; margin: 0 0 8px; }
+h2 { font-size: 28px; line-height: 32px; margin: 56px 0 16px; }
+h3 { font-size: 17px; line-height: 22px; font-weight: 600; margin: 28px 0 10px; }
+p, li { color: #A3A8B0; }
+a { color: #5FE69C; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #2A2E33; vertical-align: top; }
+th { color: #A3A8B0; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+code { font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+.sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; box-shadow: 0 0 0 1px #3A3F45; }
+</style>
+</head>
+<body>
+<main>
+
+<header id="overview">
+  <h1>matiq Design System</h1>
+  <p>The design system for matiq, the BJJ training companion, on native iOS and Android with light and dark themes. The theme follows the system setting. Exported from the <a href="https://claude.ai/artifact/BJQCTGcpWTzTV2wA6bwyiR">design canvas</a> (version 13).</p>
+  <p>Where this export and a canvas default differ, the canvas default with accent <code>green</code> wins. Other accents in the canvas Accent tweak (blue, orange, teal, gold, mono, volt) are rejected alternatives. They are not part of the system.</p>
+</header>
+
+<section id="principles">
+  <h2>01 · Principles</h2>
+  <table>
+    <tr><th>#</th><th>Principle</th><th>Meaning</th></tr>
+    <tr><td>01</td><td>Mat-side first</td><td>One-thumb flows and big targets. Logging a session takes under 30 seconds, even with sweaty hands.</td></tr>
+    <tr><td>02</td><td>Belt as language</td><td>Belt colors mean rank and nothing else, so progress reads instantly across the app.</td></tr>
+    <tr><td>03</td><td>Quiet until it counts</td><td>Neutral surfaces. The accent appears only on the primary action and on progress.</td></tr>
+    <tr><td>04</td><td>Native at heart</td><td>One token set, with platform-native navigation, sheets, back gestures and haptics.</td></tr>
+  </table>
+</section>
+
+<section id="color">
+  <h2>02 · Color: semantic tokens</h2>
+  <p>Token names are the same in both themes. Accent: <strong>Emerald</strong>, brand <code>#2EDB7F</code>.</p>
+  <table>
+    <tr><th>Token</th><th>Usage</th><th>Dark</th><th>Light</th></tr>
+    <tr><td><code>bg.base</code></td><td>App background</td><td><span class="sw" style="background:#0B0C0E"></span><code>#0B0C0E</code></td><td><span class="sw" style="background:#F6F6F3"></span><code>#F6F6F3</code></td></tr>
+    <tr><td><code>bg.surface</code></td><td>Cards, sheets, tab bar</td><td><span class="sw" style="background:#15171A"></span><code>#15171A</code></td><td><span class="sw" style="background:#FFFFFF"></span><code>#FFFFFF</code></td></tr>
+    <tr><td><code>bg.raised</code></td><td>Inputs, highlighted cards, secondary buttons</td><td><span class="sw" style="background:#1E2125"></span><code>#1E2125</code></td><td><span class="sw" style="background:#EEEEEA"></span><code>#EEEEEA</code></td></tr>
+    <tr><td><code>border.default</code></td><td>Hairlines, dividers</td><td><span class="sw" style="background:#2A2E33"></span><code>#2A2E33</code></td><td><span class="sw" style="background:#DCDCD6"></span><code>#DCDCD6</code></td></tr>
+    <tr><td><code>border.strong</code></td><td>Outlined buttons, inactive bars, white/black belt edge</td><td><span class="sw" style="background:#3A3F45"></span><code>#3A3F45</code></td><td><span class="sw" style="background:#C9C9C2"></span><code>#C9C9C2</code></td></tr>
+    <tr><td><code>border.stronger</code></td><td>Emphasised outlines</td><td><span class="sw" style="background:#4A4F56"></span><code>#4A4F56</code></td><td><span class="sw" style="background:#A9AAA3"></span><code>#A9AAA3</code></td></tr>
+    <tr><td><code>text.primary</code></td><td>Titles, body</td><td><span class="sw" style="background:#F4F4F1"></span><code>#F4F4F1</code></td><td><span class="sw" style="background:#0B0C0E"></span><code>#0B0C0E</code></td></tr>
+    <tr><td><code>text.secondary</code></td><td>Metadata, labels</td><td><span class="sw" style="background:#A3A8B0"></span><code>#A3A8B0</code></td><td><span class="sw" style="background:#5A5F67"></span><code>#5A5F67</code></td></tr>
+    <tr><td><code>text.disabled</code></td><td>Disabled labels</td><td><span class="sw" style="background:#6A6F77"></span><code>#6A6F77</code></td><td><span class="sw" style="background:#9A9EA4"></span><code>#9A9EA4</code></td></tr>
+    <tr><td><code>text.placeholder</code></td><td>Input placeholder (both themes)</td><td><span class="sw" style="background:#8A8F97"></span><code>#8A8F97</code></td><td><span class="sw" style="background:#8A8F97"></span><code>#8A8F97</code></td></tr>
+    <tr><td><code>inverse.bg</code></td><td>Selected segment, toast</td><td><span class="sw" style="background:#F4F4F1"></span><code>#F4F4F1</code></td><td><span class="sw" style="background:#15171A"></span><code>#15171A</code></td></tr>
+    <tr><td><code>inverse.fg</code></td><td>Text on inverse</td><td><span class="sw" style="background:#0B0C0E"></span><code>#0B0C0E</code></td><td><span class="sw" style="background:#F6F6F3"></span><code>#F6F6F3</code></td></tr>
+    <tr><td><code>accent.fill</code></td><td>Primary button, Log tab</td><td><span class="sw" style="background:#2EDB7F"></span><code>#2EDB7F</code></td><td><span class="sw" style="background:#2EDB7F"></span><code>#2EDB7F</code></td></tr>
+    <tr><td><code>accent.on</code></td><td>Label on accent.fill (always dark)</td><td><span class="sw" style="background:#0B0C0E"></span><code>#0B0C0E</code></td><td><span class="sw" style="background:#0B0C0E"></span><code>#0B0C0E</code></td></tr>
+    <tr><td><code>accent.text</code></td><td>Links, active tab, overlines</td><td><span class="sw" style="background:#5FE69C"></span><code>#5FE69C</code></td><td><span class="sw" style="background:#0B7A3E"></span><code>#0B7A3E</code></td></tr>
+    <tr><td><code>accent.border</code></td><td>Selected chip, focus ring</td><td><span class="sw" style="background:#2EDB7F"></span><code>#2EDB7F</code></td><td><span class="sw" style="background:#17B061"></span><code>#17B061</code></td></tr>
+    <tr><td><code>accent.graphic</code></td><td>Charts, intensity, progress</td><td><span class="sw" style="background:#2EDB7F"></span><code>#2EDB7F</code></td><td><span class="sw" style="background:#17B061"></span><code>#17B061</code></td></tr>
+    <tr><td><code>accent.tint</code></td><td>Selected chip fill, Drilled badge</td><td><span class="sw" style="background:rgba(46,219,127,0.16)"></span><code>rgba(46,219,127,0.16)</code></td><td><span class="sw" style="background:#DCF8E8"></span><code>#DCF8E8</code></td></tr>
+    <tr><td><code>feedback.danger</code></td><td>Destructive, injury</td><td><span class="sw" style="background:#FF5C7A"></span><code>#FF5C7A</code></td><td><span class="sw" style="background:#C4223F"></span><code>#C4223F</code></td></tr>
+    <tr><td><code>feedback.danger.tint</code></td><td>Destructive button fill</td><td><span class="sw" style="background:rgba(255,92,122,0.14)"></span><code>rgba(255,92,122,0.14)</code></td><td><span class="sw" style="background:#FCE3E8"></span><code>#FCE3E8</code></td></tr>
+    <tr><td><code>feedback.warning</code></td><td>Comp, warnings</td><td><span class="sw" style="background:#FFB547"></span><code>#FFB547</code></td><td><span class="sw" style="background:#8F5600"></span><code>#8F5600</code></td></tr>
+    <tr><td><code>feedback.warning.tint</code></td><td>Warning tag fill</td><td><span class="sw" style="background:rgba(255,181,71,0.16)"></span><code>rgba(255,181,71,0.16)</code></td><td><span class="sw" style="background:#FCEBD2"></span><code>#FCEBD2</code></td></tr>
+    <tr><td><code>feedback.info</code></td><td>Gi tag, New badge</td><td><span class="sw" style="background:#6FA8FF"></span><code>#6FA8FF</code></td><td><span class="sw" style="background:#1F5BD1"></span><code>#1F5BD1</code></td></tr>
+    <tr><td><code>feedback.info.tint</code></td><td>Info tag fill</td><td><span class="sw" style="background:rgba(111,168,255,0.16)"></span><code>rgba(111,168,255,0.16)</code></td><td><span class="sw" style="background:#E2EBFC"></span><code>#E2EBFC</code></td></tr>
+    <tr><td><code>tabbar</code></td><td>Tab / navigation bar background</td><td><code>rgba(21,23,26,0.96)</code></td><td><code>rgba(255,255,255,0.96)</code></td></tr>
+    <tr><td><code>scrim</code></td><td>Behind sheets</td><td><span class="sw" style="background:#000000"></span><code>#000000</code></td><td><span class="sw" style="background:#B9B9B4"></span><code>#B9B9B4</code></td></tr>
+  </table>
+
+  <h3 id="color-rules">Theme rules</h3>
+  <ul>
+    <li>Accent fills keep a dark label in both themes. Accent text and lines use a darker shade on light.</li>
+    <li>Belts don't change with the theme. On light surfaces the white belt gets a hairline (<code>border.strong</code>) so it stays visible.</li>
+    <li>Elevation: dark steps surfaces up (base → surface → raised) and uses no shadows. Light uses white cards on an off-white base with hairlines.</li>
+    <li>Emerald doubles as success. Keep it clearly distinct from the kids green belt <code>#2FA35A</code>.</li>
+  </ul>
+
+  <h3 id="belts">Belt colors (rank only, theme-invariant)</h3>
+  <table>
+    <tr><th>Token</th><th>Belt</th><th>Fill</th><th>Rank bar</th><th>Edge</th></tr>
+    <tr><td><code>belt.white</code></td><td>White</td><td><span class="sw" style="background:#EDEDE8"></span><code>#EDEDE8</code></td><td><code>#0B0C0E</code></td><td><code>border.strong</code></td></tr>
+    <tr><td><code>belt.blue</code></td><td>Blue</td><td><span class="sw" style="background:#2E62F0"></span><code>#2E62F0</code></td><td><code>#0B0C0E</code></td><td><code>#2E62F0</code></td></tr>
+    <tr><td><code>belt.purple</code></td><td>Purple</td><td><span class="sw" style="background:#7E4FE0"></span><code>#7E4FE0</code></td><td><code>#0B0C0E</code></td><td><code>#7E4FE0</code></td></tr>
+    <tr><td><code>belt.brown</code></td><td>Brown</td><td><span class="sw" style="background:#7A4E2A"></span><code>#7A4E2A</code></td><td><code>#0B0C0E</code></td><td><code>#7A4E2A</code></td></tr>
+    <tr><td><code>belt.black</code></td><td>Black</td><td><span class="sw" style="background:#111111"></span><code>#111111</code></td><td><code>#D7262E</code> (red bar)</td><td><code>border.strong</code></td></tr>
+    <tr><td><code>belt.stripe</code></td><td>Degree stripes (0–4)</td><td><span class="sw" style="background:#FFFFFF"></span><code>#FFFFFF</code></td><td>on rank bar</td><td>—</td></tr>
+    <tr><td><code>belt.kids.grey</code></td><td>Kids grey</td><td><span class="sw" style="background:#8E9196"></span><code>#8E9196</code></td><td colspan="2" rowspan="4">Kids ranks. White / black split variants use a 50% band.</td></tr>
+    <tr><td><code>belt.kids.yellow</code></td><td>Kids yellow</td><td><span class="sw" style="background:#F2C230"></span><code>#F2C230</code></td></tr>
+    <tr><td><code>belt.kids.orange</code></td><td>Kids orange</td><td><span class="sw" style="background:#F2862E"></span><code>#F2862E</code></td></tr>
+    <tr><td><code>belt.kids.green</code></td><td>Kids green</td><td><span class="sw" style="background:#2FA35A"></span><code>#2FA35A</code></td></tr>
+  </table>
+</section>
+
+<section id="typography">
+  <h2>03 · Typography</h2>
+  <p>Archivo, a variable font with a width axis, is used for display text, titles and numbers. Inter is used for reading and UI. Sizes are in pt (iOS), which equal sp (Android). All styles scale with Dynamic Type or the system font scale up to 200%. Display caps at 1.3×. Numbers always use tabular figures.</p>
+  <table>
+    <tr><th>Style</th><th>Family</th><th>Weight</th><th>Width</th><th>Size / line</th><th>Tracking</th><th>Usage</th></tr>
+    <tr><td>display</td><td>Archivo</td><td>800</td><td>125%</td><td>44 / 44</td><td>−0.02em</td><td>Stats, tabular numbers</td></tr>
+    <tr><td>title-l</td><td>Archivo</td><td>800</td><td>115%</td><td>28 / 32</td><td>−0.01em</td><td>Screen titles</td></tr>
+    <tr><td>title-m</td><td>Archivo</td><td>700</td><td>110%</td><td>20 / 24</td><td>0</td><td>Cards, sections</td></tr>
+    <tr><td>headline</td><td>Inter</td><td>600</td><td>—</td><td>17 / 22</td><td>0</td><td>List titles, buttons</td></tr>
+    <tr><td>body</td><td>Inter</td><td>400</td><td>—</td><td>15 / 22</td><td>0</td><td>Notes, steps</td></tr>
+    <tr><td>caption</td><td>Inter</td><td>500</td><td>—</td><td>13 / 18</td><td>0</td><td>Metadata</td></tr>
+    <tr><td>overline</td><td>Inter</td><td>600</td><td>—</td><td>11 / 14</td><td>+0.12em, uppercase</td><td>Section labels, “Next class”</td></tr>
+  </table>
+  <p>Font sources: Google Fonts, Archivo (<code>wdth 62..125, wght 400..900</code>) and Inter (<code>400, 500, 600, 700</code>).</p>
+</section>
+
+<section id="space-shape-motion">
+  <h2>04 · Space, shape &amp; motion</h2>
+  <h3>Spacing (4-pt grid)</h3>
+  <table>
+    <tr><th>Token</th><th>Value</th></tr>
+    <tr><td><code>space-1</code></td><td>4</td></tr>
+    <tr><td><code>space-2</code></td><td>8</td></tr>
+    <tr><td><code>space-3</code></td><td>12</td></tr>
+    <tr><td><code>space-4</code></td><td>16</td></tr>
+    <tr><td><code>space-5</code></td><td>20</td></tr>
+    <tr><td><code>space-6</code></td><td>24</td></tr>
+    <tr><td><code>space-8</code></td><td>32</td></tr>
+    <tr><td><code>space-10</code></td><td>40</td></tr>
+    <tr><td><code>space-14</code></td><td>56</td></tr>
+  </table>
+  <h3>Radius</h3>
+  <table>
+    <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
+    <tr><td><code>radius-xs</code></td><td>4</td><td>Belts</td></tr>
+    <tr><td><code>radius-sm</code></td><td>8</td><td>Tags</td></tr>
+    <tr><td><code>radius-md</code></td><td>12</td><td>Inputs</td></tr>
+    <tr><td><code>radius-lg</code></td><td>16</td><td>Cards</td></tr>
+    <tr><td><code>radius-xl</code></td><td>24</td><td>Sheets</td></tr>
+    <tr><td><code>radius-full</code></td><td>28 (height ÷ 2)</td><td>Pills, buttons</td></tr>
+  </table>
+  <h3>Touch, motion, haptics, icons</h3>
+  <table>
+    <tr><th>Rule</th><th>Value</th></tr>
+    <tr><td>Touch targets</td><td>≥ 44 × 44 pt on iOS, ≥ 48 × 48 dp on Android.</td></tr>
+    <tr><td>Motion</td><td>200 ms ease-out for state changes, 320 ms spring for sheets. Respect Reduce Motion.</td></tr>
+    <tr><td>Haptics</td><td>Light tick on steppers, success notification on save.</td></tr>
+    <tr><td>Icons</td><td>24 grid, 1.75 stroke, round caps. SF Symbols / Material Symbols Rounded as fallback.</td></tr>
+    <tr><td>Elevation</td><td>No shadows on dark. Step up the surface color instead (base → surface → raised).</td></tr>
+  </table>
+</section>
+
+<section id="components">
+  <h2>05 · Components</h2>
+  <p>Exact styles and states are in <code>canvas/Components.dc.html</code>. Values below use semantic tokens.</p>
+  <table>
+    <tr><th>Component</th><th>Spec</th></tr>
+    <tr><td>Button · primary</td><td>Height 56, pill (28). Fill <code>accent.fill</code>, label <code>accent.on</code>, 17 / 700.</td></tr>
+    <tr><td>Button · secondary</td><td>Height 48, pill (24). Fill <code>bg.raised</code>, 1px <code>border.default</code>, label <code>text.primary</code>, 15 / 600.</td></tr>
+    <tr><td>Button · ghost</td><td>Height 48, transparent, label <code>accent.text</code>, 15 / 600.</td></tr>
+    <tr><td>Button · destructive</td><td>Height 48, fill <code>feedback.danger.tint</code>, label <code>feedback.danger</code>, 15 / 600.</td></tr>
+    <tr><td>Button · disabled</td><td>Height 48, fill <code>bg.raised</code>, label <code>text.disabled</code>.</td></tr>
+    <tr><td>Icon button</td><td>44 × 44 circle, <code>bg.raised</code>, 1px <code>border.default</code>.</td></tr>
+    <tr><td>Inputs &amp; controls</td><td>Session-type segmented control (Gi / No-Gi / Open mat / Comp, selected segment in <code>inverse.bg</code>/<code>inverse.fg</code>), duration stepper (90 min), switch (“Class reminder”), and intensity scale “3 of 5” in <code>accent.graphic</code>.</td></tr>
+    <tr><td>Chips, tags, badges</td><td>Filter chips (selected: <code>accent.tint</code> + <code>accent.border</code> + <code>accent.text</code>). Belt tags use the belt fills. Badges: Drilled = accent tint/text, New = info tint/info, Comp = warning tint/warning, Injury = danger tint/danger.</td></tr>
+    <tr><td>Belt rank (signature)</td><td>Belt fill, a black rank bar (red for black belt) with 0–4 white degree stripes, and a 4-radius bar.</td></tr>
+    <tr><td>Cards</td><td>Next-class card, stat card (display numerals), session card. <code>bg.surface</code>, radius 16, 1px <code>border.default</code>.</td></tr>
+    <tr><td>List rows</td><td>Settings-style rows (Rank · “Blue · 2”, Training goal · “3×”, Home gym) with a leading icon tile, a headline plus caption, and a trailing value and chevron.</td></tr>
+    <tr><td>Sheet &amp; feedback</td><td>Bottom sheet (radius 24, drag handle, <code>scrim</code> behind) and toast in <code>inverse.bg</code>.</td></tr>
+    <tr><td>Navigation</td><td>5 tabs: Home, Library, Log (centre, presents a sheet), Progress, Profile. iOS: active <code>accent.text</code>, inactive <code>text.secondary</code>. Android: active pill <code>accent.tint</code>, label <code>text.primary</code> 700 (inactive <code>text.secondary</code> 500).</td></tr>
+  </table>
+
+  <h3 id="platform-mapping">Platform mapping: same tokens, native patterns</h3>
+  <table>
+    <tr><th>Pattern</th><th>iOS</th><th>Android</th></tr>
+    <tr><td>Primary navigation</td><td>TabView, 5 tabs, labels always visible</td><td>NavigationBar, active pill indicator</td></tr>
+    <tr><td>Log action</td><td>Center tab presents a sheet</td><td>Center destination presents a sheet (no FAB)</td></tr>
+    <tr><td>Sheets</td><td>.sheet with .medium / .large detents</td><td>ModalBottomSheet with drag handle</td></tr>
+    <tr><td>Back</td><td>Edge swipe + chevron</td><td>Predictive back gesture + arrow</td></tr>
+    <tr><td>Date &amp; time</td><td>Inline / compact DatePicker</td><td>M3 DatePicker &amp; TimePicker dialogs</td></tr>
+    <tr><td>Type scaling</td><td>Dynamic Type, relativeTo text styles</td><td>sp + system font scale</td></tr>
+    <tr><td>Haptics</td><td>sensoryFeedback .selection / .success</td><td>HapticFeedbackConstants CLOCK_TICK / CONFIRM</td></tr>
+  </table>
+</section>
+
+<section id="screens">
+  <h2>06 · Key screens</h2>
+  <p>Interactive 390 × 844 prototypes in <code>canvas/</code>, each in dark and light (<code>*Light.dc.html</code> wraps the dark file with <code>theme="light"</code>).</p>
+  <table>
+    <tr><th>Screen</th><th>File</th><th>Contents</th></tr>
+    <tr><td>Home · Today</td><td><code>canvas/Home.dc.html</code></td><td>Week strip, next-class card, stats, recent sessions</td></tr>
+    <tr><td>Log session</td><td><code>canvas/LogSession.dc.html</code></td><td>Type, duration, rolls, intensity, techniques, Save</td></tr>
+    <tr><td>Technique library</td><td><code>canvas/Library.dc.html</code></td><td>Category chips, positions grid, continue learning</td></tr>
+    <tr><td>Technique detail</td><td><code>canvas/Technique.dc.html</code></td><td>Video, Steps / Details / Notes tabs, Mark as drilled</td></tr>
+    <tr><td>Progress &amp; belt</td><td><code>canvas/Progress.dc.html</code></td><td>Belt card, mat-hours chart (Week / Month / Year), Gi / No-Gi split, taps</td></tr>
+  </table>
+</section>
+
+</main>
+</body>
+</html>
