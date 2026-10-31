@@ -43,30 +43,70 @@ lines.push(`/** "starter" until the design intake has run; screens are not speci
 lines.push(`export const designStatus = ${q(t._status ?? 'intake')} as const;`);
 lines.push('');
 const ff = t.type?.fontFamily ?? {};
-lines.push('/** One family name per weight (Android does not synthesise weights). "System" = the platform font. */');
-lines.push('export const fontFamily = {');
-for (const w of ['regular', 'medium', 'semibold', 'bold']) lines.push(`  ${w}: ${q(ff[w] ?? 'System')},`);
-lines.push('} as const;');
-lines.push('');
+const dff = t.type?.displayFontFamily ?? {};
+const emitFamily = (map, order, doc, name) => {
+  lines.push(doc);
+  lines.push(`export const ${name} = {`);
+  for (const w of order) if (map[w] || name === 'fontFamily') lines.push(`  ${w}: ${q(map[w] ?? 'System')},`);
+  lines.push('} as const;');
+  lines.push('');
+};
+emitFamily(ff, ['regular', 'medium', 'semibold', 'bold'], '/** Sans family name per weight (Android does not synthesise weights). "System" = the platform font. */', 'fontFamily');
+if (Object.keys(dff).length) emitFamily(dff, ['regular', 'medium', 'semibold', 'bold', 'extrabold'], '/** Display family name per weight. */', 'displayFontFamily');
 lines.push('/** Ratings, counts and scores: tabular-nums (RN: fontVariant: [...fontVariantNumeric]). */');
 lines.push("export const fontVariantNumeric = ['tabular-nums'] as const;");
 lines.push('');
 
+// CSS weight -> family-map key. A weight the family does not define falls back to the nearest defined weight (ties: heavier).
+const WEIGHT_KEY = { 400: 'regular', 500: 'medium', 600: 'semibold', 700: 'bold', 800: 'extrabold' };
+const resolveFamily = (fam, weight) => {
+  const map = fam === 'display' ? dff : ff;
+  const w = Number(weight ?? 400);
+  const defined = Object.keys(WEIGHT_KEY).map(Number).filter((k) => map[WEIGHT_KEY[k]]);
+  if (!defined.length) return undefined;
+  const pick = defined.includes(w) ? w : defined.reduce((best, k) => (Math.abs(k - w) < Math.abs(best - w) || (Math.abs(k - w) === Math.abs(best - w) && k > best) ? k : best));
+  return map[WEIGHT_KEY[pick]];
+};
+
+const maxScale = [];
 lines.push('export const textStyle = {');
 for (const g of t.type?.groups ?? []) {
   for (const s of g.styles ?? []) {
     const parts = [`fontSize: ${px(s.fontSize)}`];
     if (s.lineHeight != null) parts.push(`lineHeight: ${typeof s.lineHeight === 'number' ? Math.round(px(s.fontSize) * s.lineHeight) : px(s.lineHeight)}`);
+    const fam = resolveFamily(s.family ?? 'sans', s.fontWeight);
+    if (fam) parts.push(`fontFamily: ${q(fam)}`);
     if (s.fontWeight != null) parts.push(`fontWeight: '${s.fontWeight}' as const`);
     if (s.letterSpacing) {
       const ls = String(s.letterSpacing);
       parts.push(`letterSpacing: ${ls.endsWith('em') ? (parseFloat(ls) * px(s.fontSize)).toFixed(2) : px(ls)}`);
     }
-    lines.push(`  ${camel(s.name)}: { ${parts.join(', ')} },${s.usage ? ` // ${s.usage}` : ''}`);
+    if (s.fontVariantNumeric === 'tabular-nums') parts.push("fontVariant: ['tabular-nums'] as const");
+    if (s.textTransform === 'uppercase') parts.push("textTransform: 'uppercase' as const");
+    if (s.maxFontSizeMultiplier != null) maxScale.push([camel(s.name), s.maxFontSizeMultiplier]);
+    const notes = [];
+    if (s.fontStretch) notes.push(`fontStretch ${s.fontStretch} — pending DSR-12`);
+    if (s.usage) notes.push(s.usage);
+    lines.push(`  ${camel(s.name)}: { ${parts.join(', ')} },${notes.length ? ` // ${notes.join(' · ')}` : ''}`);
   }
 }
 lines.push('} as const;');
 lines.push('');
+if (maxScale.length) {
+  lines.push('/** Per-style maxFontSizeMultiplier — a <Text> prop, not a style: <Text maxFontSizeMultiplier={textMaxScale.display}>. */');
+  lines.push('export const textMaxScale = {');
+  for (const [n, v] of maxScale) lines.push(`  ${n}: ${v},`);
+  lines.push('} as const;');
+  lines.push('');
+}
+if (t.type?.scaling) {
+  const { usage, ...sc } = t.type.scaling;
+  if (usage) lines.push(`/** ${usage} */`);
+  lines.push('export const textScaling = {');
+  for (const [k, v] of Object.entries(sc)) lines.push(`  ${k}: ${typeof v === 'number' ? v : q(v)},`);
+  lines.push('} as const;');
+  lines.push('');
+}
 
 const family = (key, name, mapVal = px) => {
   const fam = t[key];
@@ -91,11 +131,44 @@ for (const theme of themes) {
 lines.push(`export const colors = { ${themes.join(', ')} } as const;`);
 lines.push('');
 
+const colorNames = new Set(t.color.tokens.map((c) => c.name));
+for (const tok of t.semantic?.tokens ?? []) {
+  for (const k of ['bg', 'text']) {
+    if (!colorNames.has(tok[k])) { console.error(`semantic pair "${tok.name}" names ${k} "${tok[k]}", which is not a colour token.`); process.exit(1); }
+  }
+}
 if (t.semantic?.tokens?.length) {
   lines.push('/** Semantic pairings (status, progression), as token names — never hex. */');
   lines.push('export const semantic = {');
   for (const tok of t.semantic.tokens) lines.push(`  ${camel(tok.name)}: { bg: ${q(camel(tok.bg))}, text: ${q(camel(tok.text))} },${tok.usage ? ` // ${tok.usage}` : ''}`);
   lines.push('} as const satisfies Record<string, { bg: keyof ColorScheme; text: keyof ColorScheme }>;');
+  lines.push('');
+}
+
+if (t.motion?.tokens?.length) {
+  lines.push('/** Durations in ms. easing is a name from the design ("spring" has no parameters yet). Respect Reduce Motion. */');
+  lines.push('export const motion = {');
+  for (const tok of t.motion.tokens) {
+    const parts = [`duration: ${tok.value}`];
+    if (tok.easing) parts.push(`easing: ${q(tok.easing)}`);
+    lines.push(`  ${camel(tok.name)}: { ${parts.join(', ')} },${tok.usage ? ` // ${tok.usage}` : ''}`);
+  }
+  lines.push('} as const;');
+  lines.push('');
+}
+if (t.haptics?.tokens?.length) {
+  lines.push('/** Haptic names per platform (expo-haptics on iOS, Android HapticFeedbackConstants). */');
+  lines.push('export const haptics = {');
+  for (const tok of t.haptics.tokens) lines.push(`  ${camel(tok.name)}: { ios: ${q(tok.ios)}, android: ${q(tok.android)} },${tok.usage ? ` // ${tok.usage}` : ''}`);
+  lines.push('} as const;');
+  lines.push('');
+}
+if (t.icon) {
+  lines.push('/** Icon drawing parameters. */');
+  lines.push('export const icon = {');
+  for (const k of ['grid', 'stroke']) if (t.icon[k] != null) lines.push(`  ${k}: ${t.icon[k]},`);
+  for (const k of ['linecap', 'linejoin']) if (t.icon[k] != null) lines.push(`  ${k}: ${q(t.icon[k])},`);
+  lines.push('} as const;');
   lines.push('');
 }
 

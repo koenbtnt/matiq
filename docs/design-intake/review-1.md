@@ -1,0 +1,31 @@
+# design-intake — review 1 (intake audit, Themis) · 2026-10-31 · artefacts at 6df7e3f, tokens.ts at 484b7b3
+
+| # | check | result |
+|---|---|---|
+| 1 | Citations: 25 token + 12 rule/component citations read at the cited line | pass, except R-T6 (S5) |
+| 2 | Nothing invented: every value traces; gaps/conflicts parked (DSR-1…25 + § Privacy and scope conflicts); no pressed/loading/error/empty state invented | pass (S2, S4) |
+| 3 | `_status: intake`, `version` 0 → 1 (3164ce6 had 0/starter), `_source` canvas v13, exported 2026-10-31, Emerald | pass |
+| 4 | Contrast: 55+ pairs recomputed (WCAG 2.x, rgba composited); all agree with `docs/design-system-contrast.md` to 2 dp; every failing pair has a non-colour handling | pass (S1) |
+| 5 | RULES vs `frontend.md` / `privacy.md`: no contradiction, no web API, Theming SwiftUI/Compose notes rejected (R-S4); check-in, coach, video, reminders catalogued as not buildable | pass (S2, S3) |
+| 6 | `tokens.ts` ↔ `tokens.json`: 38/38 colours light + dark, 19/19 semantic pairs, 25/25 type styles (size, line, weight, tracking, max scale), 72/72 sizes, spacing, radius; `designStatus = 'intake'`; 0 uncited tokens | pass |
+| 7 | `verify.md` / `verify.json` frontend-coder @ 484b7b3: tsc, jest 13/13, `--check`, adherence, expo-doctor 20/20, all exit 0 | pass |
+
+**Citations checked (all carry the value unless marked):** bg-raised M:60 · text-placeholder M:67 · accent-text M:72 · accent-border M:73 · feedback-warning M:78 · belt-bar-black M:101 · belt-kids-green M:106 · title-m M:117 · overline M:121 · space-5 M:135 · radius-full M:149 · touch-target-android M:154 · stat C:187 · stat-meta C:188 · badge C:121 · tab-label C:266 · input-height C:56 · border-width-focus C:59 · segment-height C:67 · toast-action-height C:246 · duration-toast C:248 · tab-log-action Home:27 · week-day-done Home:159 · intensity-selected Log:162 · video-hero-height Tech:20 · R-M1 C:23 · R-C1 C:48 · R-T1 Theming:22 · R-N6 Main:36 · components Home:82-83, Log:40, Log:20, C:232, Lib:52, Tech:29, Tech:40, Home:89 · **R-T6 C/AccentOptions:73 ✗** (S5). Palette also matched against the canvas source `palette()` (C:322-328).
+
+**Pairs recomputed (mine = recorded):** L placeholder/raised 2.80 · D 4.97 · L disabled/raised 2.31 · D 3.20 · L accent-fill/surface 1.82 · /raised 1.56 · L accent-border/raised 2.43 · /surface 2.83 · L accent-graphic/border-default 2.06 · L belt-white/surface 1.17 · /raised 1.01 · D belt-black/surface 1.05 · /base 1.04 · D brown/surface 2.52 · belt-bar/brown 2.75 · L kids-yellow 1.68 · kids-orange 2.55 · L accent-text/raised 4.67 · L accent-text/accent-tint 4.82 · D 8.29 (#19362A) · D 9.36 (#112D20) · accent-on/fill 10.77 · L danger/tint 4.74 · D 5.03 · D warning/tint 7.36 · D info/tint on surface 5.68, raised 5.00, base 6.40 · media overlay 11.57 / 19.02 · L text-secondary/raised 5.53 · border-strong/surface 1.66 / 1.69 — and the remaining belt, border, surface and tabbar rows, all equal.
+
+| id | sev | file · section | defect | owner | fixed looks like |
+|---|---|---|---|---|---|
+| S1 | S | `RULES.md` R-A2 | Light `text-placeholder` 2.80 is "mitigated" by R-C5 (state in text or an icon). That rule does not apply to placeholder text. The real mitigation is that the label must always be visible, and it is stated only in `components.md:75`. | designer | R-A2 (or a new R-A4) says: every input has a visible label, the placeholder never carries required information, and this holds until DSR-1 is answered. |
+| S2 | S | `components.md` § Privacy and scope conflicts; `RULES.md` | Gym check-in/schedule, coach content, video, reminders and avatar are parked in a table without DSR ids. No RULES line stops a builder from using them, even though `button-compact-height`, `video-hero-height`, `play-button` and the COACH badge are live tokens and variants. | designer | Each conflict gets a DSR id (DSR-26…) under Open requests, and RULES § 0 adds: "elements in Privacy and scope conflicts are not built until a PO ruling". |
+| S3 | S | `RULES.md` R-M1, § 9 | R-M1 makes ≥ 48 dp on Android binding, while DSR-16 still asks the user to confirm and `frontend.md` sets the floor at 44 pt. This is one of the conflicts the PO is ruling on. | designer | R-M1 keeps 44 pt as the binding floor (`frontend.md`) and marks the 48 dp clause "artifact value, pending DSR-16 / PO ruling". |
+| S4 | S | `tokens.json` `size.tab-log-action` | 52 (Home:27) is a key-screen value that DSR-15 contests (56 vs 52). Making it a token goes against R-S3 and `components.md:19` ("no agent picks a token silently"). | designer (frontend-coder regenerates) | The token is removed until DSR-15 is answered. If the designer argues the tab-bar action is a separate component the board does not draw, that reason is recorded in R-S3 and the conflict leaves DSR-15. |
+| S5 | S | `RULES.md` R-T6 | The clause "never place `accent-*` inside a belt component, or a belt colour next to an accent fill" cites C/AccentOptions:73. That line says the opposite: the two "stay distinct" because Emerald is much brighter. | designer | Cite the clause as the mitigation for the 1.78 pair (`docs/design-system-contrast.md:96,111`), or narrow it to "inside a belt component". |
+| N1 | N | `tokens.json` `type` | The 1.3× cap is applied to `stat` as well as `display` (M:112 read together with M:176 "display numerals"). `title-l`/`title-m` (Archivo) stay at 2.0. | designer | Recorded. Ask with DSR-12 if the PO wants the cap scoped to the family. |
+| N2 | N | `tokens.json` `semantic.tab-active-android` | Pairs `text-primary` with `accent-tint`, but the label sits under the pill (C:288-291) and is never rendered on the tint. | designer | Recorded. |
+| N3 | N | `RULES.md` R-A2 | "Some belt fills are against surfaces" is garbled. | designer | "…are below 3:1 against surfaces". |
+| N4 | N | `progress.md` | Claims 38 components. `components.md` has 33 entries (38 counting variants). Not an artefact defect. | orchestrator | Recorded. |
+
+REVIEW PASSED
+No blocking defects: all 38 colours, 25 styles, 72 sizes and 19 pairs trace to v13, and `tokens.ts` matches `tokens.json` exactly. Contrast agrees to 2 dp. Verify is green at 484b7b3.
+Fix S1–S5 this round, or the designer answers them with reasons. S2 and S3 go to the PO grilling as DSR rows.
