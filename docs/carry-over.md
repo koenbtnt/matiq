@@ -12,7 +12,7 @@
 | CO-08 | setup | Sync backend: an ADR when chosen; the seam (`.claude/rules/data.md`) is the only commitment now. | planner | open |
 | CO-09 | setup | JSON export/import and erase-all (publishing readiness, `.claude/rules/privacy.md`) in a v1 sprint. | planner | open |
 | CO-10 | setup | `drizzle-sqlite` community skill (`pproenca/dot-skills`, experimental): audit its rules against expo-sqlite; keep or remove from `data-coder` `skills:`. | data-coder / PO | open |
-| CO-11 | setup | GitHub rulesets on `develop` and `main` (require PR, block force-push/deletion) and `ci-ok` as a required check after the first green run. | PO | open |
+| CO-11 | setup | GitHub rulesets on `develop` and `main` (require PR, block force-push/deletion) and `ci-ok` as a required check after the first green run. | PO | done — ruleset `protect develop and main (ADR 0001)` (id 26286621) created 2026-10-31 via `gh api`: deletion, non_fast_forward, pull_request (merge only), required_status_checks `ci-ok` |
 | CO-12 | setup | Agent-memory lines tagged "cadence, unverified here": confirm or delete after the first frontend sprint. | frontend-coder / tester | open |
 | CO-13 | setup | Prune the SDK 58 template's unused dependencies in `mobile/package.json` (`@expo/ui`, `expo-image`, `expo-symbols`, `expo-glass-effect`, `expo-web-browser`, `expo-device`, …) once the foundation sprint knows what the screens use; `npx expo-doctor` must stay green. | frontend-coder (foundation) | open |
 | CO-14 | setup | Install CocoaPods (`brew install cocoapods`) so `npx expo run:ios` dev-client builds work; Expo Go (`npx expo start --go --ios`) is enough until a native module is added. | PO | open |
