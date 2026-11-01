@@ -5,6 +5,7 @@
 import type { BackupExclusionStatus } from '../db/backup';
 import type attributionJson from '../db/seed/attribution.json';
 import type { DomainError } from '../domain/errors';
+import type { ConsistencyData, PlannedVsActualData, ProgressResult } from '../domain/progression/types';
 import type { SettingKey, SettingValue, SettingValueType } from '../domain/settings/defaults';
 
 export type { SettingKey, SettingValue, SettingValueType };
@@ -268,98 +269,21 @@ export type EnsureSeededResult = {
 // ---------------------------------------------------------------------------------------------
 
 export type { BackupExclusion, BackupExclusionResult, BackupExclusionStatus } from '../db/backup';
-
-export type ProgressState = 'IMPROVING' | 'STEADY' | 'NEEDS_WORK' | 'NOT_TRAINED';
-export type SignalId = 'n' | 'trend' | 'needsWorkRate' | 'gap' | 'daysSince' | 'hitRatio';
-export type SignalRow = {
-  signal: SignalId;
-  available: boolean;
-  value?: number;
-  /** Rescaled weight `w_s / Σ w_S` on the four scored signals (only when available); absent otherwise. */
-  weight?: number;
-  /** Set on `daysSince` (staleDays), `trend` (trendImproving) and `n` (minSessions) only. */
-  threshold?: number;
-  /** True when the signal was part of the rule that fired. */
-  contributed: boolean;
-};
-export type ProgressResult = {
-  ref: FocusRef;
-  name: string;
-  removed: boolean;
-  state: ProgressState;
-  rule: 1 | 2 | 3 | 4;
-  flagged: boolean;
-  n: number;
-  /** Needs-work score; present when rule 1 did not fire. */
-  score?: number;
-  lastTrainedOn?: string;
-  /** One row per SignalId, in the order n, trend, needsWorkRate, gap, daysSince, hitRatio. */
-  signals: SignalRow[];
-};
-
-/** Domain input of the consistency heatmap: one live session with `localDate ≤ today`. */
-export type SessionDayRow = { localDate: string; startsAt: string; status: SessionStatus; durationMinutes?: number };
-export type DayCell = {
-  localDate: string;
-  inWindow: boolean;
-  future: boolean;
-  completed: number;
-  skipped: number;
-  pending: number;
-  minutes: number;
-};
-export type WeekRow = { weekStart: string; days: [DayCell, DayCell, DayCell, DayCell, DayCell, DayCell, DayCell]; completed: number };
-export type ConsistencyData = {
-  windowStart: string;
-  today: string;
-  weeks: WeekRow[];
-  totals: {
-    completed: number;
-    activeDays: number;
-    minutes: number;
-    weeksWithTraining: number;
-    weeksInWindow: number;
-    currentStreakWeeks: number;
-  };
-};
-export type GapRow = {
-  ref: FocusRef;
-  name: string;
-  removed: boolean;
-  planned: number;
-  trained: number;
-  notTrained: number;
-  pending: number;
-  unplannedTrained: number;
-  /** notTrained / planned; absent when planned = 0. */
-  gap?: number;
-};
-export type PlannedVsActualData = { windowStart: string; today: string; totals: Omit<GapRow, 'ref' | 'name' | 'removed'>; rows: GapRow[] };
+export type {
+  ConsistencyData, DayCell, FocusHistory, FocusHistoryRow, GapRow, PlannedVsActualData, ProgressResult, ProgressState,
+  SessionDayRow, SignalId, SignalRow, WeekRow,
+} from '../domain/progression/types';
 
 export type ProgressOverview = {
   today: string;
   windowStart: string;
   algorithmVersion: string;
   params: Record<string, number>;
+  /** PS-04: live focuses first, then removed; each by state (NEEDS_WORK, NOT_TRAINED, STEADY, IMPROVING), then name. */
   results: ProgressResult[];
   consistency: ConsistencyData;
   plannedVsActual: PlannedVsActualData;
 };
-
-/** Domain input of the algorithm: one focus ref and its live rows (all time). */
-export type FocusHistoryRow = {
-  localDate: string;
-  startsAt: string;
-  status: SessionStatus;
-  isPlanned: boolean;
-  isActual: boolean;
-  needsWork: boolean;
-  rating?: number;
-  hitCount?: number;
-  caughtCount?: number;
-};
-export type FocusHistory = { ref: FocusRef; name: string; removed: boolean; rows: FocusHistoryRow[] };
-
 export type ParamInput = { version: string; key: string; value: number };
 
 export type TaxonomyKind = 'POSITION' | 'TECHNIQUE' | 'SUBJECT';
