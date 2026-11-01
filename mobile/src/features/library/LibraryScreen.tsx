@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '../../components/Button';
 import { EmptyState } from '../../components/EmptyState';
+import { IconButton } from '../../components/IconButton';
 import { LoadingState } from '../../components/LoadingState';
 import { SearchField } from '../../components/SearchField';
 import { SegmentedControl } from '../../components/SegmentedControl';
@@ -20,6 +22,7 @@ import { useTheme } from '../../theme/useTheme';
 import { PositionListRow, SubjectListRow, TechniqueListRow } from './rows';
 
 type Segment = 'positions' | 'techniques' | 'subjects';
+const KIND = { positions: 'POSITION', techniques: 'TECHNIQUE', subjects: 'SUBJECT' } as const;
 
 export function LibraryScreen() {
   const { t } = useTranslation();
@@ -33,7 +36,15 @@ export function LibraryScreen() {
 
   const header = (
     <View style={styles.header}>
-      <Txt variant="titleL" accessibilityRole="header">{t('library.title')}</Txt>
+      <View style={styles.titleRow}>
+        <Txt variant="titleL" accessibilityRole="header" style={styles.titleText}>{t('library.title')}</Txt>
+        <IconButton
+          testID="library.add"
+          icon="plus"
+          accessibilityLabel={t(`library.add.${KIND[segment]}`)}
+          onPress={() => router.push({ pathname: '/library-edit', params: { kind: KIND[segment] } })}
+        />
+      </View>
       <SearchField
         label={t(`library.search.label.${segment}`)}
         value={input}
@@ -113,5 +124,7 @@ function SubjectsList(p: ListProps) {
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   header: { gap: spacing[4], paddingBottom: spacing[4] },
+  titleRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
+  titleText: { flex: 1 },
   footer: { paddingVertical: spacing[5] },
 });
