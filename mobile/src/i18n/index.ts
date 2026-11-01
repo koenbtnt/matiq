@@ -18,6 +18,9 @@ if (!i18n.isInitialized) {
     lng: resolveLanguage(),
     fallbackLng: 'en',
     resources,
+    // en.json is flat (`"log.focus.trained"`): a key such as `log.notSet` and `log.notSet.short`
+    // would collide as a nested object, so the key separator is off.
+    keySeparator: false,
     interpolation: { escapeValue: false },
     // Resources are bundled, so initialise synchronously: `t` is usable on first render.
     initAsync: false,
