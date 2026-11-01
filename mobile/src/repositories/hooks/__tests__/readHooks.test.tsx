@@ -9,6 +9,7 @@ import { sessions } from '../../sessions';
 import { settings } from '../../settings';
 import { FX } from '../../testing/fixtures';
 import { sequentialIds } from '../../../db/testing/testDb';
+import * as runtimeModule from '../../runtime';
 import { setRuntime } from '../../runtime';
 import { resetRuntime, seededDb } from '../../testing/helpers';
 import {
@@ -144,6 +145,10 @@ describe('useHome date rollover (R2-06)', () => {
   });
 
   it('re-partitions from the foreground minute check past local midnight', async () => {
+    // The hook reads the device zone through the runtime seam; pin it so the 23:00Z instants below straddle
+    // local midnight on any runner (CI runs in UTC, where 23:00:30Z is still 2026-03-02; process.env.TZ
+    // does not reach Intl inside the Jest sandbox).
+    const zone = jest.spyOn(runtimeModule, 'deviceTimeZone').mockReturnValue('Europe/Amsterdam');
     const appState = jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() } as never);
     const intervals: [() => void, number][] = [];
     const spy = jest.spyOn(global, 'setInterval').mockImplementation(((fn: () => void, ms: number) => {
@@ -162,6 +167,7 @@ describe('useHome date rollover (R2-06)', () => {
     await waitFor(() => expect(result.current.data?.today).toBe('2026-03-03'));
     spy.mockRestore();
     appState.mockRestore();
+    zone.mockRestore();
   });
 });
 

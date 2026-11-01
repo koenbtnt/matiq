@@ -7,7 +7,7 @@
 | CO-03 | setup | Android: EAS preview build (`eas build --platform android --profile preview`) and, when wanted locally, the Android SDK + an emulator (Android Studio is installed, the SDK is not) → Android Maestro flows. | PO / tester | open |
 | CO-04 | setup | Design-system intake: the user saves the Claude Artifact to `design-system/artifact/matiq-design.html`; designer derives `tokens.json` / `components.md` / `RULES.md`; frontend-coder regenerates `tokens.ts`; reviewer-design follow-up pass. Until then `tokens.json` is the starter and no screen spec may be written. | PO / designer | done — `design-intake` chore 2026-10-31 (tokens v1, canvas v13); re-export repeats steps 2–5 |
 | CO-05 | setup | Harness evals runner (sugar `scripts/claude/evals/`, cadence CO-31): port when a `.claude/**` change needs more proof than `hooks.test.sh`. | PO | open |
-| CO-06 | setup | Jest under a non-UTC `TZ` once a date renders (cadence CO-28). | frontend-coder | open |
+| CO-06 | setup | Jest under a non-UTC `TZ` once a date renders (cadence CO-28). | frontend-coder | open — first instance 2026-11-01: `useHome date rollover` passed in Europe/Amsterdam and failed on the UTC runner; fixed by pinning `deviceTimeZone` through the runtime seam. Coders run `TZ=UTC npx jest` once before CODING COMPLETE until the verify chain carries it (harness change, next session) |
 | CO-07 | setup | Apple Developer / Google Play accounts and EAS credentials before TestFlight or Play internal testing. | PO | open |
 | CO-08 | setup | Sync backend: an ADR when chosen; the seam (`.claude/rules/data.md`) is the only commitment now. | planner | open |
 | CO-09 | setup | JSON export/import and erase-all (publishing readiness, `.claude/rules/privacy.md`) in a v1 sprint. | planner | open |

@@ -92,3 +92,11 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 | first launch: seed + render | — | Library lists seeded positions with aliases (50/50 guard, Back control, …); Home shows the empty states and the rank card (screenshots) |
 | xcrun simctl openurl booted matiq://dev/reset | 0 | database recreated (file mtimes), under 0.8 s |
 | maestro test -e METRO_URL=http://localhost:8082 e2e/maestro | 0 | 4/4 flows passed in 2 m 58 s on iPhone 18 Pro (iOS 27.2), Maestro 2.12.0; JUnit tests=4 failures=0; flow fixes in this commit |
+
+### main (CI fix: zone-dependent test) @ aa4cef1 — 2026-11-01
+| Command | Exit | Notes |
+|---|---|---|
+| TZ=UTC npx jest --ci --watchAll=false (mobile/) | 0 | 29 suites, 932 tests — the CI runner's zone; before the fix `useHome date rollover › minute check past local midnight` failed here (run 41303819212) |
+| npx jest --ci --watchAll=false (mobile/, Europe/Amsterdam) | 0 | 29 suites, 932 tests |
+| npx tsc --noEmit (mobile/) | 0 | 0 errors |
+| node scripts/check-token-adherence.mjs | 0 |  |
