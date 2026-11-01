@@ -4,5 +4,10 @@
   { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "TZ=Europe/Amsterdam npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1673 passed, 0 failed (38 suites); CO-06 local zone" },
   { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "node scripts/sync-design-tokens.mjs --check", "exit": 0, "notes": "" },
   { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": "" },
-  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "npx expo-doctor", "exit": 0, "notes": "20/20" }
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "npx expo-doctor", "exit": 0, "notes": "20/20" },
+  { "agent": "data-coder", "sha": "f39172c", "date": "2026-11-01", "command": "npx tsc --noEmit", "exit": 0, "notes": "" },
+  { "agent": "data-coder", "sha": "f39172c", "date": "2026-11-01", "command": "TZ=UTC npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1722 passed, 0 failed (41 suites)" },
+  { "agent": "data-coder", "sha": "f39172c", "date": "2026-11-01", "command": "TZ=Europe/Amsterdam npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1722 passed, 0 failed (41 suites); CO-06 local zone; data layer 539 passed (25 suites)" },
+  { "agent": "data-coder", "sha": "f39172c", "date": "2026-11-01", "command": "npx drizzle-kit generate && git diff --exit-code -- mobile/drizzle/", "exit": 0, "notes": "No schema changes, nothing to migrate (PS-01)" },
+  { "agent": "data-coder", "sha": "f39172c", "date": "2026-11-01", "command": "NF-09 Jest benchmark (informative)", "exit": 0, "notes": "computeProgression 500x3 0.25 ms; progression.overview end to end 4.64 ms (target < 100 ms)" }
 ]
