@@ -87,6 +87,11 @@ and erase not made harder, fictional fixtures → violation is **B**.
   `<screen>.<element>[.<id>]`? Missing → **B** (the tester cannot select it).
 - Domain rules visible: planned vs actual distinguishable; `needs_work` only on actual; complete
   needs ≥ 1 actual; taxonomy/weights editable with history kept; progression explainable?
+- **UX acceptance criteria (ruling R-26, `docs/decisions.md`):** logging a session takes ≤ 30 s and
+  ≤ 2 taps from Home to start; every screen one-handed in portrait; destructive actions undoable
+  (soft delete + undo toast), no confirm dialog for routine actions; only session type + one focus
+  required; every empty state names the next step; readable in light and dark. A spec that breaks
+  one of these is **B**.
 - Design-system requests listed for the user (never an edit to the artifact)?
 
 **Intake review** — every token, component and rule cites the artifact; ten citations spot-checked;
