@@ -2,10 +2,10 @@
 
 ## Current state
 
-- HEAD: 2128fbf (data CODING COMPLETE, UI PHASE COMPLETE, data-contracts.md); green tsc+jest(UTC,local) @ f39172c
-- Step: 5 — frontend-coder phase B ∥ tester authoring
-- Live agents: frontend-coder B (af94bddc3267a16a8), tester authoring; data-coder a7b2918c9d462ad0b idle
-- Next action: gate CODING COMPLETE (phase B, dev-client rebuild) → tester run
+- HEAD: 01bb503 + this; green verify block frontend-coder B @ 169fe7e (tsc, jest UTC+local 1722, tokens, adherence, doctor, run:ios, smoke, xattr)
+- Step: 6 — tester run (full Maestro suite, once)
+- Live agents: tester run; frontend-coder af94…/a4b913af5cc01a86e, data-coder a7b2918c9d462ad0b idle
+- Next action: gate TESTING COMPLETE → documenter
 - Blockers: none
 - Uncommitted: none
 - Env: simulator iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), dev-client installed; Metro on 8082; Maestro at `~/.maestro/bin/maestro`
@@ -21,3 +21,5 @@
 - reviewer-design · REVIEW PASSED (recheck) · 71301e3
 - data-coder · CODING COMPLETE · 43e9b80…2128fbf
 - frontend-coder A · UI PHASE COMPLETE · 5180901…32f2bac
+- tester · AUTHORING COMPLETE · 3c4663f
+- frontend-coder B · CODING COMPLETE (dev-client rebuilt, smoke green, xattr excluded) · 007694d…01bb503
