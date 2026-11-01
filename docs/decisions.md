@@ -78,7 +78,7 @@ Every bullet is dated and tagged with the ruling it derives from (`docs/product-
 ## Privacy and publishing
 
 - 2026-10-31 · R-12 (see Data) · Encryption at rest from the start (R-24), app lock later (R-25); export/import/erase in v1.
-- 2026-10-31 · R-24 (see Data) · No user data leaves the device; EAS artefacts carry none (`.claude/rules/privacy.md`). The SQLCipher key uses a this-device-only keychain class (with A-11, assumed, pending PO; plan D-22).
+- 2026-10-31 · R-24 (see Data) · No user data leaves the device; EAS artefacts carry none (`.claude/rules/privacy.md`). The SQLCipher key uses a this-device-only keychain class (with A-11, ruled R-39 (2026-11-01); plan D-22).
 - 2026-10-31 · R-27 (see Product) · Export format is the future upload format; versioned.
 - 2026-10-31 · R-28 (see Data) · Licences: GrappleMap public domain; grapple-flows CC BY 4.0 — attribution shown in the app; BJJGraph (PolyForm Noncommercial) not imported without a licence.
 - 2026-10-31 · R-33 (see Product) · No scraping of instructional sites in v1; terms-of-service assessment first.
