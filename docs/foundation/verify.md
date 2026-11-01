@@ -77,3 +77,9 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 | npx jest --watchAll=false | 0 | Test Suites: 29 passed; Tests: 928 passed, 0 failed |
 | node scripts/check-token-adherence.mjs | 0 |  |
 | npx expo-doctor | 0 | 20/20 |
+
+### data-coder (review-2 follow-up) @ dfa6122 — 2026-11-01
+| check | command | result | commit | date |
+|---|---|---|---|---|
+| tsc | `npx tsc --noEmit (mobile/)` | exit 0: 0 errors | dfa6122 | 2026-11-01 |
+| Jest (all) | `npx jest --watchAll=false (mobile/)` | exit 0: 29 suites, 932 tests passed; R2-03/R2-06 fixes + tests | dfa6122 | 2026-11-01 |
