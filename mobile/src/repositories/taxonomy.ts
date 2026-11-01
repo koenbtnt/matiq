@@ -7,7 +7,7 @@ import { DomainError } from '../domain/errors';
 import { matchRows, rankRows } from '../domain/taxonomy/search';
 import type { TaxonomySeed } from '../domain/taxonomy/seed';
 import type {
-  FocusPickerRow, ImportReport, PositionDetail, PositionRow, SubjectRow, TechniqueRow, TechniqueType, Tier,
+  AliasRow, FocusPickerRow, ImportReport, PositionDetail, PositionRow, SubjectRow, TechniqueRow, TechniqueType, Tier,
 } from './contracts';
 import { compact, likeContains, opt } from './internal';
 import { runtime } from './runtime';
@@ -32,6 +32,16 @@ export function aliasMap(kind: 'POSITION' | 'TECHNIQUE', ids: readonly string[],
   }
   for (const list of out.values()) list.sort((a, b) => a.localeCompare(b, 'en'));
   return out;
+}
+
+/** Live aliases of one target with ids (N9), sorted by name. */
+export function listAliasesSync(kind: 'POSITION' | 'TECHNIQUE', id: string, database: Db): AliasRow[] {
+  return database
+    .select({ id: aliases.id, targetKind: aliases.targetKind, targetId: aliases.targetId, name: aliases.name, origin: aliases.origin })
+    .from(aliases)
+    .where(and(eq(aliases.targetKind, kind), eq(aliases.targetId, id), isNull(aliases.deletedAt)))
+    .all()
+    .sort((a, b) => a.name.localeCompare(b.name, 'en'));
 }
 
 /** SQL prefilter: name or a live alias contains the (lower-cased) query. Ranking happens in the domain. */
@@ -174,6 +184,7 @@ export const taxonomy = {
       notes: opt(row.notes),
       tier: row.tier,
       aliases: aliasMap('POSITION', [id], database).get(id) ?? [],
+      aliasRows: listAliasesSync('POSITION', id, database),
       parent: parent ?? undefined,
       children,
       techniquesFrom: techniqueRows([eq(techniques.fromPositionId, id), techTier], database).sort(byTypeThenName),

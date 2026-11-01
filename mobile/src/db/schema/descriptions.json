@@ -1,6 +1,6 @@
 {
   "app_meta": {
-    "_": "Key/value store for app-level metadata (schema_version, taxonomy_release, catalog_release, db_key_created_at — never key material).",
+    "_": "Key/value store for app-level metadata (schema_version, taxonomy_release, catalog_release, db_key_created_at, backup_exclusion = excluded | failed | not_applicable, backup_exclusion_checked_at = ISO date of the last check — never key material).",
     "id": "UUID v4, generated on device by the repository (expo-crypto randomUUID)",
     "created_at": "ISO-8601 UTC creation time",
     "updated_at": "ISO-8601 UTC last update",

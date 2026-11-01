@@ -12,4 +12,10 @@ export { taxonomy } from './taxonomy';
 export * from './hooks';
 export { DomainError, ERROR_CODES, isDomainError, type ErrorCode } from '../domain/errors';
 export { resetDatabase } from '../db/lifecycle';
-export { bootstrapDatabase, type BootstrapErrorCode, type BootstrapResult } from '../db/bootstrap';
+export {
+  bootstrapDatabase,
+  setBootstrapOverrides,
+  type BootstrapDeps,
+  type BootstrapErrorCode,
+  type BootstrapResult,
+} from '../db/bootstrap';
