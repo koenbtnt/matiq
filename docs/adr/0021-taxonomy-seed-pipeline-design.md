@@ -1,6 +1,7 @@
 # 0021. Taxonomy seed pipeline: vendored snapshot, zero-dependency converter, endpoint resolution
 
 - **Status:** proposed — pending PO (A-26, A-27, A-31, A-32, A-33)
+- **Rulings of 2026-11-01:** R-48 ("Q13: yes") accepts the 84.1 % endpoint-resolution deviation (CO-29) but names none of the A-rows above; they are on the morning brief's §4 accept-by-default list and stay open until the PO replies to it.
 - **Date:** 2026-11-01
 - **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. PO confirmation pending for the A-rows above; implements ADR 0012 (accepted).
 - **Decision ids:** F-10, F-11, F-12, F-13, F-15 / R-28, R-35, R-29, R-33; D-31

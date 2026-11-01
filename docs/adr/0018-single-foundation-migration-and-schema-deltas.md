@@ -1,6 +1,7 @@
 # 0018. One foundation migration for the whole schema; live-unique partial indexes; schema deltas
 
 - **Status:** proposed — pending PO (A-24, A-31; A-15 is closed)
+- **Rulings of 2026-11-01:** none cover this ADR; A-24 and A-31 are on the morning brief's §4 accept-by-default list and stay open until the PO replies to it.
 - **Date:** 2026-11-01
 - **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. PO confirmation pending for A-24 and A-31.
 - **Decision ids:** F-01, F-02, F-04, F-20 / D-29; A-15, A-24, A-31

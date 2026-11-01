@@ -1,8 +1,9 @@
 # 0020. SQLCipher key seam, raw 32-byte key and backup exclusion
 
-- **Status:** proposed — pending PO (A-16, A-17)
+- **Status:** proposed — pending PO (A-17; A-16 ruled R-39, 2026-11-01)
+- **Rulings of 2026-11-01:** R-39 ("Q4: yes") rules A-11 and A-16 (backup exclusion; iOS module in sprint 2, CO-28). A-17 (the secure-store constant, confirmed by CO-25) is on the morning brief's §4 accept-by-default list and stays open until the PO replies to it.
 - **Date:** 2026-11-01
-- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. PO confirmation pending for A-16 and A-17; refines ADR 0006 (accepted), does not supersede it.
+- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. A-16 ruled R-39 (2026-11-01); PO confirmation pending for A-17; refines ADR 0006 (accepted), does not supersede it.
 - **Decision ids:** F-05, F-06, F-07 / R-24, R-12; A-11, A-16, A-17
 - **Source:** `docs/foundation/plan.md` §0 F-05..F-07, §0.1 A-16, A-17, §2, §5, §13, §14; `docs/foundation/review-1.md` ruling 3, R1-12.
 

@@ -1,6 +1,7 @@
 # 0019. Shared Db type, transaction-only writes and the bootstrap sequence
 
 - **Status:** proposed — pending PO (no PO sentence exists; ratification only, no A-row)
+- **Rulings of 2026-11-01:** none cover this ADR (no question in the morning brief §3 or §4 names it); it still needs the PO's explicit ratification.
 - **Date:** 2026-11-01
 - **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. No A-row applies.
 - **Decision ids:** F-03, F-08, F-09 / R-24, CO-15

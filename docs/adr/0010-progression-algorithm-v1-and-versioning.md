@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user) for the shape, window default and versioning (R-08, R-17, R-22); planner, pending PO (2026-10-31) for the numeric defaults (A-13)
+- **Deciders:** PO (user) for the shape, window default and versioning (R-08, R-17, R-22); numeric defaults (A-13) ruled R-49 (2026-11-01, "Q14: yes ok")
 - **Decision ids:** D-16, D-17 / S-06, R-08, R-17, R-22
 - **Source:** `docs/decisions.md` Algorithm S-06, R-08, R-17, R-22; plan §0 D-16, D-17, §8, §4.3.
 
@@ -39,6 +39,6 @@ Pure TypeScript module `mobile/src/domain/progression/v1`, computed on demand (n
 ## Consequences
 
 - Ruled defaults: window 8 weeks (R-08 "rolling window (default 8 weeks)"), `suggest.max` 3 (R-21), cycle 4 weeks (R-07), 2-week slot horizon (R-20).
-- Assumed, pending PO (2026-10-31), A-13: every other default and bound (`staleDays` 21, `minSessions` 3, `trendImproving` 0.5, `needsWorkThreshold` 0.5, weights 0.4/0.25/0.2/0.15, `hitCaughtMinEvents` 3). They are seed-row values only, tuned once real data exists.
+- Ruled R-49 (2026-11-01), formerly A-13: every other default and bound (`staleDays` 21, `minSessions` 3, `trendImproving` 0.5, `needsWorkThreshold` 0.5, weights 0.4/0.25/0.2/0.15, `hitCaughtMinEvents` 3). They are seed-row values only, tuned once real data exists.
 - NF-09 (< 100 ms for 500 sessions) is a planner target, not ruled.
 - Technique-level progression is v1.x (ADR 0014).
