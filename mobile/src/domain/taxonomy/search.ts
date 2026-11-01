@@ -11,22 +11,24 @@ export function normalizeQuery(s: string): string {
     .trim();
 }
 
-/** Match class, lower is better: 0 name prefix, 1 alias prefix, 2 name substring, 3 alias substring. */
+/**
+ * Match class, lower is better: 0 name prefix, 1 name word-start, 2 alias prefix or word-start,
+ * 3 name substring, 4 alias substring.
+ */
 type Match = { cls: number; alias?: string };
 
-function prefixOrWordStart(hay: string, q: string): boolean {
-  return hay.startsWith(q) || hay.includes(` ${q}`);
-}
+const wordStart = (hay: string, q: string) => hay.includes(` ${q}`);
 
 function matchOf(row: Searchable, q: string): Match | undefined {
   const name = normalizeQuery(row.name);
-  if (prefixOrWordStart(name, q)) return { cls: 0 };
+  if (name.startsWith(q)) return { cls: 0 };
+  if (wordStart(name, q)) return { cls: 1 };
   const aliases = row.aliases.map((a) => [a, normalizeQuery(a)] as const);
-  const aliasPrefix = aliases.find(([, n]) => prefixOrWordStart(n, q));
-  if (aliasPrefix) return { cls: 1, alias: aliasPrefix[0] };
-  if (name.includes(q)) return { cls: 2 };
+  const aliasPrefix = aliases.find(([, n]) => n.startsWith(q) || wordStart(n, q));
+  if (aliasPrefix) return { cls: 2, alias: aliasPrefix[0] };
+  if (name.includes(q)) return { cls: 3 };
   const aliasSub = aliases.find(([, n]) => n.includes(q));
-  if (aliasSub) return { cls: 3, alias: aliasSub[0] };
+  if (aliasSub) return { cls: 4, alias: aliasSub[0] };
   return undefined;
 }
 
@@ -44,8 +46,8 @@ export function matchRows<T extends Searchable>(rows: readonly T[], query: strin
 }
 
 /**
- * Ranks rows for a picker/search (plan §4): prefix (or word-start) beats substring, a name hit beats
- * an alias hit, CORE beats EXTENDED, then name. An empty query returns every row in tier/name order.
+ * Ranks rows for a picker/search (plan §4): prefix beats word-start beats substring, a name hit beats
+ * an alias hit of the same kind, CORE beats EXTENDED, then name. An empty query returns every row in tier/name order.
  * `matchedAlias` is set when the hit came from an alias.
  */
 export function rankRows<T extends Searchable>(rows: readonly T[], query: string, limit = 30): Ranked<T>[] {

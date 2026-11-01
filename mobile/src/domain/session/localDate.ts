@@ -1,10 +1,13 @@
 import { DomainError } from '../errors';
 
-const ISO_UTC = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?Z$/;
+const ISO_UTC = /^(\d{4}-\d{2}-\d{2})T([01]\d|2[0-3]):[0-5]\d(:[0-5]\d(\.\d{1,3})?)?Z$/;
 const LOCAL_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
 
-/** True for an ISO-8601 UTC timestamp (`…Z`) that denotes a real instant. */
-export const isIsoUtc = (s: string): boolean => ISO_UTC.test(s) && !Number.isNaN(Date.parse(s));
+/** True for an ISO-8601 UTC timestamp (`…Z`) on a real calendar date. */
+export function isIsoUtc(s: string): boolean {
+  const m = ISO_UTC.exec(s);
+  return !!m && isLocalDate(m[1]!);
+}
 
 /** True for a real calendar date `YYYY-MM-DD`. */
 export function isLocalDate(s: string): boolean {
