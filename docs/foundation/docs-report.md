@@ -33,7 +33,7 @@ None. The generator reports 21 tables, 0 undescribed (owner if that changes: dat
 | ADR | Status | Why |
 |---|---|---|
 | 0018 | proposed | A-24, A-31 pending PO |
-| 0019 | accepted | no A-row |
+| 0019 | proposed | no PO sentence; pending PO (review 2 R2-07) |
 | 0020 | proposed | A-16, A-17 pending PO |
 | 0021 | proposed | A-26, A-27, A-31, A-32, A-33 pending PO |
 | 0022 | proposed | A-28, A-29 pending PO |

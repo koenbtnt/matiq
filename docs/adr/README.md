@@ -24,7 +24,7 @@ register in the sprint's `plan.md §0`, R-ids to rulings in `docs/decisions.md`.
 | [0016](0016-time-model-and-settings-store.md) | Time model (UTC + local_date) and settings separate from app_meta | D-26, D-35 / R-15, R-21, R-22 | accepted | 2026-10-31 |
 | [0017](0017-planning-and-logging-model.md) | Planning and logging model: sessions, reviews, rounds, cycles, slots, rank | D-04, D-10..D-15, D-19 / R-03, R-05..R-07, R-10, R-19, R-20 | accepted | 2026-10-31 |
 | [0018](0018-single-foundation-migration-and-schema-deltas.md) | One foundation migration for the whole schema; live-unique partial indexes; schema deltas | F-01, F-02, F-04, F-20 / D-29; A-15, A-24, A-31 | proposed | 2026-11-01 |
-| [0019](0019-database-access-layer-and-bootstrap.md) | Shared Db type, transaction-only writes and the bootstrap sequence | F-03, F-08, F-09 / R-24, CO-15 | accepted | 2026-11-01 |
+| [0019](0019-database-access-layer-and-bootstrap.md) | Shared Db type, transaction-only writes and the bootstrap sequence | F-03, F-08, F-09 / R-24, CO-15 | proposed | 2026-11-01 |
 | [0020](0020-sqlcipher-key-seam-and-backup-exclusion.md) | SQLCipher key seam, raw 32-byte key and backup exclusion | F-05..F-07 / R-24, R-12; A-16, A-17 | proposed | 2026-11-01 |
 | [0021](0021-taxonomy-seed-pipeline-design.md) | Taxonomy seed pipeline: vendored snapshot, zero-dependency converter, endpoint resolution | F-10..F-13, F-15 / R-28, R-35; A-26, A-27, A-31..A-33 | proposed | 2026-11-01 |
 | [0022](0022-curated-layer-id-registry-and-first-launch-seed.md) | Curated layer, append-only id registry and idempotent first-launch seed | F-14, F-16 / R-28, D-07, D-08; A-28, A-29 | proposed | 2026-11-01 |
