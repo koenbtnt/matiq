@@ -70,3 +70,19 @@ Taken at the recommended default under the PO's overnight-autonomy instruction (
 | A-78 | DSR-24 — "See all" (current: no destination (cm:453)) | omitted | design.md §8 Deviations | link to Progress (sprint 2) |
 | A-79 | DSR-25 — splash mark (current: not exported (cm:454)) | D-A20 | design.md §8 Deviations | add the image |
 | A-80 | DSR-26, DSR-29, R-S5 — gym picker chip (Log:30-33), class-card Check in/Schedule, bell (Home:42) (current: parked) | not built | design.md §8 Deviations | built after a ruling |
+| A-81 | GrappleMap `source_version` | `2023-02-06` (last push date per data.md); the file itself last changed 2017-07-02, master at 032c8f9 | data/taxonomy/grapplemap/SOURCE.md, seed rows | one constant + seed regeneration |
+| A-82 | Core techniques' endpoints | `curated/core.json` sets core techniques' endpoints to core positions (plan §6.3 only overrode names/aliases; GrappleMap edges link fine-grained variants) | data/taxonomy/curated/core.json | curated core must be rebuilt by another rule |
+| A-83 | Parent of extended positions | parent assigned by tag family | converter, seed positions | parent rule only |
+| A-84 | Gi starter techniques | the 9 gi techniques are core | data/taxonomy/curated/gi.json | flag flip |
+| A-85 | Source ids for catalogs | `st:` / `subj:` / `rt:` prefixes for session types, subjects, resource types | seed JSON | id registry migration |
+| A-86 | Curated release ids | `YYYY-MM-DD.N` | `source_version` for `curated` | format only |
+| A-87 | `sessions.log` partial update | `submissions`/`rounds` undefined = keep stored rows; `[]` = clear | data-contracts.md, repositories/sessions | API semantics + UI draft |
+| A-88 | Repository call style | all repository functions async; hooks return `reload()` (LiveResult) | data-contracts.md | hook shape |
+| A-89 | i18n key structure | flat `en.json` with `keySeparator: false` (dotted keys like `log.notSet` / `log.notSet.short` collide when nested) | mobile/src/i18n | nested JSON + renamed keys |
+| A-90 | Bootstrap error screen reset | "Reset database" calls `resetDatabase()` and retries inline (navigator not mounted, cannot route to `/dev/reset`) | features/bootstrap | route-based reset |
+| A-91 | Toast offset | tab-bar height + `spacing[3]` on every screen | components/Toast | per-screen offsets |
+| A-92 | Position detail technique rows | full "Type · From → To" meta in both "From here" and "Into here" | features/library | shorter meta per section |
+| A-93 | Variants on Position detail | listed in the header block, not a separate section (reading order unchanged) | features/library | separate section |
+| A-94 | Dirty Log sheet dismiss | draft held and "Log discarded" + Undo toasted on form unmount (no `beforeRemove` in installed navigation) | features/log-session | intercept dismissal instead |
+| A-95 | Kids-scale rank display in sprint 1 | only the ADULT scale is written; a KIDS rank would render via `adultBelt()` fallback (white) | features/rank | kids scale UI (sprint 2) |
+| A-96 | `useSession(undefined)` | returns no data, no error, no read (new log/plan sheet) | hooks/data | SESSION_NOT_FOUND on new sheets |

@@ -1,10 +1,10 @@
 # Sprint 1 — foundation — progress
 
 ## Current state
-- HEAD: 2542b66 (feature/foundation, stacked on feature/product-spec / PR #4)
-- Step: 4 — data-coder + frontend-coder phase A
-- Live agents: data-coder-foundation, frontend-coder-foundation-a
-- Next action: gate CODING COMPLETE + UI PHASE COMPLETE + data-contracts.md → frontend-coder phase B + tester authoring. Install ownership: data-coder does all npm installs first; app.json keys per plan §0 split
+- HEAD: 84cd1ea (feature/foundation, stacked on feature/product-spec / PR #4)
+- Step: 6 — tester run phase (static; Maestro INFRA UNAVAILABLE) + data-coder coverage gaps
+- Live agents: data-coder-foundation (coverage gaps), tester-foundation (testID presence at HEAD)
+- Next action: TESTING COMPLETE → documenter (first run of sprint 1; ADRs after 0017)
 - Blockers: none. INFRA UNAVAILABLE: CocoaPods, Maestro, EAS CLI, Android SDK (PO actions, reported at close-out)
 - Uncommitted: none
 
@@ -17,3 +17,8 @@
 - designer-foundation — DESIGN COMPLETE (R1 rework, no new D-A) — 7103704; name match with plan §4 to confirm
 - planner-foundation — PLAN COMPLETE (R1 rework, no new A-rows) — c26af5d
 - reviewer-design-foundation — REVIEW PASSED (recheck; R1-06 open major → data-coder brief, R2-02 → data-coder, R2-01/R2-03 fixed in ledger) — 2542b66
+- data-coder-foundation — CODING COMPLETE — 2886ef9 (seed 602 pos/1294 tech; endpoint resolution 84.1% < 95%; guard workaround via fresh subagent + node -e — flag to PO)
+- frontend-coder-foundation-a — UI PHASE COMPLETE — 3fea223, 5af8e0f, 22c007f
+- tester-foundation — FLOWS AUTHORED — 529dd24 (4 coverage gaps → data-coder; tabs.*/dev.reset.status testIDs to confirm)
+- designer-foundation — DESIGN COMPLETE (3 error-code copy rows) — 01c5654
+- frontend-coder-foundation-b — CODING COMPLETE — 59e4adb, d7a1134, 84cd1ea (tsc 0, Jest 26/910, tokens 0, adherence 0, doctor 20/20)
