@@ -1,0 +1,53 @@
+appId: nl.btnt.matiq
+name: Regression CO-42 - no "(tabs)" back label on session and position detail
+tags:
+  - regression
+env:
+  MOUNT: d05df656-d2e7-4bcd-ac72-c9d197bb5a2d
+---
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "home.quickLog"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.search.input"
+- inputText: "mount"
+- tapOn:
+    id: "log.search.result.${MOUNT}"
+- tapOn:
+    id: "log.focus.${MOUNT}.rating.3"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+
+# --- Home -> session detail ---
+- tapOn:
+    id: "home\\.recent\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "session.screen"
+    timeout: 10000
+- assertVisible:
+    id: "BackButton"
+- assertNotVisible:
+    text: ".*\\(tabs\\).*"
+- runFlow: ../../subflows/back.yaml
+
+# --- Library -> position detail ---
+- tapOn:
+    id: "tabs.library"
+- tapOn:
+    id: "library.position.${MOUNT}"
+- extendedWaitUntil:
+    visible:
+      id: "position.screen"
+    timeout: 10000
+- assertNotVisible:
+    text: ".*\\(tabs\\).*"

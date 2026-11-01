@@ -1,0 +1,91 @@
+appId: nl.btnt.matiq
+name: Progress panels - consistency heatmap, planned-vs-trained gap, rank card (empty then one session)
+tags:
+  - features
+  - progress
+env:
+  CLOSED: 858d33c2-438d-41e2-a1b9-6b0d79a31ce7   # position "Closed guard"
+---
+# Clock-independent (plan N5): no planned session is created. Plan mode defaults to the next full hour, which
+# lands tomorrow after 23:00, and the gap panel ignores future rows. Today's cell id is unknown to the flow,
+# so the summary copy is the heatmap assertion.
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "tabs.progress"
+- extendedWaitUntil:
+    visible:
+      id: "progress.screen"
+    timeout: 10000
+- assertVisible:
+    id: "progress.empty"
+- scrollUntilVisible:
+    element:
+      id: "progress.consistency.empty"
+- assertVisible:
+    id: "progress.consistency.empty"
+- scrollUntilVisible:
+    element:
+      id: "progress.gap.empty"
+- assertVisible:
+    id: "progress.gap.empty"
+- scrollUntilVisible:
+    element:
+      id: "progress.rank"
+- assertVisible:
+    id: "progress.rank"
+
+# --- log one unplanned session (default duration) on Closed guard ---
+- tapOn:
+    id: "tabs.log"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.search.input"
+- inputText: "closed guard"
+- tapOn:
+    id: "log.search.result.${CLOSED}"
+- tapOn:
+    id: "log.focus.${CLOSED}.rating.3"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+
+- tapOn:
+    id: "tabs.progress"
+- extendedWaitUntil:
+    visible:
+      id: "progress.screen"
+    timeout: 10000
+- assertNotVisible:
+    id: "progress.empty"
+- scrollUntilVisible:
+    element:
+      id: "progress.consistency"
+- assertVisible:
+    id: "progress.consistency"
+- assertNotVisible:
+    id: "progress.consistency.empty"
+# review-1-recheck N10: the rendered summary carries the window ("... in the last 8 weeks")
+- assertVisible:
+    id: "progress.consistency.summary"
+    text: "1 session on 1 day in the last \\d+ weeks?"
+- scrollUntilVisible:
+    element:
+      id: "progress.gap.card"
+- assertVisible:
+    id: "progress.gap.summary"
+- assertNotVisible:
+    id: "progress.gap.empty"
+- assertVisible:
+    id: "progress.gap.POSITION.${CLOSED}"
+    text: ".*\\+1 unplanned.*"
+- scrollUntilVisible:
+    element:
+      id: "progress.rank"
+- assertVisible:
+    id: "progress.rank"

@@ -1,0 +1,119 @@
+appId: nl.btnt.matiq
+name: Library edit - create, rename keeps alias, alias search, delete and undo
+tags:
+  - features
+  - library
+---
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "tabs.library"
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- tapOn:
+    id: "library.segment.positions"
+
+# --- create (design P-16: the plus button; no long-press) ---
+- tapOn:
+    id: "library.add"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+# domain rule: a name is required
+- assertVisible:
+    id: "libraryEdit.save.reason"
+- tapOn:
+    id: "libraryEdit.field.name"
+- inputText: "Zeta guard"
+- assertNotVisible:
+    id: "libraryEdit.save.reason"
+- tapOn:
+    id: "libraryEdit.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+- assertVisible: "Position added"      # copy is the thing under test (design 6.1)
+
+# --- the new row is findable; user ids are minted, so select by id pattern ---
+- tapOn:
+    id: "library.search.input"
+- inputText: "zeta guard"
+- extendedWaitUntil:
+    visible:
+      id: "library\\.position\\.[^.]+"
+    timeout: 10000
+- tapOn:
+    id: "library\\.position\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "position.screen"
+    timeout: 10000
+
+# --- rename; the old name stays as an alias (R-50). The new name shares no text with the old one,
+#     so the next search can only succeed through the alias ---
+- tapOn:
+    id: "position.edit"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "libraryEdit.field.name"
+- eraseText: 40
+- inputText: "Omega shield"
+- assertVisible:
+    id: "libraryEdit.keepAlias"
+- tapOn:
+    id: "libraryEdit.save"
+- extendedWaitUntil:
+    notVisible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- runFlow: ../../subflows/back.yaml
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- tapOn:
+    id: "library.search.clear"
+    optional: true
+- tapOn:
+    id: "library.search.input"
+- inputText: "zeta guard"
+- extendedWaitUntil:
+    visible:
+      id: "library\\.position\\.[^.]+"
+    timeout: 10000
+- assertVisible: "Omega shield"
+
+# --- delete, then undo ---
+- tapOn:
+    id: "library\\.position\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "position.screen"
+    timeout: 10000
+- tapOn:
+    id: "position.edit"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "libraryEdit.delete"
+- extendedWaitUntil:
+    visible:
+      id: "toast.undo"
+    timeout: 10000
+- assertVisible: "Position deleted"
+- tapOn:
+    id: "toast.undo"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000

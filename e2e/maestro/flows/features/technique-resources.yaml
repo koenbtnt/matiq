@@ -1,0 +1,91 @@
+appId: nl.btnt.matiq
+name: Technique resources - add, mark watched, delete, undo
+tags:
+  - features
+  - library
+env:
+  CLOCK_CHOKE: 72faa818-11cb-4d05-aed4-9d13832ccbf5   # technique "Clock choke" (CORE, seed)
+---
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "tabs.library"
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- tapOn:
+    id: "library.segment.techniques"
+- tapOn:
+    id: "library.search.input"
+- inputText: "clock choke"
+- extendedWaitUntil:
+    visible:
+      id: "library.technique.${CLOCK_CHOKE}"
+    timeout: 10000
+- tapOn:
+    id: "library.technique.${CLOCK_CHOKE}"
+- extendedWaitUntil:
+    visible:
+      id: "technique.screen"
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      id: "technique.resources.empty"
+- assertVisible:
+    id: "technique.resources.empty"
+
+# --- add (title is the only required field) ---
+- tapOn:
+    id: "technique.resources.add"
+- extendedWaitUntil:
+    visible:
+      id: "resourceEdit.sheet"
+    timeout: 10000
+- assertVisible:
+    id: "resourceEdit.save.reason"
+- tapOn:
+    id: "resourceEdit.field.title"
+- inputText: "Fictional clock choke drill"
+- tapOn:
+    id: "resourceEdit.field.url"
+- inputText: "https://example.com/clock-choke"
+- tapOn:
+    id: "resourceEdit.save"
+- extendedWaitUntil:
+    visible:
+      id: "technique\\.resource\\.[^.]+"
+    timeout: 10000
+- assertVisible: "Resource added"
+- assertNotVisible:
+    id: "technique.resources.empty"
+
+# --- watched toggle ---
+- tapOn:
+    id: "technique\\.resource\\.[^.]+\\.watched"
+- assertVisible:
+    id: "technique\\.resource\\.[^.]+\\.watched"
+    checked: true
+
+# --- delete from the edit sheet, then undo ---
+- tapOn:
+    id: "technique\\.resource\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "resourceEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "resourceEdit.delete"
+- extendedWaitUntil:
+    visible:
+      id: "toast.undo"
+    timeout: 10000
+- assertVisible: "Resource deleted"
+- assertVisible:
+    id: "technique.resources.empty"
+- tapOn:
+    id: "toast.undo"
+- extendedWaitUntil:
+    visible:
+      id: "technique\\.resource\\.[^.]+"
+    timeout: 10000

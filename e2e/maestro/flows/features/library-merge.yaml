@@ -1,0 +1,186 @@
+appId: nl.btnt.matiq
+name: Library merge - sessions move to the survivor, undo moves them back
+tags:
+  - features
+  - library
+---
+- runFlow: ../../subflows/reset.yaml
+
+# --- two user positions: "Zeta A" (loser) and "Zeta B" (survivor) ---
+- tapOn:
+    id: "tabs.library"
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- tapOn:
+    id: "library.segment.positions"
+- tapOn:
+    id: "library.add"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "libraryEdit.field.name"
+- inputText: "Zeta A"
+- tapOn:
+    id: "libraryEdit.save"
+- extendedWaitUntil:
+    notVisible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "library.add"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "libraryEdit.field.name"
+- inputText: "Zeta B"
+- tapOn:
+    id: "libraryEdit.save"
+- extendedWaitUntil:
+    notVisible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+
+# --- a session on Zeta A ---
+- tapOn:
+    id: "tabs.log"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.search.input"
+- inputText: "zeta a"
+- tapOn:
+    id: "log.search.result\\.[^.]+"
+    index: 0
+- tapOn:
+    id: "log\\.focus\\.[^.]+\\.rating\\.3"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+
+# --- pass 1: merge Zeta A into Zeta B and undo at once (the toast is short-lived) ---
+- tapOn:
+    id: "tabs.library"
+- tapOn:
+    id: "library.search.input"
+- inputText: "zeta a"
+- extendedWaitUntil:
+    visible:
+      id: "library\\.position\\.[^.]+"
+    timeout: 10000
+- tapOn:
+    id: "library\\.position\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "position.screen"
+    timeout: 10000
+- tapOn:
+    id: "position.edit"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "libraryEdit.merge"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.merge.panel"
+    timeout: 10000
+# domain rule: confirming needs a picked survivor
+- tapOn:
+    id: "libraryEdit.merge.search.input"
+- inputText: "zeta b"
+- tapOn:
+    id: "libraryEdit.merge.result\\.[^.]+"
+    index: 0
+- tapOn:
+    id: "libraryEdit.merge.confirm"
+- extendedWaitUntil:
+    visible:
+      id: "toast.undo"
+    timeout: 10000
+- assertVisible: "Merged into Zeta B"
+- tapOn:
+    id: "toast.undo"
+- extendedWaitUntil:
+    visible: "Merge undone"
+    timeout: 10000
+- tapOn:
+    id: "tabs.home"
+- tapOn:
+    id: "home\\.recent\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "session.screen"
+    timeout: 10000
+- assertVisible: "Zeta A"
+- assertNotVisible: "Zeta B"
+- runFlow: ../../subflows/back.yaml
+
+# --- pass 2: merge again, keep it: the session shows the survivor ---
+- tapOn:
+    id: "tabs.library"
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- tapOn:
+    id: "library.search.clear"
+    optional: true
+- tapOn:
+    id: "library.search.input"
+- inputText: "zeta a"
+- extendedWaitUntil:
+    visible:
+      id: "library\\.position\\.[^.]+"
+    timeout: 10000
+- tapOn:
+    id: "library\\.position\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "position.screen"
+    timeout: 10000
+- assertVisible: "Zeta A"
+- tapOn:
+    id: "position.edit"
+- extendedWaitUntil:
+    visible:
+      id: "libraryEdit.sheet"
+    timeout: 10000
+- tapOn:
+    id: "libraryEdit.merge"
+- tapOn:
+    id: "libraryEdit.merge.search.input"
+- inputText: "zeta b"
+- tapOn:
+    id: "libraryEdit.merge.result\\.[^.]+"
+    index: 0
+- tapOn:
+    id: "libraryEdit.merge.confirm"
+- extendedWaitUntil:
+    visible: "Merged into Zeta B"
+    timeout: 10000
+- tapOn:
+    id: "tabs.home"
+- tapOn:
+    id: "home\\.recent\\.[^.]+"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "session.screen"
+    timeout: 10000
+- assertVisible: "Zeta B"
+- assertNotVisible: "Zeta A"

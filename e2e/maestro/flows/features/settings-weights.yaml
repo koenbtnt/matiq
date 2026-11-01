@@ -1,0 +1,77 @@
+appId: nl.btnt.matiq
+name: Settings weights - wNeedsWork 0 flips Needs work to Steady live, Reset restores, out-of-range rejected
+tags:
+  - features
+  - settings
+env:
+  MOUNT: d05df656-d2e7-4bcd-ac72-c9d197bb5a2d
+  SIDE: 1d7c5fba-91ad-4aef-8375-1470bc217458     # flagged needs work (the focus under test)
+  CLOSED: 858d33c2-438d-41e2-a1b9-6b0d79a31ce7
+---
+- runFlow: ../../subflows/reset.yaml
+- runFlow:
+    file: ../../subflows/seed-progress-states.yaml
+    env:
+      SIDE: ${SIDE}
+      CLOSED: ${CLOSED}
+      MOUNT: ${MOUNT}
+- tapOn:
+    id: "tabs.progress"
+- extendedWaitUntil:
+    visible:
+      id: "progress.row.POSITION.${SIDE}"
+      text: "Side control\\. Needs work\\..*"
+    timeout: 10000
+
+# --- weight of the only available signal -> 0: the score is 0, the focus is Steady ---
+- runFlow: ../../subflows/open-algorithm.yaml
+- assertVisible:
+    id: "algorithm.preview"
+- scrollUntilVisible:
+    element:
+      id: "algorithm.param.wNeedsWork.input"
+- tapOn:
+    id: "algorithm.param.wNeedsWork.input"
+- eraseText: 10
+- inputText: "0"
+- pressKey: Enter
+- tapOn:
+    id: "tabs.progress"
+- extendedWaitUntil:
+    visible:
+      id: "progress.row.POSITION.${SIDE}"
+      text: "Side control\\. Steady\\..*"
+    timeout: 10000
+
+# --- Reset to defaults: back to Needs work ---
+- runFlow: ../../subflows/open-algorithm.yaml
+- scrollUntilVisible:
+    element:
+      id: "algorithm.reset"
+- tapOn:
+    id: "algorithm.reset"
+- tapOn:
+    id: "tabs.progress"
+- extendedWaitUntil:
+    visible:
+      id: "progress.row.POSITION.${SIDE}"
+      text: "Side control\\. Needs work\\..*"
+    timeout: 10000
+
+# --- out of range is rejected with the domain error copy (errors.PARAM_OUT_OF_RANGE) ---
+- runFlow: ../../subflows/open-algorithm.yaml
+- scrollUntilVisible:
+    element:
+      id: "algorithm.param.needsWorkThreshold.input"
+- tapOn:
+    id: "algorithm.param.needsWorkThreshold.input"
+- eraseText: 10
+- inputText: "1.5"
+- pressKey: Enter
+- extendedWaitUntil:
+    visible:
+      id: "algorithm.param.needsWorkThreshold.error"
+    timeout: 10000
+- assertVisible:
+    id: "algorithm.param.needsWorkThreshold.error"
+    text: "Enter a value from .* to .*"

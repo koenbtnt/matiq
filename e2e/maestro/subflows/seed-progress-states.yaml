@@ -1,0 +1,52 @@
+# Shared subflow (outside the flows/** glob, never run alone): builds the progress-states fixture on a reset app.
+# Needs: SIDE (Side control, flagged), CLOSED (Closed guard, rated), MOUNT (Mount, planned only) - seed position ids.
+# Order matters: the logged session first (Home quick log targets a planned session if one exists), the plan last.
+appId: nl.btnt.matiq
+---
+# --- one completed session: SIDE needs work (flagged), CLOSED rated 4, not flagged ---
+- tapOn:
+    id: "home.quickLog"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.search.input"
+- inputText: "side control"
+- tapOn:
+    id: "log.search.result.${SIDE}"
+- tapOn:
+    id: "log.search.input"
+- inputText: "closed guard"
+- tapOn:
+    id: "log.search.result.${CLOSED}"
+- tapOn:
+    id: "log.focus.${SIDE}.rating.2"
+- tapOn:
+    id: "log.focus.${SIDE}.needsWork"
+- tapOn:
+    id: "log.focus.${CLOSED}.rating.4"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+# --- one planned session for MOUNT, never logged ---
+- tapOn:
+    id: "home.planEmpty.action"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.search.input"
+- inputText: "mount"
+- tapOn:
+    id: "log.search.result.${MOUNT}"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "home.next"
+    timeout: 10000
