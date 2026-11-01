@@ -48,3 +48,12 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | maestro test …/features/progress-states.yaml | 1 | 0/1: `why.close` unreachable, sheet header overlapped by content (app defect A-1) |
 | maestro test …/features/settings-rank-theme.yaml | 1 | 0/1: `rank.save` absent from the hierarchy on the KIDS scale (app defect A-2) |
 | Final state | — | 11/13 flows pass; 2 blocked by app defects A-1, A-2 |
+
+### frontend-coder @ 0e8d4db — 2026-11-01 (defect round 1: A-1, A-2)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1726 passed, 0 failed (41 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1726 passed, 0 failed (41 suites) |
+| node scripts/check-token-adherence.mjs | 0 | |
+| simulator check (Metro 8082, JS only) | 0 | why sheet: header clear above body, Close dismisses; set-rank on Kids: Save rank pinned, belts scroll, Cancel dismisses |
