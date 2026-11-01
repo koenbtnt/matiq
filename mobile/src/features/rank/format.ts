@@ -1,11 +1,15 @@
 import type { TFunction } from 'i18next';
 
-import type { Belt } from '../../hooks/data';
+import type { AdultBelt, Belt } from '../../hooks/data';
 
-export const BELTS: Belt[] = ['WHITE', 'BLUE', 'PURPLE', 'BROWN', 'BLACK'];
+type BeltName = AdultBelt;
+export const BELTS: AdultBelt[] = ['WHITE', 'BLUE', 'PURPLE', 'BROWN', 'BLACK'];
+
+/** Sprint 1 only writes the adult scale; a kids-scale row (written by a later sprint) falls back to white. */
+export const adultBelt = (b: Belt): AdultBelt => (BELTS as Belt[]).includes(b) ? (b as AdultBelt) : 'WHITE';
 
 /** "Blue belt · 2 stripes": the rank is always a text name beside the belt graphic (R-C5, DSR-4). */
-export function rankTitle(t: TFunction, belt: Belt, stripes: number): string {
+export function rankTitle(t: TFunction, belt: BeltName, stripes: number): string {
   return t('rank.title', {
     beltName: t('rank.beltName', { belt: t(`rank.belt.${belt}`) }),
     stripes: t('rank.stripes', { count: stripes }),

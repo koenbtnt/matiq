@@ -8,7 +8,7 @@ import { Card } from '../../components/Card';
 import { Txt } from '../../components/Txt';
 import type { RankEntry } from '../../hooks/data';
 import { fmt } from './format';
-import { rankTitle } from '../rank/format';
+import { adultBelt, rankTitle } from '../rank/format';
 
 export function RankCard({ rank }: { rank: RankEntry | null | undefined }) {
   const { t } = useTranslation();
@@ -26,8 +26,8 @@ export function RankCard({ rank }: { rank: RankEntry | null | undefined }) {
   return (
     <Card testID="home.rank">
       <Txt variant="overline" color="textSecondary">{t('home.rank.overline')}</Txt>
-      <BeltRank belt={rank.belt} stripes={rank.stripes} />
-      <Txt variant="titleM">{rankTitle(t, rank.belt, rank.stripes)}</Txt>
+      <BeltRank belt={adultBelt(rank.belt)} stripes={rank.stripes} />
+      <Txt variant="titleM">{rankTitle(t, adultBelt(rank.belt), rank.stripes)}</Txt>
       <Txt variant="caption" color="textSecondary">{t('home.rank.since', { date: fmt.localDateLong(rank.awardedOn) })}</Txt>
       <View style={styles.end}>
         <Button variant="ghost" testID="home.rank.update" label={t('home.rank.update')} accessibilityLabel={t('home.rank.update.a11y')} onPress={open} />

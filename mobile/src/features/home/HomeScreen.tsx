@@ -8,7 +8,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { LoadingState } from '../../components/LoadingState';
 import { SectionHeader } from '../../components/SectionHeader';
 import { Txt } from '../../components/Txt';
-import { useCurrentRank, useHome, useSessionTypes, quickLogTarget } from '../../hooks/data';
+import { useCurrentRank, useHome, useSessionTypes, quickLogTarget, type QuickLogTarget } from '../../hooks/data';
 import { errorKey } from '../../i18n/keys';
 import { isAndroid } from '../../theme/layout';
 import { size, spacing } from '../../theme/tokens';
@@ -33,7 +33,12 @@ export function HomeScreen() {
   const tabBar = (isAndroid ? size.tabbarHeightAndroid : size.tabbarHeightIos) + insets.bottom;
 
   const h = home.data;
-  const target = h && types.data ? quickLogTarget(h, types.data[0]?.id ?? '') : undefined;
+  let target: QuickLogTarget | undefined;
+  try {
+    target = h && types.data ? quickLogTarget(h, types.data) : undefined;
+  } catch {
+    target = undefined; // no session type at all: the hint is omitted, the tap surfaces the error
+  }
   let hint: string | undefined;
   if (h && target) {
     if ('sessionId' in target) {
@@ -70,7 +75,7 @@ export function HomeScreen() {
           testID="home.error"
           title={t('home.error')}
           body={t(errorKey(home.error.code))}
-          action={<Button variant="secondary" testID="home.error.retry" label={t('common.tryAgain')} onPress={() => router.replace('/')} />}
+          action={<Button variant="secondary" testID="home.error.retry" label={t('common.tryAgain')} onPress={home.reload} />}
         />
       ) : !h ? (
         <LoadingState testID="home.loading" />

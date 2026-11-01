@@ -1,5 +1,5 @@
 import type {
-  Direction, FocusInput, FocusKind, FocusPickerRow, HomeData, LogSessionInput, PlanSessionInput, SessionDetail,
+  Direction, FocusInput, FocusKind, FocusPickerRow, HomeData, LogSessionInput, PlanSessionInput, SessionDetail, SubmissionInput,
 } from '../../hooks/data';
 
 export type LogMode = 'log' | 'plan' | 'edit';
@@ -20,7 +20,8 @@ export type FocusDraft = {
   techniques: TechniqueRef[];
 };
 
-export type SubmissionDraft = { direction: Direction; techniqueId: string; name: string };
+/** `id`/`note` survive an edit round trip: `sessions.log` replaces the submission set. */
+export type SubmissionDraft = { id?: string; direction: Direction; techniqueId: string; name: string; note?: string };
 
 export type LogDraft = {
   mode: LogMode;
@@ -39,6 +40,8 @@ export type LogDraft = {
   landed?: number;
   taken?: number;
   submissions: SubmissionDraft[];
+  /** Stored session-level rows this sheet cannot show (no technique): sent back untouched so the replace-set keeps them. */
+  keptSubmissions?: SubmissionInput[];
 };
 
 export type TextField = 'contextNote' | 'whatWorked' | 'whatFailed';
@@ -137,15 +140,19 @@ export function toLogInput(d: LogDraft, timeZone: string): LogSessionInput {
     startsAt: d.when.toISOString(),
     timeZone,
     durationMinutes: d.durationMinutes,
-    rating: d.rating,
-    intensity: d.intensity,
-    energy: d.energy,
+    rating: rating5(d.rating),
+    intensity: rating5(d.intensity),
+    energy: rating5(d.energy),
     contextNote: text(d.contextNote),
     whatWorked: text(d.whatWorked),
     whatFailed: text(d.whatFailed),
     focuses,
     aggregates: { roundsCount: d.rounds, submissionsLanded: d.landed, submissionsTaken: d.taken },
-    submissions: d.submissions.map((s) => ({ direction: s.direction, techniqueId: s.techniqueId })),
+    // Always explicit: `undefined` would keep stored rows, `[]` clears them.
+    submissions: [
+      ...d.submissions.map((s) => ({ id: s.id, direction: s.direction, techniqueId: s.techniqueId, note: s.note })),
+      ...(d.keptSubmissions ?? []),
+    ],
   };
 }
 
@@ -194,7 +201,8 @@ export function draftFromSession(s: SessionDetail, mode: LogMode): LogDraft {
     rounds: s.roundsCount,
     landed: s.submissionsLanded,
     taken: s.submissionsTaken,
-    submissions: s.submissions.flatMap((x) => (x.techniqueId ? [{ direction: x.direction, techniqueId: x.techniqueId, name: x.techniqueName ?? x.techniqueId }] : [])),
+    submissions: s.submissions.flatMap((x) => (x.techniqueId ? [{ id: x.id, direction: x.direction, techniqueId: x.techniqueId, name: x.techniqueName ?? x.techniqueId, note: x.note }] : [])),
+    keptSubmissions: s.submissions.filter((x) => !x.techniqueId).map((x) => ({ id: x.id, direction: x.direction, roundId: x.roundId, note: x.note })),
   };
 }
 

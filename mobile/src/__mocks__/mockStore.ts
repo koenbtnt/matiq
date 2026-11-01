@@ -1,14 +1,17 @@
 import type {
-  BootstrapState, DomainErrorLike, FocusPickerRow, FocusRow, HomeData, LogSessionInput, PlanSessionInput,
+  FocusPickerRow, FocusRow, HomeData, LogSessionInput, PlanSessionInput,
   PositionDetail, PositionRow, RankEntry, RankInput, SessionDetail, SessionSummary, SubjectRow, Suggestion,
   TechniqueRow, TechniqueType,
-} from '../hooks/data/types';
+} from '../repositories/contracts';
 import { buildSessions, currentRank, localDateOf, positions, sessionTypes, subjects, techniques } from './fixtures';
 
 /**
  * In-memory stand-in for the repositories (phase A). The seam in `src/hooks/data/index.ts` is the only
  * importer; phase B replaces that file's implementation and leaves the screens untouched.
  */
+
+export type DomainErrorLike = { code: string; message?: string };
+export type BootstrapState = { status: 'loading' } | { status: 'ready' } | { status: 'error'; code: string };
 
 type Listener = () => void;
 export type ForcedState = 'loading' | { error: DomainErrorLike } | null;
@@ -189,7 +192,7 @@ class MockStore {
     if (existing && existing.status !== 'PLANNED') throw { code: 'SESSION_NOT_PLANNED' } satisfies DomainErrorLike;
     const next: SessionDetail = {
       id: existing?.id ?? this.id('ses'), status: 'PLANNED', sessionTypeId: input.sessionTypeId, sessionTypeName: this.typeName(input.sessionTypeId),
-      startsAt: input.startsAt, localDate: localDateOf(input.startsAt), focusNames: focuses.map((f) => f.name), focuses, submissions: [],
+      startsAt: input.startsAt, localDate: localDateOf(input.startsAt), focusNames: focuses.map((f) => f.name), focuses, submissions: [], rounds: [],
     };
     this.upsert(next);
     return next;
@@ -207,7 +210,7 @@ class MockStore {
       startsAt: input.startsAt, localDate: localDateOf(input.startsAt), durationMinutes: input.durationMinutes, rating: input.rating,
       intensity: input.intensity, energy: input.energy, contextNote: input.contextNote, whatWorked: input.whatWorked, whatFailed: input.whatFailed,
       roundsCount: input.aggregates?.roundsCount, submissionsLanded: input.aggregates?.submissionsLanded, submissionsTaken: input.aggregates?.submissionsTaken,
-      focusNames: focuses.map((f) => f.name), focuses,
+      focusNames: focuses.map((f) => f.name), focuses, rounds: [],
       submissions: (input.submissions ?? []).map((s) => ({ id: this.id('sub'), direction: s.direction, techniqueId: s.techniqueId, techniqueName: techniques.find((t) => t.id === s.techniqueId)?.name })),
     };
     this.upsert(next);

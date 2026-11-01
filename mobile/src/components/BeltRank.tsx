@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import type { Belt } from '../hooks/data/types';
+import type { AdultBelt as Belt } from '../hooks/data/types';
 import { radius, size } from '../theme/tokens';
 import { useTheme } from '../theme/useTheme';
 import type { ColorScheme } from '../theme/tokens';

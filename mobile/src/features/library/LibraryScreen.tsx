@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +10,7 @@ import { SearchField } from '../../components/SearchField';
 import { SegmentedControl } from '../../components/SegmentedControl';
 import { Txt } from '../../components/Txt';
 import {
-  useLibraryPositions, useSubjects, useTechniqueSearch, type HookResult,
+  useLibraryPositions, useSubjects, useTechniqueSearch, type LiveResult,
 } from '../../hooks/data';
 import { useDebounced } from '../../hooks/useDebounced';
 import { errorKey } from '../../i18n/keys';
@@ -65,7 +64,7 @@ export function LibraryScreen() {
 
 type ListProps = { header: React.ReactElement; query: string; top: number; bottom: number };
 
-function useListShell<T>(result: HookResult<T[]>, { header, query, top, bottom }: ListProps, attribution: boolean) {
+function useListShell<T>(result: LiveResult<T[]>, { header, query, top, bottom }: ListProps, attribution: boolean) {
   const { t } = useTranslation();
   const empty = result.error ? (
     <EmptyState
@@ -73,7 +72,7 @@ function useListShell<T>(result: HookResult<T[]>, { header, query, top, bottom }
       testID="library.error"
       title={t('library.error')}
       body={t(errorKey(result.error.code))}
-      action={<Button variant="secondary" testID="library.error.retry" label={t('common.tryAgain')} onPress={() => router.replace('/library')} />}
+      action={<Button variant="secondary" testID="library.error.retry" label={t('common.tryAgain')} onPress={result.reload} />}
     />
   ) : !result.data ? (
     <LoadingState testID="library.loading" />
@@ -104,7 +103,7 @@ function TechniquesList(p: ListProps) {
 function SubjectsList(p: ListProps) {
   const r = useSubjects();
   const q = p.query.toLowerCase();
-  const filtered: HookResult<NonNullable<typeof r.data>> = {
+  const filtered: LiveResult<NonNullable<typeof r.data>> = {
     ...r,
     data: r.data?.filter((s) => !q || s.name.toLowerCase().includes(q) || (s.description ?? '').toLowerCase().includes(q)),
   };

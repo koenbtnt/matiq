@@ -65,7 +65,7 @@ export function localDateOf(iso: string): string {
 export function buildSessions(now: Date): SessionDetail[] {
   const base = (id: string, status: SessionDetail['status'], typeId: string, startsAt: string, focuses: FocusRow[], over: Partial<SessionDetail> = {}): SessionDetail => ({
     id, status, sessionTypeId: typeId, sessionTypeName: sessionTypes.find((s) => s.id === typeId)?.name ?? typeId,
-    startsAt, localDate: localDateOf(startsAt), focusNames: focuses.map((f) => f.name), focuses, submissions: [], ...over,
+    startsAt, localDate: localDateOf(startsAt), focusNames: focuses.map((f) => f.name), focuses, submissions: [], rounds: [], ...over,
   });
   return [
     base('ses-last', 'COMPLETED', 'st-nogi', isoDaysFromNow(-2, 19, now), [

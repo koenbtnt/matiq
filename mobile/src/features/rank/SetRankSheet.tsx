@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -14,12 +14,12 @@ import { SheetChrome } from '../../components/SheetChrome';
 import { Stepper } from '../../components/Stepper';
 import { toast } from '../../components/Toast';
 import { Txt } from '../../components/Txt';
-import { useCurrentRank, useDataActions, type Belt } from '../../hooks/data';
+import { useCurrentRank, useDataActions, type AdultBelt } from '../../hooks/data';
 import { hapticSave } from '../../hooks/haptics';
 import { errorKey } from '../../i18n/keys';
 import { size, spacing } from '../../theme/tokens';
 import { useTheme } from '../../theme/useTheme';
-import { BELTS, parseLocalDate, rankTitle, toLocalDate } from './format';
+import { BELTS, adultBelt, parseLocalDate, rankTitle, toLocalDate } from './format';
 
 /** Set-rank sheet (D-A17): belt rows, stripes stepper, awarded-on date. */
 export function SetRankSheet() {
@@ -27,9 +27,20 @@ export function SetRankSheet() {
   const { c } = useTheme();
   const actions = useDataActions();
   const current = useCurrentRank();
-  const [belt, setBelt] = useState<Belt>(current.data?.belt ?? 'WHITE');
+  const [belt, setBelt] = useState<AdultBelt>(current.data ? adultBelt(current.data.belt) : 'WHITE');
   const [stripes, setStripes] = useState<number>(current.data?.stripes ?? 0);
   const [awarded, setAwarded] = useState<Date>(current.data ? parseLocalDate(current.data.awardedOn) : new Date());
+  // The rank read is async: prefill once when it lands (null = no rank yet, keep the defaults).
+  const hydrated = useRef(current.data !== undefined);
+  useEffect(() => {
+    if (hydrated.current || current.data === undefined) return;
+    hydrated.current = true;
+    if (current.data) {
+      setBelt(adultBelt(current.data.belt));
+      setStripes(current.data.stripes);
+      setAwarded(parseLocalDate(current.data.awardedOn));
+    }
+  }, [current.data]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const maxStripes = belt === 'BLACK' ? 6 : 4;
