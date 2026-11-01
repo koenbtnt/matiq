@@ -69,3 +69,11 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 |---|---|---|---|---|
 | reset subflow YAML parse | js-yaml loadAll e2e/maestro/subflows/reset.yaml | exit 0 | f7e77c0 | 2026-11-01 |
 | maestro test | not run | INFRA UNAVAILABLE | f7e77c0 | 2026-11-01 |
+
+### frontend-coder @ d11ef27 — 2026-11-01 (R2-01 fonts)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | 0 errors |
+| npx jest --watchAll=false | 0 | Test Suites: 29 passed; Tests: 928 passed, 0 failed |
+| node scripts/check-token-adherence.mjs | 0 |  |
+| npx expo-doctor | 0 | 20/20 |
