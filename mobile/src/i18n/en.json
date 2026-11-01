@@ -5,6 +5,7 @@
   "bootstrap.title.DB_KEY_REJECTED": "matIQ can't read your data",
   "bootstrap.title.DB_KEY_UNAVAILABLE": "Unlock your phone to open matIQ",
   "bootstrap.title.DB_MIGRATION_FAILED": "matIQ couldn't update your data",
+  "bootstrap.title.DB_NOT_OPEN": "matIQ couldn't open your data",
   "bootstrap.title.DB_RESET_FAILED": "The database couldn't be reset",
   "bootstrap.title.DB_SEED_FAILED": "matIQ couldn't load the library",
   "common.badge.flagged": "Flagged",
