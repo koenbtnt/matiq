@@ -19,12 +19,12 @@ Designer: Thaleia · 2026-11-01 · branch `feature/progress-settings` · sprint 
 **Decisions index:** P-01…P-36 in §3 (every plan §13 design-level choice: sheet vs in-screen why → sheet; heatmap sizing; icons; plus the system gaps). No PO question is open.
 
 **Components used (shipped, `mobile/src/components/`):** Button (primary · secondary · ghost · destructive) · IconButton · TextArea · SearchField · SegmentedControl · Stepper · Chip (filter · selectable · add) · Tag · Badge (flagged) · BeltRank + BeltSwatch · Card · ListRow · SectionHeader · SheetChrome · BottomActionBar · Toast · EmptyState · ErrorBanner · LoadingState · MainTabBar · Icon · Txt · Touch.
-**Extended (props):** MainTabBar (5 columns) · Icon (+7 glyphs) · BeltRank/BeltSwatch (17 belts, band) · SectionHeader (`icon`, `action`) · SheetChrome (`cancelLabel`) · Stepper (`editable` value) · RankCard (`testIDPrefix`, history) · SetRankSheet (scale, edit, delete).
+**Extended (props):** MainTabBar (5 columns) · Icon (+8 glyphs) · BeltRank/BeltSwatch (17 belts, band) · SectionHeader (`icon`, `action`) · SheetChrome (`cancelLabel`) · RankCard (`testIDPrefix`, history) · SetRankSheet (scale, edit, delete).
 **New shared:** `TextField` (cm:71-78, single line) · `SwitchRow` (cm:120-127, native `Switch`). **New feature components:** §10.1.
 
 **Gaps decided within tokens (all in §8):** DSR-6 (switch off), DSR-8, DSR-11, DSR-13, DSR-14, DSR-15 (kids split belt), DSR-17 (states), DSR-20 (editing screens), DSR-21 (Profile/Settings), DSR-23, the heatmap ramp, the in-sheet undo.
 
-**Copy table:** §6, 359 rows (`<screen>.<element>`, no duplicates, none clashes with `en.json`), 1 changed string (`errors.RANK_BELT_INVALID_FOR_SCALE`). **testID table:** §7, 140 rows / 143 ids (headings `## §7 testID table` / `## §8 Deviations` kept for `testids.test.ts`), with the §11.3 flow per id. Two flow strings differ from plan §11.3 examples on purpose (P-27, P-30).
+**Copy table:** §6, 363 rows (`<screen>.<element>`, no duplicates, none clashes with `en.json`), 1 changed string (`errors.RANK_BELT_INVALID_FOR_SCALE`). **testID table:** §7, 142 rows / 145 ids (headings `## §7 testID table` / `## §8 Deviations` kept for `testids.test.ts`), with the §11.3 flow per id. Two flow strings differ from plan §11.3 examples on purpose (P-27, P-30).
 
 **Data the UI consumes:** §10.2 — plan §5 names; two additive requests for `data-contracts.md` (endpoint soft-delete flags on `TechniqueDetail`; aliases as `AliasRow[]` with ids on `usePosition` / `useTechnique`), nothing that changes plan §5 signatures.
 
@@ -32,11 +32,25 @@ Designer: Thaleia · 2026-11-01 · branch `feature/progress-settings` · sprint 
 
 **Design-system requests:** DSR-30 heatmap ramp, DSR-31 switch-off and settings group patterns (§11). Non-blocking: each is decided in §8.
 
+**Rework round 1:** §2 lists the review-1 fixes (S1, S7, S8, N1–N4). Heatmap a11y = one `role="image"` stop per week row (§4.2.3, §8 R-A3 row); typed params = a numeric field beside the unchanged Stepper (§4.4.2); theme SYSTEM = `'auto'` (§4.1.4).
+
 **Open questions:** none. Signal: DESIGN COMPLETE.
 
 ## §1 Scope
 
 Sprint 2 screens on the five-tab shell (plan §10, PS-09…PS-19, rulings Q1 (a), Q3 (a), Q5): the Progress tab with the four computed states, their "why" sheet and the three secondary panels; the Profile tab as the Settings surface; Library editing for positions, techniques and subjects; Technique detail with Resources; the iOS back-label fix; the theme override. Sources: `design-system/RULES.md` (R-*), `design-system/components.md` (`cm:<line>`), `design-system/tokens.json` v1 via `mobile/src/theme/tokens.ts` (`tk:<line>`), the shipped components and screens of sprint 1 (`docs/foundation/design.md`, cited `fd §n`). Out of scope: cycles/slots, reminders, export/erase, the detailed-rounds UI (only its switch), session-type and resource-type list editing (Q2 (b)), coral/red belts (Q4 (b)), parked DSR-26…29. Every value is a `tokens.ts` name, a cited rule, or a §8 row. The artifact is not changed.
+
+## §2 Changes since review 1 (2026-11-01, rework round 1; `docs/progress-settings/review-1.md`)
+
+| finding | section | what changed |
+|---|---|---|
+| S1 (design half) | §4.1.4 | SYSTEM → `Appearance.setColorScheme('auto')` (RN 0.88.1 `ColorSchemeOverride`), never `null` |
+| S7 | §4.4.2, P-12, §5, §6.4, §7, §8 cm:111-118 row, §9, §4.9, §0 | the Stepper stays as shipped (adjustable value, `Stepper.tsx:67-82`); typed entry is a sibling numeric TextField (`algorithm.param.<key>.input`, label `algorithm.param.input.a11y`) — a separate stop in the §9 order −, value, +, field; the `editable` Stepper extension is withdrawn |
+| S8 | §4.2.3, P-07, §6.3, §7, §8 R-A3 row, §9 | header text = chart summary; each week row is one `role="image"` element with `progress.consistency.week` (8–9 stops); cells are not a11y elements; §8 states why per-week grouping instead of one image; plan §11.2's cell-label assertion moves to week rows; `cell.future` removed (future days get no phrase) |
+| N1 | §4.2.3, §8 cm:310 row, §10.1 | streak aligned to cm:310 with the flame glyph (`flame` / `local_fire_department`, verified); 13/600 → `statMeta` recorded in §8 |
+| N2 | §9.1, §4.2.3 legend, `docs/design-system-contrast.md` :67, :95 | legend swatch row corrected to `bgSurface` (1.16 / 1.11, doc :95); out-of-window hairline row added (1.38 / 1.31, doc :67); captions and week labels carry in/out of window; both doc rows name the heatmap use |
+| N3 | §4.2.3, §6.3 | "not logged" only for past days; today's pending sessions read `progress.consistency.cell.planned` |
+| N4 | §4.4.1 SwitchRow, §9 | the inner `Switch` is hidden from accessibility; the row is the one stop |
 
 ## §3 Decisions
 
@@ -48,12 +62,12 @@ Sprint 2 screens on the five-tab shell (plan §10, PS-09…PS-19, rulings Q1 (a)
 | P-04 | Heatmap levels (plan §6.6 keys `legend.none\|one\|two\|three`) | L0 = `bgRaised`, no digit · L1 = `accentTint` + digit `accentText` · L2 = `accentGraphic` + digit `accentOn` · L3 (≥ 3) = `accentText` fill + digit `inverseFg`. Every cell with ≥ 1 session shows its count | the only accent steps in `tk:198-203`/`:241-246`; the digit carries the count at AA (§9.1), so the grid is never colour alone (R-C5, R-A1); ramp weakness → DSR-30 |
 | P-05 | Heatmap sizing (plan §13 "heatmap sizing") | 7 equal columns `flex: 1`, `aspectRatio: 1`, `columnGap`/`rowGap` `spacing[1]`, inside a Card with padding `spacing[4]`: cell ≈ 42 pt at 390, ≈ 47.7 pt at 430 (derived, not a token); no week-label column; a range caption names the dates | fills the width at both frames with no breakpoint; a label column would shrink cells below the digit's 200 % size |
 | P-06 | Out-of-window, future and today cells (plan §6.6) | out-of-window (`inWindow: false`, past): transparent + `size.borderWidth` `borderDefault`, digit `textSecondary` · future: transparent, no border, no digit · today: `size.borderWidthFocus` ring `textPrimary` over the level fill | "dimmed" without an opacity token; the ring passes 3:1 against the card in both schemes (§9.1), unlike `accentBorder` light |
-| P-07 | Heatmap cell interaction (plan §6.6 "long-press/`accessibilityLabel`") | cells are not pressable; the count is drawn in the cell and in `accessibilityLabel` | the visible digit makes the long-press redundant; fewer hidden gestures (R-1) |
+| P-07 | Heatmap cell interaction (plan §6.6 "long-press/`accessibilityLabel`") | cells are not pressable; the count is drawn in the cell and read in its week row's `accessibilityLabel` (§4.2.3) | the visible digit makes the long-press redundant; fewer hidden gestures (R-1) |
 | P-08 | Planned-vs-trained row visual | text "x of y" + a 4-high bar (`textPrimary` fill on `borderDefault` track, the drawn position-card bar cm:337) + text parts (not trained · pending · unplanned) | bar passes 3:1 (contrast doc :72); text carries every number |
 | P-09 | Rank history panel (Q1 (a)) | RankCard (fd §4.4.7) + up to 5 promotion rows of the active scale + ghost `progress.rank.allHistory` → `profile/rank` | R-10 "shown on Home and Progress"; full list lives in Profile › Rank |
 | P-10 | Panel placement with an unbounded state list | one `SectionList` (virtualised, `frontend.md`); panels in `ListFooterComponent` in plan order heatmap → planned-vs-trained → rank | plan §10 order; virtualised rows |
 | P-11 | Profile structure (Q3 (a), plan §10) | rank card on top; groups Progress · Planning · Logging · Library · Appearance · Rank · About (plan order); navigation rows push Algorithm, Suggestions, Rank, About; switches and the theme segmented control sit inline | one-thumb: every setting is one tap from the tab; R-4 native push navigation |
-| P-12 | Param input (plan §10 "steppers/sliders", §11.2 "rejects out-of-range") | Stepper with an **editable value** (number keyboard) per param; step per key (§4.4.2 table); commit on −/+ tap, blur or submit → `setParam` | steppers are the system control (cm:111); typed entry is what can be out of range; no slider exists in the system |
+| P-12 | Param input (plan §10 "steppers/sliders", §11.2 "rejects out-of-range") | the shipped Stepper plus a separate numeric TextField beside it per param (S7: the field is never inside the adjustable wrapper); step per key (§4.4.2 table); commit on −/+ tap, the adjustable action, or field blur / submit → `setParam` | steppers are the system control (cm:111); typed entry is what can be out of range; no slider exists in the system |
 | P-13 | Save model for settings | every change commits at once (no Save button) | live preview (plan §10); settings are reversible by editing back; R-26 |
 | P-14 | Reset to defaults (plan §10, §12) | secondary Button → `resetParams` → toast `toast.defaultsRestored` + Undo = `setParam` for each key of the pre-reset snapshot | plan §12 "frontend keeps the snapshot" |
 | P-15 | Switch off colours (DSR-6) | native `Switch`: `trackColor={{ false: borderStronger, true: accentFill }}`, `ios_backgroundColor={borderStronger}`, `thumbColor` = `accentOn` on, `textPrimary` off | thumb vs track 8.35 (L) / 7.49 (D) off, 10.77 on (§9.1); thumb position carries state (cm:127) |
@@ -100,7 +114,7 @@ Push headers (profile sub-screens, technique detail): the library Stack's `scree
 
 **§4.1.3 Back label (CO-42, P-28).** Every Stack's `screenOptions` adds `headerBackButtonDisplayMode: 'minimal'`: iOS shows the chevron only (never "(tabs)"), Android the arrow (unchanged). iOS edge swipe and Android back are never disabled (R-N4). The native back button keeps its system accessibility label ("Back").
 
-**§4.1.4 Theme override (Q5, PS-09).** `_layout.tsx` reads `useSetting('theme.override')` and calls `Appearance.setColorScheme(SYSTEM → null, LIGHT → 'light', DARK → 'dark')` before the splash hides; `useTheme`, native headers, sheets and `StatusBar style="auto"` follow. No screen branches on the setting (R-T2).
+**§4.1.4 Theme override (Q5, PS-09).** `_layout.tsx` reads `useSetting('theme.override')` and calls `Appearance.setColorScheme(SYSTEM → 'auto', LIGHT → 'light', DARK → 'dark')` (RN 0.88.1 `ColorSchemeOverride`; `'auto'` resets to the system scheme, `Appearance.d.ts:37`; never `null`) before the splash hides; `useTheme`, native headers, sheets and `StatusBar style="auto"` follow. No screen branches on the setting (R-T2).
 
 ### §4.2 Progress (`(tabs)/progress/index`; plan §10, PS-04)
 
@@ -121,10 +135,10 @@ Data: `useProgress()` (`ProgressOverview`), `useRankHistory()`, `useCurrentRank(
 
 **§4.2.3 Consistency heatmap** (`ConsistencyCard`; bar-chart card pattern cm:393-399; plan §6.6; P-04…P-07).
 - Card: `bgSurface`, `size.borderWidth` `borderDefault`, `radius.lg`, padding `spacing[4]` (cm:223), column `gap: spacing[3]`. `testID` `progress.consistency.card`.
-- Header (column, `gap: spacing[1]`): overline `textSecondary` `progress.consistency.title`; summary `textStyle.headline` `textPrimary` `progress.consistency.summary` (tabular); streak line `textStyle.statMeta` `accentText` `progress.consistency.streak` (text only, no glyph), shown when `currentStreakWeeks ≥ 1` (week-strip streak cm:310; `accentText` on `bgSurface` 5.43 / 11.36, contrast doc :32); minutes caption `textSecondary` `progress.consistency.minutes`.
+- Header (column, `gap: spacing[1]`): overline `textSecondary` `progress.consistency.title`; summary `textStyle.headline` `textPrimary` `progress.consistency.summary` (tabular); streak line (row, `gap: spacing[1]`), shown when `currentStreakWeeks ≥ 1`, aligned to the week-strip streak cm:310: flame Icon `streak` (`flame` / `local_fire_department`) `size.iconCheck` (16) `accentText`, decorative, + `textStyle.statMeta` `accentText` `progress.consistency.streak` (cm:310 draws 13/600, which is off the type scale → `statMeta` 12/600 keeps the weight; §8 DSR-11 row; `accentText` on `bgSurface` 5.43 / 11.36, contrast doc :32); minutes caption `textSecondary` `progress.consistency.minutes`.
 - Empty line (when `totals.completed = 0`): caption `textSecondary` `progress.consistency.empty`. The grid still renders (plan §12 "full zero grid plus the empty copy").
 - **Weekday header:** a row of 7 `flex: 1` cells, `columnGap: spacing[1]`, each the narrow weekday (`Intl.DateTimeFormat` `weekday: 'narrow'` of `weeks[0].days[j].localDate`) in `textStyle.overline` `textSecondary`, centred; `accessibilityElementsHidden`.
-- **Grid** (`testID` `progress.consistency`): one row per `WeekRow` (oldest first), each a `flexDirection: 'row'` with `columnGap: spacing[1]`; rows separated by `rowGap: spacing[1]`. Cell: `flex: 1`, `aspectRatio: 1`, `radius.sm` (DSR-14 6→8 rule), centred digit `textStyle.caption` tabular.
+- **Grid** (`testID` `progress.consistency`; the container itself is not an accessibility element): one row per `WeekRow` (oldest first), each a `flexDirection: 'row'` with `columnGap: spacing[1]`; rows separated by `rowGap: spacing[1]`. Cell: `flex: 1`, `aspectRatio: 1`, `radius.sm` (DSR-14 6→8 rule), centred digit `textStyle.caption` tabular.
 
 | cell | fill | border | digit |
 |---|---|---|---|
@@ -136,9 +150,10 @@ Data: `useProgress()` (`ProgressOverview`), `useRankHistory()`, `useCurrentRank(
 | ≥ 3 completed (L3) | `accentText` | none | the count in `inverseFg` |
 | today (any level) | as its level | `size.borderWidthFocus` `textPrimary` | as its level |
 
-- Cell a11y: `accessible`, no role, label = parts joined ", ": `progress.consistency.cell` (date `Intl` weekday long + day + month long, sessions plural, minutes) or `progress.consistency.cell.future`; then `progress.consistency.cell.skipped` (when `skipped ≥ 1`), `progress.consistency.cell.notLogged` (when `pending ≥ 1` and the date is ≤ today), `progress.consistency.cell.outside` (when `!inWindow`), `progress.consistency.cell.today`. Plan §11.2 asserts these labels. `testID` `progress.consistency.cell.<localDate>`.
+- **A11y (R-A3 with one §8 deviation, S8):** the chart summary is the header text above (summary, streak, minutes, empty line), read first. Each **week row** is one accessibility element: `accessible`, `accessibilityRole="image"`, `testID` `progress.consistency.week.<weekStart>`, label `progress.consistency.week` (date = `weekStart`, `Intl` day + month long; `days` = the day phrases of that week joined "; ") or `progress.consistency.week.none` when no day in it has a phrase; ` · ` + `progress.consistency.week.partial` is appended when the row mixes in- and out-of-window days. Cells are not accessibility elements (`accessible={false}`; they keep `testID` `progress.consistency.cell.<localDate>` for Jest). That gives 8–9 stops instead of 56–63.
+- **Day phrase** (one per day with `completed`, `skipped` or `pending` ≥ 1, or that is today; parts joined ", "): `progress.consistency.cell` (date = `Intl` weekday long, sessions plural, minutes) — then `progress.consistency.cell.skipped` (`skipped ≥ 1`); for `pending ≥ 1`: `progress.consistency.cell.notLogged` only when `localDate < today`, and `progress.consistency.cell.planned` when `localDate = today` (a session planned later today is not "not logged"; `DayCell` carries no start time, so today's pending sessions are always "planned"); `progress.consistency.cell.outside` (`!inWindow`); `progress.consistency.cell.today`. Future days get no phrase. The plan §11.2 assertion "cells with the right `accessibilityLabel`" becomes "week rows with the right `accessibilityLabel`" (§8).
 - Range caption under the grid: `textSecondary` `progress.consistency.range` (first and last grid dates).
-- **Legend** (row, `gap: spacing[3]`, `flexWrap: 'wrap'`): caption `textSecondary` `progress.consistency.legend.title`, then four items (row, `gap: spacing[1]`): a swatch `spacing[4]` × `spacing[4]`, `radius.xs`, in the L0/L1/L2/L3 fill, + caption `textSecondary` `progress.consistency.legend.none|one|two|three`. Swatches `accessibilityElementsHidden`; the captions read.
+- **Legend** (row, `gap: spacing[3]`, `flexWrap: 'wrap'`): caption `textSecondary` `progress.consistency.legend.title`, then four items (row, `gap: spacing[1]`): a swatch `spacing[4]` × `spacing[4]`, `radius.xs`, in the L0/L1/L2/L3 fill, + caption `textSecondary` `progress.consistency.legend.none|one|two|three`. Swatches `accessibilityElementsHidden`; the captions read. In- vs out-of-window is carried by the window caption (`progress.window`), the range caption and the week labels, not by the out-of-window hairline alone (§9.1).
 - Frames: cell ≈ 42 pt at 390, ≈ 47.7 pt at 430; 8 or 9 rows (≈ 410 / 465 pt). At font scale 2 the digit (26 pt) still fits a 42-pt cell; single digits are the realistic case.
 
 **§4.2.4 Planned vs trained** (`PlannedVsActualCard`; plan §6.7; P-08).
@@ -181,7 +196,7 @@ Data: `useProgress()` (`ProgressOverview`), `useRankHistory()`, `useCurrentRank(
    - Rank: ListRow `profile.rankHistory`, value `profile.rankScale.<SCALE>`, chevron → `profile/rank`.
    - About: ListRow `profile.about`, value `about.version` (app version), chevron → `profile/about`.
 - **ListRow** (fd §4.6.3 anatomy): min height `size.listRowMinHeight`, bottom hairline, `rowTitle`, trailing `rowValue` `textSecondary`, chevron; `role="button"`, label = title + ", " + value.
-- **SwitchRow** (new, cm:120-127): container `bgRaised`, `radius.md` (DSR-14 14→12), padding `spacing[3]` vertical / `spacing[4]` horizontal, row `gap: spacing[3]`, min height `size.listRowMinHeight`; text column (flex 1): label `textStyle.chipRegular` `textPrimary` (cm:124 14/500), hint `textStyle.caption` `textSecondary` (5.53 / 6.76 on `bgRaised`, contrast doc :25); trailing native `Switch` per P-15 (`size.switchWidth`×`size.switchHeight` is the platform's own). The whole row toggles (`role="switch"`, `accessibilityState={{ checked }}`, label = label + hint). Change fires no haptic (R-M4).
+- **SwitchRow** (new, cm:120-127): container `bgRaised`, `radius.md` (DSR-14 14→12), padding `spacing[3]` vertical / `spacing[4]` horizontal, row `gap: spacing[3]`, min height `size.listRowMinHeight`; text column (flex 1): label `textStyle.chipRegular` `textPrimary` (cm:124 14/500), hint `textStyle.caption` `textSecondary` (5.53 / 6.76 on `bgRaised`, contrast doc :25); trailing native `Switch` per P-15 (`size.switchWidth`×`size.switchHeight` is the platform's own). The whole row is the one accessible control and toggles (`role="switch"`, `accessibilityState={{ checked }}`, label = label + hint); the inner `Switch` is hidden from accessibility (`accessible={false}`, `importantForAccessibility="no-hide-descendants"`, `accessibilityElementsHidden`) so Android TalkBack and iOS VoiceOver get one stop per row. Change fires no haptic (R-M4).
 - Write errors (rare): toast `errors.<CODE>`.
 
 **§4.4.2 Algorithm** (`profile/algorithm`; header title `algorithm.title`; PS-07, P-12…P-14). ScrollView, gutter, `gap: spacing[5]`, `keyboardShouldPersistTaps="handled"`, `keyboardDismissMode="on-drag"`, iOS `automaticallyAdjustKeyboardInsets`. Data: `useAlgorithmParams()`, `useProgress()`.
@@ -198,9 +213,12 @@ Data: `useProgress()` (`ProgressOverview`), `useRankHistory()`, `useCurrentRank(
 | weights | `wNeedsWork`, `wHitCaught`, `wGap`, `wTrend` | `…<key>` / — | 0.05 | 2 | decimal-pad |
 | data | `hitCaughtMinEvents` | `…hitCaughtMinEvents` / `…unit.events` | 1 | 0 | number-pad |
 
-   - **ParamField** (column, `gap: spacing[1]`): label `textStyle.caption` `textSecondary` (R-A4); Stepper (cm:111-118, fd §4.3.3 spec: container `bgRaised` `radius.md` padding `spacing[1]`; buttons `size.stepperButton`, `radius.sm`, fill `borderDefault`; at min/max `semantic.buttonDisabled`, `disabled`) whose value is a `TextInput` (`editable` prop): `textStyle.stepperValue` tabular `textPrimary`, centred, `minWidth: hit`, `selectTextOnFocus`, focused `size.borderWidthFocus` `accentBorder` + `radius.sm`, unit `caption` `textSecondary` after it; hint caption `textSecondary` `algorithm.param.range` (min, max, default); weights add `algorithm.weightShare` (`w / Σ w` of the four, 0 % when Σ = 0).
-   - Commit: −/+ tap (value ± step, rounded to the decimals; `hapticStepper`) or blur/submit of the input (parse with "," or "." as decimal separator). Invalid number → ErrorBanner `algorithm.param.invalidNumber` below the field; otherwise `setParam({ version, key, value })`. `PARAM_OUT_OF_RANGE` → ErrorBanner `errors.PARAM_OUT_OF_RANGE` with `details.min/max`; `PARAM_NOT_INTEGER` → `errors.PARAM_NOT_INTEGER`; the displayed value reverts to the stored one. The banner clears on the next valid commit.
-   - A11y: −/+ labels `algorithm.param.less.a11y` / `.more.a11y`; the input `accessibilityLabel` = the label, `accessibilityHint` = the range hint.
+   - **ParamField** (column, `gap: spacing[1]`): label `textStyle.caption` `textSecondary` (R-A4, the visible label of both controls below); then a row, `gap: spacing[3]`, `alignItems: 'center'`, holding two **separate** controls:
+     1. the shipped Stepper, **unchanged** (`flex: 1`; cm:111-118, fd §4.3.3 spec: container `bgRaised` `radius.md` padding `spacing[1]`; buttons `size.stepperButton`, `radius.sm`, fill `borderDefault`; at min/max `semantic.buttonDisabled`, `disabled`; value `textStyle.stepperValue` tabular + unit `caption` `textSecondary`). Its value view stays the `accessible` `adjustable` element of `Stepper.tsx:67-82` (`testIDPrefix="algorithm.param.<key>"`), with `label` = the param label.
+     2. a numeric TextField (P-36; `flex: 1`, `size.inputHeight`, `textStyle.input` tabular, `textAlign: 'center'`, `keyboardType` per the table, `selectTextOnFocus`, focused `size.borderWidthFocus` `accentBorder`) showing the stored value; it is a sibling of the Stepper, never inside its adjustable wrapper, so VoiceOver / TalkBack reach it as its own stop. `testID` `algorithm.param.<key>.input`.
+     - Under the row: hint caption `textSecondary` `algorithm.param.range` (min, max, default); weights add `algorithm.weightShare` (`w / Σ w` of the four, 0 % when Σ = 0). At `PixelRatio.getFontScale() ≥ 1.5` the two controls stack (Stepper above the field, `gap: spacing[2]`; fd D-A24).
+   - Commit: −/+ tap or the adjustable increment/decrement action (value ± step, rounded to the decimals; `hapticStepper`), or blur/submit of the TextField (parse with "," or "." as decimal separator). Invalid number → ErrorBanner `algorithm.param.invalidNumber` below the row; otherwise `setParam({ version, key, value })`. `PARAM_OUT_OF_RANGE` → ErrorBanner `errors.PARAM_OUT_OF_RANGE` with `details.min/max`; `PARAM_NOT_INTEGER` → `errors.PARAM_NOT_INTEGER`; the field reverts to the stored value. The banner clears on the next valid commit.
+   - A11y (one model, §9): −/+ buttons labelled `algorithm.param.less.a11y` / `.more.a11y`; the value is `accessibilityRole="adjustable"` with `accessibilityValue={{ min, max, now }}` and increment/decrement actions (shipped); the TextField is a separate stop with `accessibilityLabel` `algorithm.param.input.a11y` and `accessibilityHint` = the range hint. Stop order: −, value, +, input, then the banner when shown.
    - Weights group adds caption `textSecondary` `algorithm.weights.hint` under its header.
 3. **Reset:** secondary Button full width `algorithm.reset` (`algorithm.reset`) + caption `algorithm.reset.hint`; P-14. No accent button on this screen.
 - Live: `useProgress` recomputes as each param commits (plan §12), so the preview and Progress follow.
@@ -303,7 +321,7 @@ Under the reset status line: caption `textSecondary` `dev.reset.backup` with the
 | goal | taps (testID) | count |
 |---|---|---|
 | see why a focus needs work | `tabs.progress` → `progress.row.POSITION.<id>` | 2 |
-| change the needs-work threshold | `tabs.profile` → `profile.algorithm` → `algorithm.param.needsWorkThreshold.value` + type → hide keyboard | 3 + typing |
+| change the needs-work threshold | `tabs.profile` → `profile.algorithm` → `algorithm.param.needsWorkThreshold.input` + type → hide keyboard | 3 + typing |
 | switch to dark | `tabs.profile` → `profile.theme.DARK` | 2 |
 | add a position | `tabs.library` → `library.add` → type → `libraryEdit.save` | 3 + typing |
 | merge two positions | `library.position.<id>` → `position.edit` → `libraryEdit.merge` → `libraryEdit.merge.result.<id>` → `libraryEdit.merge.confirm` | 5 (+ search typing) |
@@ -324,7 +342,7 @@ Primary actions sit in bottom action bars in every sheet; Progress and Profile a
 | TextArea (:78) | — | — | — | description, notes | notes |
 | SearchField (:89) | — | — | — | pickers, merge | — |
 | SegmentedControl (:97) | — | — | theme, scale | applies to, perspective | status |
-| Stepper (:111) | — | — | params (editable), max | — | — |
+| Stepper (:111) | — | — | params (+ numeric field), max | — | — |
 | Switch / SwitchRow (:120, new) | — | — | rounds, extended, 4 sources | — | — |
 | Chip filter (:142) | — | — | — | technique type | resource type |
 | Chip selectable (:147) | — | — | — | keep alias, aliases, picked position | Watched |
@@ -437,12 +455,15 @@ All keys go into `mobile/src/i18n/en.json` (flat dotted keys, as today). i18next
 | `progress.consistency.minutes` | {{minutes}} min trained | caption |
 | `progress.consistency.empty` | No sessions in this window yet. Log a session and it shows up here. | empty (names the next step) |
 | `progress.consistency.range` | {{start}} – {{end}} | grid range |
-| `progress.consistency.cell` | {{date}}: {{sessions}}, {{minutes}} min | cell a11y |
-| `progress.consistency.cell.future` | {{date}}: upcoming | cell a11y |
-| `progress.consistency.cell.skipped` | {{count}} skipped | cell a11y part |
-| `progress.consistency.cell.notLogged` | {{count}} not logged | cell a11y part |
-| `progress.consistency.cell.outside` | outside the window | cell a11y part |
-| `progress.consistency.cell.today` | today | cell a11y part |
+| `progress.consistency.week` | Week of {{date}}: {{days}} | week-row a11y (S8) |
+| `progress.consistency.week.none` | Week of {{date}}: no sessions | week-row a11y |
+| `progress.consistency.week.partial` | partly outside the window | week-row a11y part |
+| `progress.consistency.cell` | {{date}}: {{sessions}}, {{minutes}} min | day phrase |
+| `progress.consistency.cell.skipped` | {{count}} skipped | day phrase part |
+| `progress.consistency.cell.notLogged` | {{count}} not logged | day phrase part (past days only, N3) |
+| `progress.consistency.cell.planned` | {{count}} planned | day phrase part (today, N3) |
+| `progress.consistency.cell.outside` | outside the window | day phrase part |
+| `progress.consistency.cell.today` | today | day phrase part |
 | `progress.consistency.legend.title` | Sessions a day | legend |
 | `progress.consistency.legend.none` | None | legend |
 | `progress.consistency.legend.one` | 1 | legend |
@@ -547,6 +568,7 @@ All keys go into `mobile/src/i18n/en.json` (flat dotted keys, as today). i18next
 | `algorithm.param.less.a11y` | Decrease {{label}} | stepper − |
 | `algorithm.param.more.a11y` | Increase {{label}} | stepper + |
 | `algorithm.param.invalidNumber` | Enter a number. | local banner |
+| `algorithm.param.input.a11y` | {{label}}: type a value | numeric field a11y (S7) |
 | `algorithm.reset` | Reset to defaults | secondary |
 | `algorithm.reset.hint` | Restores all ten values. You can undo right after. | caption |
 | `suggestions.title` | Suggested focuses | header |
@@ -750,7 +772,8 @@ All keys go into `mobile/src/i18n/en.json` (flat dotted keys, as today). i18next
 | `progress.consistency.summary` | summary line | Progress | pp |
 | `progress.consistency.streak` | streak line | Progress | — |
 | `progress.consistency.empty` | empty line | Progress | pp |
-| `progress.consistency.cell.<localDate>` | day cell (not pressable) | Progress | — |
+| `progress.consistency.week.<weekStart>` | week row (one a11y stop, `role="image"`) | Progress | — |
+| `progress.consistency.cell.<localDate>` | day cell (not pressable, not an a11y element; Jest only) | Progress | — |
 | `progress.gap.card` | planned-vs-trained card | Progress | pp |
 | `progress.gap.summary` | summary line | Progress | pp |
 | `progress.gap.empty` | empty line | Progress | pp |
@@ -787,7 +810,8 @@ All keys go into `mobile/src/i18n/en.json` (flat dotted keys, as today). i18next
 | `profile.about` | nav row | Profile | ab |
 | `algorithm.screen` | ScrollView root | Algorithm | sw |
 | `algorithm.preview` | preview card | Algorithm | sw |
-| `algorithm.param.<key>.less` / `.more` / `.value` | param stepper (value = text input) | Algorithm | sw (`needsWorkThreshold`) |
+| `algorithm.param.<key>.less` / `.more` / `.value` | param stepper (shipped; value = adjustable display) | Algorithm | — |
+| `algorithm.param.<key>.input` | numeric field beside the stepper | Algorithm | sw (`needsWorkThreshold`; out-of-range entry) |
 | `algorithm.param.<key>.error` | param ErrorBanner | Algorithm | sw |
 | `algorithm.reset` | Reset to defaults | Algorithm | sw |
 | `suggestions.screen` | ScrollView root | Suggestions | — |
@@ -892,7 +916,9 @@ Unchanged sprint-1 ids that sprint-2 flows reuse: `tabs.home`, `tabs.library`, `
 | cm:124, DSR-11 | switch row label | 14/500 on `bgRaised` | `textStyle.chipRegular` (exact 14/500) + `caption` hint | `chipRegular`, `caption` | SwitchRow |
 | DSR-21, R-T1 | Profile / Settings screen | not drawn (cm:450) | Q3 (a) layout §4.4.1: rank card, overline groups, ListRows, SwitchRows, segmented theme | as cited | Profile |
 | DSR-20 | taxonomy and weights editing | not drawn (cm:449) | `library-edit` sheet + merge panel (§4.5), Algorithm screen (§4.4.2); history = soft delete, aliases, merge payload (data) | TextField, PositionPicker, Stepper | Library, Algorithm |
-| cm:111-118 | editable stepper value | value is display text | the value is a `TextInput` in `stepperValue` with a focus ring (P-12) | `stepperValue`, `borderWidthFocus`, `accentBorder` | Algorithm |
+| cm:111-118 | typed param entry | the stepper has no text entry | the shipped Stepper unchanged + a sibling numeric TextField (P-12, P-36), so the adjustable value and the field are separate a11y stops (S7) | Stepper, TextField, `input`, `borderWidthFocus`, `accentBorder` | Algorithm |
+| R-A3 | heatmap accessibility | a chart is one `role="image"` with a text summary | the header text is the summary; each week row is one `role="image"` element with a week label (8–9 stops), cells are not a11y elements. Reason: the per-day facts (which days were trained, skipped, not logged; today; outside the window) are what the heatmap adds over the summary and cannot fit one label; per-week grouping keeps them reachable without 56–63 stops (S8). Plan §11.2's cell-label assertion moves to week rows | `progress.consistency.week*` | Progress heatmap |
+| cm:310, DSR-11 | streak line | 13/600 `accentText` + flame 16 | flame Icon `size.iconCheck` `accentText` + `textStyle.statMeta` 12/600 `accentText` (13/600 is off the type scale; `statMeta` keeps weight and colour) | `statMeta`, `accentText`, `size.iconCheck` | heatmap header |
 | R-M3, cm:270 | undo toast inside a sheet | toast is the undo surface | aliases: inline undo line in the sheet (P-18); everywhere else the toast after dismiss (P-32) | ghost Button, `caption` | library-edit |
 | R-N3 | sheet detents | medium / large | why sheet `[0.5, 1]` (matches); edit sheets large only (fd D-A23 reason: form + action bar) | react-native-screens formSheet | sheets |
 | cm:291, R-N4 | detail "Edit" | Android app bar trailing action in a 48 box; iOS has no drawn header action | native `headerRight` text button `button` `accentText`, min `hit` × `hit` (P-16) | `textStyle.button`, `accentText` | Position, Technique detail |
@@ -911,11 +937,11 @@ Unchanged sprint-1 ids that sprint-2 flows reuse: `tabs.home`, `tabs.library`, `
 
 ## §9 Accessibility
 
-- **Roles and labels:** every control in §4 names its role and i18n label. Icon-only controls: Library plus (`library.add.<KIND>`), open link (`technique.resource.open.a11y`). Toggles expose state: SwitchRow `checked`, Watched / keep-alias chips `checked`, segments `selected`, merge results `checked` (radio), steppers `adjustable` with `accessibilityValue` and disabled at limits. The heatmap grid: each cell `accessible` with its label (plan §11.2); the card header text is the chart summary (R-A3); the weekday header and swatches are hidden.
+- **Roles and labels:** every control in §4 names its role and i18n label. Icon-only controls: Library plus (`library.add.<KIND>`), open link (`technique.resource.open.a11y`). Toggles expose state: SwitchRow `checked`, Watched / keep-alias chips `checked`, segments `selected`, merge results `checked` (radio), steppers `adjustable` with `accessibilityValue` and disabled at limits; on Algorithm the numeric TextField next to each Stepper is its own stop (`algorithm.param.input.a11y`), never inside the adjustable value (S7). SwitchRow: the row is the one stop, the inner Switch is hidden (N4). The heatmap: the card header text is the chart summary (R-A3); each week row is one `role="image"` stop with its week label (8–9 stops, §8 R-A3 row); cells, the weekday header and swatches are not accessibility elements.
 - **Reading / focus order:**
-  - Progress: title → window → each section (header, rows top to bottom; row = name, state line, Flagged, "Show why") → heatmap (title, summary, streak, minutes, empty line, cells week by week, range, legend) → planned vs trained (summary, rows) → rank card.
+  - Progress: title → window → each section (header, rows top to bottom; row = name, state line, Flagged, "Show why") → heatmap (title, summary, streak, minutes, empty line, week rows oldest first, range, legend) → planned vs trained (summary, rows) → rank card.
   - Why sheet: Close → title (focused on open) → state → Flagged → rule → flagged note → score → rescale note → signals → window → settings link.
-  - Profile: title → rank card → groups in order (overline, then rows). Algorithm: preview (polite live region) → groups → each field (label, −, value, +, range, error) → reset.
+  - Profile: title → rank card → groups in order (overline, then rows). Algorithm: preview (polite live region) → groups → each field (label, −, value (adjustable), +, numeric field, range, error) → reset.
   - library-edit: Cancel → title (focused on open) → fields top to bottom → merge / delete → action bar (reason or error, then primary). Merge panel: title (focused) → body → search → results → selection summary (polite) → back → action bar.
   - Technique detail: back → title → aliases → meta tags → From / To → description → notes → Resources (header, Add, rows: title, meta, Watched, open) → History.
   - About: title → app block → backup status → each source block (name, use, licence, credit, changes, version, links).
@@ -949,7 +975,8 @@ Non-text (3:1, WCAG 1.4.11):
 | L1 vs L2 | #DCF8E8 / #17B061 | 2.51 | #19362A / #2EDB7F | 7.21 | L fail · D pass — **new** |
 | L2 vs L3 | #17B061 / #0B7A3E | 1.92 | #2EDB7F / #5FE69C | 1.15 | fail; digit — **new** (DSR-30) |
 | today ring `textPrimary` on `bgSurface` | #0B0C0E / #FFFFFF | 19.57 | #F4F4F1 / #15171A | 16.30 | pass (= doc :21) |
-| legend L0 swatch `bgRaised` on `bgBase` | #EEEEEA / #F6F6F3 | 1.07 | #1E2125 / #0B0C0E | 1.21 | fail; caption "None" beside it (= doc :96) |
+| legend L0 swatch `bgRaised` on `bgSurface` (the legend sits in the card) | #EEEEEA / #FFFFFF | 1.16 | #1E2125 / #15171A | 1.11 | fail; caption "None" beside it (= doc :95) |
+| out-of-window hairline `borderDefault` on `bgSurface` | #DCDCD6 / #FFFFFF | 1.38 | #2A2E33 / #15171A | 1.31 | fail; in/out of window is carried by the window and range captions and the week labels (`progress.consistency.week.partial`, `cell.outside`) (= doc :67) |
 | switch off thumb `textPrimary` on track `borderStronger` | #0B0C0E / #A9AAA3 | 8.35 | #F4F4F1 / #4A4F56 | 7.49 | pass (= doc :73) — `accentOn` off would be 2.37 dark, rejected (P-15) |
 | switch off track `borderStronger` on `bgRaised` | #A9AAA3 / #EEEEEA | 2.01 | #4A4F56 / #1E2125 | 1.96 | fail; thumb position + native value (= doc :71) |
 | kids band `beltWhite` on grey / yellow / orange / green | #EDEDE8 on #8E9196 · #F2C230 · #F2862E · #2FA35A | 2.69 · 1.43 · 2.17 · 2.75 | same | same | fail; name always shown (DSR-4) — **new** |
@@ -972,7 +999,7 @@ Reused recorded pairs: `textSecondary` on `bgBase` / `bgSurface` / `bgRaised` (d
 | `TechniqueDetailScreen`, `ResourceRow`, `ResourceEditSheet` | features/library | §4.6, §4.7 | |
 | `TextField`, `SwitchRow` | components | P-36, §4.4.1 | required `label` (R-A4) |
 
-Icon map additions (`components/Icon.tsx`): `progress`, `profile` (P-29), `stateImproving`, `stateSteady`, `stateNeedsWork`, `stateNotTrained` (P-03), `openLink` (`arrow.up.right.square` / `open_in_new`).
+Icon map additions (`components/Icon.tsx`): `progress`, `profile` (P-29), `stateImproving`, `stateSteady`, `stateNeedsWork`, `stateNotTrained` (P-03), `openLink` (`arrow.up.right.square` / `open_in_new`), `streak` (`flame` / `local_fire_department`, cm:310; names verified as P-03).
 
 ### §10.2 Names this spec relies on (plan §5; plan wins on spelling)
 
@@ -1002,7 +1029,7 @@ Icon map additions (`components/Icon.tsx`): `progress`, `profile` (P-29), `state
 | # | request | why | screens |
 |---|---|---|---|
 | DSR-30 | A 4-step graphic ramp for activity heatmaps (empty / low / mid / high) that keeps adjacent steps ≥ 3:1 apart in both themes, with the digit colour per step | today L0/L1 light 1.03, L2/L3 dark 1.15 (§9.1); the digit is the only channel | Progress heatmap |
-| DSR-31 | Settings patterns: grouped list header, switch row (off colours, DSR-6), editable stepper value, header text action | Profile/Algorithm built from the closest drawn parts (§8) | Profile, Algorithm, detail headers |
+| DSR-31 | Settings patterns: grouped list header, switch row (off colours, DSR-6), numeric entry beside a stepper, header text action | Profile/Algorithm built from the closest drawn parts (§8) | Profile, Algorithm, detail headers |
 | (open) | DSR-17, 20, 21 are now answered in code by §8; drawing them (state badge, why sheet, edit sheet, Profile) lets the next intake replace these decisions | — | Progress, Library, Profile |
 
 ## §12 Reviewer checklist

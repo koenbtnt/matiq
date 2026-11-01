@@ -64,7 +64,7 @@ treated as CSS px for the large-text threshold (≥ 24 regular or ≥ 18.67 at 7
 | accent-graphic on bg-surface | #17B061 on #FFFFFF | 2.83 | #2EDB7F on #15171A | 9.88 | chart current bar; intensity bar | L FAIL · D pass (≥3) |
 | accent-graphic on border-default | #17B061 on #DCDCD6 | 2.06 | #2EDB7F on #2A2E33 | 7.52 | intensity filled vs empty segment | L FAIL · D pass (≥3) |
 | border-default on bg-raised | #DCDCD6 on #EEEEEA | 1.18 | #2A2E33 on #1E2125 | 1.18 | input 1px boundary | L FAIL · D FAIL (≥3) |
-| border-default on bg-surface | #DCDCD6 on #FFFFFF | 1.38 | #2A2E33 on #15171A | 1.31 | card hairline (decorative) | L FAIL · D FAIL (≥3) |
+| border-default on bg-surface | #DCDCD6 on #FFFFFF | 1.38 | #2A2E33 on #15171A | 1.31 | card hairline (decorative); heatmap out-of-window cell edge (sprint progress-settings: in/out of window carried by captions and week labels) | L FAIL · D FAIL (≥3) |
 | border-strong on bg-raised | #C9C9C2 on #EEEEEA | 1.43 | #3A3F45 on #1E2125 | 1.52 | outlined button edge (next-class Details) | L FAIL · D FAIL (≥3) |
 | border-strong on bg-surface | #C9C9C2 on #FFFFFF | 1.66 | #3A3F45 on #15171A | 1.69 | chart inactive bars | L FAIL · D FAIL (≥3) |
 | border-stronger on bg-surface | #A9AAA3 on #FFFFFF | 2.34 | #4A4F56 on #15171A | 2.18 | dashed add-chip edge; sheet handle on surface | L FAIL · D FAIL (≥3) |
@@ -92,7 +92,7 @@ treated as CSS px for the large-text threshold (≥ 24 regular or ≥ 18.67 at 7
 | belt-kids-yellow on bg-surface | #F2C230 on #FFFFFF | 1.68 | #F2C230 on #15171A | 10.72 | kids belt fill | L FAIL · D pass (≥3) |
 | belt-kids-orange on bg-surface | #F2862E on #FFFFFF | 2.55 | #F2862E on #15171A | 7.03 | kids belt fill | L FAIL · D pass (≥3) |
 | belt-kids-green on bg-surface | #2FA35A on #FFFFFF | 3.23 | #2FA35A on #15171A | 5.56 | kids belt fill | L pass · D pass (≥3) |
-| bg-raised on bg-surface | #EEEEEA on #FFFFFF | 1.16 | #1E2125 on #15171A | 1.11 | input / stepper / segment container fill vs sheet or card | L FAIL · D FAIL (≥3) |
+| bg-raised on bg-surface | #EEEEEA on #FFFFFF | 1.16 | #1E2125 on #15171A | 1.11 | input / stepper / segment container fill vs sheet or card; heatmap level-0 cell and its legend swatch on the card (sprint progress-settings: digit and "None" caption carry it) | L FAIL · D FAIL (≥3) |
 | bg-raised on bg-base | #EEEEEA on #F6F6F3 | 1.07 | #1E2125 on #0B0C0E | 1.21 | search field, next-class card vs screen | L FAIL · D FAIL (≥3) |
 | inverse-bg on bg-raised | #15171A on #EEEEEA | 15.44 | #F4F4F1 on #1E2125 | 14.67 | selected segment vs segment track | L pass · D pass (≥3) |
 | accent-fill on tabbar (over bg-base) | #2EDB7F on #FFFFFF | 1.82 | #2EDB7F on #15171A | 9.88 | Log action in tab bar | L FAIL · D pass (≥3) |
