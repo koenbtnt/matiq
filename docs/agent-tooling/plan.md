@@ -68,6 +68,8 @@ file is the in-repo summary and the control ledger. ADR 0002 records the decisio
 | Seed JSON in sync with the vendored snapshot | data-coder verify row + CI step (`scripts/taxonomy/`) | ruling R-28: our own versioned taxonomy releases must be reproducible | never |
 | Documenter may write `verify.md`/`.json` | documenter frontmatter | sprint 0: the path guard blocked its generator rows and the orchestrator copied them by hand | never |
 | Data-coder owns `data/taxonomy/`, `scripts/taxonomy/`, `app.json` plugin entry, CI step | data-coder frontmatter | sprint 1 scope (R-24, R-28) | review after sprint 1 |
+| Inline interpreters, stdin scripts and out-of-repo scripts refused for scoped agents (rule 6) | `bash-guard.sh` | sprint 1 CO-37: the data-coder edited `app.json` through `node -e` and built files in its scratchpad after its cached guard refused in-scope paths; ruling Q1 (2026-11-01) | never — rule 1 cannot see those writes |
+| Harness change ⇒ new session before the next spawn | `CLAUDE.md`, main-session memory | agent definitions (frontmatter hooks with the scope regexes) are cached for the whole session: the data-coder spawned 50 min after cc3480c still ran the 838a353 scope (sprint 1) | when Claude Code reloads `.claude/agents/*.md` per spawn |
 
 ## 4. Carry-over opened here
 

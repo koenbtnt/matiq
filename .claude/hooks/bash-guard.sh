@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # PreToolUse hook for Bash. Usage: bash-guard.sh [ALLOW_REGEX [DENY_REGEX]]
-#   from an agent's frontmatter, with that agent's path-guard regexes: rules 1-5
+#   from an agent's frontmatter, with that agent's path-guard regexes: rules 1-6
 #   from .claude/settings.json, without args (the main session):        rules 2-5
 # Branching (ADR 0001): develop (integration, default) and main (released) are the long-lived branches.
 # feature/* and chore/* PR into develop; hotfix/* PRs into main. Every merge is a regular merge by the user.
@@ -15,6 +15,10 @@
 # 4. git add -A|--all|. and git push --force|-f|--force-with-lease.
 # 5. Staging a secret or signing file: .env* (not .env.example), *.jks/.keystore/.p8/.p12/.mobileprovision/.pem,
 #    google-services.json, GoogleService-Info.plist. Secrets never enter git (.claude/rules/privacy.md).
+# 6. Scoped agents only: inline interpreter code (node -e/-p, python -c, perl/ruby -e, php -r, osascript -e,
+#    sh/bash/zsh -c), scripts read from stdin (python3 - <<EOF, a heredoc into node) and scripts outside the
+#    repository (node /tmp/x.mjs, bash ~/scratch/x.sh, source ...) are refused: rule 1 cannot see what they
+#    write (sprint 1 CO-37, ruling Q1 2026-11-01). Scripts committed inside the repository stay allowed.
 set -u
 set -f   # no glob expansion while word-splitting the command's segments
 allow=${1:-}; deny=${2:-}
@@ -109,6 +113,64 @@ done <<< "$segments"
 
 # 1. scope — only when this hook carries an agent's regexes
 [ -z "$allow" ] && exit 0
+
+# 6. inline interpreter code, stdin scripts and out-of-repo scripts — rule 1 cannot see their writes
+rule6=$(python3 -I - "$cwd" "$root" <<'PY' "$segments"
+import os, re, shlex, sys
+cwd, root, segs = sys.argv[1], os.path.realpath(sys.argv[2]), sys.argv[3].split("\n")
+# interpreter -> (long inline flags, short inline letters)
+INLINE = {"node": (("--eval", "--print"), "ep"), "nodejs": (("--eval", "--print"), "ep"), "bun": (("--eval", "--print"), "ep"),
+          "python": ((), "c"), "pypy": ((), "c"), "perl": ((), "eE"), "ruby": ((), "e"), "php": ((), "r"), "osascript": ((), "e"),
+          "sh": ((), "c"), "bash": ((), "c"), "zsh": ((), "c"), "dash": ((), "c"), "ksh": ((), "c"), "tsx": ((), ""), "ts-node": (("--eval", "--print"), "ep"), "deno": ((), "")}
+INFO = {"--version", "-V", "-v", "--help", "-h"}
+WRAP = {"env", "time", "nohup", "exec", "command", "nice", "caffeinate"}
+RED = re.compile(r"^(\d*|&)?[<>]")
+BARE_RED = re.compile(r"^(\d*|&)?[<>]{1,2}(&\d*)?$")
+cur = cwd
+def under_root(p):
+    full = os.path.realpath(p if os.path.isabs(p) else os.path.join(cur, p))
+    return full == root or full.startswith(root + os.sep)
+def stop(msg):
+    print(msg); sys.exit(0)
+for s in segs:
+    try: toks = shlex.split(s)
+    except ValueError: toks = s.split()
+    while toks and (os.path.basename(toks[0]) in WRAP or re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", toks[0])): toks = toks[1:]
+    if not toks: continue
+    c = os.path.basename(toks[0]); args = toks[1:]
+    if c == "cd" and args and not args[0].startswith("$"):
+        cur = os.path.normpath(os.path.join(cur, args[0])); continue
+    if c == "npx" and args and args[0] in ("tsx", "ts-node", "node"): c, args = args[0], args[1:]
+    if c in ("source", "."):
+        if args and not under_root(args[0]): stop("'%s %s' sources a script outside the repository" % (c, args[0]))
+        continue
+    base = re.sub(r"\d+([.]\d+)?$", "", c) if c.startswith(("python", "pypy")) else c
+    if base not in INLINE: continue
+    longs, shorts = INLINE[base]
+    # drop redirections and their targets
+    clean, skip = [], False
+    for t in args:
+        if skip: skip = False; continue
+        if RED.match(t):
+            skip = bool(BARE_RED.match(t)); continue
+        clean.append(t)
+    for a in clean:
+        if a in longs or any(a.startswith(f + "=") for f in longs): stop("'%s %s …' runs inline code" % (c, a))
+        if a == "-": stop("'%s -' runs a script from stdin" % c)
+        if a.startswith("-") and not a.startswith("--") and any(ch in shorts for ch in a[1:]): stop("'%s %s …' runs inline code" % (c, a))
+    if base == "deno":
+        if clean and clean[0] == "eval": stop("'deno eval …' runs inline code")
+        pos = [a for a in clean[1:] if not a.startswith("-")] if clean and clean[0] == "run" else []
+        if pos and not under_root(pos[0]): stop("'deno run %s' runs a script outside the repository" % pos[0])
+        continue
+    pos = [a for a in clean if not a.startswith("-")]
+    if not pos:
+        if set(clean) & INFO: continue
+        stop("'%s' with no script file runs code from stdin" % s)
+    if not under_root(pos[0]): stop("'%s %s' runs a script outside the repository" % (c, pos[0]))
+PY
+)
+[ -n "$rule6" ] && refuse "$rule6 — its writes are not scope-checked (rule 6). Use the Edit/Write tools or a script committed inside the repository; if your scope lacks a path, report CODING BLOCKED instead (CO-37)."
 # shellcheck source=scope-lib.sh
 . "$(dirname "$0")/scope-lib.sh"
 GUARD_NAME=bash-guard
