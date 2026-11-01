@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { LoadingState } from '../../components/LoadingState';
 import { Txt } from '../../components/Txt';
-import { useDataActions } from '../../hooks/data';
+import { useAbout, useDataActions } from '../../hooks/data';
 import { spacing } from '../../theme/tokens';
 import { useTheme } from '../../theme/useTheme';
 import { BootstrapErrorScreen } from './BootstrapErrorScreen';
@@ -15,6 +15,7 @@ export function DevResetScreen() {
   const { t } = useTranslation();
   const { c } = useTheme();
   const actions = useDataActions();
+  const about = useAbout();
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
 
@@ -35,6 +36,7 @@ export function DevResetScreen() {
     <View style={[styles.fill, { backgroundColor: c.bgBase }]}>
       <LoadingState fill />
       <Txt testID="dev.reset.status" variant="body" color="textSecondary" style={styles.status}>{t('dev.reset.status')}</Txt>
+      {about.data ? <Txt testID="dev.reset.backup" variant="caption" color="textSecondary">{t('dev.reset.backup', { status: about.data.backup })}</Txt> : null}
     </View>
   );
 }
