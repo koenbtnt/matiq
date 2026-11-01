@@ -1,10 +1,20 @@
 # progress-settings — plan
 
+## Changes since PO rulings Q1–Q5 (2026-11-01, rework round 1; rulings relayed by the coordinator, quoted in §0.1 and §13)
+
+| ruling | section(s) | what changed |
+|---|---|---|
+| Q1 (a) — not the default | §0 scope, PS-21, PS-22, §3 steps 2–3/7, §4, §5.1, §5.2, §6.6, §6.7, §10, §11.1–§11.3, §12, §15 | Consistency heatmap and planned-vs-actual gap panel added to scope: aggregation spec with Jest vectors (H1–H7, G1–G6), `aggregateConsistency` / `aggregatePlannedVsActual` domain functions, `ProgressOverview.consistency` / `.plannedVsActual`, Progress screen panels, flow assertions; no schema change (§4 note) |
+| Q2 (b) | §0.1, §13, §15 | Default confirmed; close-out carry-over line for the list editors |
+| Q3 (a) | §0.1, §13, PS-10 | Profile tab = Settings screen, titled "Profile" — ruled, no longer an assumption |
+| Q4 (b) | §0.1, §13, §15 | Coral/red belts later; CO-27 stays; PS-01 holds |
+| Q5 | §0.1, §13, §16 | Theme override ships in sprint 2 by ruling; §16 cites Q5 instead of "the spec wins" |
+
 Sprint 2. Planner · 2026-11-01 · branch `feature/progress-settings` (cut from `origin/develop` 99f5286). Binding inputs in order: `docs/decisions.md`, `docs/PRODUCT.md` (§6 Progress / Settings / Library / Technique detail, §7 algorithm, §8 taxonomy), `docs/product-spec/plan.md` (§4.2 settings keys, §4.3 params, §5 API, §6 edge cases, §8 algorithm), `docs/foundation/plan.md` (F-07, F-18, F-23, F-24) and `data-contracts.md`, `.claude/rules/*.md`, the shipped schema (`mobile/src/db/schema/`, 20 tables) and screens. Scope per R-32 and the orchestrator's brief: Progress tab with algorithm v1 and explanations · Settings (weights, suggestion sources, rank incl. kids scale, detailed-rounds toggle, theme override, About with the CC BY 4.0 attribution) · Library editing with aliases and merge/undo · Technique detail with Resources · iOS backup-exclusion local Expo module (CO-28) · "(tabs)" back label (CO-42).
 
 ## §0 Summary for builders
 
-**What this sprint delivers.** No migration: every table, column and check this sprint needs exists in `0001_foundation` (PS-01). Algorithm v1 as pure domain code with structured explanations (§6), the Progress tab and its "why" sheet, a Profile tab that hosts Settings (rank with the kids scale, algorithm parameters with reset, suggestion sources, detailed-rounds and extended-library toggles, theme override, About rendering `attribution.json`), Library editing (create/rename/soft delete + undo, aliases, merge + undo) for positions, techniques and subjects, Technique detail with Resources (manual entry, to-watch/watched, history), the iOS backup-exclusion module behind a Jest-testable seam, and the back-label fix. Out: cycles/slots/reminders/export/import/erase/detailed rounds (sprint 3), heatmap and gap panels (Q1), session-type / resource-type editing (Q2).
+**What this sprint delivers.** No migration: every table, column and check this sprint needs exists in `0001_foundation` (PS-01). Algorithm v1 as pure domain code with structured explanations (§6), the Progress tab and its "why" sheet, a Profile tab that hosts Settings (rank with the kids scale, algorithm parameters with reset, suggestion sources, detailed-rounds and extended-library toggles, theme override, About rendering `attribution.json`), Library editing (create/rename/soft delete + undo, aliases, merge + undo) for positions, techniques and subjects, Technique detail with Resources (manual entry, to-watch/watched, history), the iOS backup-exclusion module behind a Jest-testable seam, and the back-label fix. Progress also ships its three secondary panels — rank history, consistency heatmap, planned-vs-actual gap panel (ruling Q1 (a), §6.6–§6.7, PS-21/PS-22) — and the theme override (ruling Q5). Out: cycles/slots/reminders/export/import/erase/detailed rounds (sprint 3), session-type / resource-type list editing (ruling Q2 (b), sprint 3).
 
 **Work split (section → owner; guard scopes `.claude/agents/*.md`).** §4 data (no change) · §5 API · §6 algorithm · §7 taxonomy editing + merge · §8 resources + rank + settings + params · §9.1 backup seam (`mobile/src/db/`) · §11.1 Jest · `data-contracts.md` → **data-coder**. §9.2 native module (`mobile/modules/matiq-backup/`, frontend scope) · §10 screens, theme override, tab shell, back label · §11.2 UI Jest · dev-client rebuild → **frontend-coder** (phase A on typed mocks from §5, phase B after `data-contracts.md`). §11.3 Maestro → **tester**. Copy + testID tables → **designer** (`design.md`, keep the headings `## §7 testID table` / `## §8 Deviations` that `mobile/__tests__/testids.test.ts` slices on). Shared files: none needed in `package.json`; `app.json` unchanged (autolinking finds `./modules` by default, verified `expo-modules-autolinking/build/commands/autolinkingOptions.js:201`).
 
@@ -20,8 +30,8 @@ Sprint 2. Planner · 2026-11-01 · branch `feature/progress-settings` (cut from 
 | PS-06 | Home suggestions gain the NEEDS_WORK and NOT_TRAINED sources from the same compute; `sessions.home` calls `progression.overview` and the hook also subscribes to `algorithm_params` | R-09, R-21 |
 | PS-07 | Params: `algorithmParams.set` validates bounds and integer keys in the domain (`PARAM_OUT_OF_RANGE`, `PARAM_NOT_INTEGER`, `PARAM_UNKNOWN`); weights need not sum to 1 (rescaling); `resetAll` restores `default_value` of the active version only | R-08, R-22 |
 | PS-08 | Settings STRING keys get a domain vocabulary: `theme.override` SYSTEM\|LIGHT\|DARK, `rank.scale` ADULT\|KIDS, `algorithm.version` v1 → `SETTING_VALUE_INVALID` | R-44, R-10 |
-| PS-09 | Theme override: root layout reads `theme.override` live and calls `Appearance.setColorScheme('light'\|'dark'\|null)` (RN 0.88, verified `Appearance.d.ts:37`), so `useTheme`, native headers, sheets and the status bar follow one source | R-44, PRODUCT §6 |
-| PS-10 | Shell = 5 tabs Home · Library · Log · Progress · Profile (R-45 final order); Profile is the Settings surface of R-02: rank header + grouped settings rows (Q3) | R-45, F-18 |
+| PS-09 | Theme override ships now (ruled Q5, 2026-11-01): root layout reads `theme.override` live and calls `Appearance.setColorScheme('light'\|'dark'\|null)` (RN 0.88, verified `Appearance.d.ts:37`), so `useTheme`, native headers, sheets and the status bar follow one source | Q5, R-44, PRODUCT §6 |
+| PS-10 | Shell = 5 tabs Home · Library · Log · Progress · Profile (R-45 final order); Profile is the Settings screen of R-02: rank at the top, settings groups below, titled "Profile" (ruled Q3 (a), 2026-11-01) | R-45, F-18, Q3 |
 | PS-11 | Rank: `rank.current`/`history` filter by the active `rank.scale`; `rank.update`, `rank.softDelete` + `undoDelete`; the Set-rank sheet reads the scale instead of hard-coding ADULT; switching scale hides, never deletes | R-10, sprint-0 §6 |
 | PS-12 | Taxonomy editing (§7): user rows `origin = user`, `tier = CORE`, slug minted from the name (`domain/taxonomy/slug.ts`, `-2` suffix on clash); rename keeps the old name as a user alias by default (R-50/A-9); imported-field edits set `user_edited_at`, `notes`/aliases/resource status never do | R-14, R-23, R-50 |
 | PS-13 | Soft delete never cascades: a technique whose endpoint is deleted is hidden from lists/pickers while the endpoint is deleted; history renders "(removed)"; undo restores by id | R-14 |
@@ -32,27 +42,33 @@ Sprint 2. Planner · 2026-11-01 · branch `feature/progress-settings` (cut from 
 | PS-18 | Back label: `headerBackButtonDisplayMode: 'minimal'` on every Stack's `screenOptions` (verified `expo-router/build/react-navigation/native-stack/types.d.ts:426`) | CO-42 |
 | PS-19 | About renders `mobile/src/db/seed/attribution.json` in full (name, licence + link, credit, change note per source), app version, algorithm version, backup status; links open with `Linking.openURL` | R-28, CO-35 |
 | PS-20 | CO-13 closes: the template packages it lists are already gone from `package.json`; `expo-constants`/`expo-linking` are `expo-router` peers, `expo-system-ui` backs `userInterfaceStyle` — nothing to prune | CO-13 |
+| PS-21 | Consistency heatmap (§6.6): pure `aggregateConsistency` over live sessions' `local_date` (fixed at write time, ADR 0016 — no Date math in the domain), Monday weeks (R-15), the algorithm's window plus the partial weeks around it; cells carry counts and minutes, never colour alone; part of `ProgressOverview` (one live read) | Q1 (a), R-15, CO-06 |
+| PS-22 | Planned-vs-actual gap panel (§6.7): `aggregatePlannedVsActual` reuses the §6.3 `gap` signal per focus so the panel and the explanation never disagree; totals + per-focus rows for focuses with a planned or unplanned-trained row in the window; part of `ProgressOverview` | Q1 (a), PRODUCT §6 |
+| PS-23 | The panels need no schema change: both read `sessions.local_date/status/starts_at/duration_minutes` and `session_focuses.is_planned/is_actual` — PS-01 holds | Q1 (a), PS-01 |
 
 **Data (field level)** — §4: no new columns; the rows and JSON shapes this sprint writes. **API surface** — §5 (function · input · output · codes · live). **Algorithm** — §6. **Edge cases** — §12. **Open questions** — §13 (PO). **Carry-over in/out** — §15.
 
 **Errors added to `mobile/src/domain/errors.ts`:** `PARAM_UNKNOWN` · `PARAM_OUT_OF_RANGE` · `PARAM_NOT_INTEGER` · `SETTING_VALUE_INVALID` · `TAXONOMY_NAME_REQUIRED` · `TAXONOMY_NAME_DUPLICATE` · `TAXONOMY_ROW_DELETED` · `TAXONOMY_SELF_MERGE` · `TAXONOMY_MERGE_KIND_MISMATCH` · `POSITION_PARENT_CYCLE` · `TECHNIQUE_TARGET_REQUIRED` · `TECHNIQUE_SUBMISSION_HAS_TARGET` · `ALIAS_NAME_REQUIRED` · `ALIAS_DUPLICATE` · `ALIAS_NOT_FOUND` · `MERGE_NOT_FOUND` · `MERGE_ALREADY_UNDONE` · `MERGE_NOT_LATEST` · `RESOURCE_NOT_FOUND` · `RESOURCE_TITLE_REQUIRED` · `RESOURCE_URL_INVALID` · `RESOURCE_TYPE_NOT_FOUND` · `RESOURCE_LINK_TARGET_NOT_FOUND` · `RANK_NOT_FOUND`.
 
-**Edge-case index (full text §12):** sparse data and omitted signals · n = 0 vs stale · planned-only focus · future-dated sessions · same-day ordering · deleted focus in the window · merge folding and self-loops · survivor's parent is the loser · subject merge has no aliases · rename to an existing alias · alias equal to the canonical name · extended-tier endpoints · params edited while Progress is open · theme override and the sheet backgrounds · kids scale switch with no entries · resource without URL · backup exclusion on a fresh file after reset · TZ (CO-06).
+**Edge-case index (full text §12):** sparse data and omitted signals · n = 0 vs stale · planned-only focus · future-dated sessions · same-day ordering · deleted focus in the window · heatmap with no sessions / partial weeks / several sessions a day / travel across zones · gap panel with no planned rows / unplanned training / pending planned · merge folding and self-loops · survivor's parent is the loser · subject merge has no aliases · rename to an existing alias · alias equal to the canonical name · extended-tier endpoints · params edited while Progress is open · theme override and the sheet backgrounds · kids scale switch with no entries · resource without URL · backup exclusion on a fresh file after reset · TZ (CO-06).
 
-### §0.1 Rulings needed — PO questions (§13, each with the recommended default; the plan is written to the default)
+### §0.1 Rulings — PO, 2026-11-01, relayed by the coordinator (quoted verbatim; full readings in §13; the documenter records them in `docs/decisions.md`)
 
-| Q | question | recommended default |
-|---|---|---|
-| Q1 | Progress secondary panels (PRODUCT §6: rank history, consistency heatmap, planned-vs-actual gaps): which ship now? | Rank history yes (data exists, R-10); heatmap and gap panel → sprint 3 with the slots (CO row) |
-| Q2 | Session-type and resource-type editing (PRODUCT §6 Settings, R-03/R-29): in sprint 2? | Out → sprint 3 (CO row); the resource-type picker reads the seeded five |
-| Q3 | Profile tab = the Settings surface (rank header + settings groups), per R-45's final order? | Yes |
-| Q4 | CO-27 coral/red belts: add to the ADULT scale now that rank editing ships? | No — stays CO-27; adding later widens one check in one migration |
+| Q | question | ruling (2026-11-01) | effect |
+|---|---|---|---|
+| Q1 | Progress secondary panels: which ship now? | "(a). Rank history, heatmap and gap panel all ship now." | all three in: §6.6, §6.7, PS-21–PS-23 (not the planner's default) |
+| Q2 | Session-type and resource-type editing in sprint 2? | "(b). Session-type and resource-type list editing moves to sprint 3. Until then the pickers read the seeded lists." | out; close-out carry-over line §15 |
+| Q3 | Profile tab = the Settings surface? | "(a). The Profile tab is the Settings screen: rank at the top, settings groups below, titled \"Profile\"." | PS-10 |
+| Q4 | Coral/red belts now (CO-27)? | "(b). Coral/red belts later. No migration this sprint." | CO-27 stays open; PS-01 holds |
+| Q5 | Theme override in sprint 2 (§16 R-44 conflict)? | "Yes, theme override ships in sprint 2." | PS-09; §16 cites Q5 |
+
+No open PO question remains.
 
 ---
 
 ## §1 Summary
 
-Sprint 2 turns the foundation's data into the product's feedback loop: the algorithm reads the logged signals (per-focus ratings, needs-work flags, planned-vs-actual rows, hit/caught counts, dates) and explains four states per focus; Settings exposes every knob the rules say the user owns (weights, thresholds, window, suggestion sources, rank incl. kids scale, detailed rounds, extended library, theme); the Library becomes editable with history-preserving rename, soft delete, aliases and merge/undo; Technique detail shows the graph edge with its resources and history; the iOS backup exclusion closes the privacy gap ADR 0020 deferred; the back label is fixed. No migration (PS-01).
+Sprint 2 turns the foundation's data into the product's feedback loop: the algorithm reads the logged signals (per-focus ratings, needs-work flags, planned-vs-actual rows, hit/caught counts, dates) and explains four states per focus, with rank history, a consistency heatmap and a planned-vs-actual panel beside it (ruling Q1); Settings exposes every knob the rules say the user owns (weights, thresholds, window, suggestion sources, rank incl. kids scale, detailed rounds, extended library, theme); the Library becomes editable with history-preserving rename, soft delete, aliases and merge/undo; Technique detail shows the graph edge with its resources and history; the iOS backup exclusion closes the privacy gap ADR 0020 deferred; the back label is fixed. No migration (PS-01).
 
 ## §2 Decision register (full text)
 
@@ -69,12 +85,12 @@ Sprint 2 turns the foundation's data into the product's feedback loop: the algor
 ## §3 Implementation steps (WHAT, in order)
 
 1. **data-coder** — errors + contracts: add the §0 codes and the §5 types to `errors.ts` / `contracts.ts`; `V1_PARAM_DEFAULTS` integer flags; settings vocabularies (PS-07, PS-08).
-2. **data-coder** — algorithm: `domain/progression/v1/{window,signals,compute}.ts` + tests from §6.5; `domain/suggestions/forPlanning.ts` takes `states` (PS-06).
-3. **data-coder** — repositories: `progression.ts` (`inputs`, `overview`), `algorithmParams.set/resetAll`, `settings` vocabulary, `rank.update/softDelete/undoDelete` + scale filter, `taxonomy` editing/merge/aliases/`getTechnique`, `resources.ts`, `resourceTypes.list`; `sessions.home` wired to `progression.overview`; hooks §5.9.
+2. **data-coder** — algorithm: `domain/progression/v1/{window,signals,compute}.ts` + tests from §6.5; panels `domain/progression/panels/{consistency,plannedVsActual}.ts` + tests from §6.6/§6.7 (algorithm-version-independent, hence outside `v1/`); `domain/suggestions/forPlanning.ts` takes `states` (PS-06).
+3. **data-coder** — repositories: `progression.ts` (`inputs`, `sessionDays`, `overview` incl. the two panels), `algorithmParams.set/resetAll`, `settings` vocabulary, `rank.update/softDelete/undoDelete` + scale filter, `taxonomy` editing/merge/aliases/`getTechnique`, `resources.ts`, `resourceTypes.list`; `sessions.home` wired to `progression.overview`; hooks §5.9.
 4. **data-coder** — backup seam `db/backup.ts`, `BootstrapDeps.backupExclusion`, `nativeDeps.ts` wiring to `../../modules/matiq-backup` (import by relative path; the module exists from step 6 — until then the TS import resolves against the stub the frontend-coder commits first, see step 6 ordering), `app_meta.backup_exclusion`, `resetDatabase` re-run; tests with the fake.
 5. **data-coder** — `docs/progress-settings/data-contracts.md`, `descriptions.json` unchanged (no columns added; document the new `app_meta` key in its `app_meta` entry), verify rows incl. `TZ=UTC npx jest` and local TZ (CO-06).
 6. **frontend-coder (phase A, first commit)** — `mobile/modules/matiq-backup/` (`expo-module.config.json`, `ios/MatiqBackupModule.swift`, `index.ts` with `setExcludedFromBackup(fileUri, excluded): boolean`, `isExcludedFromBackup(fileUri): boolean`, `isAvailable` = iOS); this commit lands before step 4's import. Swift API names (`Module`, `Name`, `Function`, `URLResourceValues.isExcludedFromBackup`) are the planner's recollection — confirm against `node_modules/expo-modules-core` docs/`/expo:*` skill and append the facts to `docs/stack-notes.md`.
-7. **frontend-coder (phase A)** — shell: five tabs, Progress + Profile stacks, back label, theme override hook, `testids.test.ts` generalised to every `docs/*/design.md` with the two headings; screens of §10 on typed mocks of §5 (`design.md` copy/testID tables).
+7. **frontend-coder (phase A)** — shell: five tabs, Progress + Profile stacks, back label, theme override hook, `testids.test.ts` generalised to every `docs/*/design.md` with the two headings; screens of §10 on typed mocks of §5 incl. the heatmap grid and the gap panel from a mocked `ProgressOverview` (`design.md` copy/testID tables).
 8. **frontend-coder (phase B)** — integrate against `data-contracts.md`; dev-client rebuild `npx expo run:ios` (the module needs pod install; record the verify row; infra failure → PO action per CO-14); simulator smoke of every touched route in light and dark; About shows backup status `excluded`.
 9. **tester** — flows §11.3 on the rebuilt dev client; `xattr` measurement §9.3 appended to `docs/stack-notes.md`.
 10. **orchestrator** — carry-over rows §15 at close.
@@ -98,6 +114,8 @@ Sprint 2 turns the foundation's data into the product's feedback loop: the algor
 
 Belt lists: `docs/product-spec/plan.md §4.1`. Params and bounds: `§4.3` there (seeded, unchanged).
 
+**Panels (Q1 (a)) — read-only, no new columns (PS-23).** Heatmap reads `sessions.local_date`, `status`, `starts_at`, `duration_minutes` (live rows); gap panel reads `session_focuses.is_planned`, `is_actual` joined to `sessions.status`, `starts_at`, `local_date` (live rows) — the same rows `progression.inputs` already loads. Rank history reads `rank_entries` by the active scale (§5.4). Nothing is stored; both are computed on read like the states. Verdict: the schema-change answer stays **no**.
+
 ## §5 Repository / domain API surface (data-coder implements; frontend-coder consumes, mocks in phase A)
 
 Conventions as `docs/foundation/data-contracts.md` (runtime clock/ids, transactions on writes, `deleted_at IS NULL` on every read except `undo*`, export and import). Types below go in `contracts.ts`.
@@ -110,7 +128,15 @@ type SignalId = 'n' | 'trend' | 'needsWorkRate' | 'gap' | 'daysSince' | 'hitRati
 type SignalRow = { signal: SignalId; available: boolean; value?: number; weight?: number; threshold?: number; contributed: boolean };
 type ProgressResult = { ref: FocusRef; name: string; removed: boolean; state: ProgressState; rule: 1 | 2 | 3 | 4; flagged: boolean;
   n: number; score?: number; lastTrainedOn?: string; signals: SignalRow[] };
-type ProgressOverview = { today: string; windowStart: string; algorithmVersion: string; params: Record<string, number>; results: ProgressResult[] };
+type ProgressOverview = { today: string; windowStart: string; algorithmVersion: string; params: Record<string, number>; results: ProgressResult[];
+  consistency: ConsistencyData; plannedVsActual: PlannedVsActualData };
+// panels (Q1 (a)); all dates are local `YYYY-MM-DD` strings, weeks start Monday (R-15)
+type SessionDayRow = { localDate: string; startsAt: string; status: SessionStatus; durationMinutes?: number };   // domain input
+type DayCell = { localDate: string; inWindow: boolean; future: boolean; completed: number; skipped: number; pending: number; minutes: number };
+type WeekRow = { weekStart: string; days: [DayCell, DayCell, DayCell, DayCell, DayCell, DayCell, DayCell]; completed: number };
+type ConsistencyData = { windowStart: string; today: string; weeks: WeekRow[]; totals: { completed: number; activeDays: number; minutes: number; weeksWithTraining: number; weeksInWindow: number; currentStreakWeeks: number } };
+type GapRow = { ref: FocusRef; name: string; removed: boolean; planned: number; trained: number; notTrained: number; pending: number; unplannedTrained: number; gap?: number };
+type PlannedVsActualData = { windowStart: string; today: string; totals: Omit<GapRow, 'ref' | 'name' | 'removed'>; rows: GapRow[] };
 type FocusHistory = { ref: FocusRef; name: string; removed: boolean; rows: FocusHistoryRow[] };   // domain input
 type FocusHistoryRow = { localDate: string; startsAt: string; status: SessionStatus; isPlanned: boolean; isActual: boolean;
   needsWork: boolean; rating?: number; hitCount?: number; caughtCount?: number };
@@ -137,7 +163,10 @@ type AboutData = { appVersion: string; algorithmVersion: string; taxonomyRelease
 |---|---|---|---|---|
 | `computeProgression` (domain) | `histories: FocusHistory[]`, `params: Record<string, number>`, `today` | `ProgressResult[]` (unsorted) | `PARAM_UNKNOWN` (missing key) | — |
 | `progression.inputs` | `{ today }` | `FocusHistory[]` — one per focus ref with a live `session_focuses` row in a live session; `removed` from the taxonomy row; rows for all time (the domain cuts the window; `daysSince` needs all time) | — | — |
-| `progression.overview` | `{ today }` | `ProgressOverview` sorted per PS-04; removed focuses without a live row in the window dropped | — | hook `useProgress()` (tables: sessions, session_focuses, algorithm_params, settings, positions, subjects) |
+| `aggregateConsistency` (domain, `progression/panels/consistency.ts`) | `rows: SessionDayRow[]`, `{ today, windowWeeks }` | `ConsistencyData` (§6.6) | — | — |
+| `aggregatePlannedVsActual` (domain, `progression/panels/plannedVsActual.ts`) | `histories: FocusHistory[]`, `{ today, windowWeeks, nowIso }` | `PlannedVsActualData` (§6.7) | — | — |
+| `progression.sessionDays` | `{ today }` | `SessionDayRow[]` — every live session with `localDate ≤ today`, any status | — | — |
+| `progression.overview` | `{ today }` | `ProgressOverview` sorted per PS-04; removed focuses without a live row in the window dropped; `consistency` and `plannedVsActual` from the two aggregators over the same loaded rows | — | hook `useProgress()` (tables: sessions, session_focuses, algorithm_params, settings, positions, subjects) |
 | `suggestions.forPlanning` (domain, extended) | settings, lastCompleted, `states: ProgressResult[]` | `Suggestion[]` ≤ max, order LAST_NEEDS_WORK → CYCLE (empty) → NEEDS_WORK by score desc → NOT_TRAINED by daysSince desc (only focuses with `lastTrainedOn`); dedupe by ref | — | via `useHome` |
 
 ### §5.3 Params and settings
@@ -253,6 +282,50 @@ Output per focus: `state`, `rule`, `flagged` (PS-05), `n`, `score` (when rule 2 
 | T16 rescale | needsWorkRate 0.5, gap unavailable, hit unavailable, trend unavailable | score 0.5 → NEEDS_WORK (≥) |
 | NF-09 | 500 synthetic sessions × 3 focuses | `computeProgression` < 100 ms (node, informative threshold; assert < 500 ms to keep CI stable, log the value) |
 
+### §6.6 Consistency heatmap — aggregation (ruling Q1 (a); data-coder, `domain/progression/panels/consistency.ts`)
+
+Inputs: `SessionDayRow[]` (live sessions, `localDate ≤ today`), `today`, `windowWeeks` (the algorithm's row, so the heatmap and the states share one window). All arithmetic is on local-date strings through `domain/session/localDate.ts` helpers (`addDays`, `diffDays`, `weekdayMonday0`); no `Date` time-zone conversion (CO-06, ADR 0016: `local_date` was fixed at write time in the device zone of that moment).
+
+- `windowStart` as §6.2. `gridStart` = the Monday on or before `windowStart`; `gridEnd` = the Sunday on or after `today`. Weeks = consecutive 7-day rows from `gridStart` to `gridEnd` (so `windowWeeks` or `windowWeeks + 1` rows).
+- Per `DayCell`: `inWindow` = `windowStart ≤ localDate ≤ today`; `future` = `localDate > today`; `completed` = COMPLETED sessions that day; `skipped` = SKIPPED; `pending` = PLANNED (a stale planned session renders as pending-in-the-past, which the UI labels "not logged"); `minutes` = Σ `durationMinutes` of COMPLETED rows (missing = 0). Rows outside the grid (`localDate < gridStart`) are ignored.
+- Per `WeekRow`: `completed` = Σ day `completed`. `totals` over `inWindow` cells only: `completed`, `activeDays` (cells with `completed ≥ 1`), `minutes`, `weeksInWindow` = `windowWeeks`, `weeksWithTraining` = weeks whose in-window cells have `completed ≥ 1`, `currentStreakWeeks` = number of consecutive weeks ending with the current week (the row containing `today`) with `completed ≥ 1` — the current week counts only if it already has one; otherwise the streak is counted from the previous week.
+- Output is deterministic and index-stable: `weeks[i].days[j]` is `gridStart + 7i + j`.
+
+**i18n keys:** `progress.consistency.title` · `progress.consistency.summary` ("{{completed}} sessions on {{activeDays}} days in {{weeks}} weeks") · `progress.consistency.streak` ("{{count}} weeks in a row") · `progress.consistency.cell` (accessibility label: "{{date}}: {{completed}} sessions, {{minutes}} min") · `progress.consistency.empty` (names the next step: log a session) · `progress.consistency.legend.none|one|two|three` (levels 0, 1, 2, ≥ 3 sessions; each cell also shows its count on long-press/`accessibilityLabel`, never colour alone).
+
+**Test vectors (`today` 2026-11-01, a Sunday; `windowWeeks` 8 → `windowStart` 2026-09-07, a Monday → `gridStart` 09-07, `gridEnd` 11-01, 8 week rows):**
+
+| case | rows | expected |
+|---|---|---|
+| H1 empty | none | 8 weeks × 7 cells, all zero; totals all 0; `currentStreakWeeks` 0 |
+| H2 one session | 10-30 COMPLETED 60 min | `weeks[7].days[4]` (Friday) completed 1 minutes 60; totals completed 1, activeDays 1, minutes 60, weeksWithTraining 1, streak 1 |
+| H3 two a day | 10-30 COMPLETED 60 · 10-30 COMPLETED (no duration) | cell completed 2, minutes 60; activeDays 1 |
+| H4 statuses | 10-29 SKIPPED · 10-31 PLANNED (stale) · 11-01 COMPLETED 30 | 10-29 skipped 1, 10-31 pending 1, 11-01 completed 1; totals completed 1 |
+| H5 window edge | 09-06 COMPLETED · 09-07 COMPLETED | 09-06 is before `gridStart` → ignored; 09-07 `inWindow` true, counted |
+| H6 partial weeks | `today` 2026-11-03 (Tuesday), windowWeeks 2 → windowStart 10-21 (Wed) → gridStart 10-19, gridEnd 11-08 | 3 week rows; 10-19/10-20 `inWindow` false; 11-04…11-08 `future` true; totals count in-window cells only |
+| H7 streak | COMPLETED on 10-13, 10-20, 10-27 (three consecutive weeks), nothing this week (11-01 is Sunday of week 10-26) | 10-27 is in the week of 10-26 = current week → streak 3; move the 10-27 row to 10-24 (week of 10-19, which already has 10-20) → current week empty, streak counted from the previous week → 2; from the original rows drop 10-20 → 1 |
+
+### §6.7 Planned-vs-actual gap panel — aggregation (ruling Q1 (a); data-coder, `domain/progression/panels/plannedVsActual.ts`)
+
+Inputs: the same `FocusHistory[]` the states use, `today`, `windowWeeks`, `nowIso`. Window and ordering as §6.2; the per-row classification is the §6.3 `gap` definition verbatim, so a focus's `gap` here equals its `gap` signal in the why sheet (PS-22; a Jest test asserts equality for every vector in §6.5).
+
+- Per focus over W: `planned` = rows with `isPlanned`; `trained` = `isPlanned ∧ isActual`; `notTrained` = `isPlanned ∧ ¬isActual ∧ (status ∈ {COMPLETED, SKIPPED} ∨ (PLANNED ∧ startsAt + 24 h < nowIso))`; `pending` = `planned − trained − notTrained` (planned sessions less than 24 h old or in the future-but-≤ today part of W); `unplannedTrained` = `¬isPlanned ∧ isActual ∧ COMPLETED`; `gap` = `notTrained / planned` when `planned ≥ 1`, else absent.
+- Rows: focuses with `planned ≥ 1 ∨ unplannedTrained ≥ 1`; order `notTrained` desc, `gap` desc, `name` asc; removed focuses last with `removed: true`. `totals` = column sums over the rows.
+- Output carries no strings.
+
+**i18n keys:** `progress.gap.title` · `progress.gap.summary` ("Trained {{trained}} of {{planned}} planned focuses; {{unplanned}} unplanned") · `progress.gap.row` ("{{trained}} of {{planned}}") · `progress.gap.pending` ("{{count}} pending") · `progress.gap.unplanned` ("+{{count}} unplanned") · `progress.gap.empty` ("Plan a session to compare plan and practice" — names the next step).
+
+**Test vectors (`today` 2026-11-01, `nowIso` 2026-11-01T12:00:00Z, defaults):**
+
+| case | rows for focus A | expected row A |
+|---|---|---|
+| G1 none | no rows | no row; totals 0; `rows` empty |
+| G2 trained as planned | 10-30 COMPLETED p∧a | planned 1, trained 1, notTrained 0, pending 0, gap 0 |
+| G3 skipped | 10-30 SKIPPED p∧¬a | planned 1, notTrained 1, gap 1 |
+| G4 stale planned vs pending | 10-25 PLANNED p (startsAt 10-25T18:00Z) · 11-01 PLANNED p (startsAt 11-01T09:00Z) | planned 2, notTrained 1 (10-25), pending 1 (11-01: less than 24 h), gap 0.5 |
+| G5 unplanned | 10-30 COMPLETED ¬p∧a | planned 0, unplannedTrained 1, gap absent; row present |
+| G6 mixed and equality | T9 of §6.5 | planned 5, trained 1, notTrained 4, gap 0.8 — equal to the `gap` signal value of T9 |
+
 ## §7 Taxonomy editing and merge (data-coder)
 
 ### §7.1 Create / update
@@ -283,7 +356,7 @@ POSITION: `session_focuses.focus_ref_id`, `cycle_focuses` (same column shape), `
 ## §10 Screens (frontend-coder; copy and testID tables in `design.md`)
 
 - **Shell.** Tabs Home · Library · Log · Progress · Profile (PS-10); `headerBackButtonDisplayMode: 'minimal'` on the root, library, progress and profile Stacks (PS-18); theme override effect in `_layout.tsx` (PS-09).
-- **Progress (`(tabs)/progress/index`).** Sections per state in PS-04 order, each row: name, state (text + icon, never colour alone), Flagged badge, one-line summary (`progress.rule.n`); tap → "why" sheet (`progress-why` formSheet with `kind`, `refId` params or in-screen; designer) listing every `SignalRow` (label, value or "not enough data", weight, threshold, contributed mark), the score line, the window, a link to Settings › Algorithm; rank history card (Q1 default) with the current entry and promotions; empty state names the next step (log a session). Removed focuses under a "Removed" header.
+- **Progress (`(tabs)/progress/index`).** Sections per state in PS-04 order, each row: name, state (text + icon, never colour alone), Flagged badge, one-line summary (`progress.rule.n`); tap → "why" sheet (`progress-why` formSheet with `kind`, `refId` params or in-screen; designer) listing every `SignalRow` (label, value or "not enough data", weight, threshold, contributed mark), the score line, the window, a link to Settings › Algorithm; empty state names the next step (log a session). Removed focuses under a "Removed" header. **Secondary panels (ruling Q1 (a)), below the state list, in this order:** (1) consistency heatmap — `weeks × 7` grid from `ConsistencyData` with Monday-first columns, cells outside the window dimmed, future cells empty, intensity by level token plus the count on `accessibilityLabel` (never colour alone), summary and streak lines, empty copy; (2) planned-vs-actual — summary line + one row per `GapRow` (name, "x of y", pending and unplanned counts, Flagged badge not shown here), tap → the focus's why sheet; (3) rank history — current entry and promotions (`useRankHistory`), "Set rank" entry. Designer fixes sizes within tokens; the grid is a plain `View` grid, no chart library.
 - **Profile (`(tabs)/profile/index`).** Rank header (belt visual, name, stripes, since; "Set rank" opens the existing sheet with the active scale) · groups: Algorithm (`profile/algorithm`: window, thresholds, weights as steppers/sliders with min/max, live state preview count, "Reset to defaults" → toast with Undo = restore the previous values) · Suggestions (`profile/suggestions`: four switches + max stepper 0–10) · Logging (detailed rounds switch — stored only; the rounds UI is sprint 3, copy says so) · Library (show extended library switch) · Appearance (segmented SYSTEM / LIGHT / DARK) · Rank (`profile/rank`: scale segmented ADULT / KIDS, history list with edit sheet, swipe/soft delete + undo toast) · About (`profile/about`: attribution per PS-19, versions, backup status line, licence links).
 - **Library editing.** Index: add button per segment → `library-edit` formSheet (`kind`, `id?`); row long-press/overflow → Rename, Aliases, Merge into…, Delete (undo toast). Position detail gains Edit; `library-edit` sheet fields per §7.1 incl. an alias chip list (add/remove) and, for techniques, from/to position pickers reusing `FocusSearch` restricted to positions, type segmented, applies-to, perspective. `merge` formSheet: search survivor (same kind), confirm → toast "Merged into X" with Undo (PS-14). Extended-tier rows reachable only with the setting on.
 - **Technique detail (`(tabs)/library/technique/[id]`).** Header name + aliases, type, from → to (links to position detail), GI/NOGI, perspective, description (imported), notes (user, editable inline or via sheet), Resources list (status toggle, open URL, edit, add → `resource-edit` formSheet with title, URL, author/source, type picker, notes, status), History list (→ session detail). Library technique rows now push this route.
@@ -293,15 +366,16 @@ POSITION: `session_focuses.focus_ref_id`, `cycle_focuses` (same column shape), `
 ## §11 Tests and verify rows
 
 ### §11.1 data-coder Jest
-§6.5 vectors; window/ordering; suggestions with states; params set/reset/bounds/integer; settings vocabularies; rank scale filter/update/delete/undo; taxonomy create/rename-alias/duplicate/parent-cycle/technique-target rules/soft delete + hidden edges/undo; alias add/remove/undo; merge per kind incl. fold, survivor-parent swap, self-loop, subject (no aliases), undo round-trip equality of all moved rows, `MERGE_NOT_LATEST`; resources validation/link/unlink/status/delete-undo; `getTechnique` history; backup seam; purity test extended to the new domain files; `TZ=UTC` and local runs (CO-06).
+§6.5 vectors; §6.6 H1–H7 and §6.7 G1–G6 plus the gap-equality test over every §6.5 vector; `progression.overview` returns both panels from one load; window/ordering; suggestions with states; params set/reset/bounds/integer; settings vocabularies; rank scale filter/update/delete/undo; taxonomy create/rename-alias/duplicate/parent-cycle/technique-target rules/soft delete + hidden edges/undo; alias add/remove/undo; merge per kind incl. fold, survivor-parent swap, self-loop, subject (no aliases), undo round-trip equality of all moved rows, `MERGE_NOT_LATEST`; resources validation/link/unlink/status/delete-undo; `getTechnique` history; backup seam; purity test extended to the new domain files; `TZ=UTC` and local runs (CO-06).
 
 ### §11.2 frontend-coder Jest
-Progress list order and why-sheet rows from a mocked `ProgressOverview`; params screen rejects out-of-range (error banner from `errors.PARAM_OUT_OF_RANGE`); theme effect calls `Appearance.setColorScheme`; tab bar renders five tabs; library edit sheet validation copy; technique detail renders resources/history; About renders every `attribution.json` source with its link; testID table coverage.
+Progress list order and why-sheet rows from a mocked `ProgressOverview`; heatmap renders `weeks.length × 7` cells with the right `accessibilityLabel` and dims out-of-window cells; gap panel rows in `rows` order with the "x of y" copy; params screen rejects out-of-range (error banner from `errors.PARAM_OUT_OF_RANGE`); theme effect calls `Appearance.setColorScheme`; tab bar renders five tabs; library edit sheet validation copy; technique detail renders resources/history; About renders every `attribution.json` source with its link; testID table coverage.
 
 ### §11.3 tester (Maestro, iOS simulator, dev-client rebuilt with the module)
 | flow | journey | asserts |
 |---|---|---|
 | `features/progress-states.yaml` | reset → plan a session for focus A (never log it) → log a session with focus B flagged and focus C rated, no flag → Progress | A = Not trained lately, B = Needs work + Flagged, C = Steady; why sheet for B shows `needsWorkRate` row and "not enough data" rows |
+| `features/progress-panels.yaml` | reset → Progress (empty) → log one session (focus C, 45 min) → plan one session for A → Progress | before: `progress.consistency.empty` and `progress.gap.empty` visible; after: `progress.consistency` grid visible, `progress.consistency.summary` shows the "1 sessions on 1 days" copy (copy under test), `progress.gap.POSITION.<A id>` row visible with the pending copy "1 pending", `progress.gap.summary` visible; `progress.rank` card visible. Today's cell id is unknown to the flow (local date), so the summary copy is the assertion |
 | `features/settings-weights.yaml` | from the above → Profile › Algorithm → `needsWorkThreshold` to 1.0 → Progress | B flips to Steady live; Reset → B back to Needs work; out-of-range entry shows the error banner |
 | `features/library-edit.yaml` | add position "Zeta guard" → rename to "Zeta guard high" (alias kept) → search "zeta guard" finds it via alias → delete → undo | rows by `id` regex (`library\.position\..*`, Maestro ids are regexes) since user ids are minted |
 | `features/library-merge.yaml` | add "Zeta A", "Zeta B" → log a session on Zeta A → merge A into B → session detail shows Zeta B → undo → shows Zeta A | |
@@ -321,6 +395,15 @@ Flows reuse `subflows/reset.yaml`; new flows start from it; Metro port per run (
 - **PLANNED less than 24 h past** — not yet "not trained" (pending); gap excludes it from the numerator but it counts in `planned`.
 - **Same-day sessions** — `startsAt` order (T12).
 - **Deleted focus in the window** — computed and shown under Removed; its Home suggestion is suppressed (`removed`).
+- **Heatmap, no sessions** — full zero grid plus the empty copy; never a spinner (NF-09).
+- **Heatmap, partial weeks** — `windowStart` is rarely a Monday and `today` rarely a Sunday: out-of-window cells are rendered dimmed, excluded from totals (H6); the grid never shows fewer than `windowWeeks` rows.
+- **Heatmap, several sessions a day** — count and minutes sum; level ≥ 3 caps the intensity; the label carries the exact count (H3).
+- **Heatmap, travel across zones** — `local_date` was fixed when the session was written (ADR 0016); a session logged at 23:30 in Tokyo and viewed in Amsterdam stays on its Tokyo date; `today` comes from the device's current zone (`useLocalDate`), so the current-week row can shift by a day after travel — accepted, consistent with Home (R-46).
+- **Heatmap, missing duration** — contributes 0 minutes, still counts as a session.
+- **Gap panel, no planned rows** — a focus trained without a plan shows "+n unplanned" and no gap (G5); with no rows at all the empty copy names the next step (plan a session).
+- **Gap panel, pending planned** — a planned session less than 24 h old or dated today is `pending`, not a gap (G4); it moves to `notTrained` after 24 h without logging, which is also when the gap signal moves (same rule).
+- **Gap panel vs why sheet** — identical `gap` by construction (PS-22, equality test); if the sheet omits `gap` as "not enough data" the panel shows no row for that focus either (both require `planned ≥ 1`).
+- **Panels and the window setting** — changing `windowWeeks` re-aggregates both panels live with the states.
 - **Merge while Progress is open** — live hooks re-read; the survivor's history now includes the loser's rows (n, trend recomputed).
 - **Merge folding** — §7.3; the survivor row's prior values are in `folded[].survivorBefore` for undo.
 - **Survivor's parent is the loser** — survivor takes the loser's parent (§7.3), restored on undo.
@@ -339,16 +422,19 @@ Flows reuse `subflows/reset.yaml`; new flows start from it; Metro port per run (
 - **Soft-deleted technique endpoint** — edge hidden from lists, pickers and `getPosition.techniquesFrom/To`; `getTechnique` still opens from history with "(removed)" endpoints.
 - **Time zones (CO-06)** — `today` from `useLocalDate` (device zone); Jest runs under `TZ=UTC` and the local zone; test vectors use fixed `today`.
 - **One-handed entry** — Progress and Settings are read-mostly; edit sheets keep the primary action bottom-anchored (`BottomActionBar`).
-- **Dark mode** — tokens only; the theme override makes both schemes testable on one simulator.
+- **Dark mode** — tokens only; the theme override makes both schemes testable on one simulator; heatmap levels are tokens with AA-checked contrast against the surface in both schemes (designer §9) and the count label is the non-colour channel.
 - **Maestro reach** — new routes reachable from tabs; `progress-why`, `library-edit`, `merge`, `resource-edit` are formSheets with `testID` roots; the reset subflow is unchanged.
 - **Export/erase readiness** — merges, aliases, resources and `app_meta` rows are ordinary seam rows; nothing new outside the database.
 
-## §13 Open questions (PO; each blocks nothing but a scope line — the plan is written to the default)
+## §13 Open questions — all ruled by the PO on 2026-11-01 (relayed by the coordinator; quotes verbatim; `docs/decisions.md` entries by the documenter)
 
-1. **Q1 Progress secondary panels.** (a) rank history + heatmap + gap panel now; (b) rank history now, the rest in sprint 3; (c) none now. **Default (b):** rank data exists and R-10 names Progress; the heatmap and gap panel are session-over-time views that sprint 3's slots make meaningful; a CO row carries them.
-2. **Q2 Session-type / resource-type editing.** (a) in sprint 2 (two small list editors, same pattern as subjects); (b) sprint 3 with the rest of Settings' data lists. **Default (b)** to keep the sprint at six items; pickers read the seeded lists.
-3. **Q3 Profile tab = Settings surface.** (a) yes: rank header + grouped settings, title "Profile"; (b) a "Settings" tab instead of "Profile". **Default (a)** per R-45's quoted order.
-4. **Q4 Coral/red belts (CO-27).** (a) add now (one migration widening `rank_entries_belt_check`); (b) later. **Default (b):** no user need yet; keeps PS-01.
+1. **Q1 Progress secondary panels.** Readings: (a) rank history + heatmap + gap panel now; (b) rank history now, the rest in sprint 3; (c) none now. Planner's default was (b). **Ruled: "(a). Rank history, heatmap and gap panel all ship now."** → §6.6, §6.7, PS-21–PS-23, §10, §11; no carry-over row.
+2. **Q2 Session-type / resource-type editing.** Readings: (a) in sprint 2; (b) sprint 3. **Ruled: "(b). Session-type and resource-type list editing moves to sprint 3. Until then the pickers read the seeded lists."** → §15 close-out line.
+3. **Q3 Profile tab = Settings surface.** Readings: (a) yes, titled "Profile"; (b) a "Settings" tab. **Ruled: "(a). The Profile tab is the Settings screen: rank at the top, settings groups below, titled \"Profile\"."** → PS-10.
+4. **Q4 Coral/red belts (CO-27).** Readings: (a) now, one migration; (b) later. **Ruled: "(b). Coral/red belts later. No migration this sprint."** → CO-27 stays open; PS-01.
+5. **Q5 Theme override (the §16 conflict between R-44's "system theme only (21)" and PRODUCT §6 "read from sprint 2").** **Ruled: "Yes, theme override ships in sprint 2."** → PS-09; the sprint-1 system-only limit has expired.
+
+No open question remains; the designer resolves only design-level choices (sheet vs in-screen why, heatmap sizing, icons) in `design.md`'s Decisions table.
 
 ## §14 Recorded decisions carried forward (binding on the designer and coders)
 
@@ -366,14 +452,14 @@ Flows reuse `subflows/reset.yaml`; new flows start from it; Metro port per run (
 | CO-22 | out | no scraping; manual entry only (R-33) |
 | CO-24 | out | export is sprint 3 |
 | CO-26 | closes | PS-15: column stays `author`, label "Author / source" |
-| CO-27 | out → Q4 | |
+| CO-27 | out | ruled Q4 (b) 2026-11-01: "Coral/red belts later. No migration this sprint." — stays open |
 | CO-28 | in | §9 |
 | CO-35 | in | PS-19 |
 | CO-40 | out | dev-only tidy, untouched |
 | CO-42 | in | PS-18 |
-| new (orchestrator at close) | — | Q1 panels (heatmap, gap) → sprint 3; Q2 list editors → sprint 3; `MERGE_NOT_LATEST` means an older merge is undoable only after undoing the newer — a merge-log screen is v1.x |
+| new (orchestrator at close) | — | **Q2 (b), 2026-11-01:** session-type and resource-type list editing (PRODUCT §6 Settings, R-03/R-29) → sprint 3; until then the pickers read the seeded lists (owner: planner, sprint 3). Also: `MERGE_NOT_LATEST` means an older merge is undoable only after undoing the newer — a merge-log screen is v1.x. No row for the Q1 panels: they ship now |
 
 ## §16 Binding-source conflicts found
 
-- R-44 records DSR-21 as "system theme only (21)" for sprint 1 while `docs/PRODUCT.md §6` Settings says the override "is read from sprint 2" and the orchestrator's brief lists it — the spec and brief win; the sprint-1 restriction expired by its own wording.
+- R-44 records DSR-21 as "system theme only (21)" for sprint 1 while `docs/PRODUCT.md §6` Settings says the override "is read from sprint 2" and the orchestrator's brief lists it — settled by the PO's ruling Q5 (2026-11-01): "Yes, theme override ships in sprint 2." The sprint-1 system-only limit has expired; PS-09 applies.
 - `docs/foundation/plan.md` F-23 "no UI to flip `library.showExtended` until sprint 2" — flipped now (Profile › Library).
