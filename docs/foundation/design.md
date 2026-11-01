@@ -96,7 +96,7 @@ This spec covers the sprint-1 shell and three screens on a three-tab shell (plan
 | R1-19 | §8 | R-N3 row: large-only Log, `fitToContents` Set-rank, native scrim |
 | R1-20 | T-14, §4.4.4, §6.4, §7, §12 | Skip rendered; gating removed |
 | R1-01 (planner) | §0, §10.4 | §10.4's open requests replaced by a pointer to plan §4 with the names relied on; codes `COUNTS_REQUIRE_ACTUAL`, `TECHNIQUE_REQUIRES_ACTUAL` added to §6.2 |
-| data-contracts (2026-11-01) | §6.2 | `errors.SESSION_START_INVALID`, `errors.ROUND_NO_INVALID`, `errors.DB_NOT_OPEN` added for the codes `data-contracts.md:14` introduces |
+| data-contracts (2026-11-01) | §6.2 | `errors.SESSION_START_INVALID`, `errors.ROUND_NO_INVALID`, `errors.DB_NOT_OPEN` (+ `bootstrap.title.DB_NOT_OPEN`) added for the codes `data-contracts.md:14` introduces |
 
 ## §3 Decisions
 
@@ -558,6 +558,7 @@ All keys are added to `mobile/src/i18n/en.json`. Interpolations use i18next `{{n
 | `bootstrap.title.DB_MIGRATION_FAILED` | matIQ couldn't update your data | error screen title |
 | `bootstrap.title.DB_SEED_FAILED` | matIQ couldn't load the library | error screen title |
 | `bootstrap.title.DB_RESET_FAILED` | The database couldn't be reset | dev reset failure |
+| `bootstrap.title.DB_NOT_OPEN` | matIQ couldn't open your data | error screen title |
 | `bootstrap.code` | Error code: {{code}} | error screen caption |
 | `bootstrap.devReset` | Reset database (development only) | `__DEV__` action |
 | `dev.reset.status` | Resetting the database… | dev reset screen |
@@ -590,7 +591,7 @@ All keys are added to `mobile/src/i18n/en.json`. Interpolations use i18next `{{n
 | `errors.TECHNIQUE_REQUIRES_ACTUAL` | Techniques can only be attached to a focus you trained. Tick it as trained first. | Log banner (plan R1-05) |
 | `errors.SESSION_START_INVALID` | The date or time isn't valid. Pick it again and save. | Log banner (`data-contracts.md:14`: malformed `startsAt` or unknown `timeZone`) |
 | `errors.ROUND_NO_INVALID` | Round numbers start at 1. Save again. | Log banner (not reachable in sprint 1; rounds UI is sprint 3) |
-| `errors.DB_NOT_OPEN` | matIQ isn't ready yet. Close the app and open it again. | fallback for a repository call before bootstrap (`data-contracts.md:7`; a bug, not a user path) |
+| `errors.DB_NOT_OPEN` | matIQ isn't ready yet. Close the app and open it again. | bootstrap error screen body; also the fallback for a repository call before bootstrap (`data-contracts.md:7`) |
 | `errors.TAXONOMY_ROW_NOT_FOUND` | This entry is no longer in the library. | position detail |
 | `errors.RANK_BELT_INVALID_FOR_SCALE` | That belt isn't on the adult scale. Pick another belt. | rank banner |
 | `errors.RANK_STRIPES_INVALID` | Stripes go from 0 to 4, or up to 6 on a black belt. | rank banner |
