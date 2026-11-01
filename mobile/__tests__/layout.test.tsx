@@ -69,4 +69,12 @@ describe('root layout gate', () => {
     await fireEvent.press(screen.getByTestId('bootstrap.retry'));
     expect(screen.queryByTestId('bootstrap.error')).toBeNull();
   });
+
+  it('titles DB_NOT_OPEN with its own copy and the errors.* body', async () => {
+    mockUseFonts.mockReturnValue([true, null]);
+    mockStore.bootstrap = { status: 'error', code: 'DB_NOT_OPEN' };
+    await mount();
+    expect(screen.getByTestId('bootstrap.error.title')).toHaveTextContent("matIQ couldn't open your data");
+    expect(screen.getByText("matIQ isn't ready yet. Close the app and open it again.")).toBeTruthy();
+  });
 });
