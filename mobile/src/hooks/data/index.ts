@@ -3,21 +3,18 @@
  * importer of `src/repositories`. UI Jest mocks `src/repositories` with `__mocks__/repositoriesMock`.
  */
 import {
-  rank, resetDatabase, sessions, sessionTypes, settings,
-  useCurrentRank, useDatabaseBootstrap, useFocusSearch, useHome, useLibraryPositions, usePosition, useSession as useSessionRead,
-  useSessionTypes, useSetting, useSubjects, useTechniqueSearch,
+  algorithmParams, rank, resetDatabase, resources, sessions, sessionTypes, setBootstrapOverrides, settings, taxonomy,
+  useAbout, useAlgorithmParams, useCurrentRank, useDatabaseBootstrap, useFocusSearch, useHome, useLibraryPositions, usePosition,
+  useProgress, useRankHistory, useResources, useResourceTypes, useSession as useSessionRead,
+  useSessionTypes, useSetting, useSubjects, useTechnique, useTechniqueSearch,
 } from '../../repositories';
 import { localDateOf } from '../../domain/session/localDate';
-// PHASE A: sprint-2 reads and writes are mock-backed. Phase B replaces these re-exports and `progressActions`
-// with the repository hooks / functions of data-contracts.md (mocks stay for unit tests).
-import {
-  progressActions, useAbout, useAlgorithmParams, useProgress, useRankHistory, useResources, useResourceTypes, useTechnique,
-} from '../../__mocks__/progressMock';
 import { deviceTimeZone, runtime } from '../../repositories/runtime';
 import type { DataActions, HomeData, LiveResult, QuickLogTarget, SessionDetail, SessionTypeRow } from './types';
 
 export * from './types';
 export {
+  setBootstrapOverrides,
   useCurrentRank, useDatabaseBootstrap, useFocusSearch, useHome, useLibraryPositions, usePosition,
   useSessionTypes, useSetting, useSubjects, useTechniqueSearch,
   useAbout, useAlgorithmParams, useProgress, useRankHistory, useResources, useResourceTypes, useTechnique,
@@ -51,7 +48,29 @@ const actions: DataActions = {
   skip: (id) => sessions.skip(id),
   undoSkip: (id) => sessions.undoSkip(id),
   addRank: (i) => rank.add(i),
-  ...progressActions,
+  setParam: (i) => algorithmParams.set(i),
+  resetParams: (version) => algorithmParams.resetAll(version),
+  updateRank: (id, i) => rank.update(id, i),
+  deleteRank: (id) => rank.softDelete(id),
+  undoDeleteRank: (id) => rank.undoDelete(id),
+  createPosition: (i) => taxonomy.createPosition(i),
+  createTechnique: (i) => taxonomy.createTechnique(i),
+  createSubject: (i) => taxonomy.createSubject(i),
+  updatePosition: (id, p) => taxonomy.updatePosition(id, p),
+  updateTechnique: (id, p) => taxonomy.updateTechnique(id, p),
+  updateSubject: (id, p) => taxonomy.updateSubject(id, p),
+  deleteTaxonomy: (kind, id) => taxonomy.softDelete(kind, id),
+  undoDeleteTaxonomy: (kind, id) => taxonomy.undoDelete(kind, id),
+  addAlias: (kind, id, name) => taxonomy.addAlias(kind, id, name),
+  removeAlias: (id) => taxonomy.removeAlias(id),
+  undoRemoveAlias: (id) => taxonomy.undoRemoveAlias(id),
+  merge: (kind, from, into) => taxonomy.merge(kind, from, into),
+  undoMerge: (id) => taxonomy.undoMerge(id),
+  createResource: (i, target) => resources.create(i, target),
+  updateResource: (id, p) => resources.update(id, p),
+  setResourceStatus: (id, status) => resources.setStatus(id, status),
+  deleteResource: (id) => resources.softDelete(id),
+  undoDeleteResource: (id) => resources.undoDelete(id),
   setSetting: (key, value) => settings.set(key, value),
   resetDatabase: async () => {
     await resetDatabase({ keepKey: true });

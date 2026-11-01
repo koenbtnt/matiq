@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { quickLogTarget } from '../domain/session/quickLog';
 import type { HomeData, LogSessionInput, PlanSessionInput, RankInput, TechniqueType } from '../repositories/contracts';
 import { mockStore, type BootstrapState } from './mockStore';
+import { progressActions } from './progressMock';
 import { progressStore } from './progressStore';
 
 export * from '../repositories/contracts';
@@ -72,7 +73,7 @@ export const sessions = {
 };
 export const sessionTypes = { list: () => run(() => mockStore.sessionTypes()) };
 /** Also records the entry in the rank history the sprint-2 screens read. */
-export const rank = {
+export const rank: Record<string, (...a: any[]) => Promise<unknown>> = {
   add: (i: RankInput) => run(() => {
     const entry = mockStore.addRank(i);
     progressStore.ranks.push(entry);
@@ -85,3 +86,34 @@ export const resetDatabase = async (_opts?: { keepKey: boolean }) => {
 };
 /** Real `settings.set` stand-in: the seam's `setSetting` calls it. */
 export const settings = { set: (key: string, value: unknown) => run(() => progressStore.setSetting(key, value)) };
+
+// ---- sprint 2: the surface `hooks/data` imports from the real module, backed by the phase-A stores ----
+export { useAbout, useAlgorithmParams, useProgress, useRankHistory, useResources, useResourceTypes, useTechnique } from './progressMock';
+const pa = progressActions;
+rank.update = pa.updateRank;
+rank.softDelete = pa.deleteRank;
+rank.undoDelete = pa.undoDeleteRank;
+export const algorithmParams = { set: pa.setParam, resetAll: pa.resetParams };
+export const resources = {
+  create: pa.createResource,
+  update: pa.updateResource,
+  setStatus: pa.setResourceStatus,
+  softDelete: pa.deleteResource,
+  undoDelete: pa.undoDeleteResource,
+};
+export const taxonomy = {
+  createPosition: pa.createPosition,
+  createTechnique: pa.createTechnique,
+  createSubject: pa.createSubject,
+  updatePosition: pa.updatePosition,
+  updateTechnique: pa.updateTechnique,
+  updateSubject: pa.updateSubject,
+  softDelete: pa.deleteTaxonomy,
+  undoDelete: pa.undoDeleteTaxonomy,
+  addAlias: pa.addAlias,
+  removeAlias: pa.removeAlias,
+  undoRemoveAlias: pa.undoRemoveAlias,
+  merge: pa.merge,
+  undoMerge: pa.undoMerge,
+};
+export const setBootstrapOverrides = (_o: unknown) => undefined;
