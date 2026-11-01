@@ -1,15 +1,18 @@
 import type { TFunction } from 'i18next';
 
-import type { AdultBelt, Belt } from '../../hooks/data';
+import type { AdultBelt, Belt, KidsBelt, RankScale } from '../../hooks/data';
 
-type BeltName = AdultBelt;
 export const BELTS: AdultBelt[] = ['WHITE', 'BLUE', 'PURPLE', 'BROWN', 'BLACK'];
+export const KIDS_BELTS: KidsBelt[] = [
+  'WHITE', 'GREY_WHITE', 'GREY', 'GREY_BLACK', 'YELLOW_WHITE', 'YELLOW', 'YELLOW_BLACK',
+  'ORANGE_WHITE', 'ORANGE', 'ORANGE_BLACK', 'GREEN_WHITE', 'GREEN', 'GREEN_BLACK',
+];
 
-/** Sprint 1 only writes the adult scale; a kids-scale row (written by a later sprint) falls back to white. */
-export const adultBelt = (b: Belt): AdultBelt => (BELTS as Belt[]).includes(b) ? (b as AdultBelt) : 'WHITE';
+/** The belts of a scale in display order (ADULT 5, KIDS 13). */
+export const beltsFor = (scale: RankScale): Belt[] => (scale === 'KIDS' ? KIDS_BELTS : BELTS);
 
 /** "Blue belt · 2 stripes": the rank is always a text name beside the belt graphic (R-C5, DSR-4). */
-export function rankTitle(t: TFunction, belt: BeltName, stripes: number): string {
+export function rankTitle(t: TFunction, belt: Belt, stripes: number): string {
   return t('rank.title', {
     beltName: t('rank.beltName', { belt: t(`rank.belt.${belt}`) }),
     stripes: t('rank.stripes', { count: stripes }),

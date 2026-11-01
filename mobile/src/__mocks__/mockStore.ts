@@ -4,6 +4,7 @@ import type {
   TechniqueRow, TechniqueType,
 } from '../repositories/contracts';
 import { buildSessions, currentRank, localDateOf, positions, sessionTypes, subjects, techniques } from './fixtures';
+import { TaxonomyMock } from './taxonomyMock';
 
 /**
  * In-memory stand-in for the repositories (phase A). The seam in `src/hooks/data/index.ts` is the only
@@ -23,6 +24,8 @@ class MockStore {
   rank: RankEntry | null = null;
   showExtended = false;
   bootstrap: BootstrapState = { status: 'ready' };
+  /** Phase-A taxonomy editing (aliases, merge, create/rename/delete) over the fixture arrays. */
+  taxonomy = new TaxonomyMock(() => this.emit());
   /** Tests/dev: force every read hook into loading or error. */
   forced: ForcedState = null;
   /** Tests: make the next mutation reject with this code. */
@@ -35,6 +38,7 @@ class MockStore {
   reset(now: Date = new Date()) {
     this.sessions = buildSessions(now);
     this.rank = { ...currentRank };
+    this.taxonomy.reset();
     this.showExtended = false;
     this.bootstrap = { status: 'ready' };
     this.forced = null;
@@ -148,7 +152,8 @@ class MockStore {
     const sort = (a: TechniqueRow, b: TechniqueRow) => order.indexOf(a.type) - order.indexOf(b.type) || a.name.localeCompare(b.name);
     const visible = techniques.filter((t) => this.showExtended || t.tier === 'CORE');
     return {
-      id: p.id, slug: p.slug, canonicalName: p.canonicalName, description: p.description, tier: p.tier, aliases: p.aliases,
+      id: p.id, slug: p.slug, canonicalName: p.canonicalName, description: p.description, notes: this.taxonomy.notes.get(p.id), tier: p.tier, aliases: p.aliases,
+      aliasRows: this.taxonomy.aliasRows(p.id),
       parent: parent ? { id: parent.id, canonicalName: parent.canonicalName } : undefined,
       children: positions.filter((x) => x.parentId === p.id).map((x) => ({ id: x.id, canonicalName: x.canonicalName, tier: x.tier })),
       techniquesFrom: visible.filter((t) => t.fromPositionId === p.id).sort(sort),

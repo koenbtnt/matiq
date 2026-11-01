@@ -8,10 +8,10 @@ import { useTheme } from '../theme/useTheme';
 import { Touch } from './Touch';
 import { Txt } from './Txt';
 
-type Props = { title: string; onCancel: () => void; cancelTestID: string; titleTestID: string };
+type Props = { title: string; onCancel: () => void; cancelTestID: string; titleTestID: string; /** Defaults to "Cancel"; read-only sheets say "Close". */ cancelLabel?: string };
 
 /** Handle + header row (cm:249-261). Focus moves to the title when the sheet opens (§9). */
-export function SheetChrome({ title, onCancel, cancelTestID, titleTestID }: Props) {
+export function SheetChrome({ title, onCancel, cancelTestID, titleTestID, cancelLabel }: Props) {
   const { t } = useTranslation();
   const { c } = useTheme();
   const ref = useRef<ComponentRef<typeof View>>(null);
@@ -24,8 +24,8 @@ export function SheetChrome({ title, onCancel, cancelTestID, titleTestID }: Prop
       <View style={[styles.handle, { backgroundColor: c.borderStronger }]} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />
       <View style={styles.header}>
         <View style={styles.side}>
-          <Touch testID={cancelTestID} accessibilityRole="button" accessibilityLabel={t('common.cancel')} onPress={onCancel} style={styles.cancel}>
-            <Txt variant="rowTitle" color="textSecondary">{t('common.cancel')}</Txt>
+          <Touch testID={cancelTestID} accessibilityRole="button" accessibilityLabel={cancelLabel ?? t('common.cancel')} onPress={onCancel} style={styles.cancel}>
+            <Txt variant="rowTitle" color="textSecondary">{cancelLabel ?? t('common.cancel')}</Txt>
           </Touch>
         </View>
         <View style={styles.title}>
