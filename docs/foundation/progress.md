@@ -1,9 +1,9 @@
 # Sprint 1 — foundation — progress
 
 ## Current state
-- HEAD: f7e77c0 (feature/foundation, stacked on feature/product-spec / PR #4)
+- HEAD: 7a3ebd1 (feature/foundation, stacked on feature/product-spec / PR #4)
 - Step: 8 — review 2 follow-up fixes (then review-2-followup.md, then close-out)
-- Live agents: frontend-coder-foundation-b (R2-01 fonts), data-coder-foundation (R2-03, R2-06), tester-foundation (R2-04), documenter-foundation (R2-07)
+- Live agents: data-coder-foundation (R2-03, R2-06); frontend-coder-foundation-b report pending (R2-01 committed d11ef27, 7a3ebd1)
 - Next action: all four COMPLETE → reviewer-code-foundation follow-up pass (review-2-followup.md) → close-out: done.md, carry-over CO-28+ (R2-02), README status, PR
 - Blockers: none. INFRA UNAVAILABLE: CocoaPods, Maestro, EAS CLI, Android SDK (PO actions, reported at close-out)
 - Uncommitted: none
@@ -28,3 +28,5 @@
 - data-coder-foundation — CODING COMPLETE (coverage gaps; Jest 29/928) — 6093d47, a3b4ee2
 - documenter-foundation — DOCS COMPLETE (ADRs 0018–0023, 0 undescribed) — e41fe44; verify rows mirrored by orchestrator
 - reviewer-code-foundation — REVIEW PASSED (1 major R2-01, 6 minor; R2-02 mine at close-out, R2-05 → carry-over) — f7e77c0
+- tester-foundation — TESTING COMPLETE (R2-04) — 8460954
+- documenter-foundation — DOCS COMPLETE (R2-07) — d16db35
