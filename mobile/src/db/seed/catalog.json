@@ -1,1 +1,156 @@
-{"release":"2026-11-01.1","sessionTypes":[],"subjects":[],"resourceTypes":[]}
+{
+  "release": "2026-11-01.1",
+  "resourceTypes": [
+    {
+      "id": "d080b516-6988-4cfa-9249-fe6996b78066",
+      "key": "instructional",
+      "name": "Instructional",
+      "sortOrder": 1,
+      "source": "curated",
+      "sourceId": "rt:instructional",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "1d7fd0b3-8281-4598-8763-6a45ab9b76c4",
+      "key": "video",
+      "name": "Video",
+      "sortOrder": 2,
+      "source": "curated",
+      "sourceId": "rt:video",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "b4bf5822-e270-423a-b65b-4758d14f2302",
+      "key": "article",
+      "name": "Article",
+      "sortOrder": 3,
+      "source": "curated",
+      "sourceId": "rt:article",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "c699e81c-22c1-44ad-8fcc-9e8b84c5effe",
+      "key": "book",
+      "name": "Book",
+      "sortOrder": 4,
+      "source": "curated",
+      "sourceId": "rt:book",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "c0678c50-e4b0-45b2-8147-95907bf1186e",
+      "key": "other",
+      "name": "Other",
+      "sortOrder": 5,
+      "source": "curated",
+      "sourceId": "rt:other",
+      "sourceVersion": "2026-11-01.1"
+    }
+  ],
+  "sessionTypes": [
+    {
+      "id": "884e1bde-140b-4a00-ae05-88cd1536f489",
+      "name": "Gi class",
+      "sortOrder": 1,
+      "source": "curated",
+      "sourceId": "st:gi-class",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "a39717b4-a347-473e-bfcf-effab9d2f608",
+      "name": "No-gi class",
+      "sortOrder": 2,
+      "source": "curated",
+      "sourceId": "st:no-gi-class",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "dc3675f7-8837-4cbb-a974-9acacf12ac9b",
+      "name": "Open mat",
+      "sortOrder": 3,
+      "source": "curated",
+      "sourceId": "st:open-mat",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "169f6da4-8258-48ce-b3b1-52d4c098f3e8",
+      "name": "Private lesson",
+      "sortOrder": 4,
+      "source": "curated",
+      "sourceId": "st:private-lesson",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "410c480f-4da8-4a69-9a68-f03c5a029ae3",
+      "name": "Competition",
+      "sortOrder": 5,
+      "source": "curated",
+      "sourceId": "st:competition",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "id": "653d5030-c1ae-4fd6-98c3-10706b1f2695",
+      "name": "Drilling/study",
+      "sortOrder": 6,
+      "source": "curated",
+      "sourceId": "st:drilling-study",
+      "sourceVersion": "2026-11-01.1"
+    }
+  ],
+  "subjects": [
+    {
+      "description": "Keeping the guard against passing pressure: frames, hip movement, re-guarding.",
+      "id": "cf08e9c2-547d-4238-933f-3bd9eadc3b68",
+      "name": "Guard retention",
+      "sortOrder": 1,
+      "source": "curated",
+      "sourceId": "subj:guard-retention",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "description": "Winning, breaking and keeping grips.",
+      "id": "eb7a4539-213c-40ff-a0d0-dda577910bf1",
+      "name": "Grip fighting",
+      "sortOrder": 2,
+      "source": "curated",
+      "sourceId": "subj:grip-fighting",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "description": "Using bodyweight and angles to pin and pass.",
+      "id": "6b6d6592-c1af-4024-bd88-e27711fcecb9",
+      "name": "Pressure and weight distribution",
+      "sortOrder": 3,
+      "source": "curated",
+      "sourceId": "subj:pressure-weight-distribution",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "description": "Turning a submission position into a finish.",
+      "id": "caebfd36-3915-4d08-912f-dd6312e72a17",
+      "name": "Submission finishing",
+      "sortOrder": 4,
+      "source": "curated",
+      "sourceId": "subj:submission-finishing",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "description": "Surviving bad positions and getting out of them.",
+      "id": "63a4703d-44e1-48f8-a14a-a407b924a383",
+      "name": "Defence and escapes",
+      "sortOrder": 5,
+      "source": "curated",
+      "sourceId": "subj:defence-escapes",
+      "sourceVersion": "2026-11-01.1"
+    },
+    {
+      "description": "Rulesets, scoring, pacing and game plans.",
+      "id": "6be61c52-f490-4950-859e-c15d7ee58d56",
+      "name": "Competition strategy",
+      "sortOrder": 6,
+      "source": "curated",
+      "sourceId": "subj:competition-strategy",
+      "sourceVersion": "2026-11-01.1"
+    }
+  ]
+}

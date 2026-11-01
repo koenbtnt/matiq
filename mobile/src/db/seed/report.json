@@ -1,0 +1,73 @@
+{
+  "aliases": {
+    "bySource": {
+      "curated": 69,
+      "grapple-flows": 22
+    },
+    "grappleFlowsAliasEntries": 45,
+    "total": 91
+  },
+  "catalog": {
+    "resourceTypes": 5,
+    "sessionTypes": 6,
+    "subjects": 6
+  },
+  "grapplemap": {
+    "positions": 601,
+    "records": 2086,
+    "transitions": 1485,
+    "validationErrors": 0
+  },
+  "positions": {
+    "core": 45,
+    "total": 602,
+    "withParent": 463
+  },
+  "release": "2026-11-01.1",
+  "resolution": {
+    "bothEndsRate": 0.8384,
+    "dropped": {
+      "unresolvedFrom": 128,
+      "unresolvedTo": 108
+    },
+    "emittedRate": 0.8411,
+    "endpoints": {
+      "key": 1888,
+      "nearest": 814,
+      "unresolved": 268
+    },
+    "eps": 0.02,
+    "epsMax": 0.03,
+    "ownKeyCollisions": 0,
+    "transitionsBothEndsResolved": 1245,
+    "transitionsEmitted": 1249
+  },
+  "resources": {
+    "citations": 756,
+    "emitted": 756,
+    "links": 1018,
+    "positionCitationsNotLinked": 3
+  },
+  "techniques": {
+    "byType": {
+      "ESCAPE": 52,
+      "GUARD_PASS": 79,
+      "SUBMISSION": 84,
+      "SWEEP": 53,
+      "TAKEDOWN": 71,
+      "TRANSITION": 955
+    },
+    "core": 163,
+    "coreByType": {
+      "ESCAPE": 13,
+      "GUARD_PASS": 23,
+      "SUBMISSION": 36,
+      "SWEEP": 17,
+      "TAKEDOWN": 24,
+      "TRANSITION": 50
+    },
+    "gi": 9,
+    "reverseEdges": 36,
+    "total": 1294
+  }
+}
