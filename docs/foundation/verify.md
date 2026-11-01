@@ -24,3 +24,10 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 | prebuild android | `CI=1 npx expo prebuild --platform android --no-install (mobile/)` | exit 0: gradle.properties expo.sqlite.useSQLCipher=true; AndroidManifest android:allowBackup="false"; output untracked (gitignored), not committed | 83e6f12 | 2026-11-01 |
 | prebuild ios | `CI=1 npx expo prebuild --platform ios --no-install (mobile/)` | exit 0: Podfile.properties.json expo.sqlite.useSQLCipher "true"; mobile/ios generated (gitignored), not committed | 83e6f12 | 2026-11-01 |
 | dev-client build / SQLCipher on device | `npx expo run:ios` (not run) | INFRA UNAVAILABLE — CocoaPods missing (PO: brew install cocoapods); encryption not verified on device, never mocked green | 83e6f12 | 2026-11-01 |
+
+### tester (authoring) @ 2886ef9 — 2026-11-01
+| check | command | result | commit | date |
+|---|---|---|---|---|
+| Maestro YAML parse | `node -e js-yaml loadAll` over e2e/maestro/**/*.yaml (mobile/node_modules) | exit 0: config.yaml, subflows/reset.yaml, 4 flows parse (syntax only; Maestro command validity not checked) | 2886ef9 | 2026-11-01 |
+| maestro test (smoke, log-session, plan-then-log, browse-library) | `maestro test e2e/maestro/flows` (not run) | INFRA UNAVAILABLE — Maestro not installed; CocoaPods missing (no dev-client build) | 2886ef9 | 2026-11-01 |
+| contract coverage audit | grep of data-contracts.md items in mobile/src/**/__tests__ | 4 gap rows, see test-report.md | 2886ef9 | 2026-11-01 |

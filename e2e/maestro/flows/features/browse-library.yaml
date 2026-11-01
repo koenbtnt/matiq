@@ -1,0 +1,62 @@
+appId: nl.btnt.matiq
+name: Browse library - alias search, position detail, techniques, empty state
+tags:
+  - features
+  - library
+env:
+  KOB: 5436e234-fa1c-49df-b92f-719b8b1c6b89        # position "Knee on belly" (alias "Knee mount")
+  ARMBAR_KOB: ef7e994c-4cb5-46ce-bec6-698635c723ac # technique "Armbar from knee on belly" (CORE)
+---
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "tabs.library"
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- assertVisible:
+    id: "library.segment.positions"
+
+# --- alias search resolves to the canonical row ---
+- tapOn:
+    id: "library.search.input"
+- inputText: "knee mount"
+- extendedWaitUntil:
+    visible:
+      id: "library.position.${KOB}"
+    timeout: 10000
+
+# --- no match -> empty state; clearing restores the list ---
+- tapOn:
+    id: "library.search.clear"
+- tapOn:
+    id: "library.search.input"
+- inputText: "zzzqqq"
+- extendedWaitUntil:
+    visible:
+      id: "library.empty"
+    timeout: 10000
+- tapOn:
+    id: "library.search.clear"
+- tapOn:
+    id: "library.search.input"
+- inputText: "knee mount"
+- tapOn:
+    id: "library.position.${KOB}"
+
+# --- position detail lists its techniques ---
+- extendedWaitUntil:
+    visible:
+      id: "position.screen"
+    timeout: 10000
+- assertVisible:
+    id: "position.technique.${ARMBAR_KOB}"
+- back
+
+# --- techniques segment ---
+- tapOn:
+    id: "library.segment.techniques"
+- extendedWaitUntil:
+    visible:
+      id: "library.technique.${ARMBAR_KOB}"
+    timeout: 10000

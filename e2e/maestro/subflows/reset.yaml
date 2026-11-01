@@ -1,0 +1,18 @@
+# Shared subflow (outside the flows/** glob, never run alone): clean app state + reseeded DB.
+# design §4.2.3 / plan F-25: dev route matiq://dev/reset, __DEV__ only.
+appId: nl.btnt.matiq
+---
+- launchApp:
+    clearState: true
+    stopApp: true
+- extendedWaitUntil:
+    visible:
+      id: "home.screen"
+    timeout: 60000
+- openLink: matiq://dev/reset
+- extendedWaitUntil:
+    visible:
+      id: "home.screen"
+    timeout: 60000
+- assertNotVisible:
+    id: "bootstrap.error"

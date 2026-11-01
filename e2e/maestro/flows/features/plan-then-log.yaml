@@ -1,0 +1,72 @@
+appId: nl.btnt.matiq
+name: Plan then log - 2-tap planned path; un-ticked focus stays planned-not-trained
+tags:
+  - features
+  - log
+env:
+  MOUNT: d05df656-d2e7-4bcd-ac72-c9d197bb5a2d   # position "Mount"
+  KOB: 5436e234-fa1c-49df-b92f-719b8b1c6b89     # position "Knee on belly"
+---
+- runFlow: ../../subflows/reset.yaml
+
+# --- Plan a session with two focuses ---
+- tapOn:
+    id: "home.planEmpty.action"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.search.input"
+- inputText: "mount"
+- tapOn:
+    id: "log.search.result.${MOUNT}"
+- tapOn:
+    id: "log.search.input"
+- inputText: "knee on belly"
+- tapOn:
+    id: "log.search.result.${KOB}"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "home.next"
+    timeout: 10000
+
+# --- A (2 taps): quick log targets the planned session, focuses pre-ticked, save ---
+- tapOn:
+    id: "home.quickLog"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- assertVisible:
+    id: "log.focus.${MOUNT}"
+- assertVisible:
+    id: "log.focus.${KOB}"
+# un-tick one planned focus: it stays planned, not trained
+- tapOn:
+    id: "log.focus.${KOB}.trained"
+- assertVisible:
+    id: "log.focus.${KOB}.status"
+- assertVisible: "Planned · not trained"   # copy is the thing under test (design §7)
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+
+# --- Detail: planned vs actual visible ---
+- tapOn:
+    id: "home.recent\\..*"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "session.screen"
+    timeout: 10000
+- assertVisible:
+    id: "session.focus.${MOUNT}"
+- assertVisible:
+    id: "session.focus.${KOB}.status"
+- assertVisible: "Planned · not trained"
