@@ -1,0 +1,8 @@
+[
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "npx tsc --noEmit", "exit": 2, "notes": "1 error outside frontend scope: src/repositories/__tests__/progression.test.ts(114,20) TS2339 $client on Db (data-coder uncommitted test); 0 errors in frontend files" },
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "TZ=UTC npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1673 passed, 0 failed (38 suites)" },
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "TZ=Europe/Amsterdam npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1673 passed, 0 failed (38 suites); CO-06 local zone" },
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "node scripts/sync-design-tokens.mjs --check", "exit": 0, "notes": "" },
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": "" },
+  { "agent": "frontend-coder", "sha": "81c4bda", "date": "2026-11-01", "command": "npx expo-doctor", "exit": 0, "notes": "20/20" }
+]
