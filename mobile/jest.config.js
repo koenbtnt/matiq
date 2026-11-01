@@ -2,6 +2,10 @@
 module.exports = {
   preset: 'jest-expo',
   setupFiles: ['<rootDir>/jest.setup.ts'],
+  // A-33: the taxonomy converter's tests live beside it in scripts/taxonomy; modulePaths lets files
+  // outside mobile/ resolve mobile's node_modules (babel runtime helpers).
+  roots: ['<rootDir>', '<rootDir>/../scripts/taxonomy'],
+  modulePaths: ['<rootDir>/node_modules'],
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/android/', '<rootDir>/ios/'],
   modulePathIgnorePatterns: ['<rootDir>/android/', '<rootDir>/ios/'],
   // jest-expo's recommended list (docs.expo.dev/develop/unit-testing), plus drizzle-orm.
