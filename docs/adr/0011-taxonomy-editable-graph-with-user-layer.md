@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user) for the graph, aliases, edit semantics and "our own stable ids" (R-23, R-28, R-14, R-34); planner, pending PO (2026-10-31) for the id-minting mechanism (A-14)
+- **Deciders:** PO (user) for the graph, aliases, edit semantics and "our own stable ids" (R-23, R-28, R-14, R-34); planner for the id-minting mechanism (A-14, ruled R-50, 2026-11-01)
 - **Decision ids:** D-06, D-07, D-08, D-09, D-25, D-36 / R-13, R-14, R-23, R-34, R-28
 - **Source:** `docs/decisions.md` Data R-13, R-14, R-23, R-34; plan §0 D-06..D-09, D-25, D-36, §6.
 
@@ -34,12 +34,12 @@ The Library must be updatable from curated releases yet fully editable by the us
 
 ## Decision outcome
 
-Imported rows carry `origin` (seed|user), `source`, `source_id`, `source_version`, `user_edited_at`. A release upserts only `origin = seed` rows with `user_edited_at IS NULL AND deleted_at IS NULL`; user rows are never touched. Seed ids are "our own stable ids" (R-28); the mechanism, converter-minted UUIDs fixed in the seed file as a recorded variant of repository-minted ids (plan §11), is assumed, pending PO (2026-10-31), A-14; `app_meta.taxonomy_release` records the installed release. `tier` (CORE|EXTENDED) controls visibility via `library.showExtended`; `applies_to` (GI|NOGI|BOTH) on techniques. Rename follows the id; delete is soft and hides from pickers; merge moves every reference to the survivor and is logged in `taxonomy_merges` for undo.
+Imported rows carry `origin` (seed|user), `source`, `source_id`, `source_version`, `user_edited_at`. A release upserts only `origin = seed` rows with `user_edited_at IS NULL AND deleted_at IS NULL`; user rows are never touched. Seed ids are "our own stable ids" (R-28); the mechanism, converter-minted UUIDs fixed in the seed file as a recorded variant of repository-minted ids (plan §11), was A-14 and is ruled R-50 (2026-11-01); `app_meta.taxonomy_release` records the installed release. `tier` (CORE|EXTENDED) controls visibility via `library.showExtended`; `applies_to` (GI|NOGI|BOTH) on techniques. Rename follows the id; delete is soft and hides from pickers; merge moves every reference to the survivor and is logged in `taxonomy_merges` for undo.
 
 ## Consequences
 
-- Assumed, pending PO (A-14): converter-minted seed ids; the alternative is per-install ids, which would force export/import to match seed rows by (source, source_id).
-- Assumed, pending PO (A-3): aliases also apply to techniques.
-- Assumed, pending PO (A-9): a rename keeps the old name as an alias (pre-ticked option).
+- Ruled R-50 (2026-11-01, "All are accepted as is"), formerly A-14: converter-minted seed ids; the rejected alternative was per-install ids, which would force export/import to match seed rows by (source, source_id).
+- Ruled R-50 (2026-11-01), formerly A-3: aliases also apply to techniques.
+- Ruled R-50 (2026-11-01), formerly A-9: a rename keeps the old name as an alias (pre-ticked option).
 - Edits to imported fields freeze a row against re-import; `notes`, resource status and user aliases do not.
 - Graph layout data is not stored in v1.

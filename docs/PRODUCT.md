@@ -1,6 +1,6 @@
 # matIQ — product specification
 
-Derived from `docs/product-spec/po-brief.md` (PO rulings S-01…S-12, R-00…R-35, 2026-10-31) and `docs/decisions.md`. Plan: `docs/product-spec/plan.md`. Items the brief leaves open are marked "assumed, pending PO (plan §0.1 #n)": the plan's default is taken (PO offline, 2026-10-31) and ledgered in `docs/product-spec/assumptions.md`; items the PO ruled on 2026-11-01 are marked "ruled R-xx (2026-11-01)" (`docs/decisions.md` R-36…R-49).
+Derived from `docs/product-spec/po-brief.md` (PO rulings S-01…S-12, R-00…R-35, 2026-10-31) and `docs/decisions.md`. Plan: `docs/product-spec/plan.md`. Items the brief leaves open are marked "assumed, pending PO (plan §0.1 #n)": the plan's default is taken (PO offline, 2026-10-31) and ledgered in `docs/product-spec/assumptions.md`; items the PO ruled on 2026-11-01 are marked "ruled R-xx (2026-11-01)" (`docs/decisions.md` R-36…R-50; R-50 accepts every remaining assumption at its ledgered default, so no "assumed, pending PO" marker remains).
 
 ## §1 What matIQ is
 
@@ -13,8 +13,8 @@ A personal deliberate-practice companion for a Brazilian jiu-jitsu practitioner.
 | **Focus** | The unit that is planned, logged and scored: a position node of the graph or a subject (R-04, R-30 provisional). Stored as `{kind, ref_id}`; techniques become a third kind in v1.x. |
 | **Position** | A node of the technique graph (e.g. closed guard, side control); may have a parent (variant). Has one canonical name and any number of aliases (R-23, R-34). |
 | **Technique** | A typed edge from a position to a position: transition, guard pass, sweep, escape, takedown, or submission; a submission is terminal (no target). |
-| **Alias** | An alternative name for a position (or technique, assumed, pending PO, plan §0.1 #3); search matches any alias; the Library shows the canonical name with aliases beneath (R-34). |
-| **Subject** | A cross-cutting theme used as a focus (grip fighting, guard retention); user-editable, seeded (assumed, pending PO, plan §0.1 #4). |
+| **Alias** | An alternative name for a position (or technique, ruled R-50 (2026-11-01)); search matches any alias; the Library shows the canonical name with aliases beneath (R-34). |
+| **Subject** | A cross-cutting theme used as a focus (grip fighting, guard retention); user-editable, seeded (ruled R-50 (2026-11-01)). |
 | **Session** | One training occasion with a type (Gi class, Open mat, … — user-editable, R-03), a status (planned, completed, skipped) and signals. |
 | **Planned vs actual** | A focus row on a session carries `is_planned` (intended before training) and `is_actual` (trained). Planned-but-not-actual feeds the gap signal; a session completes only with at least one actual focus. |
 | **Needs work** (flag) | The user's own mark on an actual focus row; shown as **Flagged**; feeds suggestions and the algorithm but is never itself the computed state (R-17). |
@@ -359,7 +359,7 @@ erDiagram
   cycles |o--o{ resource_links : "target_kind=CYCLE"
 ```
 
-Invariants carried from the legacy prototype and the brief, each a schema `check()` unless marked domain: `needs_work ⇒ is_actual`; `rating ⇒ is_actual`; ratings, intensity and energy 1–5; counts (`hit_count`, `caught_count`, `rounds_count`, `submissions_*`) ≥ 0; durations > 0; `round_no` ≥ 1; `to_position_id` null iff `type = SUBMISSION`; every enum column (`status`, `type`, `applies_to`, `tier`, `focus_kind`, `target_kind`, `direction`, `scale`, `belt`, `origin`, `source`, `outcome`) checked against its list; `start_time` and date columns pattern-checked; a session completes only with ≥ 1 actual focus row (domain); focus rows unique per (session, kind, ref) (domain); cycle 1–3 focuses (domain); weekday 1–7 with Monday = 1 (R-15). Reviews are columns on `sessions` (one review per session, same screen — planner decision from the brief's core loop; ruled R-40 (2026-11-01)). Seed rows keep ids fixed in the seed file across taxonomy releases (R-28 "our own stable ids"; the converter-minting mechanism assumed, pending PO (plan §0.1 #14)). Recorded deviations from `.claude/rules/data.md` (erase-all as R-12's hard-delete exception, converter-minted seed ids): `docs/product-spec/plan.md §11`.
+Invariants carried from the legacy prototype and the brief, each a schema `check()` unless marked domain: `needs_work ⇒ is_actual`; `rating ⇒ is_actual`; ratings, intensity and energy 1–5; counts (`hit_count`, `caught_count`, `rounds_count`, `submissions_*`) ≥ 0; durations > 0; `round_no` ≥ 1; `to_position_id` null iff `type = SUBMISSION`; every enum column (`status`, `type`, `applies_to`, `tier`, `focus_kind`, `target_kind`, `direction`, `scale`, `belt`, `origin`, `source`, `outcome`) checked against its list; `start_time` and date columns pattern-checked; a session completes only with ≥ 1 actual focus row (domain); focus rows unique per (session, kind, ref) (domain); cycle 1–3 focuses (domain); weekday 1–7 with Monday = 1 (R-15). Reviews are columns on `sessions` (one review per session, same screen — planner decision from the brief's core loop; ruled R-40 (2026-11-01)). Seed rows keep ids fixed in the seed file across taxonomy releases (R-28 "our own stable ids"; the converter-minting mechanism ruled R-50 (2026-11-01)). Recorded deviations from `.claude/rules/data.md` (erase-all as R-12's hard-delete exception, converter-minted seed ids): `docs/product-spec/plan.md §11`.
 
 ## §6 Features by screen
 
@@ -367,9 +367,9 @@ Visual source for every screen: the PO's Claude Artifact exported to `design-sys
 
 **Home** — today's plan and next planned session (from slots or by hand); quick log (≤ 2 taps to a prefilled Log Session, R-26); suggestions with their source label (R-09); current rank (R-10); unlogged recent sessions as a nudge (planner default, not ruled); empty state explains the first step (R-26).
 
-**Log Session** — type (required, prefilled); focuses (≥ 1 required; planned pre-ticked; search across names and aliases, R-34); per focus: rating 1–5, needs-work flag, comment, hit/caught counts (R-05); optional techniques attached to a focus (R-04); round aggregates (rounds, submissions landed/taken) with each submission optionally tied to a technique even without detailed rounds (R-06); detailed rounds when `log.detailedRounds` is on: partner belt, outcome (assumed, pending PO, plan §0.1 #1), the round's submissions, note (R-19); session: duration (minutes), rating, intensity, energy, context note (partner belt as free context, R-05; own field assumed, pending PO, plan §0.1 #8), what worked / what failed (R-05, R-15). Review mode = same screen (R-26). Delete = soft delete with undo toast (R-26).
+**Log Session** — type (required, prefilled); focuses (≥ 1 required; planned pre-ticked; search across names and aliases, R-34); per focus: rating 1–5, needs-work flag, comment, hit/caught counts (R-05); optional techniques attached to a focus (R-04); round aggregates (rounds, submissions landed/taken) with each submission optionally tied to a technique even without detailed rounds (R-06); detailed rounds when `log.detailedRounds` is on: partner belt, outcome (ruled R-50 (2026-11-01)), the round's submissions, note (R-19); session: duration (minutes), rating, intensity, energy, context note (partner belt as free context, R-05; no own field, ruled R-50 (2026-11-01)), what worked / what failed (R-05, R-15). Review mode = same screen (R-26). Delete = soft delete with undo toast (R-26).
 
-**Library** — positions (nodes) with canonical name and aliases, techniques (edges) grouped by type, subjects; core shown by default, extended behind `library.showExtended` (R-28); search by any alias (R-34). Sprint 1 read-only; sprint 2 editing: add, rename (follows the id everywhere; keeping the old name as an alias assumed, pending PO, plan §0.1 #9), soft delete (hidden from pickers, history kept), merge (history moves to the survivor; undoable), alias add/remove (R-14, R-23). User edits are never overwritten by a taxonomy release (R-23). Technique aliases: assumed, pending PO (plan §0.1 #3).
+**Library** — positions (nodes) with canonical name and aliases, techniques (edges) grouped by type, subjects; core shown by default, extended behind `library.showExtended` (R-28); search by any alias (R-34). Sprint 1 read-only; sprint 2 editing: add, rename (follows the id everywhere; keeping the old name as an alias ruled R-50 (2026-11-01)), soft delete (hidden from pickers, history kept), merge (history moves to the survivor; undoable), alias add/remove (R-14, R-23). User edits are never overwritten by a taxonomy release (R-23). Technique aliases: ruled R-50 (2026-11-01).
 
 **Technique detail** — type, from/to positions, gi/no-gi applicability, description (imported) and notes (user), resources attached (R-29) with to-watch/watched status, history of sessions where it was attached (planner default, not ruled); v1.x adds technique-level progression (R-04).
 
@@ -377,7 +377,7 @@ Visual source for every screen: the PO's Claude Artifact exported to `design-sys
 
 **Settings** — rank (belt, stripes, promotion dates; kids scale toggle, R-10); algorithm weights, thresholds, window with "reset to defaults" and the active `algorithm.version` (R-08, R-22); suggestion sources (four switches) and maximum (R-21); detailed-rounds toggle (R-19); recurring slots (R-20); reminders (R-11); theme follows system (brief §5); the manual override (DSR-21) is ruled R-44 (2026-11-01): system only in sprint 1, the override setting is read from sprint 2; session types and resource types editing (R-03, R-29); export JSON (plaintext through the OS share sheet with an in-app warning, ruled R-38 (2026-11-01)), import JSON (merge by id, newest `updated_at` wins, no confirm, ruled R-41 (2026-11-01)), erase all (R-12; hold-to-erase confirmation ruled R-41 (2026-11-01)); about and licences (GrappleMap public domain, grapple-flows CC BY 4.0 attribution — required by the licence, R-28); app lock later (R-25).
 
-**Planning flow** — create a planned session (date, type, focuses from suggestions or search); create or end a cycle (1–3 focuses, default four weeks; one active at a time, assumed, pending PO, plan §0.1 #5); manage slots (R-07, R-20).
+**Planning flow** — create a planned session (date, type, focuses from suggestions or search); create or end a cycle (1–3 focuses, default four weeks; one active at a time, ruled R-50 (2026-11-01)); manage slots (R-07, R-20).
 
 ## §7 Progression algorithm v1
 
@@ -399,7 +399,7 @@ Ruled shape (R-08 "Yes Deterministic, but in the future the algo might be change
 - **Pipeline** (R-35): `scripts/taxonomy/` vendors the GrappleMap snapshot one file per record (PR 5 format), validates it (PR 4 rules), parses per PR 6's format description, canonicalises poses to resolve endpoints, cleans names, derives edge types, applies the hand-maintained curated-core list and emits a seed JSON with a release version. Reimplemented, not copied.
 - **Core + extended** (R-28): ≈ 40–60 positions and ≈ 150 techniques are `CORE` and visible by default; the rest is `EXTENDED` behind a setting.
 - **User layer wins on re-import** (R-23, `.claude/rules/data.md`): a release upserts only rows with `origin = seed` whose `user_edited_at` and `deleted_at` are null; user-authored rows (`origin = user`) are never touched; the seed never hard-deletes.
-- **Editing semantics** (R-14): rename follows the id everywhere (keeping the old name as an alias: assumed, pending PO, plan §0.1 #9); delete is soft and hides the row from pickers while history keeps rendering it; merge moves every reference to the survivor — session focus rows, cycle focuses, resource links, aliases, and for positions the edges' endpoints and variant children, for techniques the session technique attachments and logged submissions — hides the other and is undoable from its merge log (plan §6).
+- **Editing semantics** (R-14): rename follows the id everywhere (keeping the old name as an alias: ruled R-50 (2026-11-01)); delete is soft and hides the row from pickers while history keeps rendering it; merge moves every reference to the survivor — session focus rows, cycle focuses, resource links, aliases, and for positions the edges' endpoints and variant children, for techniques the session technique attachments and logged submissions — hides the other and is undoable from its merge log (plan §6).
 - **User edits that freeze a row against re-import**: edits to imported fields (names, slug, description, type, endpoints, applicability, tier, parent); the user's `notes`, resource status and added aliases never do.
 
 ## §9 Data, privacy, publishing readiness
@@ -418,7 +418,7 @@ UX acceptance criteria (R-00, R-26 "yes", R-18 "yes"), each testable and present
 
 | id | requirement | test |
 |---|---|---|
-| NF-01 | R-26 "≤ 2 taps from Home" — reading assumed, pending PO (plan §0.1 #7); default: the Log Session screen with type and focuses prefilled is reached in ≤ 2 taps and saved with one further tap | Maestro flow counts taps by testID |
+| NF-01 | R-26 "≤ 2 taps from Home" — reading ruled R-50 (2026-11-01): the Log Session screen with type and focuses prefilled is reached in ≤ 2 taps and saved with one further tap | Maestro flow counts taps by testID |
 | NF-02 | The log path type → focuses → per-focus rating → done completes in ≤ 30 s | timed Maestro flow on the simulator |
 | NF-03 | Only session type and one focus are required; every other field optional | domain test: `sessions.log` with two fields succeeds |
 | NF-04 | Every screen usable one-handed in portrait (R-26); widths 390 and 430 px and the bottom-anchored primary action come from `.claude/rules/frontend.md` "Phone-first, one-handed" | design review + Maestro at both widths |
@@ -475,5 +475,6 @@ Order of work (R-32 "ok"): sprint 1 foundation → sprint 2 Progress, Settings, 
 | R-40 | §5 | R-47 | — (sprint 1 design: `expo-symbols`) |
 | R-41 | §6 Settings, §9, §10 NF-05 | R-48 | — (sprint 1 taxonomy: resolution deviation, curated core) |
 | R-42 | §11 | R-49 | §7 |
+| R-50 | §2 Alias, §2 Subject, §5, §6 Log, §6 Library, §6 Planning, §8, §10 NF-01 | | |
 
 Every id also has a dated bullet in `docs/decisions.md`.

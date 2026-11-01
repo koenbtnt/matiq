@@ -1,9 +1,9 @@
 # 0021. Taxonomy seed pipeline: vendored snapshot, zero-dependency converter, endpoint resolution
 
-- **Status:** proposed — pending PO (A-26, A-27, A-31, A-32, A-33)
-- **Rulings of 2026-11-01:** R-48 ("Q13: yes") accepts the 84.1 % endpoint-resolution deviation (CO-29) but names none of the A-rows above; they are on the morning brief's §4 accept-by-default list and stay open until the PO replies to it.
+- **Status:** accepted — A-26, A-27, A-31, A-32, A-33 ruled R-50 (2026-11-01)
+- **Rulings of 2026-11-01:** R-48 ("Q13: yes") accepts the 84.1 % endpoint-resolution deviation (CO-29); R-50 ("All are accepted as is", the PO's reply to the morning brief's §4 accept-by-default list) accepts A-26, A-27, A-31, A-32 and A-33 at their recorded defaults; nothing in this ADR remains open.
 - **Date:** 2026-11-01
-- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. PO confirmation pending for the A-rows above; implements ADR 0012 (accepted).
+- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. The A-rows above ruled R-50 (2026-11-01); implements ADR 0012 (accepted).
 - **Decision ids:** F-10, F-11, F-12, F-13, F-15 / R-28, R-35, R-29, R-33; D-31
 - **Source:** `docs/foundation/plan.md` §0 F-10..F-13, F-15, §0.1 A-26, A-27, A-31..A-33, §2, §6; `mobile/src/db/seed/report.json`; verify row "converter + seed diff" at 83e6f12.
 

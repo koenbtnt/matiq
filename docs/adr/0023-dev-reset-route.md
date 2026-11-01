@@ -1,9 +1,9 @@
 # 0023. Dev-only database reset route for Maestro
 
-- **Status:** proposed — pending PO (A-25)
-- **Rulings of 2026-11-01:** none cover this ADR; A-25 is on the morning brief's §4 accept-by-default list and stays open until the PO replies to it.
+- **Status:** accepted — A-25 ruled R-50 (2026-11-01)
+- **Rulings of 2026-11-01:** R-50 ("All are accepted as is", the PO's reply to the morning brief's §4 accept-by-default list) accepts A-25 at its recorded default; nothing in this ADR remains open.
 - **Date:** 2026-11-01
-- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. PO confirmation pending for A-25.
+- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. A-25 ruled R-50 (2026-11-01).
 - **Decision ids:** F-25 / R-12; A-25
 - **Source:** `docs/foundation/plan.md` §0 F-25, §0.1 A-25, §2, §13; `.claude/rules/e2e.md`.
 

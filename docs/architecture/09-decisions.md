@@ -2,6 +2,8 @@
 
 Index of `docs/adr/` (MADR). Full list with ids: [docs/adr/README.md](../adr/README.md).
 
+Statuses follow the ADR files. R-50 (2026-11-01, "All are accepted as is") moved ADRs 0018, 0020, 0021, 0022 and 0023 to accepted; R-51 (2026-11-01, "Yes, accept 0019") accepted 0019.
+
 | ADR | Title | D-ids / R-ids | Status | Date |
 |---|---|---|---|---|
 | [0001](../adr/0001-develop-and-main-release-branching.md) | develop as integration branch, main as release branch | setup | accepted | 2026-10-31 |
@@ -21,9 +23,9 @@ Index of `docs/adr/` (MADR). Full list with ids: [docs/adr/README.md](../adr/REA
 | [0015](../adr/0015-export-import-erase.md) | JSON export, import and erase-all; erase as the single hard-delete path | D-21 / R-12, R-27, R-26; assumptions A-2, A-10 | accepted | 2026-10-31 |
 | [0016](../adr/0016-time-model-and-settings-store.md) | Time model (UTC + local_date) and settings separate from app_meta | D-26, D-35 / R-15, R-21, R-22 | accepted | 2026-10-31 |
 | [0017](../adr/0017-planning-and-logging-model.md) | Planning and logging model: sessions, reviews, rounds, cycles, slots, rank | D-04, D-10..D-15, D-19 / R-03, R-05..R-07, R-10, R-19, R-20 | accepted | 2026-10-31 |
-| [0018](../adr/0018-single-foundation-migration-and-schema-deltas.md) | One foundation migration for the whole schema; live-unique partial indexes; schema deltas | F-01, F-02, F-04, F-20 / D-29; A-15, A-24, A-31 | proposed | 2026-11-01 |
-| [0019](../adr/0019-database-access-layer-and-bootstrap.md) | Shared Db type, transaction-only writes and the bootstrap sequence | F-03, F-08, F-09 / R-24, CO-15 | proposed | 2026-11-01 |
-| [0020](../adr/0020-sqlcipher-key-seam-and-backup-exclusion.md) | SQLCipher key seam, raw 32-byte key and backup exclusion | F-05..F-07 / R-24, R-12; A-16, A-17 | proposed | 2026-11-01 |
-| [0021](../adr/0021-taxonomy-seed-pipeline-design.md) | Taxonomy seed pipeline: vendored snapshot, zero-dependency converter, endpoint resolution | F-10..F-13, F-15 / R-28, R-35; A-26, A-27, A-31..A-33 | proposed | 2026-11-01 |
-| [0022](../adr/0022-curated-layer-id-registry-and-first-launch-seed.md) | Curated layer, append-only id registry and idempotent first-launch seed | F-14, F-16 / R-28, D-07, D-08; A-28, A-29 | proposed | 2026-11-01 |
-| [0023](../adr/0023-dev-reset-route.md) | Dev-only database reset route for Maestro | F-25 / R-12; A-25 | proposed | 2026-11-01 |
+| [0018](../adr/0018-single-foundation-migration-and-schema-deltas.md) | One foundation migration for the whole schema; live-unique partial indexes; schema deltas | F-01, F-02, F-04, F-20 / D-29; A-15, A-24, A-31 | accepted | 2026-11-01 |
+| [0019](../adr/0019-database-access-layer-and-bootstrap.md) | Shared Db type, transaction-only writes and the bootstrap sequence | F-03, F-08, F-09 / R-24, CO-15 | accepted | 2026-11-01 |
+| [0020](../adr/0020-sqlcipher-key-seam-and-backup-exclusion.md) | SQLCipher key seam, raw 32-byte key and backup exclusion | F-05..F-07 / R-24, R-12; A-16, A-17 | accepted | 2026-11-01 |
+| [0021](../adr/0021-taxonomy-seed-pipeline-design.md) | Taxonomy seed pipeline: vendored snapshot, zero-dependency converter, endpoint resolution | F-10..F-13, F-15 / R-28, R-35; A-26, A-27, A-31..A-33 | accepted | 2026-11-01 |
+| [0022](../adr/0022-curated-layer-id-registry-and-first-launch-seed.md) | Curated layer, append-only id registry and idempotent first-launch seed | F-14, F-16 / R-28, D-07, D-08; A-28, A-29 | accepted | 2026-11-01 |
+| [0023](../adr/0023-dev-reset-route.md) | Dev-only database reset route for Maestro | F-25 / R-12; A-25 | accepted | 2026-11-01 |

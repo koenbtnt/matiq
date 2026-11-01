@@ -44,5 +44,5 @@ The core loop plan -> train -> log -> review needs a record model that supports 
 ## Consequences
 
 - Ruled R-40 (2026-11-01, "Q5: yes"), formerly A-12: review storage as columns on `sessions` rather than a `session_reviews` table. The whole ADR is now ruled.
-- Assumed, pending PO: A-1 round outcome vocabulary, A-5 one active cycle at a time, A-7 reading of "<= 2 taps", A-8 partner belt inside `context_note`.
+- Ruled R-50 (2026-11-01, "All are accepted as is"), formerly A-1 round outcome vocabulary, A-5 one active cycle at a time, A-7 reading of "<= 2 taps", A-8 partner belt inside `context_note`: all accepted at their recorded defaults.
 - Reminder columns arrive in migration 0002 (sprint 3).

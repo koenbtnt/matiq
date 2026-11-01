@@ -7,7 +7,7 @@ Source of truth: `docs/PRODUCT.md` §2 (terms are not restated differently here)
 | Focus | The unit planned, logged and scored: a position node or a subject, stored `{kind, ref_id}` (R-04, R-30 provisional) |
 | Position | Node of the technique graph; canonical name plus aliases; optional parent (variant) |
 | Technique | Typed edge between positions (transition, guard pass, sweep, escape, takedown); submissions are terminal |
-| Alias | Alternative searchable name (R-34); on techniques assumed, pending PO (A-3) |
+| Alias | Alternative searchable name (R-34); on techniques, ruled R-50 (2026-11-01; A-3) |
 | Subject | Cross-cutting theme usable as a focus; seeded, editable |
 | Session | One training occasion with type, status (planned, completed, skipped) and signals |
 | Planned vs actual | `is_planned` / `is_actual` per focus row; the gap feeds progression |

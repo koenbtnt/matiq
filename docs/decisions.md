@@ -1,6 +1,6 @@
 # Decisions — binding record
 
-Every bullet is dated and tagged with the ruling it derives from (`docs/product-spec/po-brief.md`, PO rulings of 2026-10-31; R-36…R-49 answer the morning brief of 2026-11-01 §3 Q1…Q14 — "yes" accepts the question's recommendation, which is recorded as the content). Quotes are the PO's words. This file changes only with a quoted, dated user ruling (`.claude/rules/docs.md`). Provisional items are marked as such. Spec: `docs/PRODUCT.md`; derivation: `docs/product-spec/plan.md`.
+Every bullet is dated and tagged with the ruling it derives from (`docs/product-spec/po-brief.md`, PO rulings of 2026-10-31; R-36…R-49 answer the morning brief of 2026-11-01 §3 Q1…Q14 — "yes" accepts the question's recommendation, which is recorded as the content; R-50 answers its §4 accept-by-default list as one blanket ruling). Quotes are the PO's words. This file changes only with a quoted, dated user ruling (`.claude/rules/docs.md`). Provisional items are marked as such. Spec: `docs/PRODUCT.md`; derivation: `docs/product-spec/plan.md`.
 
 ## Repo
 
@@ -36,6 +36,7 @@ Every bullet is dated and tagged with the ruling it derives from (`docs/product-
 - 2026-10-31 · R-29 · Resources: title, URL, author/source, type (data, extensible), notes, status to watch / watched; attachable to a technique, a focus or a cycle; manual entry in v1. "ok. but keep in mind that more entries should be available in the future".
 - 2026-11-01 · R-46 · Planned sessions before cycles/slots exist (A-19, A-46): a PLANNED session dated before today is "stale" the next morning (local date), today's is "today", the earliest ≥ today is "next"; Home shows at most 5 stale ones. "Q11: yes" — accepts main-session question Q11, morning brief 2026-11-01. Closes A-19, A-46.
 - 2026-10-31 · R-33 · Instructional catalogues (e.g. BJJ Fanatics) as a later feature on top of Resources; scraping subject to terms of service — risk, not designed in v1. "in a later feature i want to do something with these dvd's and scrap their titles etx".
+- 2026-11-01 · R-50 (see Process) · Sprint 0 product assumptions A-4 (six seeded subjects), A-7 (reading of "≤ 2 taps"), A-9 (rename keeps the old name as an alias) accepted at their recorded defaults.
 
 ## Data
 
@@ -53,6 +54,7 @@ Every bullet is dated and tagged with the ruling it derives from (`docs/product-
 - 2026-11-01 · R-41 · Import and erase (A-2): import = non-destructive merge by id, newest `updated_at` wins, no confirm dialog; erase-all is the single explicit-confirm exception (hold-to-erase) because a toast-undo is impossible once files are deleted. "Q6: yes" — accepts main-session question Q6, morning brief 2026-11-01. Closes A-2 (ADR 0015).
 - 2026-11-01 · R-42 · Legacy Oracle data (A-6): never imported — the PO starts with an empty database; no converter in v1, v1.x or any sprint. "Q7: start over completely in the new db" — main-session question Q7, morning brief 2026-11-01, whose recommendation ("not imported in v1; a one-off converter is a v1.x task") is thereby replaced. Closes A-6; the legacy repo stays reference-only (`.claude/rules/privacy.md`).
 - 2026-11-01 · R-48 · Taxonomy content (CO-29, CO-33; A-28, A-82, A-84): the 84.1 % GrappleMap endpoint resolution (target 95 %; the 268 unresolved endpoints are unnamed in GrappleMap itself) is an accepted deviation; the curated core (45 positions, 163 techniques, 9 gi starters marked core) stands as the planner's and data-coder's pick; the PO reviews `data/taxonomy/curated/` when there is an hour and sends renames/additions as a list. "Q13: yes" — accepts main-session question Q13, morning brief 2026-11-01. Closes A-28, A-82, A-84, CO-29; CO-33 stays open for the content review.
+- 2026-11-01 · R-50 (see Process) · Sprint 0 data assumptions A-1 (round `outcome` enum), A-3 (technique aliases), A-5 (one active cycle), A-8 (partner belt in `context_note`), A-14 (converter-minted seed ids) and the sprint 1 schema / seed assumptions (A-15, A-24, A-26, A-27, A-29, A-31…A-33, A-81, A-83, A-85…A-87) accepted at their recorded defaults.
 
 ## Algorithm
 
@@ -76,7 +78,7 @@ Every bullet is dated and tagged with the ruling it derives from (`docs/product-
 ## Privacy and publishing
 
 - 2026-10-31 · R-12 (see Data) · Encryption at rest from the start (R-24), app lock later (R-25); export/import/erase in v1.
-- 2026-10-31 · R-24 (see Data) · No user data leaves the device; EAS artefacts carry none (`.claude/rules/privacy.md`). The SQLCipher key uses a this-device-only keychain class (with A-11, assumed, pending PO; plan D-22).
+- 2026-10-31 · R-24 (see Data) · No user data leaves the device; EAS artefacts carry none (`.claude/rules/privacy.md`). The SQLCipher key uses a this-device-only keychain class (with A-11, ruled R-39 (2026-11-01); plan D-22).
 - 2026-10-31 · R-27 (see Product) · Export format is the future upload format; versioned.
 - 2026-10-31 · R-28 (see Data) · Licences: GrappleMap public domain; grapple-flows CC BY 4.0 — attribution shown in the app; BJJGraph (PolyForm Noncommercial) not imported without a licence.
 - 2026-10-31 · R-33 (see Product) · No scraping of instructional sites in v1; terms-of-service assessment first.
@@ -92,3 +94,5 @@ Every bullet is dated and tagged with the ruling it derives from (`docs/product-
 - 2026-10-31 · R-31 (see Repo) · Dev-client only; `CLAUDE.md` commands amended by the PO when sprint 1 lands SQLCipher.
 - 2026-10-31 · R-37 · Overnight-autonomy instruction under which sprints 0 and 1 ran: "when sprint 0 is ready, create a pr for sprint 0. Then start sprint 1 from sprint 0 and start planning and developing sprint 1. Only if you have a blocking question, stop. […] All assumptions that you want to as me after sprint 0 and 1 are done i want you to list them when i am back online so i can clarify them, and if need be they can be altered afterwards." Recorded verbatim on the PO's ruling "Q2: yes" (2026-11-01, main-session question Q2, morning brief 2026-11-01). Every default taken under it is ledgered in `docs/product-spec/assumptions.md` (A-1…A-14) and `docs/foundation/assumptions.md` (A-15…A-96); closes the instruction half of CO-23.
 - 2026-11-01 · R-36 · Guard bypass and harness hardening (CO-37): (a) the workaround is not acceptable — an agent that hits a stale path guard reports `CODING BLOCKED` with the path; (b) harness edits mid-sprint require a new session before the next spawn; (c) `bash-guard.sh` is hardened to refuse `node -e` / `python -c` / `perl -e` and shell redirects that write outside the agent's scope — the main session's commit, with hook tests. "Q1: yes" — accepts all three parts of main-session question Q1, morning brief 2026-11-01.
+- 2026-11-01 · R-50 · Remaining assumptions accepted at their recorded defaults. "All are accepted as is" — the PO's answer to "Do you confirm the §4 accept-by-default assumptions as ruled?" (morning brief 2026-11-01 §4). Covers every assumption still open in `docs/product-spec/assumptions.md` and `docs/foundation/assumptions.md` at e9080c7: A-1, A-3, A-4, A-5, A-7, A-8, A-9, A-14 (sprint 0) and A-15, A-17, A-18, A-20, A-21, A-22, A-24, A-25, A-26, A-27, A-29, A-30, A-31, A-32, A-33, A-36…A-45, A-47…A-50, A-52…A-57, A-81, A-83, A-85…A-96 (sprint 1). Each row's recorded default is now the ruling; ADRs 0018, 0020, 0021, 0022, 0023 move from `proposed` to `accepted` (ADR 0019 names no assumption and is not on the §4 list, so it stays `proposed`). Closes CO-23 and CO-32; the curated-core content review stays CO-33.
+- 2026-11-01 · R-51 · ADR 0019 (shared `Db` type, transaction-only writes, bootstrap order key → open → migrate → seed) is accepted. "Yes, accept 0019" — the PO's answer to "Do you ratify ADR 0019, or leave it proposed?" (2026-11-01).

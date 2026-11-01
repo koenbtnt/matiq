@@ -64,8 +64,12 @@ is driven with the desktop app's iOS Simulator tool or `xcrun simctl`. Personal 
 
 ## Next step
 
-Sprint 1 (`foundation`) runs on `feature/foundation` (stacked on `feature/product-spec`, PR #4; its PR targets `develop`):
-data model + migrations, SQLCipher with the key in the keychain, Inter/Archivo fonts, the taxonomy seed pipeline with the
-curated core, Log Session, Home, Library read-only — scope in `docs/PRODUCT.md` and `docs/product-spec/plan.md` (order of
-work R-32). Sprint 0 delivered `docs/PRODUCT.md`, `docs/decisions.md`, ADRs 0003–0017, arc42 and the requirements; its 14
-assumptions (`docs/product-spec/assumptions.md`) and sprint 1's await PO rulings (CO-23).
+Sprint 2 (`progress-settings`, cut from `origin/develop`; PR into `develop`) — scope per R-32 and `docs/product-spec/plan.md §7`:
+Progress tab with algorithm v1 and its explanations (`docs/PRODUCT.md §7`, defaults R-49), Settings (weights, suggestion
+sources, rank incl. kids scale, detailed-rounds toggle, theme override R-44, About with the CC BY 4.0 attribution link CO-35),
+Library editing with aliases and merge/undo, Technique detail with Resources, the iOS backup-exclusion module (CO-28, R-39),
+and the "(tabs)" back label (CO-42). Sprints 0 and 1 are merged (PRs #4, #5): 20-table schema, SQLCipher, taxonomy seed,
+Log Session, Home, Library read-only; 4 Maestro flows pass on the dev-client build (`docs/foundation/test-report.md`).
+Before the orchestrator runs: start a fresh session (agent definitions are cached per session; bash-guard rule 6 and the
+tester's Maestro command changed on 2026-11-01), keep Metro's port in mind (`-e METRO_URL=…` when 8081 is taken), and
+have the PO confirm the brief-§4 assumptions so ADRs 0018–0023 can flip from proposed (CO-32).

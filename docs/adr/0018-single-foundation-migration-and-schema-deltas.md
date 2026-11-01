@@ -1,9 +1,9 @@
 # 0018. One foundation migration for the whole schema; live-unique partial indexes; schema deltas
 
-- **Status:** proposed — pending PO (A-24, A-31; A-15 is closed)
-- **Rulings of 2026-11-01:** none cover this ADR; A-24 and A-31 are on the morning brief's §4 accept-by-default list and stay open until the PO replies to it.
+- **Status:** accepted — A-24 and A-31 ruled R-50 (2026-11-01); A-15 closed (rule alignment confirmed by R-50)
+- **Rulings of 2026-11-01:** R-50 ("All are accepted as is", the PO's reply to the morning brief's §4 accept-by-default list) accepts A-24 and A-31 at their recorded defaults and confirms the A-15 rule alignment; nothing in this ADR remains open.
 - **Date:** 2026-11-01
-- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. PO confirmation pending for A-24 and A-31.
+- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. A-24 and A-31 ruled R-50 (2026-11-01).
 - **Decision ids:** F-01, F-02, F-04, F-20 / D-29; A-15, A-24, A-31
 - **Source:** `docs/foundation/plan.md` §0 F-01, F-02, F-04, F-20, §0.1 A-15, A-24, A-31, §2; `docs/foundation/assumptions.md`; `docs/foundation/review-1.md` rulings 1-5.
 
