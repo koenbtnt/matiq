@@ -35,6 +35,8 @@ export function ProgressScreen() {
   const insets = useSafeAreaInsets();
   const progress = useProgress();
   const data = progress.data;
+  // Read once at render: React Compiler hoists `data.params` out of the renderItem closure, so it must be null-safe here.
+  const params = data?.params;
   const tabBar = (isAndroid ? size.tabbarHeightAndroid : size.tabbarHeightIos) + insets.bottom;
 
   const header = (
@@ -104,7 +106,7 @@ export function ProgressScreen() {
           />
         </View>
       )}
-      renderItem={({ item }) => <ProgressRow result={item} params={data!.params} />}
+      renderItem={({ item }) => (params ? <ProgressRow result={item} params={params} /> : null)}
     />
   );
 }
