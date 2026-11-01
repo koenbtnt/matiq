@@ -1,0 +1,24 @@
+acquire\nseatbelt
+properties: top detailed
+todo: turtle player should be posturing up, not down, during this
+ref: Ryan Hall "The Deep Half Guard", Volume 3: Advanced Deep Half Attacks, Section 2: The Armdrag @ 8:29
+    OfaAz0GlaQz9NMdjCwHjdECpOcbYCvGEcpCzOWbkJlF2boJsMAfyEjIQfkEtN8fkM1IJf
+    eNEO6aTLUHCaTOPNeaQPDLDaPQuMTayQPMObkQnMcbqRwNPavQeKPgqIcLxe0ObMje4QK
+    0baHJmSTazzHYPaEFVRLdUARYCbzG2R1cEBsVWgQKBQMbaH5TzhKD6QDfNCRPwhoLAK5j
+    jJqQscYKiHvgsIwMldGJJJCdzK1L0ddKUKVdpLcK1dQLwLLebKAPMiRFOMQiiLnLNiqNO
+    N4aAz1GqaOz5NQdlCxGxdECwOhb0CvGqceCzOZbkJlF3boJqMEfyEiIUfkEqN8fkM1IJf
+    eNBO7aTLUHCaTOMNdaQPBLEaQQsMTayQNMObmQjMbbqRuNPawQeKSgqH9Lxe0N9Mje4QI
+    2VaKLKSXazzN1MaEIcRPdRA11fbaJqR5cBBCVReKLNQ1a6IgTMhhFJQWggDBPChHM3KYi
+    RKvTJfqM1Hvf4I6RbdBKgJYdkLmP1d6KDLdc6LBOUdAJ8L3d3LNPQiwG8MUibMmLsiwOx
+    NYaAz1GqaOz5NPdlCyGxdECwOgb0CvGqceCzOZblJkF3boJqMDfxEjIUfkEqN8fkM1IJf
+    eNBO7aTLUHCaTOMNdaQPBLEaSQsMTayQNMQboQhMbbqRuNQawQeKSgqH9Lxe0N9Mje4QI
+    3OaLMvSWazzQ2IaFI0ROdQA710a8KeR4czBJVOdnMmQ4a4InTOgWGKQ9gCEbPshwNRKNi
+    GK3TZgTOYHAfUJeS8dnMUKcdfLwR1dgNrLrcZLVQ9cqM7L6dQMBPQihHYMNh7M1K9iiPa
+    NYaAz1GqaOz5NPdlCyGxdECwOgb0CvGqceCzOZblJkF3boJqMDfxEjIUfkEqN8fkM1IJf
+    eNBO7aTLUHCaTOMNdaQPBLEaSQrMTayQNMRboQgMbbqRuNQawQeKSgqH9Lxe0N9Mje4QI
+    3OaLMvV4aEyh2HaGI1Vbd8zh10a9KeVecRzTVCcYMnSHbgGaTZhTHIRLhYEJOThxOnKwi
+    OLgSlesPaHAfOJhODcwPlKkdhLzNyc2OXLwcWL3MpczOKL4dJMXPOizIBMih9NjKUh3PB
+    NTazznGyaLzXNXcXCeHXdlCgOhbyB3G7cdCmOZa2IUGla2JcMHfFEdIYfjEqN9fkM2ILf
+    fNyPcaTLSHGaTOLNeaQPCLEaUQrMSayQQMQboQeL9bqRxNRaxQfKWgpH7Lye0N9Mje4QI
+    3PaLMwZnazwc2HaEI1YMd7wU15a8KdYicVxCWzd3NhUlcoDjT6iSIWR9ivFROMgWO4Kni
+    iL4NNcqOEHCfEJiJ8dmMKJvcXL5J8daLuKIdsLUJ1dZKxLndCM3PMiPJwMchQOdJ4hzPO

@@ -1,0 +1,25 @@
+wrist control\nto double
+properties: detailed
+tags: double_leg_takedown
+ref: Marcelo Garcia "Advanced Brazilian Jiu Jitsu Techniques" p169, Section "Outside Leg Trip To Drive Through Double"
+no clue why the section name has "leg trip" in it. wonder if that's a bug in the book
+    KhaCPET1aKFnNJaSOrXfaGHeMIbVOKV5bBHaMbiTOHRzgSGXQ0nrMyRrnzISOrv8NKNDv
+    WInLZthQzKysyJrH8uQRiHgvaKrHvvER8GjvWKGGgvVR3FavFK7QurnKQNFwSK5LByzLw
+    DoazKvuIazU9zKaFK2ryaNTiAMbGK7sAbLTyBTiwLzwChoTJxKnDNPvEnGQUzlwtMYyOw
+    xShASsEKNCdtkSdEnuVJZF3u1ReE2v4JWGPvTQKGlv3JPH5vEQwwSrCPtzwxjPEBAyZPj
+    KnazPGTUazEPNKbFOkVfbzIbMxb9OMUeb0HhHcgsOUOAfxFrM1jZNpOBkDJ5LjtrN7LGt
+    aIUKMstSEHSqZHlHhukTSE4ubIeG8vkUBD9u1IrF0vpVkCUuKIqMPn8LWKCtELrICvjLS
+    DoazKvuIazU9zKaFK2ryaNTiAMbGK7szbKTyBUivLzwEhlTLxJnyNQvCnzQUy7wnMRyGw
+    sR5zIsUJQBHtlTHC7udHOFRulUrDUu4HkGSu4UkFbuMHgH4uvUrwHrvPozEwZPxBNysO2
+    KkazPIT2aJFlMBdfOvSJcpImLcc9OCSacfG0ErbSO4L2eFELJlgIN1LqhvK4HNqkONImp
+    TJAIYsjSUFUp6FyGZtJWmCRs9F1GGuPW2BYt3GaF9uFYfAKtPFJJhkVMLHvq0L4FvsMLM
+    DoazKvuIazU9zKaFK2rxaMTiAMbGK7sybJTyBUiuLywFhhTNxIntNQvAnrQUyYv7MGyXv
+    2R1yZtyIOBLtUVaBNtyFKFttGXuCztUEOGFt4XVDOtrEMHytjYmwwrmPjzIwCPnB0xUOK
+    JVazPJTUaIFgJydMNZSbcYHBIzcKOpRLcjGnBNbqOrLleJFDGFghN9IMhCLmDiphOJDRo
+    3JIErrDSzEcoZE3CctuVwA4r0FbBtuuU4BataFuAPvaV1A0t8GaFxkaMECTp6L6AGrsLK
+    DoaBKvtyaDVazLaKK3qqa4TgAMbMK7rxbZTxBoiELFv4heTywjm1NpukndQvyzvOMGyzv
+    IRkxNtRIwxjuVVIzZtkE1BdtYXiAztMDZBWu4W8BMtpDGC9uUWKvQqZO0z4v9O0CkxcOc
+    IRazOKNuazFJHadGNMNKcMIFGJcrOjMJcsHKz7a1PYGfehGhDsgVOMFyibLWxNofONzyo
+    RJDApmoSgAjmfFNwDnrTGwNnNHUv0orT5vOovIguHonUjuSofI2CbkFMZyapbL7v0qGLC
+    AhaEJ1s5aEU7wDaJKspWaXTfxEbMKEqZbVTxyZiuLAvAg6TotOmPMXszmzQrwUuHMpxQt
+    9Rlu8sgIMuzsyUjyRqVHnydqXSBz7q9G8zkrnR3A5qqHuAgqtRVtFqxPayyuZOIAZvLNR

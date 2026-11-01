@@ -1,0 +1,16 @@
+double swim\ninside
+properties: bottom
+ref: https://www.youtube.com/watch?v=N7CzcgVuvdA "Brazilian Jiu-JItsu - Advanced Basics - Transitioning to Triangle from Closed Guard - Firas Zahabi"
+ref: Ryan Hall "The Triangle" Volume 2: "Angles, Mechanics, and Entries", Technique 3 @ 9:11
+    zfazzGwOazEXCecuAPzvcSFYBWa8AwySbHGBIEbgB7Eea0KWCmegCvALeaFSIOiYEpGxi
+    YJtJzelEcGfemKnLkdHH0KxdLJDLVeDIHLresKgMJegJGMxdQKBCXhREUHVjzG4JMljHW
+    wXgQzjuYiYBqzIeVAWwYgkC1y2f9A9xnhxChAogTHSEggOBtGdc7IqHWcfFeNQcGNwQic
+    vIFJSaTPaPka2EiHlbRLZLfbaFLHgdbLXLzcnFpHCdNKUKKdkFsKobOIMPKcWLrRseNMc
+    zLazyLwbazFxCqb2APznb9GvCsaRzVyLaSGUI8a3BIDka1L5CDdoCxA0dfFUIyiMEkGpi
+    3JjJledDCFHeGKMLbebHmJYedKgLJeIIqK9eCJ4Mtd7JfMgebKrCTg4EVHYjuG0JSk4HY
+    w0gTzpuVi1BpzHe6BawZgkC1yUgjBsxfhwCkApgXIbD2g6A3F7cYIxHMcTFbNvc4NxQac
+    8IPJFbwPJPzbxEvKbcYLQMQdjHrJVdCKKL2d9HZKTdDJQLwdTJaKjbQIBPmdqLtRafgMb
+    z0azyBwEazEFCucBAwzgbZGOCxbrzDyzaFGOI6a2BHC5aYL5CDdrCxAWddFSIxitEkGri
+    JJlINdUDDETeFK9LQfRFPIRgkLBMvgXGhJNhfLjM6gyHsKKgNKxCNg4EXHWjlG0JXkPHZ
+    w0gTzpuYiZBqzGe1BbwZgkC1yWghBtxlhxChAogTIbEagLBmF7cZIzHOcjFjNudGNCP1d
+    NIGIYdLMzMwdaFAJEgoJkKgghHHIPhmJvJJhbGVIOijIzIYh5HvKlbPIQPhdXLqQ0fQMe

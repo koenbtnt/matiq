@@ -1,0 +1,22 @@
+stomp
+ref: Eddie Bravo "Mastering the System" Episode 99
+ref: Eddie Bravo "Mastering the System" Episode 30 @ 10:42
+ref: Eddie Bravo "Advanced Rubber Guard", Section "Old Stomp" @ p305
+ref: BJ Penn vs GSP, UFC 94 @ round 3, 4m0s (except that BJ doesn't take the overhook, and so is unable to sweep)
+properties: bottom
+    QoaAtKG0a3sePKbQxdGVeqtRQDaUwBG3c4uiQXbjDtFEbAATMwgoFbIOgrEKM2e1N3HEf
+    KOeNKbdQHEfcDO6JBazQ0HYaQQjITaTRZIIbLQWHFbmRMJObiRvKbfxIOKrfUORKjgzRs
+    K7azxUF2bGvfIvaEAvHIaEypI1bBzzHTbExqFVheB4LBfbB3E5djHMIub0HqIxd4QWMrc
+    oNWEGf2PgObb4JDGJeMLMPGciFzHcevKAQLcME5IddOKlQZcTDMGXb1LwKZcXQgMBdYR6
+    QyaAtNHbcjscPSbPxgG3fduxQLaVwEHbdMuFQ6bgDqFGbvASMBgsE5IVgwEJM4e1N4HGf
+    LN4NLbfQGEicFO2JBazQZHZaQQiITaTRYIIbLQWHFbmRLJPbiRvKqfAIJKrfROOJ8gtRp
+    KfcLxXI8eKt2HBdwAnJtdFxBH4egzgJRePwRDthVCAL5gAC2E2djHNIxcfHqH6egQYMmc
+    sN7ExgkOIObb3JOGdffKZPGcdFGGGfaJMQLcJFiHod7JnRbc4EaGYb4LwKLduQfMBdYR8
+    O8aCsOJlb3tlOicpvUJ7eHvTO8bbvHJydpvSPCa2CuFtbCAXMzgOFlIXgqENM1esN4HNf
+    IOhOybhQ9EwcwO4Kqa1RDIna1QnJAbsStJebuRcIrbVR7KsbfRbKefDISKBfOOMJXgmRl
+    DMdczbEQeUwpC1d7CJG5ejzfDyeLBzG9fkx9C8jQFYMeftCBEFdfH6H4b6HfIwecQUMBc
+    oNQESf9ODNBbYJgGve5KWPOdaFFHmexKbQJdVFdIedIKEQ3d9D1G4bXLwK7doP5MSdSR3
+    MFaGrEDIaAt6LRcMuzGYcpurMxbtupFWbWviMbaYA6ETaYBSLbgME1HxgqFuMDexOfHpf
+    HOpPcbqQCEucnPULjbuR6IEbkQJKvb1SUJKa2RhJncvSyKTbhQMJVfHI2KbfKO1JvgeRz
+    FCaCCTAfeEAJEjbqGjCwcxCNEEccE5CJdDBVFliFGUJmesAFFgbDHtIXbCG8I1dSQFM4b
+    GNxE0fSPcMgbxIXF7eILlL8egFBG6dQK7NaewEOHUdCL9M8e9DJHzb7LbLjcWPjMzdzRA

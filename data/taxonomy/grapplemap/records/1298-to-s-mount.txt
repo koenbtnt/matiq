@@ -1,0 +1,20 @@
+to S-mount
+properties: top
+ref: Eddie Bravo "Mastering the Twister", Section: Smashing Web @ p193
+ref: Eddie Bravo "Mastering the System", Episode 49 @ 27:26
+    CXazt9HCaztMDvaHxMHeaExvDfbNwMHtbywsCUh5zJHMh4yIDEb3C2HjcuCMDLbtMoI0b
+    sLUFkfNMTHufMMLFsdSQFHLeuQWFzdlRSH0dzRSGmcqScHJcmRMFRbVGPGubvNeGPcnPK
+    IhaCzJBGazBEJGc6B3B4dhD5JdbICeBGbREiLWa2IwBkbPLfHJfiEVD6e4FOJtmBIoEFo
+    zHsLHiGHcASqvFBJVfmI6BqmPHWJHfFKmBtl6I2JteELbB1kYI9FFi8FhHhojIpG3pZKr
+    BYaWryJlborbDFaGuPIWaXuNDabQt4ISb6tVCXg4ylHPhtxWDMcaDmHsccCEDObsMdI5b
+    sL3FkfNMTHufLMKFsdSQFHLeuQWFzdlRSH1dzRRGmcqSbHJcmRMGmb4GPGubvNdGPcnPJ
+    IhaBzMCVaCBYJGc6B6A8cQEkJhbHCkBFbxEpL4aYIvALbYK6HHeWEAEbe4FIKqjtJrHGn
+    VInMSfEKqC5olHUOMcbLFCTkjJEPSbCL4DsjDKCP0awMFDBioKHF9iXFnI9lVJDJCnlLO
+    BYaWryJlborbDFaGuPIWaXuNDabQt4ISb6tVCXg4ylHPhtxWDNcaDoHtccCDDNbsMcIZb
+    sL9FkfNMTHtfOMLFsdSQFHLeuQWFzdlRSH1dzRRGmcqSbHJcmRMGqbVGOGpbvNgGPcnPK
+    JxazDFygazLqLlcuGdBnaNJuKybfGkAubMJ4MaaZMVBciwKqJteNHBF0fkGlK3juMkHin
+    iKVMTfCKqEBlJHpONb5LLEjiyKpPUbAL6EthNLoP2auMHDXgBLqIiiUG4JjlKMfJvm7Oz
+    BYaWryJlborbDFaGuPIWaXuNDabQt4ISb6tVCXg4ylHPhtxWDOcaDpHtccCDDMbsMaITb
+    sMeFkfNMTHsfQMMFsdSQFHLeuQVFzdlRSH1dzRRGmcqSbHJcmRMGtbMGOGkbvNjGPcnPK
+    KNazHRzBaARSM0bOKwDkaERvLOaWKACcaSQFMbaYRoCrdNKxLxd9K6JaenIdLijuPNHrm
+    pNjNifPNAHdkKIUOMceLXEChjJIPUbBL6DsgQJ6P5axMJDjfyKjJ7h8J8JblmPkH9mCRr

@@ -1,0 +1,1586 @@
+{
+  "comment": "Curated core (R-28, F-14): positions and techniques shown by default (tier CORE), with canonical names, aliases, parents and, for techniques, the core endpoints and type. Entries are keyed by source id: gm:<GrappleMap record index> or cur:<slug> for curated-only rows. families: GrappleMap position tag -> core parent for EXTENDED positions (first match in order). Review by the PO is a carry-over item.",
+  "positions": [
+    {
+      "sourceId": "cur:guard",
+      "name": "Guard",
+      "description": "Bottom player playing off the back or seat with the legs between them and the opponent."
+    },
+    {
+      "sourceId": "gm:265",
+      "name": "Closed guard",
+      "parent": "cur:guard",
+      "aliases": [
+        "Full guard"
+      ]
+    },
+    {
+      "sourceId": "gm:110",
+      "name": "Closed guard, posture broken",
+      "parent": "gm:265",
+      "aliases": [
+        "Broken posture closed guard"
+      ]
+    },
+    {
+      "sourceId": "gm:163",
+      "name": "Standing in closed guard",
+      "aliases": [
+        "Standing guard break"
+      ]
+    },
+    {
+      "sourceId": "gm:314",
+      "name": "Open guard",
+      "parent": "cur:guard"
+    },
+    {
+      "sourceId": "gm:157",
+      "name": "Seated guard",
+      "parent": "gm:314",
+      "aliases": [
+        "Sit-up guard"
+      ]
+    },
+    {
+      "sourceId": "gm:278",
+      "name": "Butterfly guard",
+      "parent": "gm:314",
+      "aliases": [
+        "Hooks guard"
+      ]
+    },
+    {
+      "sourceId": "gm:277",
+      "name": "Supine butterfly guard",
+      "parent": "gm:278"
+    },
+    {
+      "sourceId": "gm:21",
+      "name": "De la Riva guard",
+      "parent": "gm:314",
+      "aliases": [
+        "DLR"
+      ]
+    },
+    {
+      "sourceId": "gm:46",
+      "name": "Reverse De la Riva guard",
+      "parent": "gm:314",
+      "aliases": [
+        "RDLR"
+      ]
+    },
+    {
+      "sourceId": "gm:283",
+      "name": "Spider guard",
+      "parent": "gm:314"
+    },
+    {
+      "sourceId": "gm:478",
+      "name": "X-guard",
+      "parent": "gm:314"
+    },
+    {
+      "sourceId": "gm:466",
+      "name": "Single-leg X",
+      "parent": "gm:314",
+      "aliases": [
+        "SLX",
+        "Ashi garami"
+      ]
+    },
+    {
+      "sourceId": "gm:598",
+      "name": "50/50 guard",
+      "parent": "gm:314",
+      "aliases": [
+        "Fifty-fifty"
+      ]
+    },
+    {
+      "sourceId": "gm:155",
+      "name": "Half guard",
+      "parent": "cur:guard",
+      "aliases": [
+        "Half"
+      ]
+    },
+    {
+      "sourceId": "gm:177",
+      "name": "Deep half guard",
+      "parent": "gm:155",
+      "aliases": [
+        "Deep half"
+      ]
+    },
+    {
+      "sourceId": "gm:200",
+      "name": "Quarter guard",
+      "parent": "gm:155",
+      "aliases": [
+        "Quarter clinch"
+      ]
+    },
+    {
+      "sourceId": "gm:260",
+      "name": "Lockdown",
+      "parent": "gm:155"
+    },
+    {
+      "sourceId": "gm:369",
+      "name": "Z-guard",
+      "parent": "gm:155",
+      "aliases": [
+        "Knee shield",
+        "Z guard"
+      ]
+    },
+    {
+      "sourceId": "gm:107",
+      "name": "Mission control",
+      "parent": "gm:265",
+      "aliases": [
+        "Rubber guard"
+      ]
+    },
+    {
+      "sourceId": "gm:150",
+      "name": "Mount",
+      "aliases": [
+        "Tate shiho gatame"
+      ]
+    },
+    {
+      "sourceId": "gm:165",
+      "name": "High mount",
+      "parent": "gm:150"
+    },
+    {
+      "sourceId": "gm:362",
+      "name": "S-mount",
+      "parent": "gm:150"
+    },
+    {
+      "sourceId": "gm:201",
+      "name": "Three-quarter mount",
+      "parent": "gm:150",
+      "aliases": [
+        "3/4 mount"
+      ]
+    },
+    {
+      "sourceId": "gm:259",
+      "name": "Side control",
+      "aliases": [
+        "Side mount",
+        "Hundred kilos"
+      ]
+    },
+    {
+      "sourceId": "gm:268",
+      "name": "Kesa gatame",
+      "parent": "gm:259",
+      "aliases": [
+        "Scarf hold"
+      ]
+    },
+    {
+      "sourceId": "gm:1",
+      "name": "Twister side control",
+      "parent": "gm:259"
+    },
+    {
+      "sourceId": "gm:193",
+      "name": "Knee on belly",
+      "aliases": [
+        "Knee mount",
+        "Knee on stomach"
+      ]
+    },
+    {
+      "sourceId": "gm:2",
+      "name": "North-south",
+      "aliases": [
+        "North south",
+        "Kami shiho gatame"
+      ]
+    },
+    {
+      "sourceId": "gm:244",
+      "name": "Back control",
+      "aliases": [
+        "Back mount",
+        "Rear mount"
+      ]
+    },
+    {
+      "sourceId": "gm:276",
+      "name": "Seated back control",
+      "parent": "gm:244"
+    },
+    {
+      "sourceId": "gm:363",
+      "name": "Crucifix"
+    },
+    {
+      "sourceId": "gm:269",
+      "name": "Truck"
+    },
+    {
+      "sourceId": "gm:237",
+      "name": "Turtle",
+      "aliases": [
+        "All fours"
+      ]
+    },
+    {
+      "sourceId": "gm:154",
+      "name": "Front headlock (sprawl)",
+      "parent": "gm:492",
+      "aliases": [
+        "Sprawled front headlock"
+      ]
+    },
+    {
+      "sourceId": "gm:570",
+      "name": "Crab ride"
+    },
+    {
+      "sourceId": "gm:550",
+      "name": "Dogfight"
+    },
+    {
+      "sourceId": "gm:94",
+      "name": "Standing",
+      "aliases": [
+        "Neutral standing"
+      ]
+    },
+    {
+      "sourceId": "gm:11",
+      "name": "Collar tie",
+      "parent": "gm:94"
+    },
+    {
+      "sourceId": "gm:54",
+      "name": "Over-under clinch",
+      "parent": "gm:94",
+      "aliases": [
+        "Over-under"
+      ]
+    },
+    {
+      "sourceId": "gm:80",
+      "name": "Standing body lock",
+      "parent": "gm:94",
+      "aliases": [
+        "Body lock"
+      ]
+    },
+    {
+      "sourceId": "gm:85",
+      "name": "Standing back body lock",
+      "parent": "gm:94",
+      "aliases": [
+        "Rear body lock"
+      ]
+    },
+    {
+      "sourceId": "gm:492",
+      "name": "Front headlock",
+      "parent": "gm:94",
+      "aliases": [
+        "Front chancery"
+      ]
+    },
+    {
+      "sourceId": "gm:451",
+      "name": "Single leg",
+      "parent": "gm:94",
+      "aliases": [
+        "Single-leg"
+      ]
+    },
+    {
+      "sourceId": "gm:489",
+      "name": "Double leg",
+      "parent": "gm:94",
+      "aliases": [
+        "Double-leg"
+      ]
+    }
+  ],
+  "techniques": [
+    {
+      "sourceId": "gm:1203",
+      "name": "Butterfly sweep",
+      "from": "gm:278",
+      "type": "SWEEP",
+      "to": "gm:150",
+      "aliases": [
+        "Butterfly hook sweep"
+      ]
+    },
+    {
+      "sourceId": "gm:1034",
+      "name": "Butterfly push sweep",
+      "from": "gm:278",
+      "type": "SWEEP",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1251",
+      "name": "Clubbing butterfly sweep",
+      "from": "gm:278",
+      "type": "SWEEP",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:656",
+      "name": "Aldo pass",
+      "from": "gm:278",
+      "type": "GUARD_PASS",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:724",
+      "name": "Butterfly guard pass",
+      "from": "gm:278",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:976",
+      "name": "Butterfly pass to half guard",
+      "from": "gm:278",
+      "type": "GUARD_PASS",
+      "to": "gm:155"
+    },
+    {
+      "sourceId": "gm:802",
+      "name": "Leg-over pass",
+      "from": "gm:278",
+      "type": "GUARD_PASS",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:738",
+      "name": "Tornado pass",
+      "from": "gm:277",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:759",
+      "name": "Back take from butterfly",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:244"
+    },
+    {
+      "sourceId": "gm:930",
+      "name": "Backward arm drag",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:244"
+    },
+    {
+      "sourceId": "gm:1204",
+      "name": "Flanking arm drag",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:237",
+      "aliases": [
+        "Arm drag to the back"
+      ]
+    },
+    {
+      "sourceId": "gm:886",
+      "name": "Omoplata from butterfly guard",
+      "from": "gm:278",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:881",
+      "name": "Climb to high guard",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:107"
+    },
+    {
+      "sourceId": "gm:1248",
+      "name": "Butterfly to X-guard",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:478"
+    },
+    {
+      "sourceId": "gm:1227",
+      "name": "Butterfly to closed guard",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:900",
+      "name": "Butterfly to spider guard",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:283"
+    },
+    {
+      "sourceId": "gm:940",
+      "name": "Technical stand-up from butterfly",
+      "from": "gm:278",
+      "type": "TRANSITION",
+      "to": "gm:94",
+      "aliases": [
+        "Technical stand-up"
+      ]
+    },
+    {
+      "sourceId": "gm:690",
+      "name": "Pendulum sweep",
+      "from": "gm:265",
+      "type": "SWEEP",
+      "to": "gm:150",
+      "aliases": [
+        "Flower sweep"
+      ]
+    },
+    {
+      "sourceId": "gm:736",
+      "name": "Closed guard sweep to mount",
+      "from": "gm:265",
+      "type": "SWEEP",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1359",
+      "name": "Hip bump sweep",
+      "from": "gm:265",
+      "type": "SWEEP",
+      "to": "gm:150",
+      "aliases": [
+        "Sit-up sweep"
+      ]
+    },
+    {
+      "sourceId": "gm:693",
+      "name": "Armbar from closed guard",
+      "from": "gm:265",
+      "type": "SUBMISSION",
+      "aliases": [
+        "Juji gatame from guard"
+      ]
+    },
+    {
+      "sourceId": "gm:1032",
+      "name": "Triangle choke from closed guard",
+      "from": "gm:265",
+      "type": "SUBMISSION",
+      "aliases": [
+        "Sankaku jime"
+      ]
+    },
+    {
+      "sourceId": "gm:903",
+      "name": "Omoplata from closed guard",
+      "from": "gm:265",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1455",
+      "name": "Kimura from closed guard",
+      "from": "gm:265",
+      "type": "SUBMISSION",
+      "aliases": [
+        "Ude garami from guard"
+      ]
+    },
+    {
+      "sourceId": "gm:698",
+      "name": "Guillotine from closed guard",
+      "from": "gm:265",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:890",
+      "name": "Climb to mission control",
+      "from": "gm:110",
+      "type": "TRANSITION",
+      "to": "gm:107"
+    },
+    {
+      "sourceId": "gm:1360",
+      "name": "Open the guard to spider guard",
+      "from": "gm:265",
+      "type": "TRANSITION",
+      "to": "gm:283"
+    },
+    {
+      "sourceId": "gm:718",
+      "name": "Stand up in closed guard",
+      "from": "gm:265",
+      "type": "TRANSITION",
+      "to": "gm:163"
+    },
+    {
+      "sourceId": "gm:1191",
+      "name": "Knee-in guard break",
+      "from": "gm:163",
+      "type": "TRANSITION",
+      "to": "gm:314"
+    },
+    {
+      "sourceId": "gm:1866",
+      "name": "Modified crab pass",
+      "from": "gm:265",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1253",
+      "name": "Closed guard pass to kesa gatame",
+      "from": "gm:265",
+      "type": "GUARD_PASS",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:878",
+      "name": "Triangle from mission control",
+      "from": "gm:107",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:882",
+      "name": "Kung fu move",
+      "from": "gm:107",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:710",
+      "name": "Armbar from mission control",
+      "from": "gm:107",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1368",
+      "name": "Half guard leg-hook sweep",
+      "from": "gm:155",
+      "type": "SWEEP",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1639",
+      "name": "Half guard sweep to mount",
+      "from": "gm:155",
+      "type": "SWEEP",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1015",
+      "name": "Recover closed guard from half guard",
+      "from": "gm:155",
+      "type": "TRANSITION",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:1008",
+      "name": "Half guard pass to kesa gatame",
+      "from": "gm:155",
+      "type": "GUARD_PASS",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:1094",
+      "name": "Knee slice pass from half guard",
+      "from": "gm:155",
+      "type": "GUARD_PASS",
+      "to": "gm:259",
+      "aliases": [
+        "Knee cut"
+      ]
+    },
+    {
+      "sourceId": "gm:1111",
+      "name": "Back step pass",
+      "from": "gm:155",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:816",
+      "name": "X-pass from half guard",
+      "from": "gm:155",
+      "type": "GUARD_PASS",
+      "to": "gm:193"
+    },
+    {
+      "sourceId": "gm:1914",
+      "name": "Half guard to three-quarter mount",
+      "from": "gm:155",
+      "type": "TRANSITION",
+      "to": "gm:201"
+    },
+    {
+      "sourceId": "gm:1461",
+      "name": "Knee bar from half guard",
+      "from": "gm:155",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:995",
+      "name": "Half guard to spider guard",
+      "from": "gm:155",
+      "type": "TRANSITION",
+      "to": "gm:283"
+    },
+    {
+      "sourceId": "gm:763",
+      "name": "Homer sweep",
+      "from": "gm:177",
+      "type": "SWEEP",
+      "to": "gm:259",
+      "aliases": [
+        "The homer"
+      ]
+    },
+    {
+      "sourceId": "gm:822",
+      "name": "Deep half pass to twister side control",
+      "from": "gm:177",
+      "type": "GUARD_PASS",
+      "to": "gm:1"
+    },
+    {
+      "sourceId": "gm:972",
+      "name": "Deep half to single leg",
+      "from": "gm:177",
+      "type": "TRANSITION",
+      "to": "gm:451"
+    },
+    {
+      "sourceId": "gm:831",
+      "name": "Supine knee bar from deep half",
+      "from": "gm:177",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1099",
+      "name": "Knee slice vs deep half",
+      "from": "gm:177",
+      "type": "GUARD_PASS",
+      "to": "gm:200"
+    },
+    {
+      "sourceId": "gm:1640",
+      "name": "Quarter guard sweep",
+      "from": "gm:200",
+      "type": "SWEEP",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1258",
+      "name": "Quarter guard to three-quarter mount",
+      "from": "gm:200",
+      "type": "TRANSITION",
+      "to": "gm:201"
+    },
+    {
+      "sourceId": "gm:1132",
+      "name": "Finish the knee slice to kesa gatame",
+      "from": "gm:200",
+      "type": "GUARD_PASS",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:1167",
+      "name": "Quarter guard to lockdown",
+      "from": "gm:200",
+      "type": "TRANSITION",
+      "to": "gm:260"
+    },
+    {
+      "sourceId": "gm:1173",
+      "name": "Quarter guard back roll",
+      "from": "gm:200",
+      "type": "TRANSITION",
+      "to": "gm:1"
+    },
+    {
+      "sourceId": "gm:914",
+      "name": "Godfather sweep",
+      "from": "gm:260",
+      "type": "SWEEP",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1281",
+      "name": "Stomp sweep from lockdown",
+      "from": "gm:260",
+      "type": "SWEEP",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1280",
+      "name": "Arm triangle from lockdown",
+      "from": "gm:260",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:663",
+      "name": "Lockdown to closed guard",
+      "from": "gm:260",
+      "type": "TRANSITION",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:1323",
+      "name": "Lockdown pass",
+      "from": "gm:260",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:626",
+      "name": "No-hand pass",
+      "from": "gm:260",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1942",
+      "name": "Lockdown to mount",
+      "from": "gm:260",
+      "type": "TRANSITION",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1095",
+      "name": "Z-guard pass",
+      "from": "gm:369",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:902",
+      "name": "Omoplata from spider guard",
+      "from": "gm:283",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1458",
+      "name": "Armbar from spider guard",
+      "from": "gm:283",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1523",
+      "name": "Triangle from spider guard",
+      "from": "gm:283",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1362",
+      "name": "Spider guard sweep to knee on belly",
+      "from": "gm:283",
+      "type": "SWEEP",
+      "to": "gm:193"
+    },
+    {
+      "sourceId": "gm:1361",
+      "name": "Spider guard sweep to mount",
+      "from": "gm:283",
+      "type": "SWEEP",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1448",
+      "name": "Spider guard to double leg",
+      "from": "gm:283",
+      "type": "TAKEDOWN",
+      "to": "gm:489"
+    },
+    {
+      "sourceId": "gm:1164",
+      "name": "X-guard push sweep",
+      "from": "gm:478",
+      "type": "SWEEP",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1163",
+      "name": "X-guard takedown sweep",
+      "from": "gm:478",
+      "type": "SWEEP",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1694",
+      "name": "X-guard pass",
+      "from": "gm:478",
+      "type": "GUARD_PASS",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:1699",
+      "name": "Single-leg X to X-guard",
+      "from": "gm:466",
+      "type": "TRANSITION",
+      "to": "gm:478"
+    },
+    {
+      "sourceId": "gm:1086",
+      "name": "Reverse De la Riva to De la Riva",
+      "from": "gm:46",
+      "type": "TRANSITION",
+      "to": "gm:21"
+    },
+    {
+      "sourceId": "gm:1575",
+      "name": "Stand up from De la Riva",
+      "from": "gm:21",
+      "type": "TRANSITION",
+      "to": "gm:94"
+    },
+    {
+      "sourceId": "gm:1392",
+      "name": "Recover De la Riva guard",
+      "from": "gm:314",
+      "type": "TRANSITION",
+      "to": "gm:21"
+    },
+    {
+      "sourceId": "gm:2077",
+      "name": "Stand up from 50/50",
+      "from": "gm:598",
+      "type": "TRANSITION",
+      "to": "gm:94"
+    },
+    {
+      "sourceId": "gm:794",
+      "name": "High mount arm escape",
+      "from": "gm:165",
+      "type": "ESCAPE",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:623",
+      "name": "Upa escape",
+      "from": "gm:150",
+      "type": "ESCAPE",
+      "to": "gm:265",
+      "aliases": [
+        "Bridge and roll",
+        "Trap and roll"
+      ]
+    },
+    {
+      "sourceId": "gm:1298",
+      "name": "Mount to S-mount",
+      "from": "gm:150",
+      "type": "TRANSITION",
+      "to": "gm:362"
+    },
+    {
+      "sourceId": "gm:1297",
+      "name": "Arm triangle from mount",
+      "from": "gm:150",
+      "type": "SUBMISSION",
+      "aliases": [
+        "Kata gatame"
+      ]
+    },
+    {
+      "sourceId": "gm:652",
+      "name": "Crossface to mount",
+      "from": "gm:201",
+      "type": "TRANSITION",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:994",
+      "name": "Shrimp escape from three-quarter mount",
+      "from": "gm:201",
+      "type": "ESCAPE",
+      "to": "gm:155"
+    },
+    {
+      "sourceId": "gm:1299",
+      "name": "Hip escape to butterfly guard",
+      "from": "gm:259",
+      "type": "ESCAPE",
+      "to": "gm:278",
+      "aliases": [
+        "Shrimp escape"
+      ]
+    },
+    {
+      "sourceId": "gm:672",
+      "name": "Heisman escape",
+      "from": "gm:259",
+      "type": "ESCAPE",
+      "to": "gm:278"
+    },
+    {
+      "sourceId": "gm:987",
+      "name": "Bridge escape to front headlock",
+      "from": "gm:259",
+      "type": "ESCAPE",
+      "to": "gm:154"
+    },
+    {
+      "sourceId": "gm:836",
+      "name": "Side control to mount",
+      "from": "gm:259",
+      "type": "TRANSITION",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:602",
+      "name": "Side control to twister side control",
+      "from": "gm:259",
+      "type": "TRANSITION",
+      "to": "gm:1"
+    },
+    {
+      "sourceId": "gm:1180",
+      "name": "D'arce choke from side control",
+      "from": "gm:259",
+      "type": "SUBMISSION",
+      "aliases": [
+        "D'arce"
+      ]
+    },
+    {
+      "sourceId": "gm:1414",
+      "name": "Kimura from side control",
+      "from": "gm:259",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1126",
+      "name": "Kesa gatame wrist-control escape",
+      "from": "gm:268",
+      "type": "ESCAPE",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:1975",
+      "name": "Kesa gatame bridge escape",
+      "from": "gm:268",
+      "type": "ESCAPE",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:952",
+      "name": "Twister side control to north-south",
+      "from": "gm:1",
+      "type": "TRANSITION",
+      "to": "gm:2"
+    },
+    {
+      "sourceId": "gm:735",
+      "name": "Tip-toe mount",
+      "from": "gm:1",
+      "type": "TRANSITION",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1371",
+      "name": "Kimura from twister side control",
+      "from": "gm:1",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1059",
+      "name": "Armbar from knee on belly",
+      "from": "gm:193",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1022",
+      "name": "Knee bar from knee on belly",
+      "from": "gm:193",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1482",
+      "name": "Knee on belly to mount",
+      "from": "gm:193",
+      "type": "TRANSITION",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:1391",
+      "name": "Running escape from knee on belly",
+      "from": "gm:193",
+      "type": "ESCAPE",
+      "to": "gm:94"
+    },
+    {
+      "sourceId": "gm:1006",
+      "name": "Knee on belly escape to closed guard",
+      "from": "gm:193",
+      "type": "ESCAPE",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:1977",
+      "name": "North-south escape to Z-guard",
+      "from": "gm:2",
+      "type": "ESCAPE",
+      "to": "gm:369"
+    },
+    {
+      "sourceId": "gm:1978",
+      "name": "North-south to back control",
+      "from": "gm:2",
+      "type": "TRANSITION",
+      "to": "gm:244"
+    },
+    {
+      "sourceId": "gm:716",
+      "name": "Rear naked choke",
+      "from": "gm:244",
+      "type": "SUBMISSION",
+      "aliases": [
+        "RNC",
+        "Mata leão"
+      ]
+    },
+    {
+      "sourceId": "gm:1844",
+      "name": "Rear naked choke on the side",
+      "from": "gm:244",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1237",
+      "name": "Seated rear naked choke",
+      "from": "gm:276",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:674",
+      "name": "Seated back to back control",
+      "from": "gm:276",
+      "type": "TRANSITION",
+      "to": "gm:244"
+    },
+    {
+      "sourceId": "gm:676",
+      "name": "Back escape to three-quarter mount",
+      "from": "gm:244",
+      "type": "ESCAPE",
+      "to": "gm:201"
+    },
+    {
+      "sourceId": "gm:1385",
+      "name": "Cartwheel to the back",
+      "from": "gm:237",
+      "type": "TRANSITION",
+      "to": "gm:244"
+    },
+    {
+      "sourceId": "gm:1569",
+      "name": "Reverse technical stand-up to closed guard",
+      "from": "gm:237",
+      "type": "TRANSITION",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:1109",
+      "name": "Stand up from turtle",
+      "from": "gm:237",
+      "type": "TRANSITION",
+      "to": "gm:80"
+    },
+    {
+      "sourceId": "gm:1822",
+      "name": "Turtle roll to the truck",
+      "from": "gm:237",
+      "type": "TRANSITION",
+      "to": "gm:269"
+    },
+    {
+      "sourceId": "gm:1773",
+      "name": "Kimura from turtle",
+      "from": "gm:237",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:612",
+      "name": "Calf crank from the truck",
+      "from": "gm:269",
+      "type": "SUBMISSION",
+      "aliases": [
+        "Calf slicer"
+      ]
+    },
+    {
+      "sourceId": "gm:1787",
+      "name": "Kimura from crucifix",
+      "from": "gm:363",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1342",
+      "name": "Crucifix escape",
+      "from": "gm:363",
+      "type": "ESCAPE",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:959",
+      "name": "Arm-in guillotine from dogfight",
+      "from": "gm:550",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:981",
+      "name": "Stand up from dogfight",
+      "from": "gm:550",
+      "type": "TRANSITION",
+      "to": "gm:94"
+    },
+    {
+      "sourceId": "gm:1052",
+      "name": "Clinch to over-under",
+      "from": "gm:94",
+      "type": "TRANSITION",
+      "to": "gm:54"
+    },
+    {
+      "sourceId": "gm:1053",
+      "name": "Over-under to body lock",
+      "from": "gm:54",
+      "type": "TRANSITION",
+      "to": "gm:80"
+    },
+    {
+      "sourceId": "gm:1140",
+      "name": "Drop seoi-nage",
+      "from": "gm:54",
+      "type": "TAKEDOWN",
+      "to": "gm:259",
+      "aliases": [
+        "Seoi nage"
+      ]
+    },
+    {
+      "sourceId": "gm:1188",
+      "name": "Collar tie entry",
+      "from": "gm:94",
+      "type": "TRANSITION",
+      "to": "gm:11"
+    },
+    {
+      "sourceId": "gm:1144",
+      "name": "O-soto-gari",
+      "from": "gm:11",
+      "type": "TAKEDOWN",
+      "to": "gm:259",
+      "aliases": [
+        "Major outer reap"
+      ]
+    },
+    {
+      "sourceId": "gm:1145",
+      "name": "Knee pick",
+      "from": "gm:11",
+      "type": "TAKEDOWN",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1984",
+      "name": "Uchi mata",
+      "from": "gm:11",
+      "type": "TAKEDOWN",
+      "to": "gm:259",
+      "aliases": [
+        "Inner thigh throw"
+      ]
+    },
+    {
+      "sourceId": "gm:1515",
+      "name": "Fireman's carry",
+      "from": "gm:11",
+      "type": "TAKEDOWN",
+      "to": "gm:259",
+      "aliases": [
+        "Kata guruma"
+      ]
+    },
+    {
+      "sourceId": "gm:1293",
+      "name": "Pull butterfly guard",
+      "from": "gm:11",
+      "type": "TRANSITION",
+      "to": "gm:278",
+      "aliases": [
+        "Guard pull"
+      ]
+    },
+    {
+      "sourceId": "gm:1663",
+      "name": "Pull closed guard",
+      "from": "gm:94",
+      "type": "TRANSITION",
+      "to": "gm:265"
+    },
+    {
+      "sourceId": "gm:1685",
+      "name": "Jump to closed guard",
+      "from": "gm:94",
+      "type": "TRANSITION",
+      "to": "gm:265",
+      "aliases": [
+        "Flying guard"
+      ]
+    },
+    {
+      "sourceId": "gm:1044",
+      "name": "Single leg entry",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:451"
+    },
+    {
+      "sourceId": "gm:1043",
+      "name": "Double leg entry",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:489"
+    },
+    {
+      "sourceId": "gm:1601",
+      "name": "Single leg run the pipe",
+      "from": "gm:451",
+      "type": "TAKEDOWN",
+      "to": "gm:259",
+      "aliases": [
+        "Drive and dump"
+      ]
+    },
+    {
+      "sourceId": "gm:1606",
+      "name": "Single leg head drive",
+      "from": "gm:451",
+      "type": "TAKEDOWN",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1763",
+      "name": "Single leg hip-pop lift",
+      "from": "gm:451",
+      "type": "TAKEDOWN",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:1333",
+      "name": "Single leg to crucifix",
+      "from": "gm:451",
+      "type": "TAKEDOWN",
+      "to": "gm:363"
+    },
+    {
+      "sourceId": "gm:1037",
+      "name": "Single leg to the back",
+      "from": "gm:451",
+      "type": "TRANSITION",
+      "to": "gm:85"
+    },
+    {
+      "sourceId": "gm:1654",
+      "name": "Pull single-leg X from a single leg",
+      "from": "gm:451",
+      "type": "TRANSITION",
+      "to": "gm:466"
+    },
+    {
+      "sourceId": "gm:1016",
+      "name": "Guillotine vs single leg",
+      "from": "gm:451",
+      "type": "SUBMISSION"
+    },
+    {
+      "sourceId": "gm:1038",
+      "name": "Double leg takedown",
+      "from": "gm:489",
+      "type": "TAKEDOWN",
+      "to": "gm:259",
+      "aliases": [
+        "Morote gari"
+      ]
+    },
+    {
+      "sourceId": "gm:1730",
+      "name": "Double leg to mount",
+      "from": "gm:489",
+      "type": "TAKEDOWN",
+      "to": "gm:150"
+    },
+    {
+      "sourceId": "gm:946",
+      "name": "Arm drag to the back",
+      "from": "gm:94",
+      "type": "TRANSITION",
+      "to": "gm:85"
+    },
+    {
+      "sourceId": "gm:1751",
+      "name": "Body lock throw",
+      "from": "gm:80",
+      "type": "TAKEDOWN",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1734",
+      "name": "Body lock flank takedown",
+      "from": "gm:80",
+      "type": "TAKEDOWN",
+      "to": "gm:155"
+    },
+    {
+      "sourceId": "gm:1963",
+      "name": "Body lock drag down",
+      "from": "gm:80",
+      "type": "TAKEDOWN",
+      "to": "gm:237"
+    },
+    {
+      "sourceId": "gm:933",
+      "name": "Ankle pick",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:934",
+      "name": "Trip to knee on belly",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:193"
+    },
+    {
+      "sourceId": "gm:935",
+      "name": "Hip throw",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:268",
+      "aliases": [
+        "O goshi"
+      ]
+    },
+    {
+      "sourceId": "gm:1849",
+      "name": "Inside trip",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:265",
+      "aliases": [
+        "Ouchi gari"
+      ]
+    },
+    {
+      "sourceId": "gm:1470",
+      "name": "Leg weave takedown",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:1589",
+      "name": "Switch arm and trip",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:268"
+    },
+    {
+      "sourceId": "gm:1596",
+      "name": "Foot-block knee pick",
+      "from": "gm:94",
+      "type": "TAKEDOWN",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:752",
+      "name": "Bullfighter pass",
+      "from": "gm:314",
+      "type": "GUARD_PASS",
+      "to": "gm:259",
+      "aliases": [
+        "Toreando pass",
+        "Toreando"
+      ]
+    },
+    {
+      "sourceId": "gm:1315",
+      "name": "X-pass",
+      "from": "gm:314",
+      "type": "GUARD_PASS",
+      "to": "gm:193"
+    },
+    {
+      "sourceId": "gm:1195",
+      "name": "Knee slice pass",
+      "from": "gm:314",
+      "type": "GUARD_PASS",
+      "to": "gm:268",
+      "aliases": [
+        "Knee cut pass"
+      ]
+    },
+    {
+      "sourceId": "gm:964",
+      "name": "Double-under pass",
+      "from": "gm:314",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    },
+    {
+      "sourceId": "gm:793",
+      "name": "Stack pass",
+      "from": "gm:314",
+      "type": "GUARD_PASS",
+      "to": "gm:259"
+    }
+  ],
+  "families": [
+    {
+      "tag": "rubber_guard",
+      "parent": "gm:107"
+    },
+    {
+      "tag": "z_guard",
+      "parent": "gm:369"
+    },
+    {
+      "tag": "lockdown",
+      "parent": "gm:260"
+    },
+    {
+      "tag": "deep_half",
+      "parent": "gm:177"
+    },
+    {
+      "tag": "quarter_guard",
+      "parent": "gm:200"
+    },
+    {
+      "tag": "half_guard",
+      "parent": "gm:155"
+    },
+    {
+      "tag": "x_guard",
+      "parent": "gm:478"
+    },
+    {
+      "tag": "slx",
+      "parent": "gm:466"
+    },
+    {
+      "tag": "50_50",
+      "parent": "gm:598"
+    },
+    {
+      "tag": "spiderweb",
+      "parent": "gm:283"
+    },
+    {
+      "tag": "spider_guard",
+      "parent": "gm:283"
+    },
+    {
+      "tag": "butterfly",
+      "parent": "gm:278"
+    },
+    {
+      "tag": "closed_guard",
+      "parent": "gm:265"
+    },
+    {
+      "tag": "full_guard",
+      "parent": "gm:265"
+    },
+    {
+      "tag": "crucifix",
+      "parent": "gm:363"
+    },
+    {
+      "tag": "truck",
+      "parent": "gm:269"
+    },
+    {
+      "tag": "crab_ride",
+      "parent": "gm:570"
+    },
+    {
+      "tag": "s_mount",
+      "parent": "gm:362"
+    },
+    {
+      "tag": "three_quarter_mount",
+      "parent": "gm:201"
+    },
+    {
+      "tag": "mount",
+      "parent": "gm:150"
+    },
+    {
+      "tag": "twister_side",
+      "parent": "gm:1"
+    },
+    {
+      "tag": "judo_side",
+      "parent": "gm:268"
+    },
+    {
+      "tag": "knee_on_belly",
+      "parent": "gm:193"
+    },
+    {
+      "tag": "north_south",
+      "parent": "gm:2"
+    },
+    {
+      "tag": "side_control",
+      "parent": "gm:259"
+    },
+    {
+      "tag": "back",
+      "parent": "gm:244"
+    },
+    {
+      "tag": "turtle",
+      "parent": "gm:237"
+    },
+    {
+      "tag": "dogfight",
+      "parent": "gm:550"
+    },
+    {
+      "tag": "single_leg_takedown",
+      "parent": "gm:451"
+    },
+    {
+      "tag": "double_leg_takedown",
+      "parent": "gm:489"
+    },
+    {
+      "tag": "collar_tie",
+      "parent": "gm:11"
+    },
+    {
+      "tag": "body_lock",
+      "parent": "gm:80"
+    },
+    {
+      "tag": "standing",
+      "parent": "gm:94"
+    }
+  ]
+}

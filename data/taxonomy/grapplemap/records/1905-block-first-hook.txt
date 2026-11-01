@@ -1,0 +1,11 @@
+block first\nhook
+properties: bottom
+ref: Marcelo Garcia "Winning Techniques Of Submission Grappling", Series I, Volume 1: Arm Drags, Technique 9 @ 19:43
+    YOb0JnIfcSELV9cOGTI2grDZWRdEHUJbfAE7WzkyIJMYjqJrTjqBIlP1pNJWXNuCNfT2u
+    jQ3XTqGKOTApYSQU2pWNRVzquO1T8prOHWcqoNTT0pKPUVJqWMMSatoLpWeu9PvX6vlRr
+    L9azJhSzaTUGJrbhLEO0bmTDKzb7LcP9ccTQORhCLcSLixSSOinXN0OMn2RFV1syMoWrs
+    LRBR3p9LEV9omP0UhmNKAZXmxO4U0lKKo08mhOAVTlhLa1mlyNBRcqTPwW2thOVZftXNy
+    UfaNKqHKbIHsR6a2HtILcRD5Szb5IpIVdpFoSCiNKaLeiuJrQZplIKNGoVKrVKt4NISkt
+    URtXMqTKYSip4T6U0pVNUTrpTPRT9prOGUyp2PfT1pKPTUJqvN4QorRMdUOuCQjWZvbRP
+    MbaDJhSyaUUGJybuLFO4bqTEKIchLcQbcnTNOqh8LAR2i1SMMUoiOkM7nURYUartMvVhs
+    nRnQQojLnTrowTfQWklMIR5ktSvRIjmMDThjWSJRsicMXToiCSFPwraQgVSssOAYzsiOE

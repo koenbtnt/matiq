@@ -1,0 +1,16 @@
+pin knee
+tags: knee_pin
+properties: top
+ref: Ryan Hall
+    ybaDx4thazCPyddOz0u2dGDFzbcRzzu2cnEiFDa6BgyVa3JPAvfGBRyqfUESF6mmEuCQm
+    mILEri2BHzdjuI5FXfxDwCgiFL8GFePEkC8ixM7GYfcFvEmieMLATjrDZEVm3GYGBnNIV
+    wZieFVyMaUBTzHgtHOAuaWFazghOHCACbQDZD8k0LmFIgBEmC3d7LrEJbIJcKhgfO3L8c
+    JLGFAf9PnIZbXIjCsh0NgHoenE7BGiZMOHpfsEmBCjpLDGqf7DZGqb2NeMfeWNvNYgZM9
+    zCaDvzuzazCEB1b8xZw2crEDBWaXxdv8bjEXHka5Bgyca2LrAZd8BTy2d0E4ESlvFOAql
+    TIrFmkaBpx7iiKqEqgODNBViwMuFKgSDJDaiaMMGnfOEdDWhDLQAxhTDZCZmNHwDDoqJA
+    wXfBEXx4aVAAzBd8G5zoaZD1zdfwGOzObJCOCKkPI2EZfHEGBCezL6ChbHJOIPfCPeJ2c
+    kK7EEgENtIpecG6EyiqJIF7hDFyFfjmI6GfiRFnEEj8IeFrjHESEBbMNtKjdUNuMofwNf
+    zyaDvyuxazCBBZb7xYw2cqEEBTaWw9v9blETHhaZBfyga6LmAXebBwztdGERGDjnG7Cnm
+    bHXFvgyDxy5jjJAEdcBEjB3iwMCFscQEgDeh9MNGqb1EpDWhDLQBIhqEnFalKHNFsmQKf
+    xbfPE8xdaBz6zRexHhxCaJDLzufWGXyBaYCFDhkSJKFeaZDZBBeyMrBPbEKbIIfOPfKhc
+    mLrEXgZMEIlcKG9FBiXI3GUf5EGGujVI2HwgVDRGFkuHRGJhLDeEJbMNsKedTNNMhfCNU
