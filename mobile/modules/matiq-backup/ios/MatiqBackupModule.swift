@@ -1,7 +1,7 @@
 import ExpoModulesCore
 import Foundation
 
-private struct InvalidFileUriException: Exception {
+private final class InvalidFileUriException: Exception, @unchecked Sendable {
   override var reason: String { "Not a file:// URI" }
 }
 
