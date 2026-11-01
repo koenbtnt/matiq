@@ -63,3 +63,9 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 | data model generated | `node scripts/docs/gen-data-model.mjs` | exit 0: 21 tables, 0 undescribed; output committed | a3b4ee2 (documenter, mirrored by orchestrator) | 2026-11-01 |
 | changelog generated | `node scripts/docs/gen-changelog.mjs` | exit 0: 2 migrations; output committed | a3b4ee2 (documenter, mirrored by orchestrator) | 2026-11-01 |
 | Mermaid fences | grep of fence counts in architecture, requirements, erd | all even | a3b4ee2 (documenter, mirrored by orchestrator) | 2026-11-01 |
+
+### tester (R2-04) @ f7e77c0 - 2026-11-01
+| check | command | result | commit | date |
+|---|---|---|---|---|
+| reset subflow YAML parse | js-yaml loadAll e2e/maestro/subflows/reset.yaml | exit 0 | f7e77c0 | 2026-11-01 |
+| maestro test | not run | INFRA UNAVAILABLE | f7e77c0 | 2026-11-01 |

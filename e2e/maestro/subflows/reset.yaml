@@ -10,6 +10,16 @@ appId: nl.btnt.matiq
       id: "home.screen"
     timeout: 60000
 - openLink: matiq://dev/reset
+# home.screen stays mounted under the reset route, so wait for the reset itself first:
+# progress shown, then gone (router.replace('/') on success, design §4.2.3)
+- extendedWaitUntil:
+    visible:
+      id: "dev.reset.status"
+    timeout: 30000
+- extendedWaitUntil:
+    notVisible:
+      id: "dev.reset.status"
+    timeout: 60000
 - extendedWaitUntil:
     visible:
       id: "home.screen"
