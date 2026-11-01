@@ -113,6 +113,9 @@ tags:
     commands:
       - tapOn:
           id: "BackButton"
+- scrollUntilVisible:
+    element:
+      id: "profile.theme.DARK"
 - assertVisible:
     id: "profile.theme.DARK"
     selected: true

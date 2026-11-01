@@ -24,5 +24,6 @@
   { "agent": "frontend-coder", "sha": "0e8d4db", "date": "2026-11-01", "command": "TZ=UTC npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1726 passed, 0 failed (41 suites)" },
   { "agent": "frontend-coder", "sha": "0e8d4db", "date": "2026-11-01", "command": "TZ=Europe/Amsterdam npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1726 passed, 0 failed (41 suites)" },
   { "agent": "frontend-coder", "sha": "0e8d4db", "date": "2026-11-01", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": "" },
-  { "agent": "frontend-coder", "sha": "0e8d4db", "date": "2026-11-01", "command": "simulator check (Metro 8082, JS only)", "exit": 0, "notes": "why sheet: header clear, Close dismisses; set-rank on Kids: Save rank pinned, Cancel dismisses" }
+  { "agent": "frontend-coder", "sha": "0e8d4db", "date": "2026-11-01", "command": "simulator check (Metro 8082, JS only)", "exit": 0, "notes": "why sheet: header clear, Close dismisses; set-rank on Kids: Save rank pinned, Cancel dismisses" },
+  { "agent": "tester", "sha": "e2ed248", "date": "2026-11-01", "command": "maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/{progress-states,settings-rank-theme,settings-weights}.yaml (one at a time)", "exit": 0, "notes": "3/3 passed in single-flow runs; final 13/13 (10 in the whole-workspace run, 3 single-flow); iPhone 18 Pro, iOS 27.2" }
 ]

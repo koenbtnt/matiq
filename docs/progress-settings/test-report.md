@@ -1,56 +1,55 @@
 # progress-settings — test report
 
-- **Sha tested:** 9ee80da (flows fixed in the working tree, committed with this report)
+- **Sha tested:** round 1 at 9ee80da; round 2 at e2ed248 (frontend fix 0e8d4db for A-1 and A-2 included, JS only, served by Metro on 8082)
 - **Environment:** iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), iOS 27.2, dev-client build at 169fe7e, Metro on 8082, Maestro via `~/.maestro/bin`
-- **Provenance:** tsc, Jest (1722, both zones), tokens, adherence, expo-doctor, run:ios, smoke, xattr accepted from `verify.md` (frontend-coder @ 169fe7e); not re-run.
+- **Provenance:** tsc, Jest, tokens, adherence, expo-doctor, run:ios, smoke, xattr accepted from `verify.md` (frontend-coder @ 169fe7e and @ 0e8d4db); not re-run.
 
 ## Commands
 
 | Command | Result |
 |---|---|
-| `maestro test -e METRO_URL=http://localhost:8082 e2e/maestro` (run 1) | 5/13 passed |
-| same (run 2, after flow fixes) | 10/13 passed |
-| single-flow re-runs after fixes | settings-weights 1/1; progress-states 0/1; settings-rank-theme 0/1 |
+| `maestro test -e METRO_URL=http://localhost:8082 e2e/maestro` (round 1, run 1, unfixed flows) | 5/13 passed |
+| same (round 1, run 2, after flow fixes; the phase 3 whole-workspace run) | 10/13 passed |
+| single-flow `settings-weights` after seed-subflow reorder (round 1) | 1/1 |
+| round 2 single-flow `progress-states` (after A-1 fix and seed scroll) | 1/1 |
+| round 2 single-flow `settings-rank-theme` (after A-2 fix and a scroll to `profile.theme.DARK`) | 1/1 |
+| round 2 single-flow `settings-weights` (re-check after the seed-subflow change) | 1/1 |
 
-## Final per-flow result
+Note: `settings-weights` has not passed inside a whole-workspace run since its seed fix; it passed only in single-flow runs. `progress-states` and `settings-rank-theme` likewise passed only in single-flow runs. The whole suite was not re-run, by instruction.
+
+## Final per-flow result: 13/13
 
 | Flow | Result |
 |---|---|
-| smoke/launch | 1/1 |
-| features/browse-library | 1/1 |
-| features/log-session | 1/1 |
-| features/plan-then-log | 1/1 |
-| features/technique-resources | 1/1 |
-| features/library-edit | 1/1 |
-| features/library-merge | 1/1 |
-| features/progress-panels | 1/1 |
-| features/settings-weights | 1/1 |
-| features/settings-about | 1/1 |
-| regression/back-label | 1/1 |
-| features/progress-states | 0/1, app defect A-1 |
-| features/settings-rank-theme | 0/1, app defect A-2 |
-
-Total 11/13. Phase 3 whole-workspace run was done (run 2); the final per-flow state combines run 2 with the single-flow re-runs of the flows fixed afterwards (weights).
+| smoke/launch | 1/1 (whole run) |
+| features/browse-library | 1/1 (whole run) |
+| features/log-session | 1/1 (whole run) |
+| features/plan-then-log | 1/1 (whole run) |
+| features/technique-resources | 1/1 (whole run) |
+| features/library-edit | 1/1 (whole run) |
+| features/library-merge | 1/1 (whole run) |
+| features/progress-panels | 1/1 (whole run) |
+| features/settings-about | 1/1 (whole run) |
+| regression/back-label | 1/1 (whole run) |
+| features/settings-weights | 1/1 (single-flow) |
+| features/progress-states | 1/1 (single-flow, round 2) |
+| features/settings-rank-theme | 1/1 (single-flow, round 2) |
 
 ## Flow defects fixed (all mine)
 
-- Preserved scroll position across screens: `scrollUntilVisible` direction UP (settings-weights, progress-panels); scroll to `profile.rankHistory`, `rank.stripes.more`.
+- Preserved scroll position across screens: `scrollUntilVisible` direction UP (settings-weights, progress-panels); scroll to `profile.rankHistory`, `rank.stripes.more`, `rank.save`, `profile.theme.DARK`.
 - `checked:` is not exposed on iOS checkboxes (value reads "checkbox, checked"): technique-resources asserts `text: "checkbox, checked"`.
-- Dev-client floating tools button swallows taps on top-right controls (Library plus): new subflow `subflows/hide-devtools-button.yaml` drags it away.
-- Keyboard covers the save/merge buttons in the edit sheet: `pressKey: Enter` before tapping them.
-- Delete button sits below the fold: scroll + swipe before tapping `libraryEdit.delete`; the undo of a delete has no toast by design, so the flow asserts the row returns.
-- Position row matched by id + text because the row is one accessibility element (library-edit).
-- back-label: search "mount" first, the row was out of the viewport.
-- progress-states: the half-height why sheet needs a swipe inside the sheet, not `scrollUntilVisible` from the screen centre.
-- seed-progress-states: rate SIDE before adding the second focus (the sheet scrolls the first card away).
+- The dev-client floating tools button swallows taps on top-right controls: new subflow `subflows/hide-devtools-button.yaml` drags it away.
+- The keyboard covers the save and merge buttons in the edit sheet: `pressKey: Enter` before tapping them.
+- The delete button sits below the fold: scroll and swipe first. A delete undo shows no toast by design, so library-edit asserts the row returns.
+- library-edit matches the position row by id plus text (one accessibility element); back-label searches "mount" first.
+- progress-states swipes inside the half-height sheet; seed-progress-states rates the first focus before adding the second and scrolls back to the search field.
 
-## App defects (route to frontend-coder)
+## App defects found in round 1 (both fixed in 0e8d4db, verified by the round-2 passes)
 
-- **A-1** `mobile/src/components/SheetChrome` (used by `ProgressWhySheet`, `SetRankSheet`, library-edit): scrolled or initial sheet content draws over the header; "Close" / "Cancel" overlap content text and `why.close` tap does not dismiss the sheet. Expected: header opaque, above the content, tappable. Repro: Progress, tap a row, scroll the sheet, tap Close. Blocks `progress-states`.
-- **A-2** `mobile/src/features/rank/SetRankSheet.tsx`: on the KIDS scale (13 belts) `rank.save` is not in the accessibility hierarchy; the screen shows "Awarded on" and no action bar. Expected: the Save bar pinned and tappable. Repro: Profile, Rank history, scale Kids, Add, pick Grey, scroll. Blocks `settings-rank-theme` (the Home kids-scale and dark-theme legs never ran).
-
-Not reached (blocked by A-2): `profile.theme.DARK` `selected: true` assertion probably has the same iOS state-exposure issue as `checked:`; expect the value text "radio, selected".
+- A-1 sheet header overlapped by content, `why.close` unreachable (progress-states).
+- A-2 `rank.save` absent on the KIDS scale (settings-rank-theme).
 
 ## Contract coverage audit
 
-Not performed this run (time spent on the flows). Open item for the next tester pass.
+Done during authoring: every block in `data-contracts.md` has a data-coder Jest test; no gaps (result copied from the authoring pass, not repeated this run).

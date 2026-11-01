@@ -57,3 +57,11 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1726 passed, 0 failed (41 suites) |
 | node scripts/check-token-adherence.mjs | 0 | |
 | simulator check (Metro 8082, JS only) | 0 | why sheet: header clear above body, Close dismisses; set-rank on Kids: Save rank pinned, belts scroll, Cancel dismisses |
+
+### tester @ e2ed248 — 2026-11-01 (Maestro re-run, iPhone 18 Pro, iOS 27.2, Metro 8082)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/progress-states.yaml | 0 | 1/1 passed (single-flow) |
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/settings-rank-theme.yaml | 0 | 1/1 passed (single-flow) |
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/settings-weights.yaml | 0 | 1/1 passed (single-flow, after the seed-subflow change) |
+| Final | — | 13/13: 10 from the whole-workspace run, 3 single-flow; whole suite not re-run |
