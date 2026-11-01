@@ -7,6 +7,7 @@ import { fontMap, tokenFamilies } from '../src/hooks/fonts';
 import RootLayout from '../app/_layout';
 
 jest.mock('expo-router', () => require('../src/__mocks__/routerMock'));
+jest.mock('../src/repositories', () => require('../src/__mocks__/repositoriesMock'));
 jest.mock('expo-splash-screen', () => ({ preventAutoHideAsync: jest.fn(() => Promise.resolve()), hideAsync: jest.fn(() => Promise.resolve()) }));
 jest.mock('expo-status-bar', () => ({ StatusBar: () => null }));
 const mockUseFonts = jest.fn();

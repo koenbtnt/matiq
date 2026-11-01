@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path';
 
 /**
  * Plan §9.2: every static testID of the design's table (§7) exists in the UI source. Dynamic ids
- * (`<refId>` …) are checked by the screen tests; ids composed from a prefix (`<prefix>.less`) match on the prefix.
+ * (`<refId>` …) are checked by the screen tests; every other id must appear verbatim.
  */
 const root = resolve(__dirname, '..');
 const design = readFileSync(resolve(root, '../docs/foundation/design.md'), 'utf8');
@@ -27,14 +27,23 @@ const source = [...files(join(root, 'app')), ...files(join(root, 'src/components
   .map((f) => readFileSync(f, 'utf8'))
   .join('\n');
 
-// The table lists `a` / `.b` / `.c` variants in one cell; keep the full first id and expand the others.
+// Ids the source composes at runtime: each maps to the literal fragment(s) that must exist where it is built.
+const composed = (id: string): string[] | undefined => {
+  const stepper = /^(.+)\.(less|more|value)$/.exec(id);
+  if (stepper && source.includes(`testIDPrefix="${stepper[1]}"`)) return [];
+  if (/^log\.sparring\.(landedWith|takenBy)\.(add|<n>)$/.test(id)) return ['`log.sparring.${b.idKey}.', `idKey: '${id.split('.')[2]}'`];
+  if (/^log\.sparring\.useCount\.(landed|taken)$/.test(id)) return ['`log.sparring.useCount.${b.field}`', `field: '${id.split('.')[3]}'`];
+  const row = /^home\.(planned|stale)\.<sessionId>(\.[A-Za-z]+)?$/.exec(id);
+  if (row) return ['`home.${kind}.${session.id}`', `'${row[1]}'`, ...(row[2] ? [`\`\${id}${row[2]}\``] : [])];
+  return undefined;
+};
+
+// Exact match: the full id as a string literal; otherwise it must be a known composed id whose pieces exist.
 const covered = (id: string) => {
-  if (id.includes('<')) return true;
-  const parts = id.split('.');
-  for (let n = parts.length; n >= 1; n--) {
-    const candidate = parts.slice(0, n).join('.');
-    if (source.includes(`'${candidate}'`) || source.includes(`"${candidate}"`) || source.includes(`\`${candidate}.`) || source.includes(`${candidate}.`)) return true;
-  }
+  if (source.includes(`'${id}'`) || source.includes(`"${id}"`) || source.includes(`\`${id}\``)) return true;
+  const pieces = composed(id);
+  if (pieces) return pieces.every((p) => source.includes(p));
+  if (id.includes('<')) return source.includes(id.slice(0, id.indexOf('<')));
   return false;
 };
 

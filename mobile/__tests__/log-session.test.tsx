@@ -5,6 +5,7 @@ import { LogSessionScreen } from '../src/features/log-session/LogSessionScreen';
 import { renderScreen } from '../src/__mocks__/renderScreen';
 
 jest.mock('expo-router', () => require('../src/__mocks__/routerMock'));
+jest.mock('../src/repositories', () => require('../src/__mocks__/repositoriesMock'));
 const { router } = require('../src/__mocks__/routerMock');
 
 beforeEach(() => jest.clearAllMocks());
