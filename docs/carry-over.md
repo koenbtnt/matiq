@@ -3,7 +3,7 @@
 | id | from sprint | item | owner | status |
 |---|---|---|---|---|
 | CO-01 | setup | Maestro in CI: a macOS runner with a prebuilt simulator app, or Maestro Cloud. Until then Maestro runs locally only and every run is recorded in `verify.md`. | PO / tester | open |
-| CO-02 | setup | Update `CLAUDE.md` "Next step" after the `product-spec` PR merges (agents may not stage `CLAUDE.md`). | PO | open |
+| CO-02 | setup | Update `CLAUDE.md` "Next step" after the `product-spec` PR merges (agents may not stage `CLAUDE.md`). | PO | done — `CLAUDE.md` Next step → sprint 2 after the foundation merge (chore/next-step-sprint-2, 2026-11-01); repeat after every sprint merge |
 | CO-03 | setup | Android: EAS preview build (`eas build --platform android --profile preview`) and, when wanted locally, the Android SDK + an emulator (Android Studio is installed, the SDK is not) → Android Maestro flows. | PO / tester | open |
 | CO-04 | setup | Design-system intake: the user saves the Claude Artifact to `design-system/artifact/matiq-design.html`; designer derives `tokens.json` / `components.md` / `RULES.md`; frontend-coder regenerates `tokens.ts`; reviewer-design follow-up pass. Until then `tokens.json` is the starter and no screen spec may be written. | PO / designer | done — `design-intake` chore 2026-10-31 (tokens v1, canvas v13); re-export repeats steps 2–5 |
 | CO-05 | setup | Harness evals runner (sugar `scripts/claude/evals/`, cadence CO-31): port when a `.claude/**` change needs more proof than `hooks.test.sh`. | PO | open |
