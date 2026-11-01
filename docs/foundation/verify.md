@@ -47,3 +47,10 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 |---|---|---|
 | npx tsc --noEmit | 0 | 0 errors |
 | npx jest --watchAll=false | 0 | Test Suites: 26 passed; Tests: 912 passed, 0 failed |
+
+### tester (run phase) @ cc48e42 - 2026-11-01
+| check | command | result | commit | date |
+|---|---|---|---|---|
+| flow testIDs exist in implementation | grep of each referenced testID in mobile/app, mobile/src (non-test) | all present, 0 missing | cc48e42 | 2026-11-01 |
+| deep link scheme | grep scheme mobile/app.json | matiq, matches matiq://dev/reset | cc48e42 | 2026-11-01 |
+| maestro test e2e/maestro/flows | not run | INFRA UNAVAILABLE (Maestro, CocoaPods missing) | cc48e42 | 2026-11-01 |

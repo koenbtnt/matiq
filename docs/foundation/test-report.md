@@ -34,3 +34,17 @@ Defects against data-coder: the four rows above. (tsc/Jest status not re-run; ac
 
 ## Verification provenance
 YAML parse: run by me. tsc, Jest, token checks, expo-doctor: accepted from verify.md (data-coder @ 83e6f12, frontend-coder A @ 5af8e0f), not re-run. Maestro: not run.
+
+## Run phase (2026-11-01, HEAD cc48e42) - static check only, no Maestro run
+Maestro and CocoaPods are not installed: every flow is **INFRA UNAVAILABLE**, none is recorded as passed.
+
+| flow | status | defects |
+|---|---|---|
+| smoke/launch.yaml | INFRA UNAVAILABLE | none (static) |
+| features/log-session.yaml | INFRA UNAVAILABLE | none (static) |
+| features/plan-then-log.yaml | INFRA UNAVAILABLE | none (static) |
+| features/browse-library.yaml | INFRA UNAVAILABLE | none (static) |
+
+- Static testID check at HEAD (grep of `mobile/app`, `mobile/src`, excluding tests/mocks): every testID the four flows reference exists in the implementation, including the earlier-flagged `tabs.home`/`tabs.library` (src/components/MainTabBar.tsx), `tabs.log` (MainTabBar.tsx:40) and `dev.reset.status` (src/features/bootstrap/DevResetScreen.tsx:37). Dynamic ids confirmed: `home.recent.<id>`, `log.search.result.<refId>`, `log.quickAdd.<refId>`, `log.focus.<id>.{status,trained,needsWork,rating.n}`, `session.focus.<refId>(.status)`, `library.position.<id>`, `library.technique.<id>`, `position.technique.<id>`. **No missing testIDs.** This proves presence only, not that elements are reachable or behave as the flows assume.
+- Deep link: `matiq://dev/reset` matches `"scheme": "matiq"` in `mobile/app.json`; route `dev/reset` registered in `mobile/app/_layout.tsx`.
+- Contract-coverage audit: the four gaps (bootstrapDatabase, useDatabaseBootstrap, DB_NOT_OPEN, per-hook wrappers) are **in progress** (data-coder); not re-audited.
