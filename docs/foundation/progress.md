@@ -4,7 +4,7 @@
 - HEAD: dfeec33 (feature/foundation, stacked on feature/product-spec / PR #4)
 - Step: 9 — close-out
 - Live agents: none
-- Next action: PR into develop open; PO merges after green CI (after PR #4)
+- Next action: PR #5 (https://github.com/koenbtnt/matiq/pull/5) into develop; PO merges after green CI, after PR #4
 - Blockers: none. INFRA UNAVAILABLE: CocoaPods, Maestro, EAS CLI, Android SDK (PO actions, reported at close-out)
 - Uncommitted: none
 
@@ -33,3 +33,4 @@
 - data-coder-foundation — CODING COMPLETE (R2-03, R2-06) — dfa6122, 8b6f286
 - reviewer-code-foundation — REVIEW PASSED (follow-up) — dfeec33
 - orchestrator — close-out: done.md, CO-28…CO-41, README status
+- orchestrator — PR #5 opened
