@@ -1,10 +1,10 @@
 # Sprint 1 — foundation — progress
 
 ## Current state
-- HEAD: 84cd1ea (feature/foundation, stacked on feature/product-spec / PR #4)
-- Step: 6 — tester run phase (static; Maestro INFRA UNAVAILABLE) + data-coder coverage gaps
-- Live agents: data-coder-foundation (4 coverage gaps), tester-foundation (run phase: static testID check)
-- Next action: TESTING COMPLETE → documenter (first run of sprint 1; ADRs after 0017)
+- HEAD: e41fe44 (feature/foundation, stacked on feature/product-spec / PR #4)
+- Step: 8 — review 2 (reviewer-code)
+- Live agents: reviewer-code-foundation
+- Next action: REVIEW PASSED → close-out (done.md, carry-over CO-28+, README, PR)
 - Blockers: none. INFRA UNAVAILABLE: CocoaPods, Maestro, EAS CLI, Android SDK (PO actions, reported at close-out)
 - Uncommitted: none
 
@@ -24,3 +24,6 @@
 - frontend-coder-foundation-b — CODING COMPLETE — 59e4adb, d7a1134, 84cd1ea (tsc 0, Jest 26/910, tokens 0, adherence 0, doctor 20/20)
 - designer-foundation — DESIGN COMPLETE (bootstrap.title.DB_NOT_OPEN) — 76737db; routed to frontend-coder-foundation-b
 - frontend-coder-foundation-b — CODING COMPLETE (DB_NOT_OPEN title test) — 17ffe6e, cc48e42 (tsc 0, Jest 26/912)
+- tester-foundation — TESTING COMPLETE (all 4 flows INFRA UNAVAILABLE; testIDs present) — ca2144b
+- data-coder-foundation — CODING COMPLETE (coverage gaps; Jest 29/928) — 6093d47, a3b4ee2
+- documenter-foundation — DOCS COMPLETE (ADRs 0018–0023, 0 undescribed) — e41fe44; verify rows mirrored by orchestrator

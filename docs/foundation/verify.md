@@ -60,3 +60,6 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 |---|---|---|---|---|
 | tsc | `npx tsc --noEmit (mobile/)` | exit 0: 0 errors | 6093d47 | 2026-11-01 |
 | Jest (all) | `npx jest --watchAll=false (mobile/)` | exit 0: 29 suites, 928 tests passed; adds bootstrapDatabase, useDatabaseBootstrap, readHooks suites (defect round 1) | 6093d47 | 2026-11-01 |
+| data model generated | `node scripts/docs/gen-data-model.mjs` | exit 0: 21 tables, 0 undescribed; output committed | a3b4ee2 (documenter, mirrored by orchestrator) | 2026-11-01 |
+| changelog generated | `node scripts/docs/gen-changelog.mjs` | exit 0: 2 migrations; output committed | a3b4ee2 (documenter, mirrored by orchestrator) | 2026-11-01 |
+| Mermaid fences | grep of fence counts in architecture, requirements, erd | all even | a3b4ee2 (documenter, mirrored by orchestrator) | 2026-11-01 |
