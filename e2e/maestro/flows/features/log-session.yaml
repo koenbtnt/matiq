@@ -1,0 +1,94 @@
+appId: nl.btnt.matiq
+name: Log session - quick log, rate, flag, save, Home reflects, undo, quick-add
+tags:
+  - features
+  - log
+env:
+  MOUNT: d05df656-d2e7-4bcd-ac72-c9d197bb5a2d   # seed id, position "Mount" (A-29)
+---
+- runFlow: ../../subflows/reset.yaml
+
+# --- Path C (first session ever): Home quick log -> search -> pick a focus ---
+- tapOn:
+    id: "home.quickLog"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+# domain rule: a session cannot be completed without an actual focus
+- assertVisible:
+    id: "log.save.reason"
+- tapOn:
+    id: "log.search.input"
+- inputText: "mount"
+- tapOn:
+    id: "log.search.result.${MOUNT}"
+- assertVisible:
+    id: "log.focus.${MOUNT}"
+# per-focus rating and needs-work flag (only available on an actual focus)
+- tapOn:
+    id: "log.focus.${MOUNT}.rating.4"
+- tapOn:
+    id: "log.focus.${MOUNT}.needsWork"
+- assertNotVisible:
+    id: "log.save.reason"
+- tapOn:
+    id: "log.save"
+
+# --- Home reflects it ---
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+- assertVisible:
+    id: "toast.undo"
+- assertVisible:
+    id: "home.recent\\..*"
+- assertNotVisible:
+    id: "home.recent.empty"
+
+# --- Undo (NF-05): save undone -> list empty; undo of the delete brings it back ---
+- tapOn:
+    id: "toast.undo"
+- extendedWaitUntil:
+    visible:
+      id: "home.recent.empty"
+    timeout: 10000
+- tapOn:
+    id: "toast.undo"
+- extendedWaitUntil:
+    visible:
+      id: "home.recent\\..*"
+    timeout: 10000
+
+# --- Session detail shows the logged focus ---
+- tapOn:
+    id: "home.recent\\..*"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "session.screen"
+    timeout: 10000
+- assertVisible:
+    id: "session.focus.${MOUNT}"
+- runFlow: ../../subflows/back.yaml
+
+# --- Path B (3 taps): tabs.log -> quick-add chip of the last trained focus -> save ---
+- tapOn:
+    id: "tabs.log"
+- extendedWaitUntil:
+    visible:
+      id: "log.sheet"
+    timeout: 10000
+- tapOn:
+    id: "log.quickAdd.${MOUNT}"
+- assertVisible:
+    id: "log.focus.${MOUNT}"
+- tapOn:
+    id: "log.save"
+- extendedWaitUntil:
+    visible:
+      id: "toast.message"
+    timeout: 10000
+- assertVisible:
+    id: "home.recent\\..*"

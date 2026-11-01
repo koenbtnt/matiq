@@ -1,0 +1,28 @@
+open elbow\nescape
+properties: bottom
+todo: remove the other version of this?
+ref: Demian Maia "Science of Jiu Jitsu", Volume 1: "Defending The Guard Pass", Technique 5 @ 13:35
+    E5azsTonaVyFDKcFvAqOdwxGE4b1vmqEcHyTIKaYBbuFbeEmC4eYBnz7fwDBINh1HWEcj
+    cKsK2dTHGBihNG1Myb9LdD5hiKhM9cxMkEFg1LmNxbNNfEJfMLODLhzEMG0i1JVIbiHMj
+    qsbvNIu5j6NUtRbeMjv4hDLis5cmMSwOisMfyufTPoDnhaN7CqclKXCkeoHSKYbDLjLcb
+    AFGGVcANpG8a2DnFFfNK1E5eVC8F7gXKVFtf1CFFAh2KDEQg1CgFPbMImLybDIvNQc0IS
+    E5azsTq3aFAJDKcFvAtvckysE4b1vmtjcbzQIKaYBbv4dmF3EoghABA8gcCiIihSIrDrj
+    qJ3K0d6IeA8i6FWMEbwK3AZhaJNMXb9MbB2hDKtNnbsNeCkgVLyEbiEEdGeiRJ5GLi8ME
+    r1aVKcwgjaNqvKaOJ0wSg3KtuKbMKjxIhJLpx2gcOtEEhsLRB9b3KFBMdeHdKQbzLiLdb
+    vFRG0dOMCG0doFaHygXJQIrg7GSHJhUKLIVigGqHIi8KvI5jiG6FLbNIgLLbGICN4cUIS
+    E5azsTt1aACMDKcFvAwda8zME5b1vnv5bEA5ILaYBcx0fLGiF1hgAvCrgEA0G9iRJuB1j
+    CJBKNfTJbAtjwFeMdccKDyrhAICMFb9LOzgipJgMVa2Mozph6KyEriPEcEHjSKzEXkmNd
+    t2azGKxAh8MMxCaEHNxDgpJxwqbkH9yKgUKnwYf4M8FChzJjBIbEKCBRceGZK6bELoKYb
+    sF1HpetMfHbd6FOH6ivLcHlh2HzH4jOLdIhiVHiHLkuJ7Iij2HRFIbMIULTbHIEOhcNIR
+    E5azsSu5aDxXDLcFvBx1cLxcE4b1voxictytIOa0BbwTdcFoElf7zVAHgrAyHcjGHZB6k
+    hI4LDh6HxzBh9FJLue0KkAdgSJQLweTLzA7hnKIMld0L6BogHLNDlhZDJERkwJgE7klLR
+    tmaCG6x3gEKvwZaEH2zLexH0vPbrIjAbfNIEwRheL2GsgXFQBvcgKQCdbEHgKVcKMwLcb
+    sHlGTe0LGHodQF9HDiEJIHHh3G1HKjUJYHPi3GcHrkMI3HHkgGsFJbMJOLUbVJ0OaddJG
+    E5azsTu2aCxODKcFvAwCdPyIE5b1vnwbcGzyIKa5BayOa1FJDzfey1AhfFAKHmjKGyCCk
+    yHBK7h3EhBIf6IEKrfdHgE4egKFKEeDIoFHeGLKKodsIHGLd2L4DzhZClFlk0H1FokjKz
+    rZaFGuyYeNHMvCaEHrBUcUGDuGbzGVBAemGvwYhoJZHPfVDPBZcEJ1CuceGkKCcSMqLRb
+    sHLGOe8KTItdfE6GHifH9KogSDBHsjgIcKzh2C8HakjHtKJi7DQF2bNINMqcaKoOzdEKq
+    AcazsVunazwDCbb7vHwHcoyQCfaTuZvLbiy7HzaYzvx9a3FzBLeuybyweWzOGHjvDTCek
+    mGtJeg0APB5f7IwInehDQFud7KqIFd6E3GkeSK5IhcYFDHwelLmBKhpBmE4kpF5G0kzHU
+    sFaGG8z8bFAcwfaEH4BSbeDsvlbDHyCbbLCcxIh5GoH0fjA3CbddInD7bHFzKjedM2L3b
+    NIHHhgdJ6Jla6EUGyiyGJHqblAYHDiTF6HBcnAeHEjYFpGRcTznGabSJqMdc6LdOweuLm

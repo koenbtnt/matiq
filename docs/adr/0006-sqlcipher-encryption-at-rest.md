@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user) for R-24 / R-12; the key accessibility class and OS-backup exclusion are assumptions A-10, A-11, pending PO (2026-10-31)
+- **Deciders:** PO (user) for R-24 / R-12; the key accessibility class and OS-backup exclusion were assumptions A-10, A-11, ruled R-38 / R-39 (2026-11-01)
 - **Decision ids:** D-22 / R-24, R-12, R-31; assumptions A-10, A-11
 - **Source:** `docs/decisions.md` Data R-24, R-12; plan §0 D-22, §0.1 #10, #11; `docs/product-spec/assumptions.md` A-10, A-11.
 
@@ -34,6 +34,6 @@ R-12 requires secure encryption of all personal data; R-24 requires it from the 
 
 ## Consequences
 
-- Pending PO, not ruled (A-11): the secure-store accessibility class (plan fact: this-device-only, to confirm in sprint 1) and exclusion of `matiq.db`, WAL/SHM and the key from OS backups are assumptions. Allowing OS backups would need a restorable key and a new ADR on cloud exposure of encrypted data.
-- Pending PO, not ruled (A-10): export-file protection (plaintext JSON with a warning in v1, optional passphrase v1.x); see ADR 0015.
+- Ruled R-39 (2026-11-01, "Q4: yes"), formerly A-11: the secure-store accessibility class (plan fact: this-device-only, to confirm in sprint 1) and exclusion of `matiq.db`, WAL/SHM and the key from OS backups are assumptions. Allowing OS backups would need a restorable key and a new ADR on cloud exposure of encrypted data.
+- Ruled R-38 (2026-11-01, "Q3: yes"), formerly A-10: export-file protection (plaintext JSON with a warning in v1, optional passphrase v1.x); see ADR 0015.
 - App lock (R-25) is v1.x and separate.

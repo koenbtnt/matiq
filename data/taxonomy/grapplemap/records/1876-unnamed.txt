@@ -1,0 +1,16 @@
+...
+properties: top
+ref: Jean Jacques Machado "The Grappler's Handbook - Gi and No-Gi Techniques", Section: Shoulder Lock From Mount Position @ p173
+todo: jean jacques does a shoulder lock without of rolling for an omoplata
+    IfaBCGBwazD7Jyc6E7AZcUGUI3bJFcBkbxGPLqbeLFA9ciNFHlerG0DHeVHJItijPODhi
+    FPfJYemRICjedQcJIaRT1BrauSdJPbeVgA6blS8JWauWhASaRUjGmg1KoFSjvP6FSjRSL
+    DdaAwTHTazwHDBaKAyHlaGAoDnbOzyHEbFzoCTicClHPicBCDFbYFhHlb6ETDFd3ObI5d
+    PNECaf4KhJFf9JAFaiJJcGGiQHOFLiIH6FniQHOGIhXHHECiiIDFTbUI2Gtd6OHGdfWQx
+    LfazClyqaGJSKhddEHBTaGIEKPbREYBdbzJELybdLSy6g6NkHIfgHPEhfkI6HAiERdCTj
+    0OUJLePSIyoiTOPJzaOTZyFeWQEJObeVdyGerRMJVauWey9dnSfG5hQLiFgj4QrEqkrSW
+    DdaAwTGuazw4DBaKAyGUaEANDlbOzyGMbzzKCWioBOHtihBxDBcBFwHgctFjC7evOjH9c
+    AOJCJhTK8JmesKFGijAJPIoiEJ7HjjsI7HnjnJ0IiiFJqGdi8JBFzcbJlFzdAPcFsfjRa
+    LfazCkzAaJPOKhddEHBZaEMWKObREVBabFNALHaYLKAuixNxIMgdImFifDJpGqiJRTC0l
+    kOkF0e6USzMjsLtCpguTey5gGOLBGhpSKzOf4PzABg5R3AWfzPiHyijL1EDkuQuC2k0SB
+    C1azxKGuazw4DjaFBpGUaEANDlbLAqGMbzzKCZiGA6G6ilA7DzdiFtHccPFoCZfjNYGOb
+    yO5DNjqLYIFdNLtHtj6J6Jkh5L3IIj9J0JkjmLLJvjyKSIWjNKzFncqJmEtdcO9EIeDRp

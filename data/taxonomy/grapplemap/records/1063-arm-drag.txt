@@ -1,0 +1,20 @@
+arm drag
+properties: bottom
+tags: arm_drag
+ref: Marcelo Garcia "The X Guard" p137: CROSS GRIP TO ARM DRAG X-GUARD SETUP
+    NzaApjBvaAAkOgderRD2aExFOvbPrIDvbGyuQVblx0FIh4xNNHfesYJXe6sUNDlgzbH9l
+    bypOjgCyDHIgzygOsguCOHHgJCCOzgRD4HvgZDUN3gjE3H7gsERLDiSt7KPlQzjKLnhBB
+    HZazAUL7azAFIUaEEwMLaEEiIsbzDyMtbDDjD6eBHHONfNH6HybGM8LcbQMJGyktMYLUk
+    yMUFPf0LXOqgCMGFQfQHNNRg1IqF4gPGVOmhBHmGtgqFKNGhpGeJmfqOuJblhMsI9nBK4
+    NzaApjBvaAAkOgderRD2aExFOvbPrIDvbGyuQVblx0FJh4xMNGfesYJWe4sUNAkUzrIel
+    cyqORgnzEHIgzygMZgtDlHHgJCCMyg6EqHvgZDUMHguFAH7gsERLDiUt7KSlOzjKLngBz
+    HZazAUL7azAFIUaEEwMLaEEiIsbzDyMtbDDjD6eBHHONfNH6HxbDM7LebLMGGIjZMvLtj
+    BK7FxfFK1K8hHGOFQfNGPIrgPDsF9gAFTHFhCCLGgglEDGsg7CvJtfbOEJik8L9JnnfKt
+    NyaApgBvaAAkOfderPD2aExFOubQrFDvbGyuQRbuxXFIh4xNNpfMttJPe4sTNaljzJHMl
+    azLM2gQBfHDgZBVKMhaEMHDf3GdJ7hSFGHBgeHsJRhmGNIkfJImKAiKu2KrlXAgKvnsCr
+    IHcgv6NocswNJkaPzqMWbpAhIybZy0NicJzIGHeDE1N0ewGeHtb8LELab2MhGFjpKsLQj
+    XLwGog9GnM1gzItGwgFCaIUgDHbGpgJARHDgUGWHkg0z3GFgdHnI4fnN9JbkHKOJvmPJc
+    NHazp6BvaAAkN0d2ryD2aExEOAcMrFDtbDyvQ4aYxOFPh3xFNnfwt0JReVsTNflMzfIxj
+    QAFN4hez6JQhpEqNGhKEhMKfTHeNhijFpNPf6HTMGhxGiOzfgIqKqiAu6KzlMz8KwmJCA
+    HLaGtTLUazshH5aRxxLbaEvXHxbPwALxbyuWGehBAgPuflzcIab1DULObFDJHxi6GWLSj
+    vIFFxfmE5PvgTHrIng9CvL1gWELJChdCAK7gSDTKnidCBJVgzDZKmdRHfJvkNHWJSmPGk

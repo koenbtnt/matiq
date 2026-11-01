@@ -1,0 +1,23 @@
+trap arm
+properties: top detailed
+ref: Marcelo Garcia "Winning Techniques Of Submission Grappling", Series IV, Volume 4: Advanced Omoplata 4, Technique 9 @ 32:48
+    MAaFCYJ4cszJKZdZDdHxe3y3KMcLDVHqdzy6EZaZHeAWa0y7FThpELEegABvwTfnIrv5f
+    cDgwFaVJXzseNz3vmavF2yDaxApuVa8EZxFbcA0uPavDPwFaxByBEgCE0vseOF1sMexGf
+    QbaEybNCbCx9NeaFAdKqaJzSM6aMyDKQbEyQGMaYu7F4gqxmF0bCBWF0eAD4wvcmDMymb
+    sIHAfdCBjCpdGIkzuhqCTAAhzHpy9ipDDAmizGAzmipEWAdilFhCtbZEmwHbzGtuibWHD
+    H0aAGHJxckzMIPcWDUHge7y2HHcCEIG0dEy7BScIIqAzaYyME0hFEDDOgABfvXhUHxuXg
+    3Cyw0enKow1eezwvpa0IMuoa2ANu4bhHstxbVBjuIaxGxsqbnBNAIhUDXuOgCFjsdgOFu
+    PoaRyHNqcbyjL8aFAqKfbAz9MsaQyZKEcdyWGIaYu0Fnf3wGFAbEBNFSeRDxwrb7CUxAc
+    sH7zWdMAhBdfmH2z7hOBuAdi5F4Aoi1BOz4jGEXASjvCRAfi9DPCecCEkwlbXFGtXcsGC
+    DuazIHIZcczOFVaEFRGYfby0EMbnGgGAdKy8zpeCI9AdaYysDJhIEFC9gCA9vzjiGTugi
+    eBJzchyJdtTdXzOv7eFI5qibQA8uTd1JhppcIBBu6cIIUogcaBZz2i5CTumiFEtrJi5EK
+    OFa3zlNccLysLfaEAFJ0csAmLKaUzlKpcOy3GraYuQEPfAv5FabIBBFKe4CXwxbVCcwSd
+    AHkzyd6zlzMhhHuAsh9AbAhkwEDBriYzUz7ldDyCejpARAckMCnBYdeEev6cqETtBcYFB
+    zaazIwIrb6zRB9aPGfGHfdyZA6bGGGGbdQy9xbgBJxzUaYybBZhLEFCdgLA7u6lbFYtzj
+    LAXyejgIOsKfozCu5gtIEqecaAXtWfSILphcLBDtReAIuohb1B2zpjXBZtIkCDCrdllDZ
+    NJbgzVMVdlyBKcaEAOJNdmAwKQaZzyJ7dqzaFsaYu8Ele2vIFcbYBYFBfBCwwLbGBMwle
+    OF9zndmyhyqiTGTAJhgzfzwlmDtBPhPySz5l0CxCKiezEAelyBmBRdPD0vUcZD5tmdtEy
+    uUaBIiHRb0zTycbaGGGrffyYxfb4HjFNdVzbvjigJDzBaZxVzXhVExBdgXA9uKm0EZsWk
+    7AfxhkXIkrqgHzDtYibIdp9cPALsQhCIgpecOBDsAgpH3otbSBYyPkDBks4mxCHqHnCDe
+    MKbsAwMFdVyKJbaEAWJzefAHJWa3zLJMd3zfEtaZvwDXeuvsFdcjCjFrf2B1wTbNBzwbg
+    oEwyBbtxgw7kUFuADffxTzemBCkByf3ydztmPA4CcfOznyWl8AaBMerDQvTdQDjtgdXDt

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2024",
+    "lib": ["es2024"],
+    "skipLibCheck": true,
+    "typeRoots": ["../../mobile/node_modules/@types"],
+    "types": ["node", "jest"]
+  },
+  "include": ["*.ts", "__tests__/*.ts"]
+}

@@ -1,0 +1,14 @@
+{
+  "comment": "Hand-authored gi techniques (A-28 starter set, applies_to GI, source curated). Endpoints are source ids of positions; a SUBMISSION has no 'to'.",
+  "techniques": [
+    { "key": "cross-collar-choke-mount", "name": "Cross collar choke from mount", "type": "SUBMISSION", "from": "gm:150", "perspective": "TOP", "aliases": ["Juji jime"] },
+    { "key": "cross-collar-choke-guard", "name": "Cross collar choke from closed guard", "type": "SUBMISSION", "from": "gm:265", "perspective": "BOTTOM" },
+    { "key": "bow-and-arrow-choke", "name": "Bow and arrow choke", "type": "SUBMISSION", "from": "gm:244", "perspective": "TOP" },
+    { "key": "loop-choke", "name": "Loop choke", "type": "SUBMISSION", "from": "gm:154", "perspective": "BOTTOM" },
+    { "key": "ezekiel-choke-mount", "name": "Ezekiel choke from mount", "type": "SUBMISSION", "from": "gm:150", "perspective": "TOP", "aliases": ["Sode guruma jime"] },
+    { "key": "baseball-bat-choke", "name": "Baseball bat choke from knee on belly", "type": "SUBMISSION", "from": "gm:193", "perspective": "TOP" },
+    { "key": "clock-choke", "name": "Clock choke", "type": "SUBMISSION", "from": "gm:237", "perspective": "TOP" },
+    { "key": "collar-drag", "name": "Collar drag to the back", "type": "TRANSITION", "from": "gm:157", "to": "gm:244", "perspective": "BOTTOM" },
+    { "key": "spider-guard-sleeve-sweep", "name": "Spider guard sleeve sweep", "type": "SWEEP", "from": "gm:283", "to": "gm:150", "perspective": "BOTTOM" }
+  ]
+}

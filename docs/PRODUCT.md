@@ -1,6 +1,6 @@
 # matIQ — product specification
 
-Derived from `docs/product-spec/po-brief.md` (PO rulings S-01…S-12, R-00…R-35, 2026-10-31) and `docs/decisions.md`. Plan: `docs/product-spec/plan.md`. Items the brief leaves open are marked "assumed, pending PO (plan §0.1 #n)": the plan's default is taken (PO offline, 2026-10-31) and ledgered in `docs/product-spec/assumptions.md`.
+Derived from `docs/product-spec/po-brief.md` (PO rulings S-01…S-12, R-00…R-35, 2026-10-31) and `docs/decisions.md`. Plan: `docs/product-spec/plan.md`. Items the brief leaves open are marked "assumed, pending PO (plan §0.1 #n)": the plan's default is taken (PO offline, 2026-10-31) and ledgered in `docs/product-spec/assumptions.md`; items the PO ruled on 2026-11-01 are marked "ruled R-xx (2026-11-01)" (`docs/decisions.md` R-36…R-49).
 
 ## §1 What matIQ is
 
@@ -36,7 +36,7 @@ A personal deliberate-practice companion for a Brazilian jiu-jitsu practitioner.
 - **v1 user:** the PO, one practitioner, iPhone first (S-03 "Me first, built for publishing"; S-08 iOS-first, Android via EAS Build).
 - **Publishable later:** export, import and erase ship in v1 (R-12); encryption at rest from the start (R-24); no analytics or crash SDK without an ADR (`.claude/rules/privacy.md`).
 - **v2 direction:** a coach tier with backend and accounts so a coach follows clients as a paid tier (R-27 "yes"; the PO's motive in the R-16 answer: "Ideally i can monitize this app for coaches to check in on their clients"). v1 keeps the sync seam, versions the JSON export as the future upload format, and assumes nothing about a single user forever.
-- **Way of working:** `develop` default / `main` released, PRs only (S-10, ADR 0001); the sugar/cadence agent harness (S-11, ADR 0002); sprint order per R-32 (`docs/product-spec/plan.md §7`).
+- **Way of working:** `develop` default / `main` released, PRs only (S-10, ADR 0001); the sugar/cadence agent harness (S-11, ADR 0002); sprint order per R-32 (`docs/product-spec/plan.md §7`); sprints 0 and 1 ran under the overnight-autonomy instruction of 2026-10-31 (R-37), every default ledgered in the sprint's `assumptions.md`; an agent that hits a stale path guard reports `CODING BLOCKED`, and a harness edit needs a new session before the next spawn (R-36).
 - **Non-goals v1:** coach, club, sharing, social, accounts, sync, cloud backup; strength & conditioning modelling (R-03); per-partner analytics; hosting or embedding video; scraping instructional sites (R-33); a web app (S-04); Android local E2E until an SDK exists; BJJGraph import without a licence (R-28). Gym check-in/schedule, coach badge/notes and the instructional-video area from the design artifact stay out (R-16).
 
 ## §4 Core loop and screens
@@ -359,7 +359,7 @@ erDiagram
   cycles |o--o{ resource_links : "target_kind=CYCLE"
 ```
 
-Invariants carried from the legacy prototype and the brief, each a schema `check()` unless marked domain: `needs_work ⇒ is_actual`; `rating ⇒ is_actual`; ratings, intensity and energy 1–5; counts (`hit_count`, `caught_count`, `rounds_count`, `submissions_*`) ≥ 0; durations > 0; `round_no` ≥ 1; `to_position_id` null iff `type = SUBMISSION`; every enum column (`status`, `type`, `applies_to`, `tier`, `focus_kind`, `target_kind`, `direction`, `scale`, `belt`, `origin`, `source`, `outcome`) checked against its list; `start_time` and date columns pattern-checked; a session completes only with ≥ 1 actual focus row (domain); focus rows unique per (session, kind, ref) (domain); cycle 1–3 focuses (domain); weekday 1–7 with Monday = 1 (R-15). Reviews are columns on `sessions` (one review per session, same screen — planner decision from the brief's core loop; assumed, pending PO (plan §0.1 #12)). Seed rows keep ids fixed in the seed file across taxonomy releases (R-28 "our own stable ids"; the converter-minting mechanism assumed, pending PO (plan §0.1 #14)). Recorded deviations from `.claude/rules/data.md` (erase-all as R-12's hard-delete exception, converter-minted seed ids): `docs/product-spec/plan.md §11`.
+Invariants carried from the legacy prototype and the brief, each a schema `check()` unless marked domain: `needs_work ⇒ is_actual`; `rating ⇒ is_actual`; ratings, intensity and energy 1–5; counts (`hit_count`, `caught_count`, `rounds_count`, `submissions_*`) ≥ 0; durations > 0; `round_no` ≥ 1; `to_position_id` null iff `type = SUBMISSION`; every enum column (`status`, `type`, `applies_to`, `tier`, `focus_kind`, `target_kind`, `direction`, `scale`, `belt`, `origin`, `source`, `outcome`) checked against its list; `start_time` and date columns pattern-checked; a session completes only with ≥ 1 actual focus row (domain); focus rows unique per (session, kind, ref) (domain); cycle 1–3 focuses (domain); weekday 1–7 with Monday = 1 (R-15). Reviews are columns on `sessions` (one review per session, same screen — planner decision from the brief's core loop; ruled R-40 (2026-11-01)). Seed rows keep ids fixed in the seed file across taxonomy releases (R-28 "our own stable ids"; the converter-minting mechanism assumed, pending PO (plan §0.1 #14)). Recorded deviations from `.claude/rules/data.md` (erase-all as R-12's hard-delete exception, converter-minted seed ids): `docs/product-spec/plan.md §11`.
 
 ## §6 Features by screen
 
@@ -375,7 +375,7 @@ Visual source for every screen: the PO's Claude Artifact exported to `design-sys
 
 **Progress** — per focus: state (Improving · Steady · Needs work · Not trained lately) with a "why" sheet listing each signal's value, weight and threshold (R-08, R-17); Flagged badge separate; window and weights editable with reset (R-08); rank history (R-10); consistency heatmap and planned-vs-actual gaps (brief §6 dashboards) as secondary panels. Graph visualisation with progression overlay = later (R-23).
 
-**Settings** — rank (belt, stripes, promotion dates; kids scale toggle, R-10); algorithm weights, thresholds, window with "reset to defaults" and the active `algorithm.version` (R-08, R-22); suggestion sources (four switches) and maximum (R-21); detailed-rounds toggle (R-19); recurring slots (R-20); reminders (R-11); theme follows system (brief §5); a manual override is DSR-21, pending CO-16; session types and resource types editing (R-03, R-29); export JSON (file protection assumed, pending PO, plan §0.1 #10), import JSON (merge semantics assumed, pending PO, plan §0.1 #2), erase all (R-12; confirmation assumed, pending PO, plan §0.1 #2); about and licences (GrappleMap public domain, grapple-flows CC BY 4.0 attribution — required by the licence, R-28); app lock later (R-25).
+**Settings** — rank (belt, stripes, promotion dates; kids scale toggle, R-10); algorithm weights, thresholds, window with "reset to defaults" and the active `algorithm.version` (R-08, R-22); suggestion sources (four switches) and maximum (R-21); detailed-rounds toggle (R-19); recurring slots (R-20); reminders (R-11); theme follows system (brief §5); the manual override (DSR-21) is ruled R-44 (2026-11-01): system only in sprint 1, the override setting is read from sprint 2; session types and resource types editing (R-03, R-29); export JSON (plaintext through the OS share sheet with an in-app warning, ruled R-38 (2026-11-01)), import JSON (merge by id, newest `updated_at` wins, no confirm, ruled R-41 (2026-11-01)), erase all (R-12; hold-to-erase confirmation ruled R-41 (2026-11-01)); about and licences (GrappleMap public domain, grapple-flows CC BY 4.0 attribution — required by the licence, R-28); app lock later (R-25).
 
 **Planning flow** — create a planned session (date, type, focuses from suggestions or search); create or end a cycle (1–3 focuses, default four weeks; one active at a time, assumed, pending PO, plan §0.1 #5); manage slots (R-07, R-20).
 
@@ -386,7 +386,7 @@ Ruled shape (R-08 "Yes Deterministic, but in the future the algo might be change
 - **Inputs per focus** over the window (`windowWeeks`, default 8, editable): trend of per-focus ratings; needs-work frequency; planned-vs-actual gap; days since last trained; hit/caught ratio when logged.
 - **States** (R-17): Improving · Steady · Needs work · Not trained lately. "Flagged" is the user's own needs-work mark on the most recent completed session in which the focus was actually trained, never a computed state.
 - **Signal definitions** (plan §8): `n` = completed sessions with the focus actual; trend = later-half minus earlier-half mean rating over rated rows, defined from two rated rows; needs-work rate = flags / n; gap = planned-not-trained / planned over sessions of any status (skipped and stale planned sessions count as not trained); days since = today minus the last actual date over all time; hit ratio defined from `hitCaughtMinEvents` events.
-- **Rules, first match wins** (numeric defaults other than the 8-week window are the planner's — assumed, pending PO (plan §0.1 #13) — tuned once real data exists): (1) `n = 0` or `daysSince > staleDays` (21) → Not trained lately; (2) weighted needs-work score ≥ `needsWorkThreshold` (0.5) → Needs work, with weights `wNeedsWork` 0.4, `wHitCaught` 0.25, `wGap` 0.2, `wTrend` 0.15; (3) trend defined and ≥ `trendImproving` (0.5 on the 1–5 scale) with `n ≥ minSessions` (3) → Improving; (4) else Steady. Signals without enough data drop out and the remaining weights are rescaled; the explanation says so.
+- **Rules, first match wins** (numeric defaults other than the 8-week window are the planner's — ruled R-49 (2026-11-01) — tuned once real data exists): (1) `n = 0` or `daysSince > staleDays` (21) → Not trained lately; (2) weighted needs-work score ≥ `needsWorkThreshold` (0.5) → Needs work, with weights `wNeedsWork` 0.4, `wHitCaught` 0.25, `wGap` 0.2, `wTrend` 0.15; (3) trend defined and ≥ `trendImproving` (0.5 on the 1–5 scale) with `n ≥ minSessions` (3) → Improving; (4) else Steady. Signals without enough data drop out and the remaining weights are rescaled; the explanation says so.
 - **Explanation**: every state shows each signal's value, weight and the threshold it crossed, and which rule fired (R-08 "every state explains why").
 - **Configuration**: weights, thresholds and window are `algorithm_params` rows with `default_value` and bounds; "reset to defaults" in Settings (R-08); the domain reads them as inputs, never as constants (`.claude/rules/data.md`).
 - **Versioning** (R-22): rows carry `algorithm_version`; `settings.algorithm.version` names the one active version; a v2 ships as a new module with new default rows and a one-time carry-over/reset notice.
@@ -405,9 +405,9 @@ Ruled shape (R-08 "Yes Deterministic, but in the future the algo might be change
 ## §9 Data, privacy, publishing readiness
 
 - **On device only** (`.claude/rules/privacy.md`; S-02): no backend, no account, no sync, no network call carrying user data; the only outbound action is opening a Resource URL in the browser (R-29).
-- **Encryption at rest** (R-24): SQLCipher through `expo-sqlite`'s `useSQLCipher`; key generated on first launch, kept in Keychain/Keystore via `expo-secure-store` with a this-device-only accessibility class so it never syncs to a cloud keychain (with A-11, assumed, pending PO — plan §0.1 #11); development, smoke checks and Maestro on dev-client builds only (R-31); Jest on plain better-sqlite3.
-- **OS backups** (R-12 "no cloud backup"): database and key excluded from iCloud / Android auto-backup — assumed, pending PO (plan §0.1 #11); the JSON export is the user's backup.
-- **Export / import / erase** (R-12): JSON export of every table including tombstones, versioned (`export_schema_version`) and documented as the future upload format (R-27); the exported file is plaintext once shared — protection assumed, pending PO (plan §0.1 #10); import semantics assumed, pending PO (plan §0.1 #2; default: merge by id, newest `updated_at` wins); erase-all closes the database, deletes the database, WAL and SHM files and the key, creates a new key and reseeds — the one hard-delete path, recorded as R-12's exception to the no-hard-delete rule (plan §11). Both ship before any store release.
+- **Encryption at rest** (R-24): SQLCipher through `expo-sqlite`'s `useSQLCipher`; key generated on first launch, kept in Keychain/Keystore via `expo-secure-store` with a this-device-only accessibility class so it never syncs to a cloud keychain (A-11, ruled R-39 (2026-11-01)); development, smoke checks and Maestro on dev-client builds only (R-31); Jest on plain better-sqlite3.
+- **OS backups** (R-12 "no cloud backup"): database and key excluded from iCloud / Android auto-backup — ruled R-39 (2026-11-01); Android done (`allowBackup: false`), the iOS exclusion module is a release gate scheduled for sprint 2 (CO-28); the JSON export is the user's backup.
+- **Export / import / erase** (R-12): JSON export of every table including tombstones, versioned (`export_schema_version`) and documented as the future upload format (R-27); the exported file is plaintext once shared — ruled R-38 (2026-11-01): plaintext JSON through the OS share sheet (cache dir, deleted after sharing) with an in-app warning, passphrase encryption v1.x; import semantics ruled R-41 (2026-11-01): merge by id, newest `updated_at` wins, no confirm; erase-all closes the database, deletes the database, WAL and SHM files and the key, creates a new key and reseeds — the one hard-delete path, recorded as R-12's exception to the no-hard-delete rule (plan §11). Both ship before any store release.
 - **No analytics, crash-reporting or advertising SDK** without a dated ruling and an ADR; no third-party identifiers.
 - **App lock** (R-25): optional biometric/passcode on open, v1.x.
 - **Fixtures and screenshots** use fictional data only.
@@ -422,9 +422,9 @@ UX acceptance criteria (R-00, R-26 "yes", R-18 "yes"), each testable and present
 | NF-02 | The log path type → focuses → per-focus rating → done completes in ≤ 30 s | timed Maestro flow on the simulator |
 | NF-03 | Only session type and one focus are required; every other field optional | domain test: `sessions.log` with two fields succeeds |
 | NF-04 | Every screen usable one-handed in portrait (R-26); widths 390 and 430 px and the bottom-anchored primary action come from `.claude/rules/frontend.md` "Phone-first, one-handed" | design review + Maestro at both widths |
-| NF-05 | Destructive actions are soft deletes with an undo toast, no confirm dialog (exception: erase all, assumed, pending PO, plan §0.1 #2) | Maestro: delete → undo restores |
+| NF-05 | Destructive actions are soft deletes with an undo toast, no confirm dialog (exception: erase all, hold-to-erase, ruled R-41 (2026-11-01)) | Maestro: delete → undo restores |
 | NF-06 | Every empty state names the next step | copy table in design.md; Maestro assertVisible |
-| NF-07 | Readable in light and dark (R-26); theme follows the system (brief §5); tokens only (`.claude/rules/frontend.md`); a manual override is DSR-21, pending CO-16 | token adherence check; dark-mode screenshots |
+| NF-07 | Readable in light and dark (R-26); theme follows the system (brief §5); tokens only (`.claude/rules/frontend.md`); the manual override (DSR-21) is read from sprint 2 (R-44) | token adherence check; dark-mode screenshots |
 | NF-08 | Hit targets ≥ 44 pt iOS / 48 dp Android, smaller elements extended with `hitSlop` | design review |
 | NF-09 | Progression for all focuses over the window computes in < 100 ms on device for 500 sessions (planner target, not ruled; keeps Progress free of spinners) | domain benchmark test |
 | NF-10 | Fully offline: no feature depends on connectivity | review |
@@ -436,7 +436,8 @@ UX acceptance criteria (R-00, R-26 "yes", R-18 "yes"), each testable and present
 
 Order of work (R-32 "ok"): sprint 1 foundation → sprint 2 Progress, Settings, Library editing, Technique detail → sprint 3 cycles, slots, reminders, export/import/erase, detailed rounds → v1.x → v2.
 
-- **v1.x:** technique-level progression (first; R-04), app lock (R-25), graph visualisation with progression overlay (R-23), resources watch list (R-29), legacy data import for the PO (assumed, pending PO, plan §0.1 #6).
+- **v1.x:** technique-level progression (first; R-04), app lock (R-25), graph visualisation with progression overlay (R-23), resources watch list (R-29).
+- **Never:** import of the PO's legacy Oracle data — the PO starts with an empty database (R-42 "start over completely in the new db", 2026-11-01); the legacy repo stays reference material only.
 - **v2:** coach tier with backend and accounts (R-27, ADR + CO-08), instructional import from public catalogues subject to terms of service (R-33), strength & conditioning session family (R-03), BJJGraph data if licensed (R-28).
 
 ## §12 Rulings register
@@ -467,5 +468,12 @@ Order of work (R-32 "ok"): sprint 1 foundation → sprint 2 Progress, Settings, 
 | R-09 | §2, §4, §6 Home, §7 | R-33 | §3, §8, §11 |
 | R-10 | §2, §6 Home, §6 Progress, §6 Settings | R-34 | §2, §6 Log, §6 Library, §8 |
 | R-11 | §6 Settings | R-35 | §8 |
+| R-36 | §3 | R-43 | — (sprint 1 design: Archivo width, DSR-15 fills; not in this spec) |
+| R-37 | §3 | R-44 | §6 Settings, §10 NF-07 (DSR-21); the rest in sprint 1 design |
+| R-38 | §6 Settings, §9 | R-45 | — (sprint 1 design: Log tab = Quick log) |
+| R-39 | §9 | R-46 | — (sprint 1 design: stale / today / next planned sessions) |
+| R-40 | §5 | R-47 | — (sprint 1 design: `expo-symbols`) |
+| R-41 | §6 Settings, §9, §10 NF-05 | R-48 | — (sprint 1 taxonomy: resolution deviation, curated core) |
+| R-42 | §11 | R-49 | §7 |
 
 Every id also has a dated bullet in `docs/decisions.md`.

@@ -13,3 +13,10 @@
 | Domain purity | No `Date.now()`, `Math.random()`, I/O in `mobile/src/domain/`; clock and id source are parameters | `data.md` |
 | Frontend | Tokens only, one-handed, 44 pt / 48 dp, testID `<screen>.<element>[.<id>]` | `frontend.md`, ADR 0008 |
 | Settings vs metadata | `settings` for user prefs, `app_meta` for machine state | ADR 0016 |
+| Encryption at rest | SQLCipher; raw 32-byte key from `expo-crypto` in secure store (device-only class), `PRAGMA key` first; Android backup off, iOS exclusion pending | ADR 0006, 0020 |
+| Error codes | `DomainError.code` from `mobile/src/domain/errors.ts` (registry linked, not copied); startup failures use `DB_*` codes; UI copy key `errors.<CODE>` | ADR 0019 |
+| Repository access | `database: Db` injected last; reads filter `deleted_at IS NULL`; writes in `db.transaction()`; hooks return `LiveResult<T>` | ADR 0019 |
+| Seed idempotency | `ensureSeeded` keyed by `(source, source_id)` and `app_meta.taxonomy_release`; ids from the append-only registry | ADR 0022 |
+| testIDs | `<screen>.<element>[.<id>]`, listed in `docs/foundation/design.md` §7 and used by the Maestro flows | `frontend.md` |
+| i18n keys | `<screen>.<element>` copy keys, one English table; error copy under `errors.<CODE>` | ADR 0009 |
+| Hard delete | Only erase-all (ADR 0015) and the `__DEV__` reset route (ADR 0023) | `data.md` deviation, `plan.md` §13 |

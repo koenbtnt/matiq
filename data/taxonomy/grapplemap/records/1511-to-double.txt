@@ -1,0 +1,25 @@
+to double
+properties: bottom
+todo: have a path where bottom's double is successful
+todo: marcelo's uke ends elsewhere
+ref: Marcelo Garcia "Winning Techniques Of Submission Grappling", Series IV, Volume 3: Advanced Omoplata 3, Technique 3 @ 11:53
+    KFazvwG6aJtaJRcKymFWddvIKObDyaGtbTvINNa6EnFfa7CsK7hdCoHQhlEaPBeRJyMVi
+    OMkNbaTIGKbggO6KzawLWJRcdNyKzaANgKSbFM4JRbtNTLrayNmLmhRGGOFgDLzPPfKNP
+    sMfxIEoQaGG3wegFHKreduHEuVgCG5rib9HfyzfYBhx4aZGFCChCGHALgCJJKag8LfJeb
+    zLBKukGIdIva3G1M2iXFlKZdREMN2itEGL8d6FoNXhbEoMlfkFMEQe3JuJ3ehLgMCeMLy
+    U3aAxDE5aMtPSZdpyUIKaMs4Tfb0zmHRbDtKPqbEE9EEggxIN5hbBeKwh5AZPKi2JILgk
+    XKiRMeUKGHikSHNOQb9JBGthIKCNyb6JQHohiLpM8a8KEHugbLWMmiSEPNljeLgMOhLNt
+    pAazE2oLaDG3rrdKFdredoHCrSclE1rhb0G8yAaYEcycbcGLBxgYF2A9gMJIKNgrGXJ2c
+    xJqHUjhECKoaVE3KpkjBoNQdFEKKSk8AuOzeDE2LbkCziPDe2EmE2fyIgK8e6JnNMfdJv
+    U2aAxGO2azusTcdvy4RtcQwbTob6zwQgcYvqPObeFqJwdlwUQxgQBoNviezGN7jnJOJUk
+    QHNQlgeMwIincD2OIdbJ9HviYEwNuc7JCHoiYFQM0bUJxGThTGnN5jsDOLkjTJ5KfjwMv
+    pAazE2wcazLKrrdKFdwUd0KBrSclE1xOcRKTyAaZEdEwaYKDBGgVFUB5hpJALpgvGIKbc
+    6KbJpgECtLMa7GdMqiuAfPkdpE4MGjczeP8erFhNDiZyqQ2eOEvFyfMHtLOe4I3OpfrIU
+    U0azxI0ta1wxTodAzeXZdix8TAcdzCXXcdxfQca3FBQ6bxwOSEgAChPWhBzUMWiYJdJNj
+    3EROrfmLJIIhZALMWdDIaH2eJDCMwdGGZHMfbEJLIcYGmHQeIFSPAjgDTKNjyHvILjsJh
+    pAazE2CjaTMJrrdKFdzwdcLMrSclE1ATc4LsyAaZEeHpbTJqB6gJFOCAgOJvLWgfFGKLd
+    8KsLUd5ByL6a3HbOegAy8P4cqFSOzhaxZRgcIGlPShkxOSgcnFwGaf2G7Mde1IcOLfCIj
+    0nazHW0mazyjYkdFHAZHdUzTX6cpIbYTcXzdRvaYJXSja1ybTSfNFDTGgDB2L6hYIjKUh
+    WCVOwd0IuJVdkCJMcdIE0L2cKGwLcdQEgMsduHvK9dAC2LIdxIBQDisEwKRikFKInjhF6
+    pPazE2CeazMHrfdXFgzLdaLJrScEE0A7cXLpyzaYEfHAbjJyCJgpE5CYgtIPLXeMD3LWe
+    OI8NwbGATNRaTHyQZcIyFRccoJQRTddxVR0dlKgTbc0xZTidhJ5GKglGENce9GBPIf1G7

@@ -1,0 +1,17 @@
+grab leg
+properties: bottom
+tags: butterfly_sweep
+todo: should end elsewhere
+ref: Marcelo Garcia "Winning Techniques Of Submission Grappling", Series III, Volume 3: Sweeps and Turnovers, Technique 4 @ 16:25
+    FDaAgIxRazflEMcfjXxTciizFEbcjxxpa2icGoaYqtuWa6oJDcdhkQzAdRkrB4kNpexUl
+    il1AWhdrXvRhdm5w8gitJzxhVo0wOgPuSz9iApXv0gcvGADh6q0B3hrklz0lYnMzcnCpE
+    yqazk3CDazmpziaEoHCvaKp9yUbAnGCZbyo6vcfCrTD8hwstyUczwRCvbZwgyTkssfEdj
+    XshwGgZpVG2guq3AThUp4DnhYpyB9h4p9CkiLppCGiCrdBfixp9A8f5vBBDkYrUCwnmq2
+    GNaAgIvcaCfrFccijCw5cDhYF8bfjqwbbxhZFUbvqkvvbBoSCrgkmFzdfSkVAOl2smv1l
+    IrmANhutrw7izn5xGfZvMwRifsswIgBwsxDiVthvKfNwSysigt5zDjGm1x7mAs6xwnBvv
+    yqazk2BJdRfDziaEoHBVaNhEyVbAnGBVcfh3vkfur7CCeQpdy1bNwBCKbUvUyUk3wKDWk
+    LwpxjhkulGQiNthASh9sjFQiYo0BAh0reE9jzn4CJiFq6EXiPmYA5fBxnBplYvOCQnXuR
+    GSaZjAvDaAfoE0d1krw6dfhAFzcZlewWbQhEFPbfrVuTaYofCogooSyWgunpzolXvUu6l
+    etQADibtwteg1s8x1fOvPt6dRvYxogiwRuletw7wifLxiumdFyazIjiqBwCmhvWwil9yB
+    ynaPkmBJdPfEzeaUnVBVaIhByqbRm6BUb8hWvRfGsfCecxoPy7bCwQCEbCvEz7kVyxDlj
+    4uNxbhBwYGDiCrNziiwtuFufjo9z6iQstE4enoiBdjrsODUdRolBnfcxHBLlNwnBUn0uP

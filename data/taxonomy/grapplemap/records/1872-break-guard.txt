@@ -1,0 +1,16 @@
+break guard
+properties: top
+ref: Marcelo Garcia "Advanced Brazilian Jiu Jitsu Techniques" p213: "Arm Pin Underhook Break"
+todo: marcelo ends in mirrored position. not sure it matters
+    RubwC2yjazKZN4btBFxwaPHkONcuCqylbxIhNqi8DXA1hSINHlmmDdDWmyEBKbtFGXFat
+    9ISLUpOEUBHrsHcNjlXFWBPnaHTOpljGhCSngIBOsj5GzDAl9INF0qlEpH2ukIKIBvHK0
+    x3oQHEDTrxBayxmlEUFSosAqy0mxGeFZpABiDHlyLbKqpGGAH0gJIDKRiMHnL4bsM4QCb
+    XJYHtaZMGQPbdFkERcvJNMRcREQDHc2JNMhdYEvC7ddICLodUDyLGexHVOrclLMPtdiN4
+    RCaItYykaBK1PxdFuFyHaNHkPXcxvxyYbHIpNhfxBfBoidH9H1j5A6ErkbCfKAphHnF1p
+    PIAM3lHFzCInsGfNehZHzDOkMJyNVhsIwEck4KNNGghI2ECj7LBGInNC3IKqsI8ICq2LJ
+    xkmNHcECqSAnyMkoEJFYnMyJy6kSF2GroLzFDHjnKZKyn6FbH3fcHyKOhbF0MxbvM8Rbc
+    DKwHVaTMRQnbTF0G9ddJvNSfhE4GjedJkNHgzFcFYetH5MIg5EwL2djHvOAcHLzO7efNG
+    RSaztyxrazExPMdtunxKa2ATPZcauZyhbRB2MqdCANBWhvDyJMjTzKGllbzKKxkeI2Fgl
+    aIOKTfYHgDsjBEOJZb1IKEEhCImKccQJMEVhXJBKkceKWFig6KuIkliDEHMj4JnHCjsLW
+    wJkzGAKuq2Dyy0iuExIvn8CuzajcFNJMocDgDwhoKRMyitF5HccXGXJdcNDPMMbQNbQPc
+    BJRIcbHMoOsbUFVKxeYKRMOfsHvLifXKCMIgLHGLugoJoLKhuHiLqbUHqO5cUL0QbefN0

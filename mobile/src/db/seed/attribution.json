@@ -1,0 +1,26 @@
+{
+  "sources": [
+    {
+      "licence": "Public domain",
+      "name": "GrappleMap",
+      "snapshot": "2023-02-06",
+      "url": "https://github.com/Eelis/GrappleMap",
+      "use": "positions, transitions, citations"
+    },
+    {
+      "changes": "slugs rendered as display names; aliases equal to our canonical names omitted",
+      "commit": "aecbd792dd54d674d91513d9ef4a4ccb599bff1a",
+      "credit": "Data from bjj-data by Grapple Flows (https://grappleflows.com)",
+      "licence": "CC BY 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "name": "bjj-data by Grapple Flows",
+      "url": "https://github.com/grapple-flows/bjj-data",
+      "use": "position and submission aliases"
+    },
+    {
+      "licence": "matIQ",
+      "name": "matIQ curated layer",
+      "use": "canonical names, core set, parents, edge types, gi techniques"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+switch to\ndouble under pass
+properties: top
+tags: pass_under passing
+todo: find no-gi source, because ryan grabs the belt with both hands
+ref: Ryan Hall "Back Attacks", Volume 2: Finishes, Technique 24: "Over Under to Double Under" @ 1:28:38
+ref: Ryan Hall "The Deep Half Guard", Volume 2: Deep Half Attacks, Section 7: "Over Unders to Double Unders" @ 29:06
+    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

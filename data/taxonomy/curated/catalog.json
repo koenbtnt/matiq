@@ -1,0 +1,26 @@
+{
+  "comment": "Catalog seed (R-03 session types, A-4 subjects, five resource types). Keys are stable source ids; names are user-editable after seeding.",
+  "sessionTypes": [
+    { "key": "gi-class", "name": "Gi class" },
+    { "key": "no-gi-class", "name": "No-gi class" },
+    { "key": "open-mat", "name": "Open mat" },
+    { "key": "private-lesson", "name": "Private lesson" },
+    { "key": "competition", "name": "Competition" },
+    { "key": "drilling-study", "name": "Drilling/study" }
+  ],
+  "subjects": [
+    { "key": "guard-retention", "name": "Guard retention", "description": "Keeping the guard against passing pressure: frames, hip movement, re-guarding." },
+    { "key": "grip-fighting", "name": "Grip fighting", "description": "Winning, breaking and keeping grips." },
+    { "key": "pressure-weight-distribution", "name": "Pressure and weight distribution", "description": "Using bodyweight and angles to pin and pass." },
+    { "key": "submission-finishing", "name": "Submission finishing", "description": "Turning a submission position into a finish." },
+    { "key": "defence-escapes", "name": "Defence and escapes", "description": "Surviving bad positions and getting out of them." },
+    { "key": "competition-strategy", "name": "Competition strategy", "description": "Rulesets, scoring, pacing and game plans." }
+  ],
+  "resourceTypes": [
+    { "key": "instructional", "name": "Instructional" },
+    { "key": "video", "name": "Video" },
+    { "key": "article", "name": "Article" },
+    { "key": "book", "name": "Book" },
+    { "key": "other", "name": "Other" }
+  ]
+}

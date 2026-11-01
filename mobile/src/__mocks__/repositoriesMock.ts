@@ -1,0 +1,72 @@
+/**
+ * Mock of `src/repositories` backed by the in-memory store, for UI Jest:
+ *   jest.mock('../src/repositories', () => require('../src/__mocks__/repositoriesMock'));
+ * Same names and shapes as the real module's surface the seam (`hooks/data`) uses. Reads are
+ * synchronous recomputations on store changes; writes are async like the real ones.
+ */
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { quickLogTarget } from '../domain/session/quickLog';
+import type { HomeData, LogSessionInput, PlanSessionInput, RankInput, TechniqueType } from '../repositories/contracts';
+import { mockStore, type BootstrapState } from './mockStore';
+
+export * from '../repositories/contracts';
+
+/** Re-computes on every store change; honours the forced loading/error switch used by tests. */
+function useQuery<T>(compute: () => T, deps: unknown[]) {
+  const [version, setVersion] = useState(0);
+  useEffect(() => mockStore.subscribe(() => setVersion((v) => v + 1)), []);
+  const reload = useCallback(() => setVersion((v) => v + 1), []);
+  const state = useMemo(() => {
+    const f = mockStore.forced;
+    if (f === 'loading') return {};
+    if (f) return { error: f.error };
+    try {
+      return { data: compute() };
+    } catch (e) {
+      return { error: e as { code: string } };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version, ...deps]);
+  return { ...state, reload };
+}
+
+export const useHome = () => useQuery(() => mockStore.home(), []);
+export const useSession = (id: string) => useQuery(() => mockStore.session(id), [id]);
+export const useSessionTypes = () => useQuery(() => mockStore.sessionTypes(), []);
+export const useFocusSearch = (query: string) => useQuery(() => mockStore.searchFocuses(query), [query]);
+export const useTechniqueSearch = (query: string, opts: { type?: TechniqueType } = {}) =>
+  useQuery(() => mockStore.listTechniques(query, opts.type), [query, opts.type]);
+export const useLibraryPositions = (query?: string) => useQuery(() => mockStore.listPositions(query), [query]);
+export const usePosition = (id: string) => useQuery(() => mockStore.position(id), [id]);
+export const useSubjects = () => useQuery(() => mockStore.subjects(), []);
+export const useSetting = (key: string) => useQuery(() => (key === 'library.showExtended' ? mockStore.showExtended : false), [key]);
+export const useCurrentRank = () => useQuery(() => mockStore.rank, []);
+
+export function useDatabaseBootstrap(): BootstrapState & { retry: () => void } {
+  const [state, setState] = useState<BootstrapState>(mockStore.bootstrap);
+  useEffect(() => mockStore.subscribe(() => setState(mockStore.bootstrap)), []);
+  const retry = useCallback(() => {
+    mockStore.bootstrap = { status: 'ready' };
+    mockStore.emit();
+  }, []);
+  return { ...state, retry };
+}
+
+const run = async <T>(fn: () => T): Promise<T> => fn();
+
+export const sessions = {
+  home: (_args?: { today: string }): Promise<HomeData> => run(() => mockStore.home()),
+  log: (i: LogSessionInput) => run(() => mockStore.logSession(i)),
+  create: (i: PlanSessionInput) => run(() => mockStore.planSession(i)),
+  softDelete: (id: string) => run(() => mockStore.softDelete(id)),
+  undoDelete: (id: string) => run(() => mockStore.undoDelete(id)),
+  skip: (id: string) => run(() => mockStore.skip(id)),
+  undoSkip: (id: string) => run(() => mockStore.undoSkip(id)),
+  quickLogTarget,
+};
+export const sessionTypes = { list: () => run(() => mockStore.sessionTypes()) };
+export const rank = { add: (i: RankInput) => run(() => mockStore.addRank(i)) };
+export const resetDatabase = async (_opts?: { keepKey: boolean }) => {
+  mockStore.reset();
+};

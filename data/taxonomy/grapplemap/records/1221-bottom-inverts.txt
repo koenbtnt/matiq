@@ -1,0 +1,21 @@
+bottom\ninverts
+properties: bottom
+tags: inversion
+todo: need a better source, that lady is all over the place
+ref: Eddie Bravo "Mastering the System" Episode 82 @ 1:12:35
+    JeaYGwKqazN1FSa2ERHAbLLVGAbWFJHPbzNjJHgZJfBJa7QCD6dxGZCybGJLDOljKAAfj
+    uOjFeigHkysfBMmGTiwLjyIbwNnHjiWMsxUbAOoGMioNxxkauONBAfTJFBYlbMMCKnaOo
+    ADkqGPAVgFGYBSg7FBDeeyEZB5hWGNDqfvF6GghSMnI1jzGmIAbUJKKVcXG1QJbwPgSee
+    gLmMabbOvOIeMIkHYcfOnLggGJKGTc2OpKnhcKAF1cvNtI9hfKoMNbMKMRNdPN4RPgkO5
+    I8aNGbKpazN1FXciHtHAbLLUGXbnHXHPbzNiIZhIJOBJa7QCEbdAG3CybHJKDElxKKAfj
+    tOjF5iCH4yrfEMlHqiiL4yJbtNnG5ijNmxTbAOnGPhaNYxkauONBDfZJGBTlbMSCKnaOo
+    ACkpGOB0iHEgBSg7FCEDhdCaB6hXGOEIhXDsGehXMnIFkOIqIXb7JRKXelHBQqbwPyRjf
+    WM1MdaXNxMVgXLTIwavPxJVeLN6IcaBQNJje3PbG6auRlIMd6PUNdcgKCRDd4PaSifpRp
+    I8aNGbKpazN1FYciHtHAbLLUGWblHXHPbzNiIrhLJ0BJa7QCD1dtGVCxbFJLDNlkKAAgj
+    tOhFiifHoyrfEMlGQivLhyJbtNnHkiWMrxTbAOnGMioNuxkauONBBfUJFBYlbMMCKnaOo
+    ACkpGOEmqdIhBSg7FCD3mXGDB7hXGQE5ntHzGah6MrKgmCMaJEcNJIKTgiJhP2bNP5P0g
+    4OSMaaVNxLxijN4ItavPxJzeDPqIbaBQNINelQnG5auRnISdmRaNOdnKMQAeBQbQQflSK
+    I8aNGbKpazN1FYciHtHAbLLUGWblHXHPbzNiIrhLJ0BJa7QCD1dtGVCxbFJLDNlkKAAgj
+    tOhFiifHoyrfEMlGQivLhyJbtNnHkiWMrxTbAOnGMioNuxkauONBBfUJFBYlbMMCKnaOo
+    ACkpGOA5q3NUBSg8FDCApsKYB8hXGQCZppMpFJiEMLH0lVPHJ0ecJGKnhNKCP9bFPWOqg
+    xRJL9aWNAKGhKPgIqavPyI7dJPhIbaBQOILecQtG5auRnIMdjRrNBfeLVOXdIRyNIceTo

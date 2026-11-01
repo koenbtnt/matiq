@@ -31,7 +31,7 @@ check() { # check EXPECTED NAME HOOK ARGS... <<< json
 }
 
 # The regexes exactly as the agent frontmatter carries them (.claude/agents/*.md). Update both together.
-DC_ALLOW='^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json)$|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)'
+DC_ALLOW='^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json|app[.]json)$|scripts/taxonomy/|data/taxonomy/|[.]github/workflows/|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)'
 DC_DENY='^mobile/drizzle/.*(snapshot|_journal)[.]json$'
 FE_ALLOW='^(mobile/|scripts/(sync-design-tokens|check-token-adherence)[.]mjs$|docs/[^/]+/verify[.](md|json)$|docs/stack-notes[.]md$|[.]github/workflows/)'
 FE_DENY='^(mobile/src/(db|domain|repositories)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/src/theme/tokens[.]ts$|e2e/|design-system/)'
@@ -40,7 +40,7 @@ DESIGN_ALLOW='^(docs/|design-system/(tokens[.]json|components[.]md|RULES[.]md)$)
 ORCH_ALLOW='^(docs/|README[.]md$)'                                            # orchestrator
 R1_ALLOW='^docs/[^/]+/review-1(-recheck|-followup(-[0-9]+)?)?[.]md$'          # reviewer-design
 R2_ALLOW='^docs/[^/]+/review-2(-recheck|-followup(-[0-9]+)?)?[.]md$'          # reviewer-code
-DOC_ALLOW='^(docs/(architecture|adr|data-model|requirements)/|docs/[^/]+/docs-report[.](md|json)$|docs/stack-notes[.]md$|scripts/docs/|README[.]md$)'  # documenter
+DOC_ALLOW='^(docs/(architecture|adr|data-model|requirements)/|docs/[^/]+/(docs-report[.](md|json)|verify[.](md|json))$|docs/stack-notes[.]md$|scripts/docs/|README[.]md$)'  # documenter
 TEST_ALLOW='^(e2e/|docs/[^/]+/(test-report[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)'  # tester
 
 echo "# path-guard: scopes"
@@ -115,6 +115,8 @@ check 0 "documenter: generator script"            path-guard.sh "$DOC_ALLOW" <<<
 check 0 "documenter: generated dictionary"        path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/data-model/dictionary.md")"
 check 0 "documenter: docs-report.json"            path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/docs-report.json")"
 check 0 "documenter: stack-notes"                 path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/stack-notes.md")"
+check 0 "documenter: verify.md (generator rows)"    path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/verify.md")"
+check 0 "documenter: verify.json"                   path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/verify.json")"
 check 2 "documenter: no docs/api here"            path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/api/openapi/x.json")"
 check 2 "documenter: sprint plan refused"         path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/s/plan.md")"
 check 2 "documenter: carry-over refused"          path-guard.sh "$DOC_ALLOW" <<< "$(json_path "$ROOT/docs/carry-over.md")"
@@ -194,7 +196,7 @@ check 0 "frontend: writes a screen"               bash-guard.sh "$FE_ALLOW" "$FE
 check 2 "tester: writes product code"             bash-guard.sh "$TEST_ALLOW" <<< "$(json_cmd 'echo x > mobile/app/x.tsx')"
 check 0 "tester: writes a flow"                   bash-guard.sh "$TEST_ALLOW" <<< "$(json_cmd 'echo x > e2e/maestro/flows/features/x.yaml')"
 check 0 "tester: maestro log to /tmp"             bash-guard.sh "$TEST_ALLOW" <<< "$(json_cmd 'maestro test e2e/maestro/flows > /tmp/maestro.log 2>&1')"
-check 0 "docs-only: heredoc '>' is not a redirect" bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd $'python3 - <<\'EOF\'\nprint(2 > 1)\nEOF')"
+check 0 "docs-only: '>' inside a heredoc body is not a redirect" bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd $'cat > docs/x/a.md <<\'EOF\'\nif (2 > 1) echo x > mobile/app/x.tsx\nEOF')"
 check 0 "docs-only: tee docs"                     bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd 'git log | tee docs/x/log.md')"
 check 2 "docs-only: cp into .claude"              bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd 'cp x.sh .claude/hooks/y.sh')"
 check 0 "docs-only: 2>&1 is not a target"         bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd 'npx jest > /tmp/jest.log 2>&1')"
@@ -202,6 +204,34 @@ check 0 "docs-only: glob target skipped"          bash-guard.sh "$DOCS_ALLOW" <<
 check 0 "main session: write anywhere"            bash-guard.sh <<< "$(json_cmd 'echo x > e2e/maestro/flows/x.yaml')"
 check 0 "docs-only: write in scratch worktree docs" bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd 'echo x > docs/x/a.md' "$TMP/scratch-wt")"
 check 2 "docs-only: write in scratch worktree app"  bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd 'echo x > mobile/app/a.tsx' "$TMP/scratch-wt")"
+
+echo "# bash-guard: rule 6 (scoped) — inline interpreter code, stdin scripts and out-of-repo scripts"
+check 2 "data-coder: node -e writes app.json"      bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "node -e \"require('fs').writeFileSync('mobile/app.json','x')\"")"
+check 2 "data-coder: node -p"                      bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "node -p \"require('./mobile/package.json').version\"")"
+check 2 "data-coder: node --eval="                 bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "node --eval='1' ")"
+check 2 "data-coder: python3 -c"                   bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "python3 -c 'open(\"mobile/app.json\",\"w\")'")"
+check 2 "data-coder: python3 heredoc script"       bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd $'python3 -I - <<\'PY\'\nopen("mobile/app.json","w")\nPY')"
+check 2 "data-coder: python3.12 -Ic cluster"       bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "python3.12 -Ic 'print(1)'")"
+check 2 "data-coder: node heredoc script"          bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd $'node <<\'JS\'\nconsole.log(1)\nJS')"
+check 2 "data-coder: node script in /tmp"          bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'node /tmp/copy-in.mjs')"
+check 2 "data-coder: npx tsx script in /tmp"       bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'npx tsx /tmp/copy-in.ts')"
+check 2 "data-coder: bash -c"                      bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "bash -c 'echo x > mobile/app/x.tsx'")"
+check 2 "data-coder: zsh -lc"                      bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "zsh -lc 'echo x'")"
+check 2 "data-coder: bash script outside the repo" bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'bash /tmp/scratch/copy.sh')"
+check 2 "data-coder: source outside the repo"      bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'source /tmp/scratch/env.sh')"
+check 2 "data-coder: perl -pi"                     bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "perl -pi -e 's/a/b/' mobile/app.json")"
+check 2 "data-coder: osascript -e"                 bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "osascript -e 'tell application \"Finder\"'")"
+check 2 "data-coder: env node -e"                  bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd "env node -e '1'")"
+check 2 "data-coder: cd mobile && node ../../tmp"  bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'cd mobile && node ../../tmp/x.mjs')"
+check 2 "docs-only: python3 heredoc script"        bash-guard.sh "$DOCS_ALLOW" <<< "$(json_cmd $'python3 - <<\'EOF\'\nprint(2 > 1)\nEOF')"
+check 0 "data-coder: node project script"          bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'node scripts/taxonomy/convert.ts --check')"
+check 0 "data-coder: cd mobile && node ../scripts" bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'cd mobile && node ../scripts/docs/gen-data-model.mjs > /tmp/gen.log 2>&1')"
+check 0 "data-coder: npx drizzle-kit generate"     bash-guard.sh "$DC_ALLOW" "$DC_DENY" <<< "$(json_cmd 'cd mobile && npx drizzle-kit generate --name foundation')"
+check 0 "frontend: node --version"                 bash-guard.sh "$FE_ALLOW" "$FE_DENY" <<< "$(json_cmd 'node --version && python3 --version')"
+check 0 "frontend: bash project script"            bash-guard.sh "$FE_ALLOW" "$FE_DENY" <<< "$(json_cmd 'bash scripts/claude/hooks.test.sh')"
+check 0 "documenter: generator with redirect"      bash-guard.sh "$DOC_ALLOW" <<< "$(json_cmd 'node scripts/docs/gen-changelog.mjs > docs/data-model/changelog.md')"
+check 0 "main session: python3 heredoc script"     bash-guard.sh <<< "$(json_cmd $'python3 -I - <<\'PY\'\nprint(1)\nPY')"
+check 0 "main session: node -e"                    bash-guard.sh <<< "$(json_cmd "node -e '1'")"
 
 echo "# agent memory carve-out"
 check 0 "tester writes its own MEMORY.md"         path-guard.sh "$TEST_ALLOW" <<< "$(json_agent "$ROOT/.claude/agent-memory/tester/MEMORY.md" tester)"

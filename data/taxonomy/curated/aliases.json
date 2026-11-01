@@ -1,0 +1,28 @@
+{
+  "comment": "grapple-flows taxonomy tags (data/taxonomy/grapple-flows/taxonomy.json, CC BY 4.0) mapped to our source ids. Every alias of a mapped tag, and its label, becomes an alias row (source grapple-flows, source_id = their slug); names equal to the canonical name are skipped.",
+  "positions": {
+    "closed-guard": "gm:265",
+    "half-guard": "gm:155",
+    "open-guard": "gm:314",
+    "butterfly": "gm:278",
+    "dlr": "gm:21",
+    "rdlr": "gm:46",
+    "x-guard": "gm:478",
+    "single-leg-x": "gm:466",
+    "50-50": "gm:598",
+    "side-control": "gm:259",
+    "mount": "gm:150",
+    "knee-on-belly": "gm:193",
+    "back-control": "gm:244",
+    "turtle": "gm:237",
+    "front-headlock": "gm:492",
+    "standing": "gm:94",
+    "crab-ride": "gm:570"
+  },
+  "techniques": {
+    "triangle": "gm:1032",
+    "kimura": "gm:1455",
+    "armbar": "gm:693",
+    "omoplata": "gm:903"
+  }
+}

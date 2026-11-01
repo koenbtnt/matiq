@@ -53,6 +53,8 @@ jobs:
               - 'design-system/**'
               - 'scripts/sync-design-tokens.mjs'
               - 'scripts/check-token-adherence.mjs'
+              - 'scripts/taxonomy/**'
+              - 'data/taxonomy/**'
               - '.github/workflows/**'
             claude:
               - '.claude/hooks/**'
@@ -91,12 +93,24 @@ jobs:
         run: |
           npx drizzle-kit generate
           git diff --exit-code -- drizzle/
+      # F-26 / R1-06: the converter type-checks under erasableSyntaxOnly (what Node type stripping runs).
+      - name: Taxonomy converter type-checks
+        working-directory: mobile
+        run: npx tsc -p ../scripts/taxonomy/tsconfig.json
+      # The converter is a check like the migrations: regenerating the seed must change nothing.
+      - name: Taxonomy seed is in sync with the vendored data
+        run: |
+          node scripts/taxonomy/convert.ts
+          git diff --exit-code -- mobile/src/db/seed/ data/taxonomy/
       - name: Expo doctor
         working-directory: mobile
         run: npx expo-doctor
       - name: Prebuild config check (android, no install)
         working-directory: mobile
         run: npx expo prebuild --platform android --no-install
+      - name: Prebuild config check (ios, no install)
+        working-directory: mobile
+        run: npx expo prebuild --platform ios --no-install
 
   # Exit-code tests for the Claude Code guards (.claude/hooks): bash, jq and python3 are on ubuntu-latest.
   claude:

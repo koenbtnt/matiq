@@ -1,0 +1,29 @@
+appId: nl.btnt.matiq
+name: Smoke - launch, splash to Home, three tabs
+tags:
+  - smoke
+---
+- runFlow: ../../subflows/reset.yaml
+- assertVisible:
+    id: "home.screen"
+- assertVisible:
+    id: "tabs.home"
+- assertVisible:
+    id: "tabs.log"
+- assertVisible:
+    id: "tabs.library"
+- assertVisible:
+    id: "home.quickLog"
+# fresh database: no sessions yet
+- assertVisible:
+    id: "home.recent.empty"
+- tapOn:
+    id: "tabs.library"
+- extendedWaitUntil:
+    visible:
+      id: "library.screen"
+    timeout: 10000
+- tapOn:
+    id: "tabs.home"
+- assertVisible:
+    id: "home.screen"

@@ -1,0 +1,17 @@
+isolate arm
+tags: pass_through
+properties: top
+ref: Eddie Bravo "Mastering the System" Episode 31 @ 15:23
+ref: Eddie Bravo "Mastering the System" Episode 67 @ 1:25:36
+    Q6azruGraCvsTgbluoIOaYyiRTaKukHoaHyeMbaYyjGVcXEOOuc6ErMPflBZJ6itLiILk
+    5G7IvezNmKdktCHFBcyK5IchvE6Eub9KuG0hjFFExbFJhGEf5FUMxgBGaI2kGJUHvl0LE
+    B2dfxBDecnxUCacZBgDTcMBvCZdFAjEKcFAmIGgnDaLicaCBHbeUJMHfbCH9NwcVQeQcb
+    uL5JjdyOgNOaTH6KZg5MENIfcHRLOhXMeOogbIkLEiTLpN4hoH4KkccLdPOcXOwRWerO5
+    RQaEzeGsaCvqSyaPCUINaYyjRpaEB3HlaOyeKCbGByGxcZENPzcQGjM5ffE0KpfHOfKmj
+    HLxJpa8OSM0jXHDFOaQMEJzhoG7EQbfLUIjhqHyD9avK9HygsHENMfoJjJhihNKG8ijPo
+    FHgjygFoetxeD6ecANEPdeAJFje3ASFVdJzXKqgRFgLHdmDJGNetKJGSbCIqNhcfQbQgb
+    tLSIEbTQWMXbmICLFeyPJQmd9IBMqfwPsQ4e8I7MdgBOSQEglIMKob7KYPwcjOrRGdtPz
+    RMaDzcEZaDypSdaNCQIDaFyMQ3aQBZHBbkztKMbqEOIwe3FeQBcJIpO2f0HvKOfzPWMwj
+    7NnJta7O8PRiUKiHmaPLvLWh0IFF2aPLoK3iRIhFBaYKaJZixHFOYeYLKLaihO6I3juQc
+    JwgoyuGAgoxsHGflByFRe9ARIUf2BgG5fkz5LGhRHlL0dJEGGqeNKHGLbDILM9bMQnPTb
+    uLXI4cySAMVbqIiKAglRJQ0bhJGKShARuR5bRJ3K6h5QmSvc1JNJ7cDLhPrbYOJRNcVPn

@@ -1,0 +1,18 @@
+control hip\nand shoulder
+properties: top bidirectional
+ref: Pablo Popovitch "NoGi Exposed", DVD 3: Taking the Back, Volume 11: Grips and Control, Section 3: Hip Control Grip @ 6:06
+ref: Pablo Popovitch "NoGi Exposed", DVD 3: Taking the Back, Volume 11: Grips and Control, Section 4: Shoulder Control Grip @ 7:27
+ref: Pablo Popovitch "NoGi Exposed", DVD 3: Taking the Back, Volume 11: Grips and Control, Section 5: Knee Position @ 8:00
+ref: Pablo Popovitch "NoGi Exposed", DVD 3: Taking the Back, Volume 11: Grips and Control, Section 6: Foot Position @ 10:00
+    EzaAz0wFaQz9D6djCwxDdECpEwbYCvwYcpCzFgbkJlwmboJsCUfyEjzafkEtEsfkM1y3f
+    eNEFqaTLUxWaTOPDyaQPDBXaPQuDdayQPC8bkQnCwbqRwD9avQeA9gqIcBRe0ObCDe4QK
+    QvaHJmJdazzHO9aEFVH5dUAROWbzG2IlcEBsMggQKBG6baH5JThKD6GXfNCRFQhoLABpj
+    jJqGMcYKixPgsIwCFdGJJzWdzK1CkddKUBfdpLcBldQLwB5ebKAF6iRFODaiiLnB7iqNO
+    EFaAzZwLaOz4EbdjCvwSdDCwECbYCvwLceCzFjbkJlwoboJqCZfyEizffkEqEsfkM1y4f
+    eNBFraTLUxWaTOMDxaQPBBWaPQsDdayQOC7bkQnCvbqRuD8avQeBcgqH9BRe0N9CDe4QI
+    QyaHJqJjazzIPdaEFZIadUATO1bxG5IqcEBtMigQKFG9baH5JuhSEpG5fzCJGdj7KrBaj
+    MI4ILkiGqxPgCH5I8hPJVzLcHH4JchbK4yHbUH6IPf0LhyKaGIoFeiVEIDojRKSCiiWNa
+    EFaAzZwLaOz4EbdjCvwSdDCwECbYCvwLceCzFjbkJlwoboJqCZfyEizffkEqEsfkM1y4f
+    eNBFraTLUxWaTOMDxaQPBBWaPQsDdayQOC7bkQnCvbqRuD8avQeBcgqH9BRe0N9CDe4QI
+    Qta2JMJjazzIOVaEGoIadUATODblHBIqcEBtMagXKMG9baH5I2h2EHGXfECOFGjyKBAEj
+    9IHFSfnICxWgoH6GffFMOzycpHEF7foN6ywbMH8EVeTOryEavIqEOiTEHCRjZKsB8jOM2

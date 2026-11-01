@@ -1,0 +1,4 @@
+{
+  "comment": "Edge-type overrides by GrappleMap source id (F-13); they win over tag and name rules. Curated core techniques set their type in core.json.",
+  "overrides": {}
+}

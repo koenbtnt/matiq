@@ -14,11 +14,11 @@ hooks:
     - matcher: "Write|Edit|NotebookEdit"
       hooks:
         - type: command
-          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/path-guard.sh '^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json)$|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)' '^mobile/drizzle/.*(snapshot|_journal)[.]json$'"
+          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/path-guard.sh '^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json|app[.]json)$|scripts/taxonomy/|data/taxonomy/|[.]github/workflows/|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)' '^mobile/drizzle/.*(snapshot|_journal)[.]json$'"
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/bash-guard.sh '^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json)$|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)' '^mobile/drizzle/.*(snapshot|_journal)[.]json$'"
+          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/bash-guard.sh '^(mobile/src/(db|domain|repositories|types)/|mobile/drizzle/|mobile/drizzle[.]config[.]ts$|mobile/(package(-lock)?[.]json|babel[.]config[.]js|metro[.]config[.]js|jest[.]config[.]js|jest[.]setup[.]ts|tsconfig[.]json|app[.]json)$|scripts/taxonomy/|data/taxonomy/|[.]github/workflows/|docs/[^/]+/(data-contracts[.]md|verify[.](md|json))$|docs/stack-notes[.]md$)' '^mobile/drizzle/.*(snapshot|_journal)[.]json$'"
   Stop:
     - hooks:
         - type: command

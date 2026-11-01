@@ -1,0 +1,56 @@
+# Shared subflow (outside the flows/** glob, never run alone): clean app state + reseeded DB.
+# design §4.2.3 / plan F-25: dev route matiq://dev/reset, __DEV__ only.
+appId: nl.btnt.matiq
+# METRO_URL = the Metro that serves the dev-client bundle. An env block in a flow file beats the CLI value
+# (observed 2026-11-01), so the default lives in the expression below and the override is the CLI only:
+#   maestro test -e METRO_URL=http://localhost:8082 e2e/maestro
+---
+- launchApp:
+    clearState: true
+    stopApp: true
+# iOS queues one "Open in matIQ?" prompt per simctl openurl and keeps unanswered ones across launches;
+# a stale prompt answered "Open" opens an old link (2026-11-01: a cadence Metro on 8081). Drain them first.
+- repeat:
+    while:
+      visible:
+        text: "Cancel"
+    commands:
+      - tapOn:
+          text: "Cancel"
+# clearState wipes the dev client's remembered server, so a cold start lands in the Expo launcher,
+# not the app (first real run, 2026-11-01). Hand it the bundle URL before waiting for Home.
+- openLink: "matiq://expo-development-client/?url=${typeof METRO_URL === 'undefined' ? 'http://localhost:8081' : METRO_URL}"
+# iOS asks "Open in matIQ?" for a custom-scheme URL opened from outside the app
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: "home.screen"
+    timeout: 60000
+# The first bundle load after clearState shows the dev client's developer-menu onboarding sheet
+# over the app; it swallows the reset link until dismissed.
+- tapOn:
+    text: "Continue"
+    optional: true
+# "Continue" opens the developer menu itself; its X closes it. A floating "Tools" button remains.
+- tapOn:
+    id: "xmark"
+    optional: true
+# clearState already deleted the database, so the app re-seeded on launch; the dev route runs the same
+# wipe + reseed again and finishes in well under a second (measured 2026-11-01), too fast to catch
+# dev.reset.status reliably. Wait for it to be gone and for Home to be back without a bootstrap error.
+- openLink: matiq://dev/reset
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    notVisible:
+      id: "dev.reset.status"
+    timeout: 60000
+- extendedWaitUntil:
+    visible:
+      id: "home.screen"
+    timeout: 60000
+- assertNotVisible:
+    id: "bootstrap.error"

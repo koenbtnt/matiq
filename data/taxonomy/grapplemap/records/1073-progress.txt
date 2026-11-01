@@ -1,0 +1,21 @@
+progress
+properties: top
+ref: Eddie Bravo "Mastering the System" Episode 37 @ 18:24
+ref: Jean Jacques Machado "The Grappler's Handbook - Gi and No-Gi Techniques", Section: Kneeling Closed-Guard Break and Double Underhook Pass @ p77
+todo: jean jacques' version starts/ends with slightly different grips
+    DgaznPusaBDwDicDqSwsdeBRDSbnqxwDcpC1FNa4w9Byd1HzEvgNASByiyCiKgiCHtFzi
+    OKaLgeaIlBxjlHQLSaRKOBnfNKoL2bFLRBYeTK3Mja2M0DaewK1FljpEgImiMJAJli2L5
+    G6oDOWPknQLFEhmTNgManQJLFumuNTMYmKKlImggOzJZgxJOC2glJ2DTgIGqJmbxLtKmb
+    NGuEIciLAGdbPEhIxd6LSFSfBB3JGeFL7GQgkBvKxe2LfGuhgAIEFcMH3KXbNJdNubWIz
+    GbazsxutaCDwEAcFu7wgbfAhFUb1u4wvbABDISa7BfzMeJGQEDgzAJBFiDBuJniFInEoj
+    dKgLcekIdAPjeHaLWa7KNA7gYKQL3bFLXBAgyLXMka6M3CbftMbEYi2EiHfjgKbIakvMm
+    AvkQQkMSjiQyzijgNaJokxPVAtjcNWKmjKPgF5fgOQIofiKmBDeGJvCOf3GfJtbsLlKFb
+    OF5FcdcL7GDbrDII5eqKYFUfuCnKkeSKZGJgvCaKOfJKdGthgA8EVcwHFKQbTISNwbWIy
+    GcazsyuraADyECcGu9whbiAqFWbZu7wwbLBPJbaYBdxgfAHAEdfQAJAVg4BVIQimIaEfj
+    OJ3LdelH4AriHHvLPbAK9C5h9KTL9bRMkDYipLLMna3NgE0hJLWEliiEjG4jjKbHFjoMN
+    uxfGQCFMhHTEuJfbMZCKiSROvLfeN0D4ipRtCCe2ORGyfzLGANcyIBB6fcGqJPbyLpKNb
+    IF0FPdoMSGTbfDsH6gqK0FhfaCzJbg4LgGkfMCcJyibKIGogYBLE6ciHNK2bTIQNBcwIY
+    GdazsyoZaVwAEBcFu5rwdwvRFWb1u0recHw2IZaYBauFbeCSDkeYAMAafwCGImh1HTDwj
+    cJWKBdTHRAZhNGdLKb9LxDqhiJKMfcxMHDUg1KSMxbNNFDUfMLkDGhzEeGmi1JGHiiHMb
+    pwbvLLt6j6Mrs2beKIvlhDJVsdcmLcvZisKXxlfTOgCkhaNuBIclKfBVeoHbKabDLtKYb
+    AFTFWcAM9Haa2DbEVfNKEE9eVCJFogXKAFBf1CjESh2KfE0g1BQFmbMH0K2bDIKNhc0Jl

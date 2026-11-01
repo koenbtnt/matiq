@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-10-31
-- **Deciders:** PO (user) for the ruled model (R-03, R-05, R-06, R-07, R-10, R-19, R-20); planner, pending PO (2026-10-31) for review columns on `sessions` (D-11, A-12)
+- **Deciders:** PO (user) for the ruled model (R-03, R-05, R-06, R-07, R-10, R-19, R-20); review columns on `sessions` (D-11, A-12) ruled R-40 (2026-11-01, "Q5: yes")
 - **Decision ids:** D-04, D-10..D-15, D-19 / R-03, R-05..R-07, R-10, R-19, R-20
 - **Source:** `docs/decisions.md` Product R-03, R-05, R-06, R-07, R-10, R-19, R-20; plan §0 D-04, D-10..D-15, D-19, §4.
 
@@ -34,7 +34,7 @@ The core loop plan -> train -> log -> review needs a record model that supports 
 
 ## Considered options
 
-- Review columns on `sessions` (one review per session, same screen): assumed, pending PO (2026-10-31), A-12; not a ruling (chosen); a separate `session_reviews` table: rejected.
+- Review columns on `sessions` (one review per session, same screen): ruled R-40 (2026-11-01), formerly A-12 (chosen); a separate `session_reviews` table: rejected.
 - Session-level `submissions` with nullable `round_id` and `technique_id`, so submissions can be tied to a technique with detailed rounds off (chosen).
 
 ## Decision outcome
@@ -43,6 +43,6 @@ The core loop plan -> train -> log -> review needs a record model that supports 
 
 ## Consequences
 
-- Assumed, pending PO (2026-10-31), A-12: review storage as columns on `sessions` rather than a `session_reviews` table. This part of the ADR is provisional; the rest is ruled.
+- Ruled R-40 (2026-11-01, "Q5: yes"), formerly A-12: review storage as columns on `sessions` rather than a `session_reviews` table. The whole ADR is now ruled.
 - Assumed, pending PO: A-1 round outcome vocabulary, A-5 one active cycle at a time, A-7 reading of "<= 2 taps", A-8 partner belt inside `context_note`.
 - Reminder columns arrive in migration 0002 (sprint 3).

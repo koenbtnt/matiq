@@ -1,0 +1,16 @@
+spiral
+properties: bottom
+ref: Ostap Manastyrski & Stephan Kesting "Reverse de la Riva Guard: A Step by Step Tutorial" https://www.youtube.com/watch?v=lj985a5UJl0 @ 6:41
+ref: Pablo Popovitch "NoGi Guard Secrets", DVD 2: Reverse Half Guard, Section 7: Reverse Half to Inverted Back Take @ 16:20
+    ZZaEJvKaazIu20a2HlM3aEF41YbUHNMdbAGLWXgiJzMohWJtUsmGIvQYmxHaSLvHKHOGu
+    4HwT4rlLXNIqLFSQkpCMGLCn5IyO3pjMAK2ojJIOIn4MEKyndKiSyqxHHQtwwJcOMyzJI
+    PwoGJuOTmqFNNPmkG9ODiXECNHmGIBOOjxFUIaivJqOLf5LSH7cSFlJ9ccIoBRfhLxF5d
+    OOpC8eAG4JQcbL3GjgMFpL9bwIpG6hKFRMSbbHpIohxFINcbWGpFPbMIPDveTNRCWg7Pg
+    Z9aHMYKaazIuYea0JRM2aEF5YCbVKSMebAGLXniAMkMohVJsT8mUHUQwmWG2TDvNLaPbv
+    YIIUBrxMRN7rBHlRwoJNeLUoBJxQUnWN0KQoaKdQrmONyKAmSJZSeqQH4Q8wXKrPSywMc
+    ONoTJ4PPlUFINimdHVOaiBE4M5mLJdOFjjGbIri4MIOIeBLkF2fQG6I0dFHtEKdYO6Ivc
+    tN6DhgiK6MOaTOAGdiwM1KKbBKMFIi4N3JOb3JWGsjSOKJWbRIEFgcbJeHgdSP6GVf1Rz
+    Z9aHMYKaazIuYea0JRM2aEF5YCbVKSMebAGLXniAMkMohVJsT9mUHUQwmXG2TDvMLaPbv
+    YIIUBrxMRN7rBHlRwoJNeLUoBJxQUnWN0KQoaKdQrmONyKAmSJZSeqQH4Q8wXKrPSywMc
+    O5o9KhQalmFLNlmpIpNWiqFnNDmIJQODiYGAKVigOmNmd0LjF8g7JuHOeCHhH0dOQ7LQb
+    7N2HLhTOMJaaZKkLJgMOEKscEGtMzfXO9LucXFONOf2OyMIcKF4GIdeLhKCdsQfMafbRy
