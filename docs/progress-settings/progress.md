@@ -2,10 +2,10 @@
 
 ## Current state
 
-- HEAD: 13cef42 + this; green frontend-coder @ 0e8d4db; tester 13/13 @ 416dd64 (10 whole-suite + 3 single-flow)
-- Step: 8 — reviewer-code (review 2)
-- Live agents: reviewer-code; coders, tester, documenter idle for rework
-- Next action: gate REVIEW PASSED → close-out
+- HEAD: 8735431 + close-out commit
+- Step: 9 — close-out (done.md, carry-over, README, PR)
+- Live agents: none
+- Next action: PR into develop, green CI, report to PO
 - Blockers: none
 - Uncommitted: none
 - Env: simulator iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), dev-client installed; Metro on 8082; Maestro at `~/.maestro/bin/maestro`
@@ -27,3 +27,4 @@
 - frontend-coder · CODING COMPLETE (A-1, A-2) · 0e8d4db, e2ed248
 - tester · TESTING COMPLETE 13/13 · 416dd64
 - documenter · DOCS COMPLETE (decisions.md R-52..R-56 appended by orchestrator; guard) · 13cef42
+- reviewer-code · REVIEW PASSED (R2-01…07, no B) · 8735431
