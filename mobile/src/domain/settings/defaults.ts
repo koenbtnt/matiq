@@ -43,7 +43,24 @@ export const SETTING_KEYS = Object.keys(SETTING_DEFAULTS) as SettingKey[];
 
 export const isSettingKey = (key: string): key is SettingKey => Object.hasOwn(SETTING_DEFAULTS, key);
 
-/** Throws SETTING_UNKNOWN / SETTING_TYPE_MISMATCH; returns the value unchanged when valid. */
+/** Allowed values of the STRING keys (PS-08). */
+export const SETTING_VOCABULARIES: Partial<Record<SettingKey, readonly string[]>> = {
+  'algorithm.version': ['v1'],
+  'rank.scale': ['ADULT', 'KIDS'],
+  'theme.override': ['SYSTEM', 'LIGHT', 'DARK'],
+};
+
+/** Inclusive ranges of INT keys that have one (plan §8.3). */
+export const SETTING_INT_RANGES: Partial<Record<SettingKey, { min: number; max: number }>> = {
+  'suggest.max': { min: 0, max: 10 },
+};
+
+export type ThemeOverride = 'SYSTEM' | 'LIGHT' | 'DARK';
+
+/**
+ * Throws SETTING_UNKNOWN / SETTING_TYPE_MISMATCH / SETTING_VALUE_INVALID (STRING outside its
+ * vocabulary, INT outside its range); returns the value unchanged when valid.
+ */
 export function validateSettingValue<K extends SettingKey>(key: string, value: unknown): SettingValue<K> {
   if (!isSettingKey(key)) throw new DomainError('SETTING_UNKNOWN', { key });
   const type = SETTING_DEFAULTS[key].valueType;
@@ -52,6 +69,11 @@ export function validateSettingValue<K extends SettingKey>(key: string, value: u
     (type === 'INT' && typeof value === 'number' && Number.isInteger(value)) ||
     (type === 'STRING' && typeof value === 'string');
   if (!ok) throw new DomainError('SETTING_TYPE_MISMATCH', { key });
+  const vocab = SETTING_VOCABULARIES[key];
+  if (vocab && !vocab.includes(value as string)) throw new DomainError('SETTING_VALUE_INVALID', { key });
+  const range = SETTING_INT_RANGES[key];
+  if (range && ((value as number) < range.min || (value as number) > range.max))
+    throw new DomainError('SETTING_VALUE_INVALID', { key, min: range.min, max: range.max });
   return value as SettingValue<K>;
 }
 

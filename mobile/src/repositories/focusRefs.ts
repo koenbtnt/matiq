@@ -3,7 +3,7 @@ import { inArray } from 'drizzle-orm';
 import type { Db } from '../db/client';
 import { positions, subjects } from '../db/schema';
 import type { FocusKind } from './contracts';
-import { aliasMap } from './taxonomy';
+import { aliasMap } from './taxonomyRows';
 
 export type RefInfo = { name: string; aliases: string[]; removed: boolean };
 

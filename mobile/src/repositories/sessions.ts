@@ -16,6 +16,7 @@ import type {
 } from './contracts';
 import { refKey, resolveRefs } from './focusRefs';
 import { compact, opt } from './internal';
+import { progressStatesSync } from './progression';
 import { currentRankSync } from './rank';
 import { listRoundsSync, upsertRoundsSync } from './rounds';
 import { runtime } from './runtime';
@@ -377,9 +378,12 @@ export const sessions = {
     return detailSync(sessionId, database);
   },
 
-  /** Everything Home renders, in one read (F-22, R1-04 partition by local date). */
-  async home({ today }: { today: string; now?: string }, database: Db = getDb()): Promise<HomeData> {
-    return homeSync(today, database);
+  /**
+   * Everything Home renders, in one read (F-22, R1-04 partition by local date). Suggestions use
+   * `progression.overview` (PS-06); `now` (ISO UTC) defaults to the runtime clock.
+   */
+  async home({ today, now }: { today: string; now?: string }, database: Db = getDb()): Promise<HomeData> {
+    return homeSync(today, database, now ?? runtime().now());
   },
 
   /** Pure target rule of Home's quick log (product-spec §6). */
@@ -405,7 +409,7 @@ function setStatus(
   );
 }
 
-export function homeSync(today: string, database: Db): HomeData {
+export function homeSync(today: string, database: Db, nowIso: string = runtime().now()): HomeData {
   const planned = summaries(eq(sessionsTable.status, 'PLANNED'), [asc(sessionsTable.startsAt)], undefined, database);
   const { stalePlanned, todayPlanned, nextPlanned } = partitionPlanned(planned, today);
   const recent = summaries(eq(sessionsTable.status, 'COMPLETED'), [desc(sessionsTable.startsAt), desc(sessionsTable.createdAt)], 5, database);
@@ -419,7 +423,7 @@ export function homeSync(today: string, database: Db): HomeData {
     recent,
     lastCompleted,
     lastUsedTypeId: lastCompleted?.sessionTypeId,
-    suggestions: forPlanning({ settings: settingsMap, lastCompleted }),
+    suggestions: forPlanning({ settings: settingsMap, lastCompleted, states: progressStatesSync({ today, nowIso }, database) }),
     rank: currentRankSync(database),
   });
 }
