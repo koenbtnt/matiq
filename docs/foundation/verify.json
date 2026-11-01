@@ -1,186 +1,27 @@
 [
-  {
-    "agent": "frontend-coder",
-    "sha": "5af8e0f",
-    "date": "2026-11-01",
-    "command": "npx tsc --noEmit",
-    "exit": 2,
-    "notes": "0 errors in frontend paths; 1 in src/db/nativeDeps.ts (data-coder WIP)"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "5af8e0f",
-    "date": "2026-11-01",
-    "command": "npx jest --watchAll=false",
-    "exit": 1,
-    "notes": "UI suites 10/10, 492 tests pass; 3 failures in src/db/__tests__/migrations.test.ts (data-coder)"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "5af8e0f",
-    "date": "2026-11-01",
-    "command": "node scripts/sync-design-tokens.mjs --check",
-    "exit": 0,
-    "notes": ""
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "5af8e0f",
-    "date": "2026-11-01",
-    "command": "node scripts/check-token-adherence.mjs",
-    "exit": 0,
-    "notes": ""
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "5af8e0f",
-    "date": "2026-11-01",
-    "command": "npx expo-doctor",
-    "exit": 0,
-    "notes": "20/20"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "5af8e0f",
-    "date": "2026-11-01",
-    "command": "npx expo run:ios (smoke)",
-    "exit": null,
-    "notes": "INFRA UNAVAILABLE: CocoaPods missing"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "npx tsc --noEmit (mobile/)",
-    "exit": 0,
-    "notes": "0 errors"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "npx tsc -p ../scripts/taxonomy/tsconfig.json (mobile/)",
-    "exit": 0,
-    "notes": "0 errors; typeRoots ../../mobile/node_modules/@types, types node+jest"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "npx jest --watchAll=false src/db src/domain src/repositories ../scripts/taxonomy",
-    "exit": 0,
-    "notes": "16 suites, 391 tests passed"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "npx jest --watchAll=false (mobile/)",
-    "exit": 0,
-    "notes": "25 suites, 861 tests passed"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "npx drizzle-kit generate && git diff --exit-code -- mobile/drizzle/",
-    "exit": 0,
-    "notes": "No schema changes, clean diff"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "node scripts/taxonomy/convert.ts && git diff --exit-code -- mobile/src/db/seed/ data/taxonomy/",
-    "exit": 0,
-    "notes": "clean; join sha256 734c5af0\u2026bfa74e; emitted 1249/1485 transitions (84.1 %, below the 95 % target \u2014 see stack-notes)"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "CI=1 npx expo prebuild --platform android --no-install (mobile/)",
-    "exit": 0,
-    "notes": "gradle.properties expo.sqlite.useSQLCipher=true; AndroidManifest android:allowBackup=\"false\"; output untracked (gitignored), not committed"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "CI=1 npx expo prebuild --platform ios --no-install (mobile/)",
-    "exit": 0,
-    "notes": "Podfile.properties.json expo.sqlite.useSQLCipher \"true\"; mobile/ios generated (gitignored), not committed"
-  },
-  {
-    "agent": "data-coder",
-    "sha": "83e6f12",
-    "date": "2026-11-01",
-    "command": "npx expo run:ios (not run)",
-    "exit": "INFRA UNAVAILABLE",
-    "notes": "INFRA UNAVAILABLE \u2014 CocoaPods missing (PO: brew install cocoapods); encryption not verified on device, never mocked green"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "d7a1134",
-    "date": "2026-11-01",
-    "command": "npx tsc --noEmit",
-    "exit": 0,
-    "notes": "0 errors"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "d7a1134",
-    "date": "2026-11-01",
-    "command": "npx jest --watchAll=false",
-    "exit": 0,
-    "notes": "Test Suites: 26 passed, 26 total; Tests: 910 passed, 0 failed"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "d7a1134",
-    "date": "2026-11-01",
-    "command": "node scripts/sync-design-tokens.mjs --check",
-    "exit": 0,
-    "notes": ""
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "d7a1134",
-    "date": "2026-11-01",
-    "command": "node scripts/check-token-adherence.mjs",
-    "exit": 0,
-    "notes": ""
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "d7a1134",
-    "date": "2026-11-01",
-    "command": "npx expo-doctor",
-    "exit": 0,
-    "notes": "20/20"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "d7a1134",
-    "date": "2026-11-01",
-    "command": "npx expo run:ios (smoke)",
-    "exit": "INFRA UNAVAILABLE",
-    "notes": "CocoaPods missing (PO: brew install cocoapods); no dev-client build, no simulator smoke; never mocked green"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "17ffe6e",
-    "date": "2026-11-01",
-    "command": "npx tsc --noEmit",
-    "exit": 0,
-    "notes": "0 errors"
-  },
-  {
-    "agent": "frontend-coder",
-    "sha": "17ffe6e",
-    "date": "2026-11-01",
-    "command": "npx jest --watchAll=false",
-    "exit": 0,
-    "notes": "Test Suites: 26 passed; Tests: 912 passed, 0 failed"
-  }
+  {"agent": "frontend-coder", "sha": "5af8e0f", "date": "2026-11-01", "command": "npx tsc --noEmit", "exit": 2, "notes": "0 errors in frontend paths; 1 in src/db/nativeDeps.ts (data-coder WIP)"},
+  {"agent": "frontend-coder", "sha": "5af8e0f", "date": "2026-11-01", "command": "npx jest --watchAll=false", "exit": 1, "notes": "UI suites 10/10, 492 tests pass; 3 failures in src/db/__tests__/migrations.test.ts (data-coder)"},
+  {"agent": "frontend-coder", "sha": "5af8e0f", "date": "2026-11-01", "command": "node scripts/sync-design-tokens.mjs --check", "exit": 0, "notes": ""},
+  {"agent": "frontend-coder", "sha": "5af8e0f", "date": "2026-11-01", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": ""},
+  {"agent": "frontend-coder", "sha": "5af8e0f", "date": "2026-11-01", "command": "npx expo-doctor", "exit": 0, "notes": "20/20"},
+  {"agent": "frontend-coder", "sha": "5af8e0f", "date": "2026-11-01", "command": "npx expo run:ios (smoke)", "exit": null, "notes": "INFRA UNAVAILABLE: CocoaPods missing"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "npx tsc --noEmit (mobile/)", "exit": 0, "notes": "0 errors"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "npx tsc -p ../scripts/taxonomy/tsconfig.json (mobile/)", "exit": 0, "notes": "0 errors; typeRoots ../../mobile/node_modules/@types, types node+jest"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "npx jest --watchAll=false src/db src/domain src/repositories ../scripts/taxonomy", "exit": 0, "notes": "16 suites, 391 tests passed"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "npx jest --watchAll=false (mobile/)", "exit": 0, "notes": "25 suites, 861 tests passed"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "npx drizzle-kit generate && git diff --exit-code -- mobile/drizzle/", "exit": 0, "notes": "No schema changes, clean diff"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "node scripts/taxonomy/convert.ts && git diff --exit-code -- mobile/src/db/seed/ data/taxonomy/", "exit": 0, "notes": "clean; join sha256 734c5af0…bfa74e; emitted 1249/1485 transitions (84.1 %, below the 95 % target — see stack-notes)"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "CI=1 npx expo prebuild --platform android --no-install (mobile/)", "exit": 0, "notes": "gradle.properties expo.sqlite.useSQLCipher=true; AndroidManifest android:allowBackup=\"false\"; output untracked (gitignored), not committed"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "CI=1 npx expo prebuild --platform ios --no-install (mobile/)", "exit": 0, "notes": "Podfile.properties.json expo.sqlite.useSQLCipher \"true\"; mobile/ios generated (gitignored), not committed"},
+  {"agent": "data-coder", "sha": "83e6f12", "date": "2026-11-01", "command": "npx expo run:ios (not run)", "exit": "INFRA UNAVAILABLE", "notes": "INFRA UNAVAILABLE — CocoaPods missing (PO: brew install cocoapods); encryption not verified on device, never mocked green"},
+  {"agent": "frontend-coder", "sha": "d7a1134", "date": "2026-11-01", "command": "npx tsc --noEmit", "exit": 0, "notes": "0 errors"},
+  {"agent": "frontend-coder", "sha": "d7a1134", "date": "2026-11-01", "command": "npx jest --watchAll=false", "exit": 0, "notes": "Test Suites: 26 passed, 26 total; Tests: 910 passed, 0 failed"},
+  {"agent": "frontend-coder", "sha": "d7a1134", "date": "2026-11-01", "command": "node scripts/sync-design-tokens.mjs --check", "exit": 0, "notes": ""},
+  {"agent": "frontend-coder", "sha": "d7a1134", "date": "2026-11-01", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": ""},
+  {"agent": "frontend-coder", "sha": "d7a1134", "date": "2026-11-01", "command": "npx expo-doctor", "exit": 0, "notes": "20/20"},
+  {"agent": "frontend-coder", "sha": "d7a1134", "date": "2026-11-01", "command": "npx expo run:ios (smoke)", "exit": "INFRA UNAVAILABLE", "notes": "CocoaPods missing (PO: brew install cocoapods); no dev-client build, no simulator smoke; never mocked green"},
+  {"agent": "frontend-coder", "sha": "17ffe6e", "date": "2026-11-01", "command": "npx tsc --noEmit", "exit": 0, "notes": "0 errors"},
+  {"agent": "frontend-coder", "sha": "17ffe6e", "date": "2026-11-01", "command": "npx jest --watchAll=false", "exit": 0, "notes": "Test Suites: 26 passed; Tests: 912 passed, 0 failed"},
+  {"agent": "data-coder", "sha": "6093d47", "date": "2026-11-01", "command": "npx tsc --noEmit (mobile/)", "exit": 0, "notes": "0 errors"},
+  {"agent": "data-coder", "sha": "6093d47", "date": "2026-11-01", "command": "npx jest --watchAll=false (mobile/)", "exit": 0, "notes": "29 suites, 928 tests passed; adds bootstrapDatabase, useDatabaseBootstrap, readHooks suites (defect round 1)"}
 ]
