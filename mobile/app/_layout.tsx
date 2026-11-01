@@ -7,13 +7,17 @@ import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { backupExclusionAdapter } from '../modules/matiq-backup';
 import { ToastHost } from '../src/components/Toast';
 import { BootstrapErrorScreen } from '../src/features/bootstrap/BootstrapErrorScreen';
 import { ThemeOverride } from '../src/features/profile/ThemeOverride';
-import { useDataActions, useDatabaseBootstrap } from '../src/hooks/data';
+import { setBootstrapOverrides, useDataActions, useDatabaseBootstrap } from '../src/hooks/data';
 import { fontMap } from '../src/hooks/fonts';
 import { radius, textStyle } from '../src/theme/tokens';
 import { useTheme } from '../src/theme/useTheme';
+
+// The native adapter must be in place before the first bootstrap (plan S6, CO-28).
+setBootstrapOverrides({ backupExclusion: backupExclusionAdapter });
 
 // Hold the native splash until fonts AND the bootstrap gate resolve (plan §7).
 void SplashScreen.preventAutoHideAsync();
