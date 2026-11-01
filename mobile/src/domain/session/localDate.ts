@@ -60,3 +60,13 @@ export function weekStartOf(date: string): string {
   const weekday = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]))).getUTCDay(); // 0 = Sunday
   return addDays(date, -((weekday + 6) % 7));
 }
+
+/** Whole calendar days from `from` to `to` (`to − from`; negative when `to` is earlier). UTC-safe: no zone math. */
+export function diffDays(from: string, to: string): number {
+  const ms = (date: string): number => {
+    const m = LOCAL_DATE.exec(date);
+    if (!m) throw new DomainError('SESSION_START_INVALID');
+    return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  };
+  return Math.round((ms(to) - ms(from)) / 86_400_000);
+}

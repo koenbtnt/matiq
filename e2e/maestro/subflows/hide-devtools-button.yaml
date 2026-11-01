@@ -1,0 +1,9 @@
+# Shared subflow (outside the flows/** glob): drag the dev client's floating tools button off the header.
+# It sits on top of the top-right header controls (Library plus, Technique Edit) and swallows taps there
+# (first full run, 2026-11-01). clearState resets its position, so a flow that needs those taps runs this after reset.
+appId: nl.btnt.matiq
+---
+- swipe:
+    start: "91%,10%"
+    end: "91%,50%"
+    duration: 800

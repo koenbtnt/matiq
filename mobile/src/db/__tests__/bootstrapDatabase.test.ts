@@ -12,7 +12,9 @@ import { setRuntime } from '../../repositories/runtime';
 import { sessionTypes } from '../../repositories/sessionTypes';
 import { ensureSeeded } from '../../repositories/seed';
 import { catalogFixture, taxonomyFixture } from '../../repositories/testing/fixtures';
-import { bootstrapDatabase, closeCurrent, type BootstrapDeps } from '../bootstrap';
+import { fakeBackupExclusion } from '../backup';
+import { bootstrapDatabase, closeCurrent, setBootstrapOverrides, type BootstrapDeps } from '../bootstrap';
+import { resetDatabase } from '../lifecycle';
 import { getDb, hasDb, setDb, type Db } from '../client';
 import { MemoryKeyStore } from '../key/memory';
 import { secureKeyStore } from '../key/secureStore';
@@ -140,5 +142,68 @@ describe('nativeBootstrapDeps / deleteDatabaseFiles', () => {
     deleteDatabaseFiles('matiq.db');
     expect(SQLite.deleteDatabaseSync).toHaveBeenCalledWith('matiq.db');
     expect(mockDeleted).toEqual(['file:///data/SQLite/matiq.db-wal']);
+  });
+});
+
+describe('backup exclusion seam (PS-17, plan §9.1)', () => {
+  const DIR = 'file:///data/SQLite';
+  afterEach(() => setBootstrapOverrides({}));
+
+  it('nativeBootstrapDeps defaults to not_applicable; targets are the directory, then the files that exist', async () => {
+    const deps = nativeBootstrapDeps();
+    expect(await deps.backupExclusion!.exclude(['x'])).toEqual({ status: 'not_applicable', failed: [] });
+    expect(deps.backupTargets!('matiq.db')).toEqual([DIR]);
+    mockExisting.add(`${DIR}/matiq.db`).add(`${DIR}/matiq.db-shm`);
+    expect(deps.backupTargets!('matiq.db')).toEqual([DIR, `${DIR}/matiq.db`, `${DIR}/matiq.db-shm`]);
+  });
+
+  it('the default records not_applicable and the check date in app_meta', async () => {
+    expect((await bootstrapDatabase({ ...realSqlite(), keyStore: new MemoryKeyStore(KEY) })).ok).toBe(true);
+    expect(await getAppMeta('backup_exclusion', getDb())).toBe('not_applicable');
+    expect(await getAppMeta('backup_exclusion_checked_at', getDb())).toBe('2026-03-02');
+  });
+
+  it('setBootstrapOverrides reaches bootstrapDatabase: directory URI first, then matiq.db, -wal, -shm', async () => {
+    const fake = fakeBackupExclusion();
+    setBootstrapOverrides({ backupExclusion: fake });
+    mockExisting.add(`${DIR}/matiq.db`).add(`${DIR}/matiq.db-wal`).add(`${DIR}/matiq.db-shm`);
+    expect((await bootstrapDatabase({ ...realSqlite(), keyStore: new MemoryKeyStore(KEY) })).ok).toBe(true);
+    expect(fake.calls).toEqual([[DIR, `${DIR}/matiq.db`, `${DIR}/matiq.db-wal`, `${DIR}/matiq.db-shm`]]);
+    expect(await getAppMeta('backup_exclusion', getDb())).toBe('excluded');
+  });
+
+  it('a failed result or a throwing adapter still yields ok: true, records failed and warns', async () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    setBootstrapOverrides({ backupExclusion: fakeBackupExclusion({ status: 'failed', failed: [DIR] }) });
+    expect((await bootstrapDatabase({ ...realSqlite(), keyStore: new MemoryKeyStore(KEY) })).ok).toBe(true);
+    expect(await getAppMeta('backup_exclusion', getDb())).toBe('failed');
+    closeCurrent();
+    setBootstrapOverrides({ backupExclusion: { exclude: () => Promise.reject(new Error('native')) } });
+    expect((await bootstrapDatabase({ ...realSqlite(), keyStore: new MemoryKeyStore(KEY) })).ok).toBe(true);
+    expect(await getAppMeta('backup_exclusion', getDb())).toBe('failed');
+    expect(warn).toHaveBeenCalledTimes(2);
+    warn.mockRestore();
+  });
+
+  it('setBootstrapOverrides reaches the bootstrap inside resetDatabase (re-run on the new files)', async () => {
+    const fake = fakeBackupExclusion();
+    const keyStore = new MemoryKeyStore(KEY);
+    setBootstrapOverrides({ ...realSqlite(), keyStore, backupExclusion: fake });
+    expect((await bootstrapDatabase()).ok).toBe(true);
+    await resetDatabase({ keepKey: true }, { keyStore, deleteFiles: () => undefined });
+    expect(fake.calls).toHaveLength(2);
+    expect(await getAppMeta('backup_exclusion', getDb())).toBe('excluded');
+  });
+
+  it('src/db never imports mobile/modules (S6)', () => {
+    const fs = jest.requireActual<typeof import('node:fs')>('node:fs');
+    const path = jest.requireActual<typeof import('node:path')>('node:path');
+    const root = path.join(__dirname, '..');
+    const walk = (dir: string): string[] =>
+      fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory() ? walk(path.join(dir, e.name)) : /\.tsx?$/.test(e.name) ? [path.join(dir, e.name)] : [],
+      );
+    const offenders = walk(root).filter((f) => /from ['"][^'"]*modules\//.test(fs.readFileSync(f, 'utf8').replace(/\/\/.*$/gm, '')));
+    expect(offenders.filter((f) => !f.includes('__tests__'))).toEqual([]);
   });
 });

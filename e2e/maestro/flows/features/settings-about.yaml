@@ -1,0 +1,42 @@
+appId: nl.btnt.matiq
+name: Settings about - attribution link and backup status
+tags:
+  - features
+  - settings
+env:
+  SLUG: bjj-data-by-grapple-flows   # kebab-case of attribution.json source.name (design P-27)
+---
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "tabs.profile"
+- extendedWaitUntil:
+    visible:
+      id: "profile.screen"
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      id: "profile.about"
+- tapOn:
+    id: "profile.about"
+- extendedWaitUntil:
+    visible:
+      id: "about.screen"
+    timeout: 10000
+- assertVisible:
+    id: "about.version"
+# backup exclusion status (R-39); copy is the thing under test
+- scrollUntilVisible:
+    element:
+      id: "about.backup.status"
+- assertVisible:
+    id: "about.backup.status"
+    text: "Your training data is excluded from iCloud and computer backups.*"
+# CC BY 4.0 attribution (CO-35): block, licence and the source link
+- scrollUntilVisible:
+    element:
+      id: "about.attribution.${SLUG}.link"
+- assertVisible:
+    id: "about.attribution.${SLUG}"
+- assertVisible:
+    id: "about.attribution.${SLUG}.link"
+- assertVisible: ".*CC BY 4.0.*"

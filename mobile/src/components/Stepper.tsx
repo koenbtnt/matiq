@@ -24,11 +24,13 @@ type Props = {
   moreLabel: string;
   /** testIDs: `<prefix>.less`, `.more`, `.value`. */
   testIDPrefix: string;
+  /** Spoken label when the visible caption is drawn by the caller (Algorithm param fields). */
+  accessibilityLabel?: string;
   /** Overline label above (omit to render the control alone). */
   label?: string;
 };
 
-export function Stepper({ value, onChange, min, max, step = 1, firstValue, unsetText, unit, lessLabel, moreLabel, testIDPrefix, label }: Props) {
+export function Stepper({ value, onChange, min, max, step = 1, firstValue, unsetText, unit, lessLabel, moreLabel, testIDPrefix, label, accessibilityLabel }: Props) {
   const { t } = useTranslation();
   const { c } = useTheme();
   const now = value ?? min;
@@ -68,7 +70,7 @@ export function Stepper({ value, onChange, min, max, step = 1, firstValue, unset
           testID={`${testIDPrefix}.value`}
           accessible
           accessibilityRole="adjustable"
-          accessibilityLabel={label}
+          accessibilityLabel={label ?? accessibilityLabel}
           accessibilityValue={value === undefined ? { text: t('log.notSet') } : { min, max, now: value }}
           accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
           onAccessibilityAction={(e) => {

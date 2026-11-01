@@ -44,6 +44,8 @@ treated as CSS px for the large-text threshold (≥ 24 regular or ≥ 18.67 at 7
 | #FFFFFF on rgba(11,12,14,0.8) (over bg-raised) | #FFFFFF on #38393A | 11.57 | #FFFFFF on #0F1013 | 19.02 | video duration 12/600 (Technique.dc.html:28) | L pass · D pass (≥4.5) |
 | feedback-warning on feedback-warning-tint (on bg-base) | #8F5600 on #FCEBD2 | 5.13 | #FFB547 on #322717 | 8.31 | Flagged badge 11/700 (Home suggestion rows; sprint foundation, design.md §9.1) | L pass · D pass (≥4.5) |
 | feedback-danger on feedback-danger-tint (on bg-base) | #C4223F on #FCE3E8 | 4.74 | #FF5C7A on #2D171D | 5.64 | destructive button 15/600 (bootstrap error screen; sprint foundation, design.md §9.1) | L pass · D pass (≥4.5) |
+| accent-on on accent-graphic | #0B0C0E on #17B061 | 6.91 | #0B0C0E on #2EDB7F | 10.77 | heatmap level-2 count 13/500 (sprint progress-settings, design.md §9.1) | L pass · D pass (≥4.5) |
+| inverse-fg on accent-text | #F6F6F3 on #0B7A3E | 5.01 | #0B0C0E on #5FE69C | 12.38 | heatmap level-3 count 13/500 (sprint progress-settings, design.md §9.1) | L pass · D pass (≥4.5) |
 
 **Text failures:**
 
@@ -62,7 +64,7 @@ treated as CSS px for the large-text threshold (≥ 24 regular or ≥ 18.67 at 7
 | accent-graphic on bg-surface | #17B061 on #FFFFFF | 2.83 | #2EDB7F on #15171A | 9.88 | chart current bar; intensity bar | L FAIL · D pass (≥3) |
 | accent-graphic on border-default | #17B061 on #DCDCD6 | 2.06 | #2EDB7F on #2A2E33 | 7.52 | intensity filled vs empty segment | L FAIL · D pass (≥3) |
 | border-default on bg-raised | #DCDCD6 on #EEEEEA | 1.18 | #2A2E33 on #1E2125 | 1.18 | input 1px boundary | L FAIL · D FAIL (≥3) |
-| border-default on bg-surface | #DCDCD6 on #FFFFFF | 1.38 | #2A2E33 on #15171A | 1.31 | card hairline (decorative) | L FAIL · D FAIL (≥3) |
+| border-default on bg-surface | #DCDCD6 on #FFFFFF | 1.38 | #2A2E33 on #15171A | 1.31 | card hairline (decorative); heatmap out-of-window cell edge (sprint progress-settings: in/out of window carried by captions and week labels) | L FAIL · D FAIL (≥3) |
 | border-strong on bg-raised | #C9C9C2 on #EEEEEA | 1.43 | #3A3F45 on #1E2125 | 1.52 | outlined button edge (next-class Details) | L FAIL · D FAIL (≥3) |
 | border-strong on bg-surface | #C9C9C2 on #FFFFFF | 1.66 | #3A3F45 on #15171A | 1.69 | chart inactive bars | L FAIL · D FAIL (≥3) |
 | border-stronger on bg-surface | #A9AAA3 on #FFFFFF | 2.34 | #4A4F56 on #15171A | 2.18 | dashed add-chip edge; sheet handle on surface | L FAIL · D FAIL (≥3) |
@@ -90,12 +92,28 @@ treated as CSS px for the large-text threshold (≥ 24 regular or ≥ 18.67 at 7
 | belt-kids-yellow on bg-surface | #F2C230 on #FFFFFF | 1.68 | #F2C230 on #15171A | 10.72 | kids belt fill | L FAIL · D pass (≥3) |
 | belt-kids-orange on bg-surface | #F2862E on #FFFFFF | 2.55 | #F2862E on #15171A | 7.03 | kids belt fill | L FAIL · D pass (≥3) |
 | belt-kids-green on bg-surface | #2FA35A on #FFFFFF | 3.23 | #2FA35A on #15171A | 5.56 | kids belt fill | L pass · D pass (≥3) |
-| bg-raised on bg-surface | #EEEEEA on #FFFFFF | 1.16 | #1E2125 on #15171A | 1.11 | input / stepper / segment container fill vs sheet or card | L FAIL · D FAIL (≥3) |
+| bg-raised on bg-surface | #EEEEEA on #FFFFFF | 1.16 | #1E2125 on #15171A | 1.11 | input / stepper / segment container fill vs sheet or card; heatmap level-0 cell and its legend swatch on the card (sprint progress-settings: digit and "None" caption carry it) | L FAIL · D FAIL (≥3) |
 | bg-raised on bg-base | #EEEEEA on #F6F6F3 | 1.07 | #1E2125 on #0B0C0E | 1.21 | search field, next-class card vs screen | L FAIL · D FAIL (≥3) |
 | inverse-bg on bg-raised | #15171A on #EEEEEA | 15.44 | #F4F4F1 on #1E2125 | 14.67 | selected segment vs segment track | L pass · D pass (≥3) |
 | accent-fill on tabbar (over bg-base) | #2EDB7F on #FFFFFF | 1.82 | #2EDB7F on #15171A | 9.88 | Log action in tab bar | L FAIL · D pass (≥3) |
 | accent-tint on bg-surface | #DCF8E8 on #FFFFFF | 1.13 | #19362A on #15171A | 1.37 | selected chip fill (state also carried by accent-border + check icon) | L FAIL · D FAIL (≥3) |
 | accent-fill vs belt-kids-green | #2EDB7F on #2FA35A | 1.78 | #2EDB7F on #2FA35A | 1.78 | distinctness check (matiq-design.html:91), not a WCAG pair | L FAIL · D FAIL (≥3) |
+| accent-text on bg-surface (fill) | #0B7A3E on #FFFFFF | 5.43 | #5FE69C on #15171A | 11.36 | heatmap level-3 cell fill (sprint progress-settings) | L pass · D pass (≥3) |
+| bg-raised vs accent-tint (on bg-surface) | #EEEEEA on #DCF8E8 | 1.03 | #1E2125 on #19362A | 1.23 | heatmap level 0 vs level 1 (count digit carries the value) | L FAIL · D FAIL (≥3) |
+| accent-tint (on bg-surface) vs accent-graphic | #DCF8E8 on #17B061 | 2.51 | #19362A on #2EDB7F | 7.21 | heatmap level 1 vs level 2 | L FAIL · D pass (≥3) |
+| accent-graphic vs accent-text | #17B061 on #0B7A3E | 1.92 | #2EDB7F on #5FE69C | 1.15 | heatmap level 2 vs level 3 (count digit carries the value; DSR-30) | L FAIL · D FAIL (≥3) |
+| belt-white on belt-kids-grey | #EDEDE8 on #8E9196 | 2.69 | #EDEDE8 on #8E9196 | 2.69 | GREY_WHITE band (name always shown) | L FAIL · D FAIL (≥3) |
+| belt-white on belt-kids-yellow | #EDEDE8 on #F2C230 | 1.43 | #EDEDE8 on #F2C230 | 1.43 | YELLOW_WHITE band (name always shown) | L FAIL · D FAIL (≥3) |
+| belt-white on belt-kids-orange | #EDEDE8 on #F2862E | 2.17 | #EDEDE8 on #F2862E | 2.17 | ORANGE_WHITE band (name always shown) | L FAIL · D FAIL (≥3) |
+| belt-white on belt-kids-green | #EDEDE8 on #2FA35A | 2.75 | #EDEDE8 on #2FA35A | 2.75 | GREEN_WHITE band (name always shown) | L FAIL · D FAIL (≥3) |
+| belt-black on belt-kids-grey | #111111 on #8E9196 | 5.97 | #111111 on #8E9196 | 5.97 | GREY_BLACK band | L pass · D pass (≥3) |
+| belt-black on belt-kids-yellow | #111111 on #F2C230 | 11.27 | #111111 on #F2C230 | 11.27 | YELLOW_BLACK band | L pass · D pass (≥3) |
+| belt-black on belt-kids-orange | #111111 on #F2862E | 7.40 | #111111 on #F2862E | 7.40 | ORANGE_BLACK band | L pass · D pass (≥3) |
+| belt-black on belt-kids-green | #111111 on #2FA35A | 5.85 | #111111 on #2FA35A | 5.85 | GREEN_BLACK band | L pass · D pass (≥3) |
+| belt-bar on belt-kids-grey | #0B0C0E on #8E9196 | 6.19 | #0B0C0E on #8E9196 | 6.19 | rank bar vs kids fill | L pass · D pass (≥3) |
+| belt-bar on belt-kids-yellow | #0B0C0E on #F2C230 | 11.68 | #0B0C0E on #F2C230 | 11.68 | rank bar vs kids fill | L pass · D pass (≥3) |
+| belt-bar on belt-kids-orange | #0B0C0E on #F2862E | 7.66 | #0B0C0E on #F2862E | 7.66 | rank bar vs kids fill | L pass · D pass (≥3) |
+| belt-bar on belt-kids-green | #0B0C0E on #2FA35A | 6.06 | #0B0C0E on #2FA35A | 6.06 | rank bar vs kids fill | L pass · D pass (≥3) |
 
 **Non-text failures and what they mean:**
 

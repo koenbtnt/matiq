@@ -16,6 +16,14 @@ const ICONS = {
   clock: { ios: 'clock', android: 'schedule' },
   error: { ios: 'exclamationmark.circle', android: 'error' },
   flag: { ios: 'flag', android: 'flag' },
+  progress: { ios: 'chart.line.uptrend.xyaxis', android: 'monitoring' },
+  profile: { ios: 'person.crop.circle', android: 'account_circle' },
+  stateImproving: { ios: 'arrow.up.right', android: 'trending_up' },
+  stateSteady: { ios: 'arrow.right', android: 'trending_flat' },
+  stateNeedsWork: { ios: 'exclamationmark.triangle', android: 'warning' },
+  stateNotTrained: { ios: 'clock.arrow.circlepath', android: 'history' },
+  openLink: { ios: 'arrow.up.right.square', android: 'open_in_new' },
+  streak: { ios: 'flame', android: 'local_fire_department' },
 } as const;
 
 export type IconName = keyof typeof ICONS;
