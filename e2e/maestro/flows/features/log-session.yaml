@@ -71,7 +71,7 @@ env:
     timeout: 10000
 - assertVisible:
     id: "session.focus.${MOUNT}"
-- back
+- runFlow: ../../subflows/back.yaml
 
 # --- Path B (3 taps): tabs.log -> quick-add chip of the last trained focus -> save ---
 - tapOn:

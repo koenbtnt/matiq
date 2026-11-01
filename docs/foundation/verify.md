@@ -83,3 +83,12 @@ Rows are appended per agent, per run. Columns: check · command · result · com
 |---|---|---|---|---|
 | tsc | `npx tsc --noEmit (mobile/)` | exit 0: 0 errors | dfa6122 | 2026-11-01 |
 | Jest (all) | `npx jest --watchAll=false (mobile/)` | exit 0: 29 suites, 932 tests passed; R2-03/R2-06 fixes + tests | dfa6122 | 2026-11-01 |
+
+### main (PO session, first device run) @ e9080c7 — 2026-11-01
+| Command | Exit | Notes |
+|---|---|---|
+| npx expo run:ios (mobile/, run by the PO in their terminal) | not captured | dev-client build with CocoaPods 1.17.0 succeeded: `nl.btnt.matiq` 0.1.0 installed and running on the iPhone 18 Pro simulator, Metro on 8082; observed by the main session |
+| head -c 16 Documents/SQLite/matiq.db \| xxd (app container on the simulator) | 0 | header `5de4 6435 2388 a43f …`, not `SQLite format 3` — SQLCipher active with the secure-store key |
+| first launch: seed + render | — | Library lists seeded positions with aliases (50/50 guard, Back control, …); Home shows the empty states and the rank card (screenshots) |
+| xcrun simctl openurl booted matiq://dev/reset | 0 | database recreated (file mtimes), under 0.8 s |
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro | 0 | 4/4 flows passed in 2 m 58 s on iPhone 18 Pro (iOS 27.2), Maestro 2.12.0; JUnit tests=4 failures=0; flow fixes in this commit |

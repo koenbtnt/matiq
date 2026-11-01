@@ -23,3 +23,7 @@ Branch `feature/foundation` (stacked on `feature/product-spec`, PR #4). Ran over
 
 ## Carry-over
 CO-28…CO-41 in `docs/carry-over.md` (closed: CO-15, CO-18, CO-20, CO-25).
+
+## Post-close-out (2026-11-01, main session)
+- Device verification done: dev-client build (PO), SQLCipher confirmed by the database file header, first-launch seed, and all 4 Maestro flows passing (`verify.md` block "main (PO session, first device run)", `test-report.md` "First device run"). CO-14, CO-30, CO-31, CO-37, CO-39 closed; CO-42 opened.
+- PO rulings R-36…R-49 recorded (e9080c7); bash-guard rule 6 (09d150f).

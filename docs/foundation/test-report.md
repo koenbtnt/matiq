@@ -51,3 +51,23 @@ Maestro and CocoaPods are not installed: every flow is **INFRA UNAVAILABLE**, no
 
 ## R2-04 fix (f7e77c0)
 `subflows/reset.yaml` no longer relies on `home.screen` after `openLink matiq://dev/reset` (it is already mounted under the reset route): it now waits for `dev.reset.status` visible, then not visible, then `home.screen`. YAML parse ok; Maestro run still INFRA UNAVAILABLE. Caveat: if the reset finishes before the first poll, the `dev.reset.status` visible wait can time out (flaky-fast, not a false pass).
+
+## First device run (2026-11-01, main session) — 4/4 flows passed
+
+Environment: iPhone 18 Pro simulator (iOS 27.2), dev-client build made by the PO with `npx expo run:ios` (CocoaPods 1.17.0, `expo.sqlite.useSQLCipher=true`), Metro on port 8082 (8081 was held by another project's Metro), Maestro 2.12.0. Command: `maestro test -e METRO_URL=http://localhost:8082 e2e/maestro` (the workspace directory holding `config.yaml`). Code at HEAD e9080c7 (app sources unchanged since dfa6122); the flow fixes below are committed together with this report.
+
+| flow | result | duration |
+|---|---|---|
+| smoke/launch.yaml | PASSED | 33 s |
+| features/browse-library.yaml | PASSED | 50 s |
+| features/log-session.yaml | PASSED | 48 s |
+| features/plan-then-log.yaml | PASSED | 46 s |
+
+4/4 passed in 2 m 58 s (JUnit: tests=4, failures=0). Nine runs were needed to get there; every fix is in the flows, none in the app:
+
+- `subflows/reset.yaml`: after `clearState` the dev client cold-starts in the Expo launcher, so the subflow opens `matiq://expo-development-client/?url=${METRO_URL}` (default `http://localhost:8081` inside the expression, because a flow-file `env:` block beats the CLI `-e`), answers iOS's "Open in matIQ?" prompt, first drains stale prompts left by earlier runs (each `simctl openurl` queues one; a stale one answered "Open" loaded another project's bundle), dismisses the developer-menu onboarding sheet ("Continue", then its `xmark`), and no longer waits for `dev.reset.status` to appear — the wipe + reseed finishes in under a second (database file mtimes), so it waits for the status to be gone and for Home.
+- `subflows/back.yaml` (new): Maestro's `back` is Android-only; on iOS it taps the header `BackButton`. Used by browse-library and log-session, which had stayed on their detail screens.
+- `features/browse-library.yaml`: the search query survives the segment switch (design §4.6.1) and "knee mount" is a position alias, so the techniques segment shows `library.empty`; the flow now asserts that, clears, and searches "armbar from knee".
+- Run commands corrected everywhere (`CLAUDE.md`, root `e2e:ios`, `.claude/rules/e2e.md`, `tester.md`): `e2e/maestro`, not `e2e/maestro/flows`.
+
+Observed app defect: the session detail header shows "(tabs)" as the iOS back label (carry-over CO-42). Facts measured on this run are in `docs/stack-notes.md` (2026-11-01 section).

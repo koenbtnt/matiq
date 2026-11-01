@@ -52,7 +52,7 @@ node scripts/check-token-adherence.mjs                             # no hex/px/f
 cd mobile && npx drizzle-kit generate && git diff --exit-code -- drizzle/   # migrations in sync with the schema
 cd mobile && npx expo-doctor                                       # config and dependency health
 cd mobile && npx expo run:ios                                      # dev-client build on the booted simulator (CocoaPods, CO-14); Expo Go cannot run SQLCipher
-maestro test e2e/maestro/flows                                     # E2E on the booted simulator (Maestro install: P2)
+maestro test -e METRO_URL=http://localhost:8081 e2e/maestro      # E2E on the booted simulator against the dev-client build (Metro port per run)
 npm run test:hooks                                                 # exit-code tests for .claude/hooks (scripts/claude/hooks.test.sh)
 node scripts/docs/gen-data-model.mjs && node scripts/docs/gen-changelog.mjs   # regenerate docs/data-model/
 ```

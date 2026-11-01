@@ -83,7 +83,7 @@ Every flow: one documented command, runnable locally without manual steps, idemp
 # sprint-time (phases 1–2): only new, changed and affected flows
 maestro test e2e/maestro/flows/features/<journey>.yaml
 # phase 3, every sprint: the whole workspace, once
-maestro test e2e/maestro/flows
+maestro test -e METRO_URL=http://localhost:8081 e2e/maestro   # the workspace dir (config.yaml), never flows/ itself
 ```
 
 ## Infrastructure check (before any run)

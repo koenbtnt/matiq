@@ -1,0 +1,16 @@
+# Shared subflow (outside the flows/** glob): go back one screen on either platform.
+# Maestro's `back` is the Android hardware button and does nothing on iOS (observed 2026-11-01);
+# on iOS the native header back button carries the accessibility id "BackButton".
+appId: nl.btnt.matiq
+---
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          id: "BackButton"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back

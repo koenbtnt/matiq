@@ -51,11 +51,20 @@ env:
     timeout: 10000
 - assertVisible:
     id: "position.technique.${ARMBAR_KOB}"
-- back
+- runFlow: ../../subflows/back.yaml
 
 # --- techniques segment ---
 - tapOn:
     id: "library.segment.techniques"
+# The query survives the segment switch (design §4.6.1) and "knee mount" is a position alias, so the
+# techniques list is empty until the query names a technique (first device run, 2026-11-01).
+- assertVisible:
+    id: "library.empty"
+- tapOn:
+    id: "library.search.clear"
+- tapOn:
+    id: "library.search.input"
+- inputText: "armbar from knee"
 - extendedWaitUntil:
     visible:
       id: "library.technique.${ARMBAR_KOB}"

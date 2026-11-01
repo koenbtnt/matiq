@@ -9,6 +9,6 @@
     "tokens:adherence": "node scripts/check-token-adherence.mjs",
     "docs:data-model": "node scripts/docs/gen-data-model.mjs",
     "docs:changelog": "node scripts/docs/gen-changelog.mjs",
-    "e2e:ios": "maestro test e2e/maestro/flows"
+    "e2e:ios": "maestro test e2e/maestro"
   }
 }
