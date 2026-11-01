@@ -1,20 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { bootstrapDatabase, type BootstrapErrorCode } from '../../db/bootstrap';
-import { localDateOf } from '../../domain/session/localDate';
 import type { SettingKey, SettingValue } from '../../domain/settings/defaults';
 import type {
   FocusPickerRow, HomeData, PositionDetail, PositionRow, RankEntry, SessionDetail, SessionTypeRow, SubjectRow,
   TechniqueRow, TechniqueType,
 } from '../contracts';
 import { rank } from '../rank';
-import { runtime, deviceTimeZone } from '../runtime';
 import { sessions } from '../sessions';
 import { sessionTypes } from '../sessionTypes';
-import { getSettingSync, settings } from '../settings';
+import { settings } from '../settings';
 import { taxonomy } from '../taxonomy';
-import { getDb } from '../../db/client';
 import { useLiveRead, type LiveResult } from './useLiveRead';
+import { useLocalDate } from './useLocalDate';
 
 export type { LiveResult };
 
@@ -24,15 +22,13 @@ const SESSION_TABLES = [
 ] as const;
 const TAXONOMY_TABLES = ['positions', 'techniques', 'aliases', 'subjects', 'settings'] as const;
 
-const showExtended = () => getSettingSync('library.showExtended', getDb()).value;
+/** Read inside the async read, so a closed database (dev reset) becomes `error`, not a throw. */
+const showExtended = async () => (await settings.get('library.showExtended')).value;
 
-/** Home's single read (F-22); `today` is the device-local date at read time. */
+/** Home's single read (F-22); re-reads when the device-local date rolls over (R2-06). */
 export function useHome(): LiveResult<HomeData> {
-  return useLiveRead(
-    () => sessions.home({ today: localDateOf(runtime().now(), deviceTimeZone()) }),
-    [...SESSION_TABLES, 'settings', 'rank_entries'],
-    [],
-  );
+  const today = useLocalDate();
+  return useLiveRead(() => sessions.home({ today }), [...SESSION_TABLES, 'settings', 'rank_entries'], [today]);
 }
 
 export function useSession(id: string): LiveResult<SessionDetail> {
@@ -45,12 +41,12 @@ export function useSessionTypes(): LiveResult<SessionTypeRow[]> {
 
 /** Log focus picker; reads `library.showExtended` itself. */
 export function useFocusSearch(query: string): LiveResult<FocusPickerRow[]> {
-  return useLiveRead(() => taxonomy.searchFocuses({ query, showExtended: showExtended() }), TAXONOMY_TABLES, [query]);
+  return useLiveRead(async () => taxonomy.searchFocuses({ query, showExtended: await showExtended() }), TAXONOMY_TABLES, [query]);
 }
 
 /** Library positions; reads `library.showExtended` itself. */
 export function useLibraryPositions(query = ''): LiveResult<PositionRow[]> {
-  return useLiveRead(() => taxonomy.listPositions({ query, showExtended: showExtended() }), TAXONOMY_TABLES, [query]);
+  return useLiveRead(async () => taxonomy.listPositions({ query, showExtended: await showExtended() }), TAXONOMY_TABLES, [query]);
 }
 
 export function usePosition(id: string): LiveResult<PositionDetail> {
@@ -64,7 +60,7 @@ export function useSubjects(): LiveResult<SubjectRow[]> {
 /** Technique search; `type` filters server-side; reads `library.showExtended` itself. */
 export function useTechniqueSearch(query: string, { type }: { type?: TechniqueType } = {}): LiveResult<TechniqueRow[]> {
   return useLiveRead(
-    () => taxonomy.listTechniques({ query, type, showExtended: showExtended() }),
+    async () => taxonomy.listTechniques({ query, type, showExtended: await showExtended() }),
     TAXONOMY_TABLES,
     [query, type],
   );

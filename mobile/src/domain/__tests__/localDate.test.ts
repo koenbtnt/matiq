@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+import { setEnv } from '../../db/testing/env';
 import { addDays, isIsoUtc, isLocalDate, localDateOf, weekStartOf } from '../session/localDate';
 
 describe('localDateOf (ADR 0016, CO-06)', () => {
@@ -15,12 +16,14 @@ describe('localDateOf (ADR 0016, CO-06)', () => {
   });
 
   it('is fixed by the zone passed in, not the process TZ', () => {
-    const before = process.env.TZ;
     for (const tz of ['UTC', 'Asia/Tokyo', 'America/Sao_Paulo']) {
-      process.env.TZ = tz;
-      expect(localDateOf('2026-03-29T00:30:00.000Z', 'Europe/Amsterdam')).toBe('2026-03-29');
+      const restore = setEnv('TZ', tz);
+      try {
+        expect(localDateOf('2026-03-29T00:30:00.000Z', 'Europe/Amsterdam')).toBe('2026-03-29');
+      } finally {
+        restore();
+      }
     }
-    process.env.TZ = before;
   });
 
   it('handles the DST switch nights (Europe/Amsterdam)', () => {

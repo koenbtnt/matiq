@@ -1,15 +1,21 @@
+import { setEnv } from '../../../db/testing/env';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { addDatabaseChangeListener } from 'expo-sqlite';
+import { AppState } from 'react-native';
 
 import { setDb, type Db } from '../../../db/client';
 import { rank } from '../../rank';
 import { sessions } from '../../sessions';
 import { settings } from '../../settings';
 import { FX } from '../../testing/fixtures';
+import { sequentialIds } from '../../../db/testing/testDb';
+import { setRuntime } from '../../runtime';
 import { resetRuntime, seededDb } from '../../testing/helpers';
 import {
-  useCurrentRank, useFocusSearch, useLibraryPositions, usePosition, useSession, useSetting, useSubjects, useTechniqueSearch,
+  useCurrentRank, useFocusSearch, useHome, useLibraryPositions, usePosition, useSession, useSetting, useSubjects, useTechniqueSearch,
 } from '..';
+import { LOCAL_DATE_POLL_MS } from '../useLocalDate';
+import { useLiveRead } from '../useLiveRead';
 
 /** Per-hook wrappers over the real repositories (better-sqlite3); only the native change feed is faked. */
 const listeners: ((e: { tableName: string }) => void)[] = [];
@@ -23,12 +29,14 @@ beforeEach(async () => {
     listeners.push(fn);
     return { remove: () => listeners.splice(listeners.indexOf(fn), 1) };
   });
-  process.env.TZ = 'Europe/Amsterdam';
+  restoreTz = setEnv('TZ', 'Europe/Amsterdam');
   const t = await seededDb('2026-03-02T20:00:00.000Z');
   db = t.db;
   sqlite = t.sqlite;
   setDb(db);
 });
+let restoreTz: () => void = () => undefined;
+afterEach(() => restoreTz());
 afterEach(() => {
   setDb(undefined);
   sqlite.close();
@@ -87,3 +95,73 @@ describe('read hooks', () => {
     await waitFor(() => expect(result.current.data).toMatchObject({ belt: 'PURPLE', stripes: 1 }));
   });
 });
+
+describe('error routing after a dev reset (R2-06)', () => {
+  it('setting-reading hooks land in error DB_NOT_OPEN instead of throwing when the database is closed', async () => {
+    setDb(undefined);
+    const focus = await renderHook(() => useFocusSearch('mount'));
+    const lib = await renderHook(() => useLibraryPositions());
+    const tech = await renderHook(() => useTechniqueSearch('sweep'));
+    await waitFor(() => expect(focus.result.current.error?.code).toBe('DB_NOT_OPEN'));
+    await waitFor(() => expect(lib.result.current.error?.code).toBe('DB_NOT_OPEN'));
+    await waitFor(() => expect(tech.result.current.error?.code).toBe('DB_NOT_OPEN'));
+    setDb(db);
+    await act(() => focus.result.current.reload());
+    await waitFor(() => expect(focus.result.current.data?.[0]?.name).toBe('Mount'));
+  });
+
+  it('a read that throws synchronously becomes error UNKNOWN', async () => {
+    const { result } = await renderHook(() =>
+      useLiveRead((): Promise<number> => {
+        throw new Error('sync');
+      }, ['sessions'], []),
+    );
+    await waitFor(() => expect(result.current.error?.code).toBe('UNKNOWN'));
+  });
+});
+
+describe('useHome date rollover (R2-06)', () => {
+  const plan = (startsAt: string) =>
+    sessions.create({ sessionTypeId: FX.gi, startsAt, timeZone: 'Europe/Amsterdam', focuses: [{ kind: 'POSITION', refId: FX.mount }] }, db);
+
+  it('re-partitions when the app returns to the foreground on a new local day', async () => {
+    let onChange: (s: string) => void = () => undefined;
+    const spy = jest.spyOn(AppState, 'addEventListener').mockImplementation((_t, fn) => {
+      onChange = fn as (s: string) => void;
+      return { remove: jest.fn() } as never;
+    });
+    let now = '2026-03-02T20:00:00.000Z';
+    setRuntime({ now: () => now, newId: sequentialIds('d') });
+    const p = await plan('2026-03-02T21:00:00.000Z');
+    const { result } = await renderHook(() => useHome());
+    await waitFor(() => expect(result.current.data?.todayPlanned.map((s) => s.id)).toEqual([p.id]));
+    now = '2026-03-03T06:30:00.000Z';
+    await act(() => onChange('active'));
+    await waitFor(() => expect(result.current.data?.today).toBe('2026-03-03'));
+    expect(result.current.data?.stalePlanned.map((s) => s.id)).toEqual([p.id]);
+    expect(result.current.data?.todayPlanned).toEqual([]);
+    spy.mockRestore();
+  });
+
+  it('re-partitions from the foreground minute check past local midnight', async () => {
+    const appState = jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() } as never);
+    const intervals: [() => void, number][] = [];
+    const spy = jest.spyOn(global, 'setInterval').mockImplementation(((fn: () => void, ms: number) => {
+      intervals.push([fn, ms]);
+      return 0 as never;
+    }) as never);
+    let now = '2026-03-02T22:59:00.000Z'; // 23:59 in Amsterdam
+    setRuntime({ now: () => now, newId: sequentialIds('d') });
+    const { result } = await renderHook(() => useHome());
+    await waitFor(() => expect(result.current.data?.today).toBe('2026-03-02'));
+    const tick = intervals.find(([, ms]) => ms === LOCAL_DATE_POLL_MS)![0];
+    await act(() => tick());
+    expect(result.current.data?.today).toBe('2026-03-02');
+    now = '2026-03-02T23:00:30.000Z'; // 00:00:30 the next local day
+    await act(() => tick());
+    await waitFor(() => expect(result.current.data?.today).toBe('2026-03-03'));
+    spy.mockRestore();
+    appState.mockRestore();
+  });
+});
+

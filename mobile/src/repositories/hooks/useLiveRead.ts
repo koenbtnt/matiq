@@ -20,7 +20,8 @@ export function useLiveRead<T>(read: () => Promise<T>, tables: readonly string[]
 
   const run = useCallback(() => {
     const mine = ++generation.current;
-    readRef.current().then(
+    // Promise.resolve().then: a read that throws synchronously still lands in `error`.
+    Promise.resolve().then(() => readRef.current()).then(
       (data) => mine === generation.current && setState({ data }),
       (e: unknown) => mine === generation.current && setState({ error: toDomainError(e) }),
     );

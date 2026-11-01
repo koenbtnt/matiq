@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+import { setEnv } from '../../db/testing/env';
 import { eq } from 'drizzle-orm';
 
 import type { Db } from '../../db/client';
@@ -14,9 +15,11 @@ import { resetRuntime, seededDb } from '../testing/helpers';
 
 let db: Db;
 beforeEach(async () => {
-  process.env.TZ = 'Europe/Amsterdam';
+  restoreTz = setEnv('TZ', 'Europe/Amsterdam');
   ({ db } = await seededDb('2026-03-02T10:00:00.000Z'));
 });
+let restoreTz: () => void = () => undefined;
+afterEach(() => restoreTz());
 afterEach(resetRuntime);
 
 describe('settings', () => {
