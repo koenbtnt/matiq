@@ -5,6 +5,7 @@ tags:
   - library
 ---
 - runFlow: ../../subflows/reset.yaml
+- runFlow: ../../subflows/hide-devtools-button.yaml
 
 # --- two user positions: "Zeta A" (loser) and "Zeta B" (survivor) ---
 - tapOn:
@@ -24,6 +25,7 @@ tags:
 - tapOn:
     id: "libraryEdit.field.name"
 - inputText: "Zeta A"
+- pressKey: Enter
 - tapOn:
     id: "libraryEdit.save"
 - extendedWaitUntil:
@@ -39,6 +41,7 @@ tags:
 - tapOn:
     id: "libraryEdit.field.name"
 - inputText: "Zeta B"
+- pressKey: Enter
 - tapOn:
     id: "libraryEdit.save"
 - extendedWaitUntil:
@@ -91,6 +94,9 @@ tags:
     visible:
       id: "libraryEdit.sheet"
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      id: "libraryEdit.merge"
 - tapOn:
     id: "libraryEdit.merge"
 - extendedWaitUntil:
@@ -104,6 +110,7 @@ tags:
 - tapOn:
     id: "libraryEdit.merge.result\\.[^.]+"
     index: 0
+- pressKey: Enter
 - tapOn:
     id: "libraryEdit.merge.confirm"
 - extendedWaitUntil:
@@ -160,6 +167,9 @@ tags:
     visible:
       id: "libraryEdit.sheet"
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      id: "libraryEdit.merge"
 - tapOn:
     id: "libraryEdit.merge"
 - tapOn:
@@ -168,6 +178,7 @@ tags:
 - tapOn:
     id: "libraryEdit.merge.result\\.[^.]+"
     index: 0
+- pressKey: Enter
 - tapOn:
     id: "libraryEdit.merge.confirm"
 - extendedWaitUntil:

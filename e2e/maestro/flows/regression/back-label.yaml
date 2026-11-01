@@ -44,6 +44,9 @@ env:
 - tapOn:
     id: "tabs.library"
 - tapOn:
+    id: "library.search.input"
+- inputText: "mount"
+- tapOn:
     id: "library.position.${MOUNT}"
 - extendedWaitUntil:
     visible:

@@ -63,6 +63,7 @@ env:
 - scrollUntilVisible:
     element:
       id: "algorithm.param.needsWorkThreshold.input"
+    direction: UP
 - tapOn:
     id: "algorithm.param.needsWorkThreshold.input"
 - eraseText: 10

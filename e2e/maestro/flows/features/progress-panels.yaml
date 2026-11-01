@@ -66,6 +66,7 @@ env:
 - scrollUntilVisible:
     element:
       id: "progress.consistency"
+    direction: UP
 - assertVisible:
     id: "progress.consistency"
 - assertNotVisible:

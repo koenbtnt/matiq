@@ -52,13 +52,24 @@ env:
     text: "Needs work"
 - assertVisible:
     id: "why.signal.needsWorkRate"
-# a single session leaves the other signals below their minimum data
+# a single session leaves the other signals below their minimum data (the sheet body scrolls)
+# swipe inside the half-height sheet (scrollUntilVisible starts on the backdrop above it)
+- swipe:
+    start: "50%,85%"
+    end: "50%,45%"
+- scrollUntilVisible:
+    element:
+      id: "why.signal.hitRatio"
 - assertVisible:
     id: "why.signal.hitRatio"
     text: ".*Not enough data.*"
 - assertVisible:
     id: "why.signal.trend"
     text: ".*Not enough data.*"
+# scrolled content draws over the sheet header (app defect, see test-report): scroll back before Close
+- swipe:
+    start: "50%,45%"
+    end: "50%,85%"
 - tapOn:
     id: "why.close"
 - extendedWaitUntil:

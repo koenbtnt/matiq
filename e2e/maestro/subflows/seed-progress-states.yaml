@@ -16,14 +16,17 @@ appId: nl.btnt.matiq
 - tapOn:
     id: "log.search.result.${SIDE}"
 - tapOn:
+    id: "log.focus.${SIDE}.rating.2"
+- tapOn:
+    id: "log.focus.${SIDE}.needsWork"
+- tapOn:
     id: "log.search.input"
 - inputText: "closed guard"
 - tapOn:
     id: "log.search.result.${CLOSED}"
-- tapOn:
-    id: "log.focus.${SIDE}.rating.2"
-- tapOn:
-    id: "log.focus.${SIDE}.needsWork"
+- scrollUntilVisible:
+    element:
+      id: "log.focus.${CLOSED}.rating.4"
 - tapOn:
     id: "log.focus.${CLOSED}.rating.4"
 - tapOn:

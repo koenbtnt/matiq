@@ -15,6 +15,9 @@ tags:
     id: "profile.rank.set"
 
 # --- kids scale: add Grey with one stripe ---
+- scrollUntilVisible:
+    element:
+      id: "profile.rankHistory"
 - tapOn:
     id: "profile.rankHistory"
 - extendedWaitUntil:
@@ -31,8 +34,14 @@ tags:
     id: "profileRank.add"
 - tapOn:
     id: "rank.belt.GREY"
+- scrollUntilVisible:
+    element:
+      id: "rank.stripes.more"
 - tapOn:
     id: "rank.stripes.more"
+- scrollUntilVisible:
+    element:
+      id: "rank.save"
 - tapOn:
     id: "rank.save"
 - extendedWaitUntil:

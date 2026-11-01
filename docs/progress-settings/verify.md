@@ -38,3 +38,13 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | npx expo run:ios --port 8082 (dev-client, iPhone 18 Pro) | 0 | after three fixes: stale gitignored `ios/.xcode.env.local` NODE_BINARY; `pod install` for the new local module; Swift `Exception` is a class |
 | simulator smoke | 0 | Home, Library (position edit saved a note; technique detail with resources), Progress (rows, heatmap, planned vs trained, why sheet), Profile, About (backup: excluded). Defect found and fixed: ProgressScreen `data!.params` hoisted by React Compiler crashed on first render. set-rank kids-scale detent not checked |
 | xattr on app container | 0 | `Documents/SQLite`, `matiq.db`, `-wal`, `-shm` all carry `com.apple.metadata:com_apple_backup_excludeItem` |
+
+### tester @ 9ee80da — 2026-11-01 (Maestro run, iPhone 18 Pro, iOS 27.2, Metro 8082)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro (first whole-workspace run, unfixed flows) | 1 | 5/13 passed |
+| same command, second whole-workspace run after flow fixes | 1 | 10/13 passed; settings-weights and progress-states failed in the seed subflow (scroll flake), settings-rank-theme on `rank.save` |
+| maestro test …/features/settings-weights.yaml (after seed-subflow reorder) | 0 | 1/1 passed |
+| maestro test …/features/progress-states.yaml | 1 | 0/1: `why.close` unreachable, sheet header overlapped by content (app defect A-1) |
+| maestro test …/features/settings-rank-theme.yaml | 1 | 0/1: `rank.save` absent from the hierarchy on the KIDS scale (app defect A-2) |
+| Final state | — | 11/13 flows pass; 2 blocked by app defects A-1, A-2 |

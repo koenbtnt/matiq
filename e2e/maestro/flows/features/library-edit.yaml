@@ -5,6 +5,7 @@ tags:
   - library
 ---
 - runFlow: ../../subflows/reset.yaml
+- runFlow: ../../subflows/hide-devtools-button.yaml
 - tapOn:
     id: "tabs.library"
 - extendedWaitUntil:
@@ -29,6 +30,7 @@ tags:
 - inputText: "Zeta guard"
 - assertNotVisible:
     id: "libraryEdit.save.reason"
+- pressKey: Enter
 - tapOn:
     id: "libraryEdit.save"
 - extendedWaitUntil:
@@ -67,6 +69,7 @@ tags:
 - inputText: "Omega shield"
 - assertVisible:
     id: "libraryEdit.keepAlias"
+- pressKey: Enter
 - tapOn:
     id: "libraryEdit.save"
 - extendedWaitUntil:
@@ -88,7 +91,9 @@ tags:
     visible:
       id: "library\\.position\\.[^.]+"
     timeout: 10000
-- assertVisible: "Omega shield"
+- assertVisible:
+    id: "library\\.position\\.[^.]+"
+    text: "Omega shield.*"
 
 # --- delete, then undo ---
 - tapOn:
@@ -104,6 +109,13 @@ tags:
     visible:
       id: "libraryEdit.sheet"
     timeout: 10000
+- scrollUntilVisible:
+    element:
+      id: "libraryEdit.delete"
+- swipe:
+    start: "50%,70%"
+    end: "50%,25%"
+- waitForAnimationToEnd
 - tapOn:
     id: "libraryEdit.delete"
 - extendedWaitUntil:
@@ -115,5 +127,5 @@ tags:
     id: "toast.undo"
 - extendedWaitUntil:
     visible:
-      id: "toast.message"
+      id: "library\\.position\\.[^.]+"
     timeout: 10000

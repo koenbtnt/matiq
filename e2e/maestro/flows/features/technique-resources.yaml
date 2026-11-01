@@ -64,7 +64,7 @@ env:
     id: "technique\\.resource\\.[^.]+\\.watched"
 - assertVisible:
     id: "technique\\.resource\\.[^.]+\\.watched"
-    checked: true
+    text: "checkbox, checked"
 
 # --- delete from the edit sheet, then undo ---
 - tapOn:
