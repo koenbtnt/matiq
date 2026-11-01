@@ -28,7 +28,7 @@ Designer: Thaleia · 2026-11-01 · branch `feature/progress-settings` · sprint 
 
 **Data the UI consumes:** §10.2 — plan §5 names; two additive requests for `data-contracts.md` (endpoint soft-delete flags on `TechniqueDetail`; aliases as `AliasRow[]` with ids on `usePosition` / `useTechnique`), nothing that changes plan §5 signatures.
 
-**Contrast:** §9.1 — 18 new pairs computed (2 text, 16 non-text). Every heatmap digit passes AA in both schemes (4.82–12.38); the level fills alone do not separate L0/L1 in light (1.03) or L2/L3 in dark (1.15), so the count digit is the channel (R-A1, R-C5) and a ramp request goes to the user (§11). Not yet appended to `docs/design-system-contrast.md` (commit scope = this file only; orchestrator action).
+**Contrast:** §9.1 — 18 new pairs computed (2 text, 16 non-text). Every heatmap digit passes AA in both schemes (4.82–12.38); the level fills alone do not separate L0/L1 in light (1.03) or L2/L3 in dark (1.15), so the count digit is the channel (R-A1, R-C5) and a ramp request goes to the user (§11). Recorded in `docs/design-system-contrast.md` :47-48, :101-116.
 
 **Design-system requests:** DSR-30 heatmap ramp, DSR-31 switch-off and settings group patterns (§11). Non-blocking: each is decided in §8.
 
@@ -49,7 +49,7 @@ Sprint 2 screens on the five-tab shell (plan §10, PS-09…PS-19, rulings Q1 (a)
 | P-05 | Heatmap sizing (plan §13 "heatmap sizing") | 7 equal columns `flex: 1`, `aspectRatio: 1`, `columnGap`/`rowGap` `spacing[1]`, inside a Card with padding `spacing[4]`: cell ≈ 42 pt at 390, ≈ 47.7 pt at 430 (derived, not a token); no week-label column; a range caption names the dates | fills the width at both frames with no breakpoint; a label column would shrink cells below the digit's 200 % size |
 | P-06 | Out-of-window, future and today cells (plan §6.6) | out-of-window (`inWindow: false`, past): transparent + `size.borderWidth` `borderDefault`, digit `textSecondary` · future: transparent, no border, no digit · today: `size.borderWidthFocus` ring `textPrimary` over the level fill | "dimmed" without an opacity token; the ring passes 3:1 against the card in both schemes (§9.1), unlike `accentBorder` light |
 | P-07 | Heatmap cell interaction (plan §6.6 "long-press/`accessibilityLabel`") | cells are not pressable; the count is drawn in the cell and in `accessibilityLabel` | the visible digit makes the long-press redundant; fewer hidden gestures (R-1) |
-| P-08 | Planned-vs-trained row visual | text "x of y" + a 4-high bar (`textPrimary` fill on `borderDefault` track, the drawn position-card bar cm:337) + text parts (not trained · pending · unplanned) | bar passes 3:1 (contrast doc :70); text carries every number |
+| P-08 | Planned-vs-trained row visual | text "x of y" + a 4-high bar (`textPrimary` fill on `borderDefault` track, the drawn position-card bar cm:337) + text parts (not trained · pending · unplanned) | bar passes 3:1 (contrast doc :72); text carries every number |
 | P-09 | Rank history panel (Q1 (a)) | RankCard (fd §4.4.7) + up to 5 promotion rows of the active scale + ghost `progress.rank.allHistory` → `profile/rank` | R-10 "shown on Home and Progress"; full list lives in Profile › Rank |
 | P-10 | Panel placement with an unbounded state list | one `SectionList` (virtualised, `frontend.md`); panels in `ListFooterComponent` in plan order heatmap → planned-vs-trained → rank | plan §10 order; virtualised rows |
 | P-11 | Profile structure (Q3 (a), plan §10) | rank card on top; groups Progress · Planning · Logging · Library · Appearance · Rank · About (plan order); navigation rows push Algorithm, Suggestions, Rank, About; switches and the theme segmented control sit inline | one-thumb: every setting is one tap from the tab; R-4 native push navigation |
@@ -941,22 +941,22 @@ Non-text (3:1, WCAG 1.4.11):
 
 | pair | light | ratio | dark | ratio | result / handling |
 |---|---|---|---|---|---|
-| L0 `bgRaised` on `bgSurface` | #EEEEEA / #FFFFFF | 1.16 | #1E2125 / #15171A | 1.11 | fail; empty cell, decorative (= doc :93) |
-| L1 `accentTint` on `bgSurface` | #DCF8E8 / #FFFFFF | 1.13 | #19362A / #15171A | 1.37 | fail; digit carries it (= doc :97) |
-| L2 `accentGraphic` on `bgSurface` | #17B061 / #FFFFFF | 2.83 | #2EDB7F / #15171A | 9.88 | L fail · D pass; digit (= doc :62) |
+| L0 `bgRaised` on `bgSurface` | #EEEEEA / #FFFFFF | 1.16 | #1E2125 / #15171A | 1.11 | fail; empty cell, decorative (= doc :95) |
+| L1 `accentTint` on `bgSurface` | #DCF8E8 / #FFFFFF | 1.13 | #19362A / #15171A | 1.37 | fail; digit carries it (= doc :99) |
+| L2 `accentGraphic` on `bgSurface` | #17B061 / #FFFFFF | 2.83 | #2EDB7F / #15171A | 9.88 | L fail · D pass; digit (= doc :64) |
 | L3 `accentText` on `bgSurface` | #0B7A3E / #FFFFFF | 5.43 | #5FE69C / #15171A | 11.36 | pass — **new as a fill** |
 | L0 vs L1 | #EEEEEA / #DCF8E8 | 1.03 | #1E2125 / #19362A | 1.23 | fail; digit — **new** |
 | L1 vs L2 | #DCF8E8 / #17B061 | 2.51 | #19362A / #2EDB7F | 7.21 | L fail · D pass — **new** |
 | L2 vs L3 | #17B061 / #0B7A3E | 1.92 | #2EDB7F / #5FE69C | 1.15 | fail; digit — **new** (DSR-30) |
 | today ring `textPrimary` on `bgSurface` | #0B0C0E / #FFFFFF | 19.57 | #F4F4F1 / #15171A | 16.30 | pass (= doc :21) |
-| legend L0 swatch `bgRaised` on `bgBase` | #EEEEEA / #F6F6F3 | 1.07 | #1E2125 / #0B0C0E | 1.21 | fail; caption "None" beside it (= doc :94) |
-| switch off thumb `textPrimary` on track `borderStronger` | #0B0C0E / #A9AAA3 | 8.35 | #F4F4F1 / #4A4F56 | 7.49 | pass (= doc :71) — `accentOn` off would be 2.37 dark, rejected (P-15) |
-| switch off track `borderStronger` on `bgRaised` | #A9AAA3 / #EEEEEA | 2.01 | #4A4F56 / #1E2125 | 1.96 | fail; thumb position + native value (= doc :69) |
+| legend L0 swatch `bgRaised` on `bgBase` | #EEEEEA / #F6F6F3 | 1.07 | #1E2125 / #0B0C0E | 1.21 | fail; caption "None" beside it (= doc :96) |
+| switch off thumb `textPrimary` on track `borderStronger` | #0B0C0E / #A9AAA3 | 8.35 | #F4F4F1 / #4A4F56 | 7.49 | pass (= doc :73) — `accentOn` off would be 2.37 dark, rejected (P-15) |
+| switch off track `borderStronger` on `bgRaised` | #A9AAA3 / #EEEEEA | 2.01 | #4A4F56 / #1E2125 | 1.96 | fail; thumb position + native value (= doc :71) |
 | kids band `beltWhite` on grey / yellow / orange / green | #EDEDE8 on #8E9196 · #F2C230 · #F2862E · #2FA35A | 2.69 · 1.43 · 2.17 · 2.75 | same | same | fail; name always shown (DSR-4) — **new** |
 | kids band `beltBlack` on grey / yellow / orange / green | #111111 on the four | 5.97 · 11.27 · 7.40 · 5.85 | same | same | pass — **new** |
 | kids bar `beltBar` on grey / yellow / orange / green | #0B0C0E on the four | 6.19 · 11.68 · 7.66 · 6.06 | same | same | pass — **new** |
 
-Reused recorded pairs: `textSecondary` on `bgBase` / `bgSurface` / `bgRaised` (doc :23-25), `accentText` on `bgBase` / `bgSurface` (:31-32; links, streak, header Edit, Resources Add), `accentText` on `accentTint` over `bgBase` (:35; selected chips), `textPrimary` on `borderDefault` (:70; gap bar), Flagged badge on `bgBase` (:45) and on `bgSurface` (:40), `inverseFg` on `inverseBg` (:29; segments), `accentOn` on `accentFill` (:30, :72; primary, switch-on thumb), destructive on tint over `bgSurface` (:39). New pairs (marked **new**): 2 text (L2 digit light, L3 digit) and 16 non-text (L3 fill, three level adjacencies, 4 white bands, 4 black bands, 4 kids bars). They must be appended to `docs/design-system-contrast.md`; this commit stages only `design.md` (orchestrator instruction), so the append is an orchestrator action.
+Reused recorded pairs: `textSecondary` on `bgBase` / `bgSurface` / `bgRaised` (doc :23-25), `accentText` on `bgBase` / `bgSurface` (:31-32; links, streak, header Edit, Resources Add), `accentText` on `accentTint` over `bgBase` (:35; selected chips), `textPrimary` on `borderDefault` (:72; gap bar), Flagged badge on `bgBase` (:45) and on `bgSurface` (:40), `inverseFg` on `inverseBg` (:29; segments), `accentOn` on `accentFill` (:30, :74; primary, switch-on thumb), destructive on tint over `bgSurface` (:39). New pairs (marked **new**): 2 text (L2 digit light, L3 digit) and 16 non-text (L3 fill, three level adjacencies, 4 white bands, 4 black bands, 4 kids bars). They are recorded in `docs/design-system-contrast.md`: text table :47-48, non-text table :101-116.
 
 ## §10 Data the UI consumes (contract: plan §5; for `data-contracts.md`)
 
@@ -1017,7 +1017,7 @@ Icon map additions (`components/Icon.tsx`): `progress`, `profile` (P-29), `state
 - [ ] Copy table covers every string in §4; `errors.*` covers every plan §0 code; one changed string marked.
 - [ ] testID table covers every interactive element and list row in §4; `## §7 testID table` / `## §8 Deviations` headings intact; flows named per id.
 - [ ] Hit areas per §9; wrapped chip rows use the fd R1-10 `rowGap`.
-- [ ] §9.1 ratios recomputed; the **new** rows appended to `docs/design-system-contrast.md` (orchestrator).
+- [ ] §9.1 ratios recomputed; the **new** rows present in `docs/design-system-contrast.md` :47-48, :101-116.
 - [ ] 390 / 430 pt, light / dark, iOS / Android differences explicit (§4.1.2–§4.1.4, §4.2.3 frames, §4.4.1 Switch, §9 keyboard).
 - [ ] §10.2 names match plan §5; the two additive requests are answered in `data-contracts.md`.
 - [ ] No parked element (DSR-26…29) appears; About links and resource URLs open only on a user tap and carry no user data.
