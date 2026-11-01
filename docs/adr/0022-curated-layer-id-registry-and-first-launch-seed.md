@@ -1,9 +1,9 @@
 # 0022. Curated layer, append-only id registry and idempotent first-launch seed
 
-- **Status:** proposed — pending PO (A-29; A-28 ruled R-48, 2026-11-01)
-- **Rulings of 2026-11-01:** R-48 ("Q13: yes") rules A-28, A-82, A-84 (curated core and gi starters stand); A-29 (the id registry) is on the morning brief's §4 accept-by-default list and stays open until the PO replies to it; the curated-core content review (CO-33) is still open.
+- **Status:** accepted — A-28 ruled R-48, A-29 ruled R-50 (both 2026-11-01); the curated-core content review stays CO-33
+- **Rulings of 2026-11-01:** R-48 ("Q13: yes") rules A-28, A-82, A-84 (curated core and gi starters stand); R-50 ("All are accepted as is", the PO's reply to the morning brief's §4 accept-by-default list) accepts A-29 (the id registry) at its recorded default; the curated-core content review (CO-33) is still open and does not block the decision.
 - **Date:** 2026-11-01
-- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. A-28 ruled R-48 (2026-11-01); PO confirmation pending for A-29; also awaits PO review of the curated core content (names, aliases, parents, edge types).
+- **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. A-28 ruled R-48 (2026-11-01); A-29 ruled R-50 (2026-11-01); the PO review of the curated core content (names, aliases, parents, edge types) continues under CO-33.
 - **Decision ids:** F-14, F-16 / R-28, D-07, D-08; A-4, A-14, A-28, A-29
 - **Source:** `docs/foundation/plan.md` §0 F-14, F-16, §0.1 A-28, A-29, §2, §6, §14; `docs/foundation/review-1.md` R1-07.
 
