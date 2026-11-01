@@ -7,8 +7,8 @@ The ledger of known failures and deferred items is [docs/carry-over.md](../carry
 | Risk | Source | Mitigation / status |
 |---|---|---|
 | Focus unit (positions) may change after user tests | R-30 (provisional) | `{kind, ref_id}` shape; ADR 0014 stays proposed |
-| Key lifecycle: accessibility class and OS-backup exclusion are unruled | A-11 | defaults assumed; confirm in sprint 1 (plan §12); ADR 0006 |
-| Export file is plaintext once shared | A-10 | warning in UI; passphrase v1.x |
+| Key lifecycle: accessibility class and OS-backup exclusion | A-11, A-16 | ruled R-39 (2026-11-01): exclusion from backups; Android done, iOS module scheduled for sprint 2 (CO-28); ADR 0006 |
+| Export file is plaintext once shared | A-10, R-38 | ruled 2026-11-01: warning in UI; passphrase v1.x |
 | Erase-all breaks the no-hard-delete rule | R-12, plan §11 | recorded exception; ADR 0015 |
 | Soft-deleted rows accumulate; a purge policy would be a second hard-delete path | plan §12 | carry-over candidate |
 | Polymorphic references (`focus_ref_id`, `target_id`) cannot be FK-enforced | ADR 0014, 0011 | repository validation and merge rewrites with tests |
@@ -24,13 +24,13 @@ The ledger of known failures and deferred items is [docs/carry-over.md](../carry
 | Curated core content and the gi layer unreviewed by the PO | ADR 0022 | review and growth are carry-over items |
 | Fonts: normal-width Archivo instead of the design's width axis | A-23, DSR-12 | static width instances need font files from the artifact |
 
-## Assumptions ledger (pending PO)
+## Assumptions ledger (all ruled)
 
-Sprint 1 adds A-15 to A-80 (planner A-15..A-33, designer A-34..A-80); they are listed in [docs/foundation/assumptions.md](../foundation/assumptions.md), not copied. Architectural ones: A-16, A-17, A-24..A-29, A-31..A-33 (ADRs 0018 to 0023).
+Sprint 1 adds A-15 to A-96 (planner A-15..A-33, designer A-34..A-80 and later); all ruled by R-39, R-43..R-49 or the blanket R-50 (2026-11-01). They are listed in [docs/foundation/assumptions.md](../foundation/assumptions.md), not copied. Architectural ones: A-16, A-17, A-24..A-29, A-31..A-33 (ADRs 0018 to 0023).
 
 Sprint 0 assumptions:
 
-All fourteen were taken at their default while the PO was offline (2026-10-31); none is a ruling. Full text and what changes if ruled otherwise: [docs/product-spec/assumptions.md](../product-spec/assumptions.md).
+All fourteen were taken at their default while the PO was offline (2026-10-31) and are now ruled: R-38, R-39, R-40, R-41, R-42, R-49 by name (A-10, A-11, A-12, A-2, A-6, A-13) and the rest by the blanket R-50 ("All are accepted as is", 2026-11-01). Rulings: [docs/decisions.md](../decisions.md). Full text: [docs/product-spec/assumptions.md](../product-spec/assumptions.md).
 
 | Id | Assumption (short) |
 |---|---|
@@ -39,7 +39,7 @@ All fourteen were taken at their default while the PO was offline (2026-10-31); 
 | A-3 | Aliases also on techniques |
 | A-4 | Six seeded, editable subjects |
 | A-5 | One active cycle at a time |
-| A-6 | No legacy data import in v1 |
+| A-6 | Legacy data is never imported (R-42; replaces "not in v1") |
 | A-7 | "<= 2 taps" reaches the prefilled Log screen; saving is one more |
 | A-8 | Session partner belt lives in `context_note` |
 | A-9 | Rename keeps the old name as an alias (pre-ticked) |

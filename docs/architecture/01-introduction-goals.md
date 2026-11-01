@@ -7,7 +7,7 @@ matIQ is a native iOS and Android app for one Brazilian jiu-jitsu practitioner: 
 | # | Goal | Source |
 |---|---|---|
 | G1 | Close the loop plan -> train -> log -> review -> progress for a single practitioner | R-01 |
-| G2 | Logging is fast: <= 30 s, <= 2 taps from Home to the prefilled screen (reading pending PO, A-7) | R-26 |
+| G2 | Logging is fast: <= 30 s, <= 2 taps from Home to the prefilled screen (reading ruled R-50, 2026-11-01; A-7) | R-26 |
 | G3 | Progress per focus is computed, explained and tunable | R-08, R-17, R-22 |
 | G4 | All personal data stays on the device and is encrypted at rest | S-02, R-12, R-24 |
 | G5 | Built for publishing: export, import, erase, no analytics | S-03, R-12 |

@@ -26,6 +26,6 @@ C4Context
 
 | Interface | Direction | Data |
 |---|---|---|
-| Share sheet | out | exported JSON (plaintext once shared; protection assumed, pending PO A-10) |
+| Share sheet | out | exported JSON (plaintext once shared, with an in-app warning; ruled R-38, 2026-11-01, A-10) |
 | Browser | out | a resource URL only |
 | Local notifications | local | reminder text, no user data leaves the device |

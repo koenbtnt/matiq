@@ -6,9 +6,9 @@ Status: `specified` = in `docs/PRODUCT.md` §10 / rules, no code yet; `enforced`
 |---|---|---|---|
 | Functional suitability | Core loop complete; only session type + one focus required (NF-03); every state explains why (R-08) | domain tests (sprint 1-2) | specified |
 | Performance efficiency | Progression for all focuses < 100 ms at 500 sessions (NF-09, planner target, not ruled) | domain benchmark test | specified |
-| Usability: speed | Log in <= 30 s (NF-02); prefilled screen in <= 2 taps from Home (NF-01, reading pending PO, A-7) | timed/tap-counting Maestro flow; both reviewer checklists (`reviewer-design.md:90-93`, `reviewer-code.md:80-83`) | specified; checklists enforced |
+| Usability: speed | Log in <= 30 s (NF-02); prefilled screen in <= 2 taps from Home (NF-01, reading ruled R-50, 2026-11-01; A-7) | timed/tap-counting Maestro flow; both reviewer checklists (`reviewer-design.md:90-93`, `reviewer-code.md:80-83`) | specified; checklists enforced |
 | Usability: ergonomics | One-handed in portrait at 390 and 430 px (NF-04); targets 44 pt / 48 dp (NF-08); empty states name the next step (NF-06) | design review, Maestro, `frontend.md` | specified |
-| Usability: forgiveness | Soft delete with undo toast instead of confirm dialogs (NF-05); erase-all the sole confirm (pending PO, A-2) | Maestro delete -> undo | specified |
+| Usability: forgiveness | Soft delete with undo toast instead of confirm dialogs (NF-05); erase-all the sole confirm (ruled R-41, 2026-11-01; A-2) | Maestro delete -> undo | specified |
 | Usability: appearance | Light and dark, tokens only (NF-07); manual theme override pending DSR-21/CO-16 | token adherence check, screenshots | specified |
 | Reliability | Migrations applied from scratch and asserted; generated migrations in sync with schema | Jest migration tests; CI step "Migrations are in sync with the schema" (`.github/workflows/ci.yml`: `npx drizzle-kit generate`, then `git diff --exit-code -- drizzle/`) | enforced rule (CI), tests with sprint 1 |
 | Reliability: availability | Fully offline (NF-10) | review | specified |
