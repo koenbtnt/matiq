@@ -28,3 +28,11 @@ Source of truth: `docs/PRODUCT.md` §2 (terms are not restated differently here)
 | Tombstone | A soft-deleted row (`deleted_at` set) |
 | ADR | Architecture decision record in `docs/adr/` |
 | DSR / CO | Design request / carry-over item numbers |
+| Window | The `windowWeeks x 7` local dates ending today that the algorithm reads |
+| Progress state | Improving, Steady, Needs work or Not trained lately, with its rule and signals (ADR 0024) |
+| Consistency heatmap | Sessions per local day in Monday weeks, shown on Progress |
+| Planned-vs-actual panel | Per-focus gap between planned and trained rows in the window |
+| Merge payload | Versioned JSON in `taxonomy_merges.payload` that reverses a merge |
+| Survivor / loser | The row a merge keeps / the row it soft-deletes |
+| Backup exclusion | iOS flag keeping the database out of iCloud backup (`app_meta.backup_exclusion`) |
+| Profile | The tab that is the Settings screen (R-54) |

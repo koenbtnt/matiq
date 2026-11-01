@@ -18,8 +18,8 @@ The ledger of known failures and deferred items is [docs/carry-over.md](../carry
 | v2 backend and accounts undesigned | R-27, CO-08 | needs its own ADR; seam only |
 | Sprint 1 blocked on DSR-12, DSR-15 and CO-15/CO-16 | S-05 | built on defaults A-23 and design A-70; PO confirmation is a close-out item (`docs/foundation/plan.md` §14) |
 | Taxonomy graph incomplete: 84.1 % of GrappleMap transitions emitted against a 95 % target; about 137 anonymous nodes leave 268 endpoints unresolved | ADR 0021, `seed/report.json` | edges dropped, nodes kept; later: synthesise EXTENDED positions or curate (carry-over candidate) |
-| iOS backup exclusion of `matiq.db*` missing; a same-device restore brings the device-only key back | ADR 0020, A-16 | required before any store release: local Expo module setting `NSURLIsExcludedFromBackupKey` |
-| Dev-client unverified: SQLCipher, the bootstrap on a device and all Maestro flows are `INFRA UNAVAILABLE` (CocoaPods, Maestro not installed) | `docs/foundation/verify.md`, `test-report.md` | Jest covers the key seam with fakes; device verification once the PO installs the tooling |
+| iOS backup exclusion implemented (ADR 0026) and measured on the simulator only; not verified on a physical device or a TestFlight build | ADR 0026, CO-28 | verify on a device build before any store release |
+| Dev-client verified in sprint 2: 13/13 Maestro flows on the iOS simulator (`docs/progress-settings/test-report.md`); Android E2E still deferred | CO-03, `docs/carry-over.md` | Android via EAS until a local SDK exists |
 | Second hard-delete path (`__DEV__` reset route) | ADR 0023 | gated by `__DEV__`; erase-all reuses the primitive in sprint 3 |
 | Curated core content and the gi layer unreviewed by the PO | ADR 0022 | review and growth are carry-over items |
 | Fonts: normal-width Archivo instead of the design's width axis | A-23, DSR-12 | static width instances need font files from the artifact |
@@ -48,3 +48,5 @@ All fourteen were taken at their default while the PO was offline (2026-10-31) a
 | A-12 | Review fields as columns on `sessions`, not a `session_reviews` table (ADR 0017) |
 | A-13 | Numeric algorithm defaults other than the ruled 8-week window (ADR 0010) |
 | A-14 | Seed ids minted by the converter and fixed in the seed file (ADR 0011) |
+
+Sprint 2 additions (details in [carry-over](../carry-over.md)): seed technique names are not unique, 10 rows share name and from-position (ADR 0027, CO-33); coral/red belts need a migration (ruling R-55, CO-27); session-type and resource-type list editing moves to sprint 3 (R-53).
