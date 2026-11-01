@@ -2,10 +2,10 @@
 
 ## Current state
 
-- HEAD: b1c709e + this; green frontend-coder @ 0e8d4db (tsc, jest UTC+local 1726, adherence, sim check); tester 13/13 (10 whole-suite + 3 single-flow re-runs)
-- Step: 7 — documenter
-- Live agents: documenter; coders + tester idle for rework
-- Next action: gate DOCS COMPLETE → reviewer-code
+- HEAD: 13cef42 + this; green frontend-coder @ 0e8d4db; tester 13/13 @ 416dd64 (10 whole-suite + 3 single-flow)
+- Step: 8 — reviewer-code (review 2)
+- Live agents: reviewer-code; coders, tester, documenter idle for rework
+- Next action: gate REVIEW PASSED → close-out
 - Blockers: none
 - Uncommitted: none
 - Env: simulator iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), dev-client installed; Metro on 8082; Maestro at `~/.maestro/bin/maestro`
@@ -25,4 +25,5 @@
 - frontend-coder B · CODING COMPLETE (dev-client rebuilt, smoke green, xattr excluded) · 007694d…01bb503
 - tester · TESTING FAILED (A-1, A-2 app defects; 11/13) · 934b7fc
 - frontend-coder · CODING COMPLETE (A-1, A-2) · 0e8d4db, e2ed248
-- tester · TESTING COMPLETE 13/13 · b1c709e
+- tester · TESTING COMPLETE 13/13 · 416dd64
+- documenter · DOCS COMPLETE (decisions.md R-52..R-56 appended by orchestrator; guard) · 13cef42
