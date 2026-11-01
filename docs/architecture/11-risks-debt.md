@@ -1,6 +1,6 @@
 # 11. Risks and technical debt
 
-The ledger of known failures and deferred items is [docs/carry-over.md](../carry-over.md); it is linked, not copied. Items below are architecture risks from the sprint 0 sources. Partial: no code exists yet, so no technical debt is recorded.
+The ledger of known failures and deferred items is [docs/carry-over.md](../carry-over.md); it is linked, not copied. Items below are architecture risks from the sprint 0 sources. Updated for sprint 1 (`foundation`).
 
 ## Risks
 
@@ -16,9 +16,19 @@ The ledger of known failures and deferred items is [docs/carry-over.md](../carry
 | Scraping instructional catalogues may violate terms of service | R-33 | not designed in v1 |
 | Algorithm defaults are unvalidated proposals | ADR 0010 | tuned with real data; versioned |
 | v2 backend and accounts undesigned | R-27, CO-08 | needs its own ADR; seam only |
-| Sprint 1 blocked on DSR-12, DSR-15 and CO-15/CO-16 | S-05 | PO/designer rulings |
+| Sprint 1 blocked on DSR-12, DSR-15 and CO-15/CO-16 | S-05 | built on defaults A-23 and design A-70; PO confirmation is a close-out item (`docs/foundation/plan.md` §14) |
+| Taxonomy graph incomplete: 84.1 % of GrappleMap transitions emitted against a 95 % target; about 137 anonymous nodes leave 268 endpoints unresolved | ADR 0021, `seed/report.json` | edges dropped, nodes kept; later: synthesise EXTENDED positions or curate (carry-over candidate) |
+| iOS backup exclusion of `matiq.db*` missing; a same-device restore brings the device-only key back | ADR 0020, A-16 | required before any store release: local Expo module setting `NSURLIsExcludedFromBackupKey` |
+| Dev-client unverified: SQLCipher, the bootstrap on a device and all Maestro flows are `INFRA UNAVAILABLE` (CocoaPods, Maestro not installed) | `docs/foundation/verify.md`, `test-report.md` | Jest covers the key seam with fakes; device verification once the PO installs the tooling |
+| Second hard-delete path (`__DEV__` reset route) | ADR 0023 | gated by `__DEV__`; erase-all reuses the primitive in sprint 3 |
+| Curated core content and the gi layer unreviewed by the PO | ADR 0022 | review and growth are carry-over items |
+| Fonts: normal-width Archivo instead of the design's width axis | A-23, DSR-12 | static width instances need font files from the artifact |
 
 ## Assumptions ledger (pending PO)
+
+Sprint 1 adds A-15 to A-80 (planner A-15..A-33, designer A-34..A-80); they are listed in [docs/foundation/assumptions.md](../foundation/assumptions.md), not copied. Architectural ones: A-16, A-17, A-24..A-29, A-31..A-33 (ADRs 0018 to 0023).
+
+Sprint 0 assumptions:
 
 All fourteen were taken at their default while the PO was offline (2026-10-31); none is a ruling. Full text and what changes if ruled otherwise: [docs/product-spec/assumptions.md](../product-spec/assumptions.md).
 

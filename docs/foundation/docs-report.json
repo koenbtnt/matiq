@@ -1,0 +1,90 @@
+{
+  "sprint": "foundation",
+  "sha": "a3b4ee2",
+  "date": "2026-11-01",
+  "rows": [
+    {
+      "artefact": "docs/data-model/dictionary.md",
+      "kind": "generated",
+      "changed": "yes",
+      "source": "node scripts/docs/gen-data-model.mjs (snapshot 0001 + descriptions.json): 21 tables, 0 undescribed"
+    },
+    {
+      "artefact": "docs/data-model/erd.md",
+      "kind": "generated",
+      "changed": "yes",
+      "source": "same run"
+    },
+    {
+      "artefact": "docs/data-model/changelog.md",
+      "kind": "generated",
+      "changed": "yes",
+      "source": "node scripts/docs/gen-changelog.mjs: 2 migrations (0000_init, 0001_foundation)"
+    },
+    {
+      "artefact": "docs/adr/0018..0023 (6 ADRs)",
+      "kind": "written",
+      "changed": "yes",
+      "source": "plan.md \u00a70 F-01..F-26, \u00a70.1, \u00a72; assumptions.md"
+    },
+    {
+      "artefact": "docs/adr/README.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "index rows 0018-0023"
+    },
+    {
+      "artefact": "docs/architecture/05-building-blocks.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "real layer paths, taxonomy pipeline flowchart"
+    },
+    {
+      "artefact": "docs/architecture/06-runtime.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "startup sequence diagram, Log Session save table"
+    },
+    {
+      "artefact": "docs/architecture/08-crosscutting.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "encryption, error codes, repository access, seed idempotency, testIDs, i18n, hard delete"
+    },
+    {
+      "artefact": "docs/architecture/09-decisions.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "index rows 0018-0023"
+    },
+    {
+      "artefact": "docs/architecture/11-risks-debt.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "endpoint resolution gap, iOS backup exclusion, dev-client unverified, dev reset, curated content, fonts"
+    },
+    {
+      "artefact": "docs/requirements/foundation.md",
+      "kind": "written",
+      "changed": "yes",
+      "source": "plan.md \u00a70, data-contracts.md, test-report.md"
+    }
+  ],
+  "undescribed": [],
+  "blocked": null,
+  "defects": [],
+  "verify_rows": [
+    {
+      "check": "gen-data-model",
+      "result": "exit 0, 21 tables, 0 undescribed"
+    },
+    {
+      "check": "gen-changelog",
+      "result": "exit 0, 2 migrations"
+    },
+    {
+      "check": "mermaid fences",
+      "result": "all even"
+    }
+  ]
+}
