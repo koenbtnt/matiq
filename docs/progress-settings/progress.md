@@ -2,10 +2,10 @@
 
 ## Current state
 
-- HEAD: 8735431 + close-out commit
-- Step: 9 — close-out (done.md, carry-over, README, PR)
+- HEAD: f9552d7 + this; PR #7 into develop, CI green at f9552d7
+- Step: 9 — close-out done; awaiting PO merge
 - Live agents: none
-- Next action: PR into develop, green CI, report to PO
+- Next action: PO reviews and merges PR #7 (regular merge)
 - Blockers: none
 - Uncommitted: none
 - Env: simulator iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), dev-client installed; Metro on 8082; Maestro at `~/.maestro/bin/maestro`
@@ -28,3 +28,4 @@
 - tester · TESTING COMPLETE 13/13 · 416dd64
 - documenter · DOCS COMPLETE (decisions.md R-52..R-56 appended by orchestrator; guard) · 13cef42
 - reviewer-code · REVIEW PASSED (R2-01…07, no B) · 8735431
+- orchestrator · close-out, PR #7 opened, CI green · f9552d7
