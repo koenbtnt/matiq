@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ComponentRef } from 'react';
+import { useEffect, useRef, type ComponentRef, type ReactNode } from 'react';
 import { AccessibilityInfo, findNodeHandle, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +20,8 @@ export function SheetChrome({ title, onCancel, cancelTestID, titleTestID, cancel
     if (node) AccessibilityInfo.setAccessibilityFocus(node);
   }, []);
   return (
-    <View>
+    // Opaque and above the scroll body: a sibling ScrollView otherwise draws and hit-tests over the header (A-1).
+    <View style={[styles.root, { backgroundColor: c.bgSurface }]}>
       <View style={[styles.handle, { backgroundColor: c.borderStronger }]} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />
       <View style={styles.header}>
         <View style={styles.side}>
@@ -40,6 +41,8 @@ export function SheetChrome({ title, onCancel, cancelTestID, titleTestID, cancel
 }
 
 const styles = StyleSheet.create({
+  root: { zIndex: 1, elevation: 1 },
+  body: { flex: 1, overflow: 'hidden' },
   handle: { width: size.sheetHandleWidth, height: size.sheetHandleHeight, borderRadius: size.sheetHandleHeight / 2, alignSelf: 'center', marginTop: spacing[2] },
   header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing[3], paddingVertical: spacing[1] },
   side: { flex: 1, alignItems: 'flex-start' },
@@ -47,3 +50,8 @@ const styles = StyleSheet.create({
   center: { textAlign: 'center' },
   cancel: { minHeight: hit, minWidth: hit, padding: spacing[2], justifyContent: 'center' },
 });
+
+/** Clips a sheet's scroll body to the area below `SheetChrome`, so scrolled content never paints over the header (A-1). */
+export function SheetBody({ children }: { children: ReactNode }) {
+  return <View style={styles.body}>{children}</View>;
+}

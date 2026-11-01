@@ -10,7 +10,7 @@ import { DateTimeField } from '../../components/DateTimeField';
 import { ErrorBanner } from '../../components/ErrorBanner';
 import { Icon } from '../../components/Icon';
 import { ListRow } from '../../components/ListRow';
-import { SheetChrome } from '../../components/SheetChrome';
+import { SheetBody, SheetChrome } from '../../components/SheetChrome';
 import { Stepper } from '../../components/Stepper';
 import { toast } from '../../components/Toast';
 import { Txt } from '../../components/Txt';
@@ -87,6 +87,7 @@ export function SetRankSheet() {
   return (
     <View style={[styles.fill, { backgroundColor: c.bgSurface }]}>
       <SheetChrome title={t(entryId ? 'rank.sheet.title.edit' : 'rank.sheet.title')} onCancel={() => router.back()} cancelTestID="rank.cancel" titleTestID="rank.title" />
+      <SheetBody>
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <View accessibilityLiveRegion="polite" style={styles.preview}>
           <BeltRank belt={belt} stripes={shown} />
@@ -129,6 +130,7 @@ export function SetRankSheet() {
           <Button variant="destructive" fullWidth testID="rank.delete" label={t('rank.sheet.delete')} disabled={busy} onPress={() => void remove()} style={styles.delete} />
         ) : null}
       </ScrollView>
+      </SheetBody>
       <BottomActionBar absolute={false}>
         {error ? <ErrorBanner testID="rank.error" message={error} /> : null}
         <Button variant="primary" fullWidth testID="rank.save" label={t('rank.sheet.save')} busy={busy} onPress={() => void save()} />

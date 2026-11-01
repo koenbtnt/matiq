@@ -73,3 +73,19 @@ describe('SectionHeader', () => {
     expect(screen.getByTestId('add')).toHaveProp('accessibilityRole', 'link');
   });
 });
+
+describe('SheetChrome (A-1)', () => {
+  it('is opaque and stacked above the scroll body so the header stays visible and tappable', async () => {
+    const { SheetChrome } = require('../src/components/SheetChrome') as typeof import('../src/components/SheetChrome');
+    await render(<SheetChrome title="T" onCancel={() => undefined} cancelTestID="x.cancel" titleTestID="x.title" />);
+    const root = screen.toJSON() as unknown as { props: { style: unknown } };
+    const style = Object.assign({}, ...[root.props.style].flat(Infinity as 1).filter(Boolean)) as Record<string, unknown>;
+    expect(style).toMatchObject({ backgroundColor: colors.light.bgSurface, zIndex: 1 });
+  });
+
+  it('SheetBody clips the scroll area below the header', async () => {
+    const { SheetBody } = require('../src/components/SheetChrome') as typeof import('../src/components/SheetChrome');
+    await render(<SheetBody><TextField label="x" testID="x" value="" onChangeText={() => undefined} /></SheetBody>);
+    expect((screen.toJSON() as unknown as { props: { style: unknown } }).props.style).toMatchObject({ flex: 1, overflow: 'hidden' });
+  });
+});

@@ -10,7 +10,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { ErrorBanner } from '../../components/ErrorBanner';
 import { LoadingState } from '../../components/LoadingState';
 import { SegmentedControl } from '../../components/SegmentedControl';
-import { SheetChrome } from '../../components/SheetChrome';
+import { SheetBody, SheetChrome } from '../../components/SheetChrome';
 import { TextArea } from '../../components/TextArea';
 import { TextField } from '../../components/TextField';
 import { toast } from '../../components/Toast';
@@ -154,6 +154,7 @@ function EditForm({ kind, id, initial, aliasRows }: FormProps) {
         <MergePanel kind={kind} fromId={id} fromName={initial.name} fromIsSubmission={initial.type === 'SUBMISSION'} onBack={() => setMerging(false)} />
       ) : (
         <>
+          <SheetBody>
           <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
             <TextField
               label={t('libraryEdit.name.label')}
@@ -254,6 +255,7 @@ function EditForm({ kind, id, initial, aliasRows }: FormProps) {
               </>
             ) : null}
           </ScrollView>
+          </SheetBody>
           <BottomActionBar absolute={false}>
             {error ? <ErrorBanner testID="libraryEdit.error" message={error} /> : null}
             {!error && disabledReason ? <Txt testID="libraryEdit.save.reason" variant="caption" color="textSecondary">{disabledReason}</Txt> : null}

@@ -57,6 +57,7 @@ export default function RootLayout() {
     );
   }
 
+  // set-rank uses this full detent too: the fitted detent let 13 kids belts push the Save bar off screen (A-2).
   const sheet = {
     presentation: 'formSheet' as const,
     sheetAllowedDetents: [1],
@@ -72,7 +73,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ contentStyle: { backgroundColor: c.bgBase }, headerBackButtonDisplayMode: 'minimal' }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="log-session" options={sheet} />
-        <Stack.Screen name="set-rank" options={{ ...sheet, sheetAllowedDetents: 'fitToContents' }} />
+        <Stack.Screen name="set-rank" options={sheet} />
         <Stack.Screen name="progress-why" options={{ ...sheet, sheetAllowedDetents: [0.5, 1] }} />
         <Stack.Screen name="library-edit" options={sheet} />
         <Stack.Screen name="resource-edit" options={sheet} />

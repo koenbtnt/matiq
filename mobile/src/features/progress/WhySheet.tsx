@@ -8,7 +8,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { Icon } from '../../components/Icon';
 import { ListRow } from '../../components/ListRow';
 import { LoadingState } from '../../components/LoadingState';
-import { SheetChrome } from '../../components/SheetChrome';
+import { SheetBody, SheetChrome } from '../../components/SheetChrome';
 import { Badge } from '../../components/Tag';
 import { Txt } from '../../components/Txt';
 import { useProgress, type ProgressResult, type SignalRow } from '../../hooks/data';
@@ -126,7 +126,9 @@ export function WhySheet() {
       ) : !progress.data ? (
         <LoadingState />
       ) : result ? (
-        <Body result={result} params={progress.data.params} windowStart={progress.data.windowStart} today={progress.data.today} />
+        <SheetBody>
+          <Body result={result} params={progress.data.params} windowStart={progress.data.windowStart} today={progress.data.today} />
+        </SheetBody>
       ) : (
         <View style={styles.pad}>
           <EmptyState testID="why.notFound" body={t('progress.why.notFound')} />
