@@ -1,0 +1,8 @@
+[
+  {"agent":"frontend-coder","sha":"5af8e0f","date":"2026-11-01","command":"npx tsc --noEmit","exit":2,"notes":"0 errors in frontend paths; 1 in src/db/nativeDeps.ts (data-coder WIP)"},
+  {"agent":"frontend-coder","sha":"5af8e0f","date":"2026-11-01","command":"npx jest --watchAll=false","exit":1,"notes":"UI suites 10/10, 492 tests pass; 3 failures in src/db/__tests__/migrations.test.ts (data-coder)"},
+  {"agent":"frontend-coder","sha":"5af8e0f","date":"2026-11-01","command":"node scripts/sync-design-tokens.mjs --check","exit":0,"notes":""},
+  {"agent":"frontend-coder","sha":"5af8e0f","date":"2026-11-01","command":"node scripts/check-token-adherence.mjs","exit":0,"notes":""},
+  {"agent":"frontend-coder","sha":"5af8e0f","date":"2026-11-01","command":"npx expo-doctor","exit":0,"notes":"20/20"},
+  {"agent":"frontend-coder","sha":"5af8e0f","date":"2026-11-01","command":"npx expo run:ios (smoke)","exit":null,"notes":"INFRA UNAVAILABLE: CocoaPods missing"}
+]
