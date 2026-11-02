@@ -30,7 +30,7 @@ Sprint 2, branch `feature/progress-settings`, PR into `develop`. Rulings R-52…
   - token sync and adherence
   - expo-doctor 20/20
   - `expo run:ios` 0
-- **Maestro**: 13/13 on the iPhone 18 Pro simulator (`test-report.md`). 10 of these passed in the whole-suite run; 3 passed in single-flow re-runs after flow fixes and the A-1/A-2 fixes.
+- **Maestro**: 13/13 in one whole-workspace run @ 6c3fcb3 on the iPhone 18 Pro simulator (2026-11-02, PO ruling "fix first"; `test-report.md`). Before that run, two fix rounds landed: the blank sheet body (one keyboard mechanism, `SheetFrame`) and the toast lifting above the keyboard.
 - **Docs**:
   - ADRs 0024–0028; ADR 0020 amended
   - arc42 05–12
@@ -47,5 +47,5 @@ Sprint 2, branch `feature/progress-settings`, PR into `develop`. Rulings R-52…
 
 ## Carry-over
 
-- Closed: CO-13, CO-26, CO-28, CO-35, CO-42.
-- Added: CO-43…CO-49 in `docs/carry-over.md`.
+- Closed: CO-13, CO-26, CO-28, CO-35, CO-42, CO-47.
+- Added: CO-43…CO-49 in `docs/carry-over.md`. CO-46 was widened on 2026-11-02 to cover the toast and Android keyboard behaviour.
