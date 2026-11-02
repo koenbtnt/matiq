@@ -10,7 +10,7 @@ import { Button } from '../../components/Button';
 import { Chip } from '../../components/Chip';
 import { DateTimeField } from '../../components/DateTimeField';
 import { ErrorBanner } from '../../components/ErrorBanner';
-import { SheetChrome } from '../../components/SheetChrome';
+import { SheetBody, SheetChrome } from '../../components/SheetChrome';
 import { toast } from '../../components/Toast';
 import { Txt } from '../../components/Txt';
 import { hapticSave } from '../../hooks/haptics';
@@ -135,9 +135,9 @@ export function LogForm({ initial, types, home, fromSession }: Props) {
   return (
     <KeyboardAvoidingView testID="log.sheet" style={[styles.fill, { backgroundColor: c.bgSurface }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <SheetChrome title={title} onCancel={close} cancelTestID="log.cancel" titleTestID="log.title" />
+      <SheetBody>
       <ScrollView
         ref={scroll}
-        automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={[styles.content, { paddingBottom: barHeight + spacing[5] }]}
       >
@@ -199,6 +199,7 @@ export function LogForm({ initial, types, home, fromSession }: Props) {
         {!isPlan ? <SessionSection draft={draft} dispatch={dispatch} onDelete={mode === 'edit' ? onDelete : undefined} /> : null}
         {isPlan && draft.sessionId ? <DeleteButton mode="plan" onPress={onDelete} /> : null}
       </ScrollView>
+      </SheetBody>
 
       <BottomActionBar onHeight={setBarHeight}>
         {error ? (

@@ -2,7 +2,10 @@
  * Row and input shapes the UI consumes (plan §4). The UI imports these and the repository
  * namespaces from `src/repositories`, never drizzle-orm or expo-sqlite.
  */
+import type { BackupExclusionStatus } from '../db/backup';
+import type attributionJson from '../db/seed/attribution.json';
 import type { DomainError } from '../domain/errors';
+import type { ConsistencyData, PlannedVsActualData, ProgressResult } from '../domain/progression/types';
 import type { SettingKey, SettingValue, SettingValueType } from '../domain/settings/defaults';
 
 export type { SettingKey, SettingValue, SettingValueType };
@@ -218,6 +221,8 @@ export type PositionDetail = {
   notes?: string;
   tier: Tier;
   aliases: string[];
+  /** Live aliases with ids, for remove/undo (N9); `aliases` stays for display. */
+  aliasRows: AliasRow[];
   parent?: { id: string; canonicalName: string };
   children: { id: string; canonicalName: string; tier: Tier }[];
   /** Ordered by type, then name. */
@@ -257,4 +262,101 @@ export type EnsureSeededResult = {
   settings: number;
   /** algorithm_params rows inserted this run. */
   params: number;
+};
+
+// ---------------------------------------------------------------------------------------------
+// Sprint 2 (progress-settings plan §5.1)
+// ---------------------------------------------------------------------------------------------
+
+export type { BackupExclusion, BackupExclusionResult, BackupExclusionStatus } from '../db/backup';
+export type {
+  ConsistencyData, DayCell, FocusHistory, FocusHistoryRow, GapRow, PlannedVsActualData, ProgressResult, ProgressState,
+  SessionDayRow, SignalId, SignalRow, WeekRow,
+} from '../domain/progression/types';
+
+export type ProgressOverview = {
+  today: string;
+  windowStart: string;
+  algorithmVersion: string;
+  params: Record<string, number>;
+  /** PS-04: live focuses first, then removed; each by state (NEEDS_WORK, NOT_TRAINED, STEADY, IMPROVING), then name. */
+  results: ProgressResult[];
+  consistency: ConsistencyData;
+  plannedVsActual: PlannedVsActualData;
+};
+export type ParamInput = { version: string; key: string; value: number };
+
+export type TaxonomyKind = 'POSITION' | 'TECHNIQUE' | 'SUBJECT';
+export type PositionInput = {
+  canonicalName: string;
+  parentId?: string | null;
+  description?: string;
+  notes?: string;
+  /** Rename only; default true (R-50). */
+  keepOldNameAsAlias?: boolean;
+};
+export type TechniqueInput = {
+  name: string;
+  type: TechniqueType;
+  fromPositionId: string;
+  toPositionId?: string | null;
+  appliesTo: AppliesTo;
+  perspective?: Perspective | null;
+  description?: string;
+  notes?: string;
+  keepOldNameAsAlias?: boolean;
+};
+export type SubjectInput = { name: string; description?: string };
+export type AliasRow = { id: string; targetKind: 'POSITION' | 'TECHNIQUE'; targetId: string; name: string; origin: 'seed' | 'user' };
+export type MergeResult = {
+  mergeId: string;
+  kind: TaxonomyKind;
+  fromId: string;
+  intoId: string;
+  /** Re-pointed rows per table name. */
+  moved: Record<string, number>;
+  folded: number;
+  aliasesAdded: number;
+};
+
+export type ResourceStatus = 'TO_WATCH' | 'WATCHED';
+export type ResourceRow = {
+  id: string;
+  title: string;
+  url?: string;
+  author?: string;
+  resourceTypeId: string;
+  resourceTypeName: string;
+  notes?: string;
+  status: ResourceStatus;
+  origin: 'seed' | 'user';
+};
+export type ResourceInput = { title: string; url?: string; author?: string; resourceTypeId: string; notes?: string; status?: ResourceStatus };
+export type ResourceTarget = { kind: 'TECHNIQUE' | 'POSITION' | 'SUBJECT' | 'CYCLE'; id: string };
+export type ResourceTypeRow = { id: string; name: string; sortOrder: number };
+
+export type TechniqueHistoryRow = { sessionId: string; localDate: string; sessionTypeName: string; via: 'ATTACHED' | 'SUBMISSION' };
+export type TechniqueDetail = TechniqueRow & {
+  description?: string;
+  notes?: string;
+  origin: 'seed' | 'user';
+  /** The technique itself is soft-deleted (opened from history). */
+  removed: boolean;
+  resources: ResourceRow[];
+  /** Endpoint soft-delete flags (design §10.2, N9): the UI renders "(removed)" and disables the link. */
+  fromRemoved: boolean;
+  toRemoved?: boolean;
+  /** Aliases with ids for remove/undo; `aliases: string[]` (from TechniqueRow) stays for display. */
+  aliasRows: AliasRow[];
+  /** Newest first, at most 20 rows (PS-16). */
+  history: TechniqueHistoryRow[];
+};
+
+export type AttributionData = typeof attributionJson;
+export type AboutData = {
+  appVersion: string;
+  algorithmVersion: string;
+  taxonomyRelease: string;
+  backup: BackupExclusionStatus;
+  attribution: AttributionData;
 };

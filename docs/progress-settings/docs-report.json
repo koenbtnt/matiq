@@ -1,0 +1,17 @@
+{
+  "sprint": "progress-settings",
+  "head": "7053331",
+  "status": "DOCS COMPLETE with one blocked row",
+  "undescribed": [],
+  "rows": [
+    {"artefact": "docs/data-model/dictionary.md", "kind": "generated", "changed": true, "source": "snapshot + descriptions.json"},
+    {"artefact": "docs/data-model/erd.md", "kind": "generated", "changed": false, "source": "snapshot"},
+    {"artefact": "docs/data-model/changelog.md", "kind": "generated", "changed": false, "source": "_journal.json"},
+    {"artefact": "docs/adr/0024..0028", "kind": "written", "changed": true, "source": "plan.md PS-01..PS-24"},
+    {"artefact": "docs/adr/0020", "kind": "written", "changed": true, "source": "Status line only"},
+    {"artefact": "docs/adr/README.md", "kind": "written", "changed": true, "source": "ADR files"},
+    {"artefact": "docs/architecture/05,06,07,08,09,10,11,12,README", "kind": "written", "changed": true, "source": "plan.md, test-report.md"},
+    {"artefact": "docs/requirements/progress-settings.md", "kind": "written", "changed": true, "source": "plan.md, test-report.md"},
+    {"artefact": "docs/decisions.md R-52..R-56", "kind": "blocked", "changed": false, "source": "outside path guard; text in docs-report.md"}
+  ]
+}

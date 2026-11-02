@@ -9,6 +9,7 @@ export default function LibraryLayout() {
     <Stack
       screenOptions={{
         contentStyle: { backgroundColor: c.bgBase },
+        headerBackButtonDisplayMode: 'minimal',
         headerShadowVisible: false,
         headerStyle: { backgroundColor: c.bgBase },
         headerTintColor: c.textPrimary,
@@ -18,6 +19,7 @@ export default function LibraryLayout() {
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="position/[id]" />
+      <Stack.Screen name="technique/[id]" />
     </Stack>
   );
 }

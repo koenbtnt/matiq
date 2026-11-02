@@ -1,0 +1,78 @@
+appId: nl.btnt.matiq
+name: Progress states - Needs work + Flagged, Steady, Not trained lately; why sheet
+tags:
+  - features
+  - progress
+env:
+  MOUNT: d05df656-d2e7-4bcd-ac72-c9d197bb5a2d    # planned only, never logged
+  SIDE: 1d7c5fba-91ad-4aef-8375-1470bc217458     # "Side control": logged, flagged needs work
+  CLOSED: 858d33c2-438d-41e2-a1b9-6b0d79a31ce7   # "Closed guard": logged, rated, not flagged
+---
+- runFlow: ../../subflows/reset.yaml
+- runFlow:
+    file: ../../subflows/seed-progress-states.yaml
+    env:
+      SIDE: ${SIDE}
+      CLOSED: ${CLOSED}
+      MOUNT: ${MOUNT}
+
+- tapOn:
+    id: "tabs.progress"
+- extendedWaitUntil:
+    visible:
+      id: "progress.screen"
+    timeout: 10000
+- assertNotVisible:
+    id: "progress.empty"
+# The row is one accessibility element: its label carries name, state, summary and the Flagged part (design 4.2.2).
+- assertVisible:
+    id: "progress.row.POSITION.${SIDE}"
+    text: "Side control\\. Needs work\\..*Flagged\\..*"
+- assertVisible:
+    id: "progress.row.POSITION.${CLOSED}"
+    text: "Closed guard\\. Steady\\..*"
+- assertNotVisible:
+    id: "progress.row.POSITION.${CLOSED}"
+    text: ".*Flagged\\..*"
+- assertVisible:
+    id: "progress.row.POSITION.${MOUNT}"
+    text: "Mount\\. Not trained lately\\..*"
+
+# --- why sheet of the flagged focus ---
+- tapOn:
+    id: "progress.row.POSITION.${SIDE}"
+- extendedWaitUntil:
+    visible:
+      id: "why.sheet"
+    timeout: 10000
+- assertVisible:
+    id: "why.title"
+- assertVisible:
+    id: "why.state"
+    text: "Needs work"
+- assertVisible:
+    id: "why.signal.needsWorkRate"
+# a single session leaves the other signals below their minimum data (the sheet body scrolls)
+# swipe inside the half-height sheet (scrollUntilVisible starts on the backdrop above it)
+- swipe:
+    start: "50%,85%"
+    end: "50%,45%"
+- scrollUntilVisible:
+    element:
+      id: "why.signal.hitRatio"
+- assertVisible:
+    id: "why.signal.hitRatio"
+    text: ".*Not enough data.*"
+- assertVisible:
+    id: "why.signal.trend"
+    text: ".*Not enough data.*"
+# scrolled content draws over the sheet header (app defect, see test-report): scroll back before Close
+- swipe:
+    start: "50%,45%"
+    end: "50%,85%"
+- tapOn:
+    id: "why.close"
+- extendedWaitUntil:
+    visible:
+      id: "progress.screen"
+    timeout: 10000

@@ -11,12 +11,14 @@ import { Icon, type IconName } from './Icon';
 import { Touch } from './Touch';
 import { Txt } from './Txt';
 
-const TABS: Record<string, { icon: IconName; label: 'tabs.home' | 'tabs.library'; testID: string }> = {
+const TABS: Record<string, { icon: IconName; label: 'tabs.home' | 'tabs.library' | 'tabs.progress' | 'tabs.profile'; testID: string }> = {
   index: { icon: 'home', label: 'tabs.home', testID: 'tabs.home' },
   library: { icon: 'library', label: 'tabs.library', testID: 'tabs.library' },
+  progress: { icon: 'progress', label: 'tabs.progress', testID: 'tabs.progress' },
+  profile: { icon: 'profile', label: 'tabs.profile', testID: 'tabs.profile' },
 };
 
-/** Custom JS tab bar: Home · Log · Library (D-A2; cm:273-288). */
+/** Custom JS tab bar: Home · Library · Log · Progress · Profile (R-45, PS-10; cm:273-288). Five equal columns. */
 export function MainTabBar({ state, emitter, navigateToTab }: BottomTabBarProps) {
   const { t } = useTranslation();
   const { c } = useTheme();

@@ -53,7 +53,7 @@ Constraints:
 
 ## app_meta
 
-Key/value store for app-level metadata (schema_version, taxonomy_release, catalog_release, db_key_created_at — never key material).
+Key/value store for app-level metadata (schema_version, taxonomy_release, catalog_release, db_key_created_at, backup_exclusion = excluded | failed | not_applicable, backup_exclusion_checked_at = ISO date of the last check — never key material).
 
 | Column | Type | Null | PK | Default | Description |
 |---|---|---|---|---|---|

@@ -1,0 +1,111 @@
+# progress-settings — verify
+
+Append-only, one block per agent per sha (`.claude/rules/docs.md`); mirrored in `verify.json`.
+
+### frontend-coder @ 81c4bda — 2026-11-01
+Phase A (UI on typed mocks). The working tree also carried the data-coder's uncommitted `mobile/src/{domain,repositories}/**` edits while this ran.
+
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 2 | 1 error, outside frontend scope: `src/repositories/__tests__/progression.test.ts(114,20)` TS2339 `$client` on `Db` (data-coder's uncommitted test). 0 errors in `app/`, `src/{components,features,hooks,i18n,__mocks__}`, `__tests__/` |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1673 passed, 0 failed (38 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1673 passed, 0 failed (38 suites); CO-06 local zone |
+| node scripts/sync-design-tokens.mjs --check | 0 | |
+| node scripts/check-token-adherence.mjs | 0 | |
+| npx expo-doctor | 0 | 20/20 |
+| npx expo run:ios (smoke) | — | not run: optional in phase A, no build started |
+
+### data-coder @ f39172c — 2026-11-01
+Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner/MEMORY.md` modified, neither under test).
+
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1722 passed, 0 failed (41 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1722 passed, 0 failed (41 suites); CO-06 local zone. Data layer (`src/{db,domain,repositories}`): 539 passed (25 suites) |
+| npx drizzle-kit generate && git diff --exit-code -- mobile/drizzle/ | 0 | No schema changes, nothing to migrate (PS-01) |
+| NF-09 (Jest benchmark, informative) | 0 | computeProgression 500 sessions × 3 focuses 0.25 ms; progression.overview end to end on better-sqlite3 4.64 ms (target < 100 ms) |
+
+### frontend-coder @ 169fe7e — 2026-11-01 (phase B)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1722 passed, 0 failed (41 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1722 passed, 0 failed (41 suites) |
+| node scripts/sync-design-tokens.mjs --check | 0 | |
+| node scripts/check-token-adherence.mjs | 0 | |
+| npx expo-doctor | 0 | 20/20 |
+| npx expo run:ios --port 8082 (dev-client, iPhone 18 Pro) | 0 | after three fixes: stale gitignored `ios/.xcode.env.local` NODE_BINARY; `pod install` for the new local module; Swift `Exception` is a class |
+| simulator smoke | 0 | Home, Library (position edit saved a note; technique detail with resources), Progress (rows, heatmap, planned vs trained, why sheet), Profile, About (backup: excluded). Defect found and fixed: ProgressScreen `data!.params` hoisted by React Compiler crashed on first render. set-rank kids-scale detent not checked |
+| xattr on app container | 0 | `Documents/SQLite`, `matiq.db`, `-wal`, `-shm` all carry `com.apple.metadata:com_apple_backup_excludeItem` |
+
+### tester @ 9ee80da — 2026-11-01 (Maestro run, iPhone 18 Pro, iOS 27.2, Metro 8082)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro (first whole-workspace run, unfixed flows) | 1 | 5/13 passed |
+| same command, second whole-workspace run after flow fixes | 1 | 10/13 passed; settings-weights and progress-states failed in the seed subflow (scroll flake), settings-rank-theme on `rank.save` |
+| maestro test …/features/settings-weights.yaml (after seed-subflow reorder) | 0 | 1/1 passed |
+| maestro test …/features/progress-states.yaml | 1 | 0/1: `why.close` unreachable, sheet header overlapped by content (app defect A-1) |
+| maestro test …/features/settings-rank-theme.yaml | 1 | 0/1: `rank.save` absent from the hierarchy on the KIDS scale (app defect A-2) |
+| Final state | — | 11/13 flows pass; 2 blocked by app defects A-1, A-2 |
+
+### frontend-coder @ 0e8d4db — 2026-11-01 (defect round 1: A-1, A-2)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1726 passed, 0 failed (41 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1726 passed, 0 failed (41 suites) |
+| node scripts/check-token-adherence.mjs | 0 | |
+| simulator check (Metro 8082, JS only) | 0 | why sheet: header clear above body, Close dismisses; set-rank on Kids: Save rank pinned, belts scroll, Cancel dismisses |
+
+### tester @ e2ed248 — 2026-11-01 (Maestro re-run, iPhone 18 Pro, iOS 27.2, Metro 8082)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/progress-states.yaml | 0 | 1/1 passed (single-flow) |
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/settings-rank-theme.yaml | 0 | 1/1 passed (single-flow) |
+| maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/settings-weights.yaml | 0 | 1/1 passed (single-flow, after the seed-subflow change) |
+| Final | — | 13/13: 10 from the whole-workspace run, 3 single-flow; whole suite not re-run |
+
+### tester @ 1f8738f — 2026-11-02 (CO-47 whole-suite re-run, iPhone 18 Pro, iOS 27.2, Metro 8081)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro test -e METRO_URL=http://localhost:8081 e2e/maestro (first attempt) | 1 | not run: "You have 0 devices connected" — the simulator was Shutdown; booted with `xcrun simctl boot` (infra check) |
+| maestro test -e METRO_URL=http://localhost:8081 e2e/maestro (whole workspace, once) | 1 | 6/13 passed, 7 failed. Passed: smoke, browse library, library edit, settings-weights, settings-rank-theme, log-session. Failed: technique-resources (`Tap on id: resourceEdit.field.title` — Element not found, at 57s, simulator still alive); library-merge (failed at 1m8s, simulator died during it); progress-states, plan-then-log, progress-panels, settings-about, regression-co42 (each 183-233ms: `Launch app ... with clear state FAILED` in reset.yaml, CoreSimulator error 405 "Unable to lookup in current state: Shutdown") |
+| Final | — | CO-47 stays open. The simulator shut down mid-run (cause not diagnosed); 6 failures are infra. technique-resources is the only failure with the simulator alive; flaky timing vs app defect undetermined (it passed in sprint 2's full run) |
+
+### main session @ aa7d9d8 — 2026-11-02 (CO-47 second whole-suite run, iPhone 18 Pro, iOS 27.2, Metro 8081)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 1 | 4/13 passed: smoke, browse library, library edit, settings-rank-theme. Simulator stayed Booted throughout (watched). Failed with the driver alive: technique-resources (`resourceEdit.field.title` not found, same step as the first re-run), settings-weights (`log.search.input` not found), log-session (2m27s, ran into the driver loss). At 09:41:28 the XCUITest driver became unreachable (`Transport unreachable while processing screenshot`, connection refused on its port); the remaining 6 flows failed within 2–7s or at the first screenshot: infra |
+| Final | — | CO-47 stays open. technique-resources failed at the same step in both 2026-11-02 runs → likely a real flow or app defect, not timing. settings-weights is order-dependent (passed in the first re-run). The driver crash is infra; two `maestro mcp` processes were alive from session startup and may contend for the device |
+
+### frontend-coder @ 5087903 — 2026-11-02 (defect round 2: CO-47 sheet body)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1739 passed, 0 failed (42 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1739 passed, 0 failed (42 suites) |
+| node scripts/check-token-adherence.mjs | 0 | |
+| maestro: Add resource sheet x10 (scratch flow, Metro 8081) | 0 | title field, url field and resourceEdit.save visible 10/10 with autoFocus keyboard up |
+| maestro: home.planEmpty.action -> log.search.input x10 (scratch flow) | 0 | visible within 10 s 10/10 |
+| maestro: settings-weights x3 (unchanged flow) | 0 | 3/3 |
+| maestro: technique-resources x1 (unchanged flow) | 1 | add step now passes; fails later at the delete step (see report): resourceEdit.delete is below the fold and its frame overlaps resourceEdit.save |
+
+### tester @ 224804c — 2026-11-02 (final whole-suite run, CO-47)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 1 | 12/13 passed; library-merge failed at `visible: "Merge undone"` (probable flow class: search keyboard covers the toast; not re-run); iPhone 18 Pro, iOS 27.2 |
+
+### frontend-coder @ 7e59b4c — 2026-11-02 (defect round 2b: F-02 toast above the keyboard)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1740 passed, 0 failed (42 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1740 passed, 0 failed (42 suites) |
+| node scripts/check-token-adherence.mjs | 0 | |
+| maestro scratch flow (not from e2e/): merge -> undo with the search keyboard up x5, Metro 8081 | 0 | toast.undo visible and tappable, "Merge undone" shown, 5/5 |
+
+### tester @ 6c3fcb3 — 2026-11-02 (round 2 whole-suite run, CO-47)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 0 | 13/13 passed in one run; iPhone 18 Pro, iOS 27.2 |

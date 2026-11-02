@@ -1,0 +1,124 @@
+appId: nl.btnt.matiq
+name: Settings rank and theme - kids scale entry on Home, scale back, dark theme persists
+tags:
+  - features
+  - settings
+---
+- runFlow: ../../subflows/reset.yaml
+- tapOn:
+    id: "tabs.profile"
+- extendedWaitUntil:
+    visible:
+      id: "profile.screen"
+    timeout: 10000
+- assertVisible:
+    id: "profile.rank.set"
+
+# --- kids scale: add Grey with one stripe ---
+- scrollUntilVisible:
+    element:
+      id: "profile.rankHistory"
+- tapOn:
+    id: "profile.rankHistory"
+- extendedWaitUntil:
+    visible:
+      id: "profileRank.screen"
+    timeout: 10000
+- tapOn:
+    id: "profileRank.scale.KIDS"
+- extendedWaitUntil:
+    visible:
+      id: "profileRank.empty"
+    timeout: 10000
+- tapOn:
+    id: "profileRank.add"
+- tapOn:
+    id: "rank.belt.GREY"
+- scrollUntilVisible:
+    element:
+      id: "rank.stripes.more"
+- tapOn:
+    id: "rank.stripes.more"
+- scrollUntilVisible:
+    element:
+      id: "rank.save"
+- tapOn:
+    id: "rank.save"
+- extendedWaitUntil:
+    visible:
+      id: "profileRank.entry\\.[^.]+"
+    timeout: 10000
+- tapOn:
+    id: "tabs.home"
+- extendedWaitUntil:
+    visible:
+      id: "home.rank"
+    timeout: 10000
+- assertVisible: "Grey belt.*"
+
+# --- back to adult: the kids entry is hidden, never deleted; fresh database has no adult entry ---
+- tapOn:
+    id: "tabs.profile"
+- runFlow:
+    when:
+      notVisible:
+        id: "profileRank.screen"
+    commands:
+      - tapOn:
+          id: "profile.rankHistory"
+- tapOn:
+    id: "profileRank.scale.ADULT"
+- extendedWaitUntil:
+    visible:
+      id: "profileRank.empty"
+    timeout: 10000
+- tapOn:
+    id: "tabs.home"
+- extendedWaitUntil:
+    visible:
+      id: "home.rank.set"
+    timeout: 10000
+
+# --- appearance: Dark, persisted across a relaunch ---
+- tapOn:
+    id: "tabs.profile"
+- runFlow:
+    when:
+      visible:
+        id: "profileRank.screen"
+    commands:
+      - tapOn:
+          id: "BackButton"
+- tapOn:
+    id: "profile.theme.DARK"
+- assertVisible:
+    id: "profile.theme.DARK"
+    selected: true
+- launchApp:
+    stopApp: true
+- openLink: "matiq://expo-development-client/?url=${typeof METRO_URL === 'undefined' ? 'http://localhost:8081' : METRO_URL}"
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: "home.screen"
+    timeout: 60000
+- tapOn:
+    id: "tabs.profile"
+- runFlow:
+    when:
+      visible:
+        id: "profileRank.screen"
+    commands:
+      - tapOn:
+          id: "BackButton"
+- scrollUntilVisible:
+    element:
+      id: "profile.theme.DARK"
+- assertVisible:
+    id: "profile.theme.DARK"
+    selected: true
+# restore: the simulator keeps the override only inside the app, but leave no state behind
+- tapOn:
+    id: "profile.theme.SYSTEM"

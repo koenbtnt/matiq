@@ -5,6 +5,7 @@ import { defaultDatabaseDirectory, deleteDatabaseSync, openDatabaseSync, type SQ
 
 import { setAppMeta } from '../repositories/appMeta';
 import { ensureSeeded } from '../repositories/seed';
+import { notApplicableBackupExclusion } from './backup';
 import type { BootstrapDeps } from './bootstrap';
 import type { Db } from './client';
 import { generateKeyHex } from './key/generate';
@@ -32,7 +33,18 @@ export function nativeBootstrapDeps(): BootstrapDeps<SQLiteDatabase> {
     seed: (db, now) => ensureSeeded(db, { now }),
     recordKeyCreated: (db, now) => setAppMeta('db_key_created_at', now().slice(0, 10), now, db),
     now: () => new Date().toISOString(),
+    backupExclusion: notApplicableBackupExclusion,
+    backupTargets: backupTargetUris,
   };
+}
+
+/**
+ * PS-17 / N8: the database directory first (SQLite recreates `-wal`/`-shm`; a directory exclusion
+ * covers them), then each of `matiq.db`, `-wal`, `-shm` that exists (belt and braces).
+ */
+export function backupTargetUris(name: string): string[] {
+  const files = (['', '-wal', '-shm'] as const).map((suffix) => databaseFile(name, suffix)).filter((f) => f.exists);
+  return [dirUri(), ...files.map((f) => f.uri)];
 }
 
 /** Deletes `matiq.db`, `-wal` and `-shm` (R-12 exception: reset/erase only; the db must be closed). */

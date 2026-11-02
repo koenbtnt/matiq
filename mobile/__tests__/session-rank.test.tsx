@@ -78,3 +78,22 @@ describe('Set-rank sheet', () => {
     expect(await screen.findByTestId('rank.error')).toHaveTextContent(has("The award date can't be in the future."));
   });
 });
+
+describe('Set-rank sheet on the kids scale (A-2)', () => {
+  afterEach(() => {
+    const { progressStore } = require('../src/__mocks__/progressStore');
+    progressStore.settings['rank.scale'] = 'ADULT';
+  });
+
+  it('lists every kids belt and keeps the pinned Save reachable', async () => {
+    const { progressStore } = require('../src/__mocks__/progressStore');
+    await renderScreen(<SetRankSheet />, () => progressStore.setSetting('rank.scale', 'KIDS'));
+    expect(screen.getAllByTestId(/^rank\.belt\.[A-Z_]+$/)).toHaveLength(13);
+    expect(screen.getByTestId('rank.save')).toBeTruthy();
+  });
+
+  it('is presented at the full detent, not fitToContents, so Save cannot fall below the sheet', () => {
+    const src = require('fs').readFileSync(require('path').join(__dirname, '../app/_layout.tsx'), 'utf8') as string;
+    expect(src).not.toMatch(/fitToContents/);
+  });
+});

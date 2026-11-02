@@ -1,6 +1,6 @@
 # 0020. SQLCipher key seam, raw 32-byte key and backup exclusion
 
-- **Status:** accepted — A-16 ruled R-39, A-17 ruled R-50 (both 2026-11-01)
+- **Status:** accepted — A-16 ruled R-39, A-17 ruled R-50 (both 2026-11-01); the iOS exclusion deferred here is implemented by ADR 0026
 - **Rulings of 2026-11-01:** R-39 ("Q4: yes") rules A-11 and A-16 (backup exclusion; iOS module in sprint 2, CO-28). R-50 ("All are accepted as is", the PO's reply to the morning brief's §4 accept-by-default list) accepts A-17 (the secure-store constant, confirmed by CO-25) at its recorded default; nothing in this ADR remains open.
 - **Date:** 2026-11-01
 - **Deciders:** planner (agent) under the PO's overnight-autonomy instruction of 2026-10-31; review 1 passed 2026-11-01. A-16 ruled R-39 (2026-11-01); A-17 ruled R-50 (2026-11-01); refines ADR 0006 (accepted), does not supersede it.

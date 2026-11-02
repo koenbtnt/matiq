@@ -1,117 +1,64 @@
-import { and, asc, eq, inArray, isNull, or, sql, type AnyColumn, type SQL } from 'drizzle-orm';
-import { alias } from 'drizzle-orm/sqlite-core';
+import { and, asc, desc, eq, inArray, isNull } from 'drizzle-orm';
 
 import { getDb, type Db } from '../db/client';
-import { aliases, positions, subjects, techniques } from '../db/schema';
+import { positions, sessions as sessionsTable, sessionTechniques, sessionTypes, submissions, techniques } from '../db/schema';
 import { DomainError } from '../domain/errors';
 import { matchRows, rankRows } from '../domain/taxonomy/search';
 import type { TaxonomySeed } from '../domain/taxonomy/seed';
 import type {
-  FocusPickerRow, ImportReport, PositionDetail, PositionRow, SubjectRow, TechniqueRow, TechniqueType, Tier,
+  AliasRow, FocusPickerRow, ImportReport, PositionDetail, PositionRow, SubjectRow, TechniqueDetail, TechniqueHistoryRow,
+  TechniqueRow, TechniqueType, Tier,
 } from './contracts';
-import { compact, likeContains, opt } from './internal';
+import { compact, opt } from './internal';
+import { listResourcesSync } from './resources';
 import { runtime } from './runtime';
 import { getSettingSync } from './settings';
+import { taxonomyEdits } from './taxonomyEdit';
 import { importTaxonomySync } from './taxonomyImport';
+import { taxonomyMergeOps } from './taxonomyMerge';
+import {
+  aliasMap, byTierThenName, byTypeThenName, listAliasesSync, nameOrAliasLike, positionRows, subjectRowsSync, techniqueRows,
+  tierFilter,
+} from './taxonomyRows';
 
-const TYPE_ORDER: Record<TechniqueType, number> = {
-  TRANSITION: 0, GUARD_PASS: 1, SWEEP: 2, ESCAPE: 3, TAKEDOWN: 4, SUBMISSION: 5,
-};
+export { aliasMap, listAliasesSync };
 
-/** Live alias names per target id, sorted. */
-export function aliasMap(kind: 'POSITION' | 'TECHNIQUE', ids: readonly string[], database: Db): Map<string, string[]> {
-  const out = new Map<string, string[]>();
-  if (ids.length === 0) return out;
-  for (let i = 0; i < ids.length; i += 500) {
-    const rows = database
-      .select({ targetId: aliases.targetId, name: aliases.name })
-      .from(aliases)
-      .where(and(eq(aliases.targetKind, kind), inArray(aliases.targetId, ids.slice(i, i + 500)), isNull(aliases.deletedAt)))
-      .all();
-    for (const r of rows) out.set(r.targetId, [...(out.get(r.targetId) ?? []), r.name]);
-  }
-  for (const list of out.values()) list.sort((a, b) => a.localeCompare(b, 'en'));
-  return out;
-}
+const HISTORY_LIMIT = 20;
 
-/** SQL prefilter: name or a live alias contains the (lower-cased) query. Ranking happens in the domain. */
-function nameOrAliasLike(kind: 'POSITION' | 'TECHNIQUE', nameCol: AnyColumn, idCol: AnyColumn, query: string): SQL | undefined {
-  const q = query.trim().toLowerCase();
-  if (!q) return undefined;
-  const pattern = likeContains(q);
-  return or(
-    sql`lower(${nameCol}) LIKE ${pattern} ESCAPE '\\'`,
-    sql`${idCol} IN (SELECT target_id FROM aliases WHERE target_kind = ${kind} AND deleted_at IS NULL AND lower(name) LIKE ${pattern} ESCAPE '\\')`,
-  );
-}
-
-function positionRows(where: (SQL | undefined)[], database: Db): PositionRow[] {
-  const rows = database
-    .select({
-      id: positions.id,
-      slug: positions.slug,
-      canonicalName: positions.canonicalName,
-      tier: positions.tier,
-      parentId: positions.parentPositionId,
-    })
-    .from(positions)
-    .where(and(isNull(positions.deletedAt), ...where))
+/** PS-16: sessions where the technique was attached or logged as a submission; newest first, 20 rows. */
+function techniqueHistorySync(id: string, database: Db): TechniqueHistoryRow[] {
+  const cols = {
+    sessionId: sessionsTable.id,
+    localDate: sessionsTable.localDate,
+    startsAt: sessionsTable.startsAt,
+    sessionTypeName: sessionTypes.name,
+  };
+  const attached = database
+    .select(cols)
+    .from(sessionTechniques)
+    .innerJoin(sessionsTable, and(eq(sessionsTable.id, sessionTechniques.sessionId), isNull(sessionsTable.deletedAt)))
+    .innerJoin(sessionTypes, eq(sessionTypes.id, sessionsTable.sessionTypeId))
+    .where(and(eq(sessionTechniques.techniqueId, id), isNull(sessionTechniques.deletedAt)))
+    .orderBy(desc(sessionsTable.startsAt))
+    .limit(HISTORY_LIMIT)
     .all();
-  const al = aliasMap('POSITION', rows.map((r) => r.id), database);
-  return rows.map((r) => compact({ ...r, parentId: opt(r.parentId), aliases: al.get(r.id) ?? [] }));
-}
-
-const fromPos = alias(positions, 'from_pos');
-const toPos = alias(positions, 'to_pos');
-
-function techniqueRows(where: (SQL | undefined)[], database: Db): TechniqueRow[] {
-  const rows = database
-    .select({
-      id: techniques.id,
-      slug: techniques.slug,
-      name: techniques.name,
-      type: techniques.type,
-      fromPositionId: techniques.fromPositionId,
-      fromName: fromPos.canonicalName,
-      toPositionId: techniques.toPositionId,
-      toName: toPos.canonicalName,
-      appliesTo: techniques.appliesTo,
-      perspective: techniques.perspective,
-      tier: techniques.tier,
-    })
-    .from(techniques)
-    .innerJoin(fromPos, and(eq(fromPos.id, techniques.fromPositionId), isNull(fromPos.deletedAt)))
-    .leftJoin(toPos, eq(toPos.id, techniques.toPositionId))
-    .where(and(isNull(techniques.deletedAt), ...where))
+  const subs = database
+    .select(cols)
+    .from(submissions)
+    .innerJoin(sessionsTable, and(eq(sessionsTable.id, submissions.sessionId), isNull(sessionsTable.deletedAt)))
+    .innerJoin(sessionTypes, eq(sessionTypes.id, sessionsTable.sessionTypeId))
+    .where(and(eq(submissions.techniqueId, id), isNull(submissions.deletedAt)))
+    .orderBy(desc(sessionsTable.startsAt))
+    .limit(HISTORY_LIMIT)
     .all();
-  const al = aliasMap('TECHNIQUE', rows.map((r) => r.id), database);
-  return rows.map((r) =>
-    compact({
-      ...r,
-      toPositionId: opt(r.toPositionId),
-      toName: opt(r.toName),
-      perspective: opt(r.perspective),
-      aliases: al.get(r.id) ?? [],
-    }),
-  );
-}
-
-const byTypeThenName = (a: TechniqueRow, b: TechniqueRow) =>
-  TYPE_ORDER[a.type] - TYPE_ORDER[b.type] || a.name.localeCompare(b.name, 'en');
-
-const byTierThenName = (a: PositionRow, b: PositionRow) =>
-  (a.tier === b.tier ? 0 : a.tier === 'CORE' ? -1 : 1) || a.canonicalName.localeCompare(b.canonicalName, 'en');
-
-const tierFilter = (col: typeof positions.tier, showExtended: boolean) => (showExtended ? undefined : eq(col, 'CORE' as Tier));
-
-function subjectRowsSync(database: Db): SubjectRow[] {
-  return database
-    .select({ id: subjects.id, name: subjects.name, description: subjects.description })
-    .from(subjects)
-    .where(isNull(subjects.deletedAt))
-    .orderBy(asc(subjects.name))
-    .all()
-    .map((r) => compact({ ...r, description: opt(r.description) }));
+  // One row per session; ATTACHED wins when both apply.
+  const bySession = new Map<string, TechniqueHistoryRow & { startsAt: string }>();
+  for (const r of attached) if (!bySession.has(r.sessionId)) bySession.set(r.sessionId, { ...r, via: 'ATTACHED' });
+  for (const r of subs) if (!bySession.has(r.sessionId)) bySession.set(r.sessionId, { ...r, via: 'SUBMISSION' });
+  return [...bySession.values()]
+    .sort((a, b) => (a.startsAt < b.startsAt ? 1 : a.startsAt > b.startsAt ? -1 : 0))
+    .slice(0, HISTORY_LIMIT)
+    .map(({ startsAt: _s, ...r }) => r);
 }
 
 export const taxonomy = {
@@ -145,8 +92,9 @@ export const taxonomy = {
   },
 
   /**
-   * One live position with parent, children and techniques from/into it (type, then name).
-   * Children and techniques honour `library.showExtended`.
+   * One live position with parent, children, techniques from/into it (type, then name; edges with
+   * a soft-deleted endpoint hidden, PS-13) and its aliases with ids. Children and techniques honour
+   * `library.showExtended`.
    */
   async getPosition(id: string, database: Db = getDb()): Promise<PositionDetail> {
     const row = database.select().from(positions).where(and(eq(positions.id, id), isNull(positions.deletedAt))).get();
@@ -166,6 +114,7 @@ export const taxonomy = {
       .orderBy(asc(positions.canonicalName))
       .all();
     const techTier = showExtended ? undefined : eq(techniques.tier, 'CORE' as Tier);
+    const aliasRows = listAliasesSync('POSITION', id, database);
     return compact({
       id: row.id,
       slug: row.slug,
@@ -173,7 +122,8 @@ export const taxonomy = {
       description: opt(row.description),
       notes: opt(row.notes),
       tier: row.tier,
-      aliases: aliasMap('POSITION', [id], database).get(id) ?? [],
+      aliases: aliasRows.map((a) => a.name),
+      aliasRows,
       parent: parent ?? undefined,
       children,
       techniquesFrom: techniqueRows([eq(techniques.fromPositionId, id), techTier], database).sort(byTypeThenName),
@@ -181,12 +131,57 @@ export const taxonomy = {
     });
   },
 
+  /**
+   * Technique detail (PS-16, N9): opens for live and soft-deleted techniques (history links), with
+   * endpoint soft-delete flags, aliases with ids, live resources and session history.
+   */
+  async getTechnique(id: string, database: Db = getDb()): Promise<TechniqueDetail> {
+    const row = database.select().from(techniques).where(eq(techniques.id, id)).get();
+    if (!row) throw new DomainError('TAXONOMY_ROW_NOT_FOUND');
+    const ends = database
+      .select({ id: positions.id, name: positions.canonicalName, deletedAt: positions.deletedAt })
+      .from(positions)
+      .where(inArray(positions.id, [row.fromPositionId, ...(row.toPositionId ? [row.toPositionId] : [])]))
+      .all();
+    const from = ends.find((e) => e.id === row.fromPositionId)!;
+    const to = row.toPositionId ? ends.find((e) => e.id === row.toPositionId) : undefined;
+    const aliasRows = listAliasesSync('TECHNIQUE', id, database);
+    return compact({
+      id: row.id,
+      slug: row.slug,
+      name: row.name,
+      type: row.type,
+      fromPositionId: row.fromPositionId,
+      fromName: from.name,
+      toPositionId: opt(row.toPositionId),
+      toName: to?.name,
+      appliesTo: row.appliesTo,
+      perspective: opt(row.perspective),
+      tier: row.tier,
+      aliases: aliasRows.map((a) => a.name),
+      description: opt(row.description),
+      notes: opt(row.notes),
+      origin: row.origin,
+      removed: row.deletedAt !== null,
+      resources: listResourcesSync({ kind: 'TECHNIQUE', id }, database),
+      fromRemoved: from.deletedAt !== null,
+      toRemoved: to ? to.deletedAt !== null : undefined,
+      aliasRows,
+      history: techniqueHistorySync(id, database),
+    });
+  },
+
+  /** Live aliases of a position or technique, with ids, by name. */
+  async listAliases(kind: 'POSITION' | 'TECHNIQUE', id: string, database: Db = getDb()): Promise<AliasRow[]> {
+    return listAliasesSync(kind, id, database);
+  },
+
   /** Live subjects by name. */
   async listSubjects(database: Db = getDb()): Promise<SubjectRow[]> {
     return subjectRowsSync(database);
   },
 
-  /** Technique search (name or alias); `type` filters in SQL (D-A22 submission chips). */
+  /** Technique search (name or alias); `type` filters in SQL (D-A22 submission chips). Hides edges with a deleted endpoint. */
   async listTechniques(
     { query, showExtended, type, limit = 30 }: { query: string; showExtended: boolean; type?: TechniqueType; limit?: number },
     database: Db = getDb(),
@@ -206,4 +201,7 @@ export const taxonomy = {
   async importRelease(seed: TaxonomySeed, { now }: { now: () => string } = runtime(), database: Db = getDb()): Promise<ImportReport> {
     return database.transaction((tx) => importTaxonomySync(seed, now(), tx));
   },
+
+  ...taxonomyEdits,
+  ...taxonomyMergeOps,
 };

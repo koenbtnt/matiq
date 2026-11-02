@@ -1,5 +1,5 @@
-import { useEffect, useRef, useSyncExternalStore } from 'react';
-import { AccessibilityInfo, Animated, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { AccessibilityInfo, Animated, Keyboard, Platform, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { isAndroid, vSlop } from '../theme/layout';
@@ -60,9 +60,25 @@ function useCurrent(): Current {
   );
 }
 
+/** Height of the on-screen keyboard while it is shown, else 0 (F-02: the toast must clear it, Undo stays tappable). */
+export function useKeyboardHeight(): number {
+  const [height, setHeight] = useState(0);
+  useEffect(() => {
+    // iOS announces the final frame before the animation; Android only reports `Did*`.
+    const [show, hide] = Platform.OS === 'ios' ? (['keyboardWillShow', 'keyboardWillHide'] as const) : (['keyboardDidShow', 'keyboardDidHide'] as const);
+    const subs = [
+      Keyboard.addListener(show, (e) => setHeight(e.endCoordinates.height)),
+      Keyboard.addListener(hide, () => setHeight(0)),
+    ];
+    return () => subs.forEach((s) => s.remove());
+  }, []);
+  return height;
+}
+
 /** One host in the root layout (cm:263-271). */
 export function ToastHost({ bottomOffset }: { bottomOffset?: number }) {
   const { t } = useTranslation();
+  const keyboard = useKeyboardHeight();
   const { c } = useTheme();
   const cur = useCurrent();
   const opacity = useRef(new Animated.Value(1)).current;
@@ -88,7 +104,7 @@ export function ToastHost({ bottomOffset }: { bottomOffset?: number }) {
   }, [cur, opacity]);
 
   if (!cur) return null;
-  const bottom = bottomOffset ?? (isAndroid ? size.tabbarHeightAndroid : size.tabbarHeightIos) + spacing[3];
+  const bottom = bottomOffset ?? (keyboard > 0 ? keyboard + spacing[3] : (isAndroid ? size.tabbarHeightAndroid : size.tabbarHeightIos) + spacing[3]);
   return (
     <View pointerEvents="box-none" style={[styles.layer, { bottom }]}>
       <Animated.View

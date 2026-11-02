@@ -1,0 +1,17 @@
+# Shared subflow (outside the flows/** glob): land on the Algorithm screen from any tab state.
+# Returning to the Profile tab may show the Algorithm screen (stack kept) or the Profile root.
+appId: nl.btnt.matiq
+---
+- tapOn:
+    id: "tabs.profile"
+- runFlow:
+    when:
+      notVisible:
+        id: "algorithm.screen"
+    commands:
+      - tapOn:
+          id: "profile.algorithm"
+- extendedWaitUntil:
+    visible:
+      id: "algorithm.screen"
+    timeout: 10000

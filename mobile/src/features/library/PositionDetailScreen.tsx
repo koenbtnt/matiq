@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { SectionList, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -12,6 +12,7 @@ import { usePosition, useSetting, type TechniqueRow, type TechniqueType } from '
 import { errorKey } from '../../i18n/keys';
 import { spacing } from '../../theme/tokens';
 import { useTheme } from '../../theme/useTheme';
+import { HeaderEditButton } from './HeaderEditButton';
 import { TechniqueListRow } from './rows';
 
 const GROUPS: TechniqueType[] = ['TRANSITION', 'GUARD_PASS', 'SWEEP', 'ESCAPE', 'TAKEDOWN', 'SUBMISSION'];
@@ -57,6 +58,12 @@ export function PositionDetailScreen({ id }: { id: string }) {
       {data.aliases.length ? <Txt variant="caption" color="textSecondary">{t('position.aliases', { aliases: data.aliases.join(', ') })}</Txt> : null}
       {extended && data.tier === 'EXTENDED' ? <Tag label={t('library.tier.EXTENDED')} /> : null}
       {data.description ? <Txt variant="body">{data.description}</Txt> : null}
+      {data.notes ? (
+        <View style={styles.notes}>
+          <Txt variant="overline" color="textSecondary">{t('position.notes')}</Txt>
+          <Txt variant="body">{data.notes}</Txt>
+        </View>
+      ) : null}
       {data.parent ? (
         <ListRow
           testID="position.variantOf"
@@ -84,6 +91,18 @@ export function PositionDetailScreen({ id }: { id: string }) {
   );
 
   return (
+    <>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <HeaderEditButton
+              testID="position.edit"
+              accessibilityLabel={t('position.edit.a11y', { name: data.canonicalName })}
+              onPress={() => router.push({ pathname: '/library-edit', params: { kind: 'POSITION', id } })}
+            />
+          ),
+        }}
+      />
     <SectionList<Item, Section>
       testID="position.screen"
       style={{ backgroundColor: c.bgBase }}
@@ -104,6 +123,7 @@ export function PositionDetailScreen({ id }: { id: string }) {
         )
       }
     />
+    </>
   );
 }
 
@@ -113,4 +133,5 @@ const styles = StyleSheet.create({
   content: { padding: spacing[5], paddingBottom: spacing[8] },
   headerBlock: { gap: spacing[3], marginBottom: spacing[3] },
   group: { marginTop: spacing[2] },
+  notes: { gap: spacing[1] },
 });

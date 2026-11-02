@@ -29,3 +29,8 @@ register in the sprint's `plan.md §0`, R-ids to rulings in `docs/decisions.md`.
 | [0021](0021-taxonomy-seed-pipeline-design.md) | Taxonomy seed pipeline: vendored snapshot, zero-dependency converter, endpoint resolution | F-10..F-13, F-15 / R-28, R-35; A-26, A-27, A-31..A-33 | proposed | 2026-11-01 |
 | [0022](0022-curated-layer-id-registry-and-first-launch-seed.md) | Curated layer, append-only id registry and idempotent first-launch seed | F-14, F-16 / R-28, D-07, D-08; A-28, A-29 | proposed | 2026-11-01 |
 | [0023](0023-dev-reset-route.md) | Dev-only database reset route for Maestro | F-25 / R-12; A-25 | proposed | 2026-11-01 |
+| [0024](0024-progress-computed-on-read-no-schema-change.md) | Progress computed on read: algorithm v1 module, window and panels, no schema change | PS-01..PS-07, PS-21..PS-23 / R-08, R-17, R-22, R-49, R-52 | accepted | 2026-11-01 |
+| [0025](0025-taxonomy-merge-single-transaction-versioned-undo.md) | Taxonomy merge as one transaction with a versioned undo payload | PS-12..PS-14 / R-14, R-26 | accepted | 2026-11-01 |
+| [0026](0026-ios-backup-exclusion-seam-and-local-module.md) | iOS backup exclusion: `BackupExclusion` seam and a local Expo module | PS-17 / R-39; CO-28 | accepted | 2026-11-01 |
+| [0027](0027-taxonomy-name-uniqueness-rule.md) | Taxonomy name uniqueness: positions and subjects by name, techniques by edge (planner decision) | PS-24 / PRODUCT §8, R-48 | accepted | 2026-11-01 |
+| [0028](0028-five-tab-shell-profile-settings-and-theme-override.md) | Five-tab shell with Profile as Settings; theme override at the root layout | PS-09, PS-10 / R-44, R-45, R-54, R-56 | accepted | 2026-11-01 |

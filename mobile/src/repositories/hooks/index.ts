@@ -2,11 +2,17 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { bootstrapDatabase, type BootstrapErrorCode } from '../../db/bootstrap';
 import type { SettingKey, SettingValue } from '../../domain/settings/defaults';
+import { about } from '../about';
+import { algorithmParams } from '../algorithmParams';
 import type {
-  FocusPickerRow, HomeData, PositionDetail, PositionRow, RankEntry, SessionDetail, SessionTypeRow, SubjectRow,
-  TechniqueRow, TechniqueType,
+  AboutData, AlgorithmParamRow, FocusPickerRow, HomeData, PositionDetail, PositionRow, ProgressOverview, RankEntry,
+  ResourceRow, ResourceTarget, ResourceTypeRow, SessionDetail, SessionTypeRow, SubjectRow, TechniqueDetail, TechniqueRow,
+  TechniqueType,
 } from '../contracts';
+import { progression } from '../progression';
 import { rank } from '../rank';
+import { resources, resourceTypes } from '../resources';
+import { runtime } from '../runtime';
 import { sessions } from '../sessions';
 import { sessionTypes } from '../sessionTypes';
 import { settings } from '../settings';
@@ -25,10 +31,13 @@ const TAXONOMY_TABLES = ['positions', 'techniques', 'aliases', 'subjects', 'sett
 /** Read inside the async read, so a closed database (dev reset) becomes `error`, not a throw. */
 const showExtended = async () => (await settings.get('library.showExtended')).value;
 
-/** Home's single read (F-22); re-reads when the device-local date rolls over (R2-06). */
+/**
+ * Home's single read (F-22); re-reads when the device-local date rolls over (R2-06). Suggestions
+ * come from the algorithm (PS-06), hence `algorithm_params`.
+ */
 export function useHome(): LiveResult<HomeData> {
   const today = useLocalDate();
-  return useLiveRead(() => sessions.home({ today }), [...SESSION_TABLES, 'settings', 'rank_entries'], [today]);
+  return useLiveRead(() => sessions.home({ today }), [...SESSION_TABLES, 'settings', 'rank_entries', 'algorithm_params'], [today]);
 }
 
 export function useSession(id: string): LiveResult<SessionDetail> {
@@ -72,7 +81,7 @@ export function useSetting<K extends SettingKey>(key: K): LiveResult<SettingValu
 
 /** `data === null` means no rank yet (not loading). */
 export function useCurrentRank(): LiveResult<RankEntry | null> {
-  return useLiveRead(async () => (await rank.current()) ?? null, ['rank_entries'], []);
+  return useLiveRead(async () => (await rank.current()) ?? null, ['rank_entries', 'settings'], []);
 }
 
 export type DatabaseBootstrapState =
@@ -99,4 +108,52 @@ export function useDatabaseBootstrap(): DatabaseBootstrapState {
   }, []);
   useEffect(run, [run]);
   return { ...state, retry: run };
+}
+
+/* ---------- sprint 2 (progress-settings plan §5.9) ---------- */
+
+const PROGRESS_TABLES = ['sessions', 'session_focuses', 'algorithm_params', 'settings', 'positions', 'subjects'] as const;
+
+/** Progress tab (PS-04, PS-21, PS-22): one read; re-reads on date rollover and on any input table change. */
+export function useProgress(): LiveResult<ProgressOverview> {
+  const today = useLocalDate();
+  return useLiveRead(() => progression.overview({ today, nowIso: runtime().now() }), PROGRESS_TABLES, [today]);
+}
+
+/** Parameter rows of the active `algorithm.version`, by key. */
+export function useAlgorithmParams(): LiveResult<AlgorithmParamRow[]> {
+  return useLiveRead(async () => algorithmParams.list((await settings.get('algorithm.version')).value), ['algorithm_params', 'settings'], []);
+}
+
+/** Rank entries of the active `rank.scale`, newest first. */
+export function useRankHistory(): LiveResult<RankEntry[]> {
+  return useLiveRead(() => rank.history(), ['rank_entries', 'settings'], []);
+}
+
+const TECHNIQUE_TABLES = [
+  'techniques', 'positions', 'aliases', 'resources', 'resource_links', 'resource_types', 'session_techniques', 'submissions',
+  'sessions', 'session_types',
+] as const;
+
+export function useTechnique(id: string): LiveResult<TechniqueDetail> {
+  return useLiveRead(() => taxonomy.getTechnique(id), TECHNIQUE_TABLES, [id]);
+}
+
+export function useResources(target: ResourceTarget): LiveResult<ResourceRow[]> {
+  return useLiveRead(() => resources.listFor(target), ['resources', 'resource_links', 'resource_types'], [target.kind, target.id]);
+}
+
+export function useResourceTypes(): LiveResult<ResourceTypeRow[]> {
+  return useLiveRead(() => resourceTypes.list(), ['resource_types'], []);
+}
+
+/** About (PS-19): repository data plus the app version from expo-constants. */
+export function useAbout(): LiveResult<AboutData> {
+  return useLiveRead(async () => ({ ...(await about.get()), appVersion: appVersion() }), ['app_meta', 'settings'], []);
+}
+
+function appVersion(): string {
+  // Lazy: keeps expo-constants out of Jest suites that never render About.
+  const Constants = (require('expo-constants') as typeof import('expo-constants')).default;
+  return Constants.expoConfig?.version ?? '';
 }

@@ -90,9 +90,9 @@ describe('taxonomy.listTechniques', () => {
     expect((await taxonomy.listTechniques({ query: 'escape', showExtended: false }, db))).toEqual([]);
   });
 
-  it('hides techniques that are soft-deleted or start from a removed position', async () => {
+  it('hides techniques that are soft-deleted or have a removed endpoint, from or to (PS-13)', async () => {
     db.update(techniques).set({ deletedAt: now() }).where(eq(techniques.id, FX.passToSide)).run();
     db.update(positions).set({ deletedAt: now() }).where(eq(positions.id, FX.mount)).run();
-    expect((await taxonomy.listTechniques({ query: '', showExtended: true }, db)).map((t) => t.name)).toEqual(['Scissor sweep']);
+    expect((await taxonomy.listTechniques({ query: '', showExtended: true }, db)).map((t) => t.name)).toEqual([]);
   });
 });
