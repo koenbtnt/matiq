@@ -17,6 +17,10 @@
 
 Note: `settings-weights` has not passed inside a whole-workspace run since its seed fix; it passed only in single-flow runs. `progress-states` and `settings-rank-theme` likewise passed only in single-flow runs. The whole suite was not re-run, by instruction.
 
+## CO-47 whole-suite re-run, 2026-11-02 @ 1f8738f: 6/13 passed, CO-47 open
+
+Metro 8081, iPhone 18 Pro. The simulator was Shutdown at start (booted by the infra check) and shut down again mid-run (CoreSimulator error 405). Passed: smoke, browse library, library edit, settings-weights, settings-rank-theme, log-session. Failed: technique-resources (`Tap on id: resourceEdit.field.title`, element not found, simulator alive; timing flake vs defect undetermined); library-merge (simulator died during it); progress-states, plan-then-log, progress-panels, settings-about, regression-co42 (reset subflow `Launch app ... with clear state` failed, simulator Shutdown: infra). No re-run done, per instruction; a clean re-run on a stable simulator is needed. The earlier result follows.
+
 ## Final per-flow result: 13/13
 
 | Flow | Result |

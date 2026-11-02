@@ -65,3 +65,10 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/settings-rank-theme.yaml | 0 | 1/1 passed (single-flow) |
 | maestro test -e METRO_URL=http://localhost:8082 e2e/maestro/flows/features/settings-weights.yaml | 0 | 1/1 passed (single-flow, after the seed-subflow change) |
 | Final | — | 13/13: 10 from the whole-workspace run, 3 single-flow; whole suite not re-run |
+
+### tester @ 1f8738f — 2026-11-02 (CO-47 whole-suite re-run, iPhone 18 Pro, iOS 27.2, Metro 8081)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro test -e METRO_URL=http://localhost:8081 e2e/maestro (first attempt) | 1 | not run: "You have 0 devices connected" — the simulator was Shutdown; booted with `xcrun simctl boot` (infra check) |
+| maestro test -e METRO_URL=http://localhost:8081 e2e/maestro (whole workspace, once) | 1 | 6/13 passed, 7 failed. Passed: smoke, browse library, library edit, settings-weights, settings-rank-theme, log-session. Failed: technique-resources (`Tap on id: resourceEdit.field.title` — Element not found, at 57s, simulator still alive); library-merge (failed at 1m8s, simulator died during it); progress-states, plan-then-log, progress-panels, settings-about, regression-co42 (each 183-233ms: `Launch app ... with clear state FAILED` in reset.yaml, CoreSimulator error 405 "Unable to lookup in current state: Shutdown") |
+| Final | — | CO-47 stays open. The simulator shut down mid-run (cause not diagnosed); 6 failures are infra. technique-resources is the only failure with the simulator alive; flaky timing vs app defect undetermined (it passed in sprint 2's full run) |
