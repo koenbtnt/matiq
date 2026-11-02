@@ -2,11 +2,11 @@
 
 ## Current state
 
-- HEAD: 2866ea9 + this; green frontend-coder @ 5087903 (tsc, jest UTC+local 1739, adherence, sim 10/10 both sheets)
-- Step: CO-47 fix-first (PO 2026-11-02) — fixes done, single flows green; final whole-suite run pending
+- HEAD: 6a94855 + this; tester whole suite @ 224804c 12/13 (library-merge); review-2-followup FAILED (F-01 gate, F-02 toast vs keyboard)
+- Step: CO-47 — final run 12/13; round 1 of 2 used
 - Live agents: none (tester a16799220f3b95019, frontend-coder a4b913af5cc01a86e idle)
-- Next action: PO disconnects Maestro MCP (pids 2444, 2652 alive) → tester whole-suite run → review-2-followup → close CO-47
-- Blockers: Maestro MCP processes must be gone before the final run
+- Next action: PO decision on F-02 → round 2 (toast keyboard-aware, library-merge single 3/3) → one more whole-suite run (needs PO go)
+- Blockers: PO decision F-02; PO go for a second whole-suite run
 - Uncommitted: none
 - Env: simulator iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), dev-client installed; Metro on 8082; Maestro at `~/.maestro/bin/maestro`
 
@@ -32,3 +32,5 @@
 - tester · APP DEFECT (blank sheet body; settings-weights same root) · no commit
 - frontend-coder · fix (single keyboard mechanism, SheetFrame) · 5232379, 5087903, 1339b7a
 - tester · FLOWS READY (technique-resources 3/3, settings-weights 2/2 single) · 2866ea9
+- tester · whole suite 12/13 (library-merge, "Merge undone" not visible, keyboard up) · 48b3154
+- reviewer-code · review-2-followup FAILED (F-01…F-04) · 6a94855
