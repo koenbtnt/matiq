@@ -98,3 +98,27 @@ describe('Toast', () => {
     expect(expire2).toHaveBeenCalled();
   });
 });
+
+describe('Toast above the keyboard (F-02)', () => {
+  afterEach(() => { toast.clear(); jest.restoreAllMocks(); });
+
+  it('follows the keyboard show and hide events, so Undo is never behind the keys', async () => {
+    const { Keyboard, Platform, StyleSheet } = require('react-native') as typeof import('react-native');
+    const handlers: Record<string, (e?: unknown) => void> = {};
+    jest.spyOn(Keyboard, 'addListener').mockImplementation(((name: string, fn: (e?: unknown) => void) => {
+      handlers[name] = fn;
+      return { remove: jest.fn() };
+    }) as never);
+    const [show, hide] = Platform.OS === 'ios' ? ['keyboardWillShow', 'keyboardWillHide'] : ['keyboardDidShow', 'keyboardDidHide'];
+    await render(<ToastHost />);
+    await act(async () => toast.show({ message: 'Merge undone', undo: () => undefined }));
+    const bottom = () => StyleSheet.flatten((screen.toJSON() as unknown as { props: { style: never } }).props.style).bottom as number;
+    const resting = bottom();
+
+    await act(async () => handlers[show]!({ endCoordinates: { height: 336 } }));
+    expect(bottom()).toBeGreaterThanOrEqual(336);
+
+    await act(async () => handlers[hide]!());
+    expect(bottom()).toBe(resting);
+  });
+});
