@@ -95,3 +95,12 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | Command | Exit | Notes |
 |---|---|---|
 | maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 1 | 12/13 passed; library-merge failed at `visible: "Merge undone"` (probable flow class: search keyboard covers the toast; not re-run); iPhone 18 Pro, iOS 27.2 |
+
+### frontend-coder @ 7e59b4c — 2026-11-02 (defect round 2b: F-02 toast above the keyboard)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1740 passed, 0 failed (42 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1740 passed, 0 failed (42 suites) |
+| node scripts/check-token-adherence.mjs | 0 | |
+| maestro scratch flow (not from e2e/): merge -> undo with the search keyboard up x5, Metro 8081 | 0 | toast.undo visible and tappable, "Merge undone" shown, 5/5 |
