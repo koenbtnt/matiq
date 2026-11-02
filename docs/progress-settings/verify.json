@@ -39,5 +39,6 @@
   { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "TZ=UTC npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1740 passed, 0 failed (42 suites)" },
   { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "TZ=Europe/Amsterdam npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1740 passed, 0 failed (42 suites)" },
   { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": "" },
-  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "maestro scratch: merge -> undo with search keyboard up x5", "exit": 0, "notes": "toast.undo visible and tappable, Merge undone shown, 5/5" }
+  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "maestro scratch: merge -> undo with search keyboard up x5", "exit": 0, "notes": "toast.undo visible and tappable, Merge undone shown, 5/5" },
+  { "agent": "tester", "sha": "6c3fcb3", "date": "2026-11-02", "command": "maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro", "exit": 0, "notes": "13/13 passed in one whole-workspace run; iPhone 18 Pro, iOS 27.2" }
 ]

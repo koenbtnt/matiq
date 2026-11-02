@@ -69,3 +69,9 @@ Done during authoring: every block in `data-contracts.md` has a data-coder Jest 
 - **Infra:** no driver event. Two idle `maestro mcp` stdio processes (pids 2444, 2652, from two desktop sessions) were alive throughout; left alone.
 - Passed: smoke, browse-library, technique-resources, library-edit, settings-weights, settings-rank-theme, log-session, progress-states, plan-then-log, progress-panels, settings-about, regression/back-label.
 - **Failed: features/library-merge** (1m 24s), step `extendedWaitUntil visible: "Merge undone"` after tapping `toast.undo`. Not re-run, not fixed. The failure screenshot shows the Library tab with the search field focused ("zeta am", "No match") and the keyboard up, no toast visible. Class: **flow, probable** — the open search keyboard covers the bottom toast and the search text is truncated; library-merge passed in every earlier run (round 2 whole run, single flows), so it may also be intermittent. An app cause (toast not shown after undo) is not excluded; it needs a single-flow repro, which this run was told not to do.
+
+## 2026-11-02 round 2 final run (CO-47)
+
+- **Sha:** 6c3fcb3. iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), iOS 27.2, Metro 8081.
+- **Command:** `maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro` — one whole-workspace run, exit 0. **13/13 passed**, including library-merge (fixed by F-02 in 7e59b4c; flow keyboard state made explicit, F-03) and technique-resources, settings-weights, progress-states, settings-rank-theme in the same run.
+- **Infra:** no driver event. The two idle `maestro mcp` processes (pids 2444, 2652) were left alone.

@@ -104,3 +104,8 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1740 passed, 0 failed (42 suites) |
 | node scripts/check-token-adherence.mjs | 0 | |
 | maestro scratch flow (not from e2e/): merge -> undo with the search keyboard up x5, Metro 8081 | 0 | toast.undo visible and tappable, "Merge undone" shown, 5/5 |
+
+### tester @ 6c3fcb3 — 2026-11-02 (round 2 whole-suite run, CO-47)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 0 | 13/13 passed in one run; iPhone 18 Pro, iOS 27.2 |
