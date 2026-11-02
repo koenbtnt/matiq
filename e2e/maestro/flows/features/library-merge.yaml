@@ -111,12 +111,18 @@ tags:
     id: "libraryEdit.merge.result\\.[^.]+"
     index: 0
 - pressKey: Enter
+# Keyboard state, explicit (F-02/F-03): Enter above closes the sheet's keyboard so the confirm button is
+# reachable. The Library search field (tapped at the start of pass 1) is still focused behind the sheet, so
+# the keyboard is UP again when the sheet dismisses; the toast and Undo must stay above it. Deliberately no
+# hideKeyboard here: that would mask a regression of F-02.
 - tapOn:
     id: "libraryEdit.merge.confirm"
 - extendedWaitUntil:
     visible:
       id: "toast.undo"
     timeout: 10000
+- assertVisible:
+    id: "toast.message"
 - assertVisible: "Merged into Zeta B"
 - tapOn:
     id: "toast.undo"
