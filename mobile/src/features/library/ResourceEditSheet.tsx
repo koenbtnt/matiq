@@ -8,7 +8,7 @@ import { Button } from '../../components/Button';
 import { Chip } from '../../components/Chip';
 import { ErrorBanner } from '../../components/ErrorBanner';
 import { SegmentedControl } from '../../components/SegmentedControl';
-import { SheetChrome } from '../../components/SheetChrome';
+import { SheetBody, SheetChrome, SheetFrame } from '../../components/SheetChrome';
 import { TextArea } from '../../components/TextArea';
 import { TextField } from '../../components/TextField';
 import { toast } from '../../components/Toast';
@@ -95,14 +95,15 @@ export function ResourceEditSheet() {
   };
 
   return (
-    <View testID="resourceEdit.sheet" style={[styles.fill, { backgroundColor: c.bgSurface }]}>
+    <SheetFrame testID="resourceEdit.sheet">
       <SheetChrome
         title={t(editing ? 'resourceEdit.title.edit' : 'resourceEdit.title.create')}
         onCancel={() => router.back()}
         cancelTestID="resourceEdit.cancel"
         titleTestID="resourceEdit.heading"
       />
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
+      <SheetBody>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <TextField label={t('resourceEdit.field.title.label')} placeholder={t('resourceEdit.field.title.placeholder')} testID="resourceEdit.field.title" value={title} onChangeText={setTitle} autoFocus={!editing} />
         <View style={styles.field}>
           <TextField
@@ -141,12 +142,13 @@ export function ResourceEditSheet() {
         </View>
         {editing ? <Button variant="destructive" fullWidth testID="resourceEdit.delete" label={t('resourceEdit.delete')} disabled={busy} onPress={() => void remove()} style={styles.delete} /> : null}
       </ScrollView>
+      </SheetBody>
       <BottomActionBar absolute={false}>
         {error ? <ErrorBanner testID="resourceEdit.error" message={error} /> : null}
         {!error && !canSave ? <Txt testID="resourceEdit.save.reason" variant="caption" color="textSecondary">{t('resourceEdit.save.disabled')}</Txt> : null}
         <Button variant="primary" fullWidth testID="resourceEdit.save" label={t(editing ? 'resourceEdit.save.edit' : 'resourceEdit.save.create')} disabled={!canSave} busy={busy} onPress={() => void save()} />
       </BottomActionBar>
-    </View>
+    </SheetFrame>
   );
 }
 

@@ -10,7 +10,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { ErrorBanner } from '../../components/ErrorBanner';
 import { LoadingState } from '../../components/LoadingState';
 import { SegmentedControl } from '../../components/SegmentedControl';
-import { SheetBody, SheetChrome } from '../../components/SheetChrome';
+import { SheetBody, SheetChrome, SheetFrame } from '../../components/SheetChrome';
 import { TextArea } from '../../components/TextArea';
 import { TextField } from '../../components/TextField';
 import { toast } from '../../components/Toast';
@@ -148,14 +148,14 @@ function EditForm({ kind, id, initial, aliasRows }: FormProps) {
     : t(`libraryEdit.title.${editing ? 'edit' : 'create'}.${kind}`);
 
   return (
-    <View testID="libraryEdit.sheet" style={[styles.fill, { backgroundColor: c.bgSurface }]}>
+    <SheetFrame testID="libraryEdit.sheet">
       <SheetChrome title={title} onCancel={() => router.back()} cancelTestID="libraryEdit.cancel" titleTestID="libraryEdit.title" />
       {merging && id ? (
         <MergePanel kind={kind} fromId={id} fromName={initial.name} fromIsSubmission={initial.type === 'SUBMISSION'} onBack={() => setMerging(false)} />
       ) : (
         <>
           <SheetBody>
-          <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
+          <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
             <TextField
               label={t('libraryEdit.name.label')}
               placeholder={t(`libraryEdit.name.placeholder.${kind}`)}
@@ -271,7 +271,7 @@ function EditForm({ kind, id, initial, aliasRows }: FormProps) {
           </BottomActionBar>
         </>
       )}
-    </View>
+    </SheetFrame>
   );
 }
 
