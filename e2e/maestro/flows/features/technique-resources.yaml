@@ -74,6 +74,11 @@ env:
     visible:
       id: "resourceEdit.sheet"
     timeout: 10000
+# Delete is the last item of the scroll; scroll it clear of the pinned Save bar (frames overlap before)
+- scrollUntilVisible:
+    element:
+      id: "resourceEdit.delete"
+    centerElement: true
 - tapOn:
     id: "resourceEdit.delete"
 - extendedWaitUntil:
