@@ -105,7 +105,10 @@ export function buildConsistency(today: string, windowWeeks: number, data: Recor
   }
   const inWin = weeks.flatMap((w) => w.days).filter((d) => d.inWindow);
   let streak = 0;
-  for (let i = weeks.length - 1; i >= 0 && weeks[i]!.completed > 0; i -= 1) streak += 1;
+  // Mirrors the domain: the current week counts only once it has a session, otherwise start from the previous week.
+  let i = weeks.length - 1;
+  if (weeks[i] && weeks[i]!.completed === 0) i -= 1;
+  for (; i >= 0 && weeks[i]!.completed > 0; i -= 1) streak += 1;
   return {
     windowStart, today, weeks,
     totals: {
