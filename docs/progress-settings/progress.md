@@ -2,11 +2,11 @@
 
 ## Current state
 
-- HEAD: f9552d7 + this; PR #7 into develop, CI green at f9552d7
-- Step: 9 — close-out done; awaiting PO merge
-- Live agents: none
-- Next action: PO reviews and merges PR #7 (regular merge)
-- Blockers: none
+- HEAD: 2866ea9 + this; green frontend-coder @ 5087903 (tsc, jest UTC+local 1739, adherence, sim 10/10 both sheets)
+- Step: CO-47 fix-first (PO 2026-11-02) — fixes done, single flows green; final whole-suite run pending
+- Live agents: none (tester a16799220f3b95019, frontend-coder a4b913af5cc01a86e idle)
+- Next action: PO disconnects Maestro MCP (pids 2444, 2652 alive) → tester whole-suite run → review-2-followup → close CO-47
+- Blockers: Maestro MCP processes must be gone before the final run
 - Uncommitted: none
 - Env: simulator iPhone 18 Pro (921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51), dev-client installed; Metro on 8082; Maestro at `~/.maestro/bin/maestro`
 
@@ -29,3 +29,6 @@
 - documenter · DOCS COMPLETE (decisions.md R-52..R-56 appended by orchestrator; guard) · 13cef42
 - reviewer-code · REVIEW PASSED (R2-01…07, no B) · 8735431
 - orchestrator · close-out, PR #7 opened, CI green · f9552d7
+- tester · APP DEFECT (blank sheet body; settings-weights same root) · no commit
+- frontend-coder · fix (single keyboard mechanism, SheetFrame) · 5232379, 5087903, 1339b7a
+- tester · FLOWS READY (technique-resources 3/3, settings-weights 2/2 single) · 2866ea9
