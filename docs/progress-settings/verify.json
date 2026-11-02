@@ -33,5 +33,6 @@
   { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro scratch: Add resource sheet x10", "exit": 0, "notes": "title, url, save visible 10/10 with keyboard up" },
   { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro scratch: home.planEmpty.action -> log.search.input x10", "exit": 0, "notes": "10/10 within 10 s" },
   { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro settings-weights x3 (unchanged)", "exit": 0, "notes": "3/3" },
-  { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro technique-resources x1 (unchanged)", "exit": 1, "notes": "add step passes; fails at delete: resourceEdit.delete below the fold, frame overlaps resourceEdit.save, tap lands on Save" }
+  { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro technique-resources x1 (unchanged)", "exit": 1, "notes": "add step passes; fails at delete: resourceEdit.delete below the fold, frame overlaps resourceEdit.save, tap lands on Save" },
+  { "agent": "tester", "sha": "224804c", "date": "2026-11-02", "command": "maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro", "exit": 1, "notes": "12/13 passed; library-merge failed at visible 'Merge undone' (probable flow class: search keyboard covers the toast; not re-run); iPhone 18 Pro, iOS 27.2" }
 ]

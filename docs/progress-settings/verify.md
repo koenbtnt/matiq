@@ -90,3 +90,8 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 | maestro: home.planEmpty.action -> log.search.input x10 (scratch flow) | 0 | visible within 10 s 10/10 |
 | maestro: settings-weights x3 (unchanged flow) | 0 | 3/3 |
 | maestro: technique-resources x1 (unchanged flow) | 1 | add step now passes; fails later at the delete step (see report): resourceEdit.delete is below the fold and its frame overlaps resourceEdit.save |
+
+### tester @ 224804c — 2026-11-02 (final whole-suite run, CO-47)
+| Command | Exit | Notes |
+|---|---|---|
+| maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 1 | 12/13 passed; library-merge failed at `visible: "Merge undone"` (probable flow class: search keyboard covers the toast; not re-run); iPhone 18 Pro, iOS 27.2 |
