@@ -78,3 +78,15 @@ Clean tree at HEAD (only `docs/stack-notes.md` and `.claude/agent-memory/planner
 |---|---|---|
 | maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro | 1 | 4/13 passed: smoke, browse library, library edit, settings-rank-theme. Simulator stayed Booted throughout (watched). Failed with the driver alive: technique-resources (`resourceEdit.field.title` not found, same step as the first re-run), settings-weights (`log.search.input` not found), log-session (2m27s, ran into the driver loss). At 09:41:28 the XCUITest driver became unreachable (`Transport unreachable while processing screenshot`, connection refused on its port); the remaining 6 flows failed within 2–7s or at the first screenshot: infra |
 | Final | — | CO-47 stays open. technique-resources failed at the same step in both 2026-11-02 runs → likely a real flow or app defect, not timing. settings-weights is order-dependent (passed in the first re-run). The driver crash is infra; two `maestro mcp` processes were alive from session startup and may contend for the device |
+
+### frontend-coder @ 5087903 — 2026-11-02 (defect round 2: CO-47 sheet body)
+| Command | Exit | Notes |
+|---|---|---|
+| npx tsc --noEmit | 0 | |
+| TZ=UTC npx jest --watchAll=false | 0 | Tests: 1739 passed, 0 failed (42 suites) |
+| TZ=Europe/Amsterdam npx jest --watchAll=false | 0 | Tests: 1739 passed, 0 failed (42 suites) |
+| node scripts/check-token-adherence.mjs | 0 | |
+| maestro: Add resource sheet x10 (scratch flow, Metro 8081) | 0 | title field, url field and resourceEdit.save visible 10/10 with autoFocus keyboard up |
+| maestro: home.planEmpty.action -> log.search.input x10 (scratch flow) | 0 | visible within 10 s 10/10 |
+| maestro: settings-weights x3 (unchanged flow) | 0 | 3/3 |
+| maestro: technique-resources x1 (unchanged flow) | 1 | add step now passes; fails later at the delete step (see report): resourceEdit.delete is below the fold and its frame overlaps resourceEdit.save |
