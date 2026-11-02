@@ -34,5 +34,10 @@
   { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro scratch: home.planEmpty.action -> log.search.input x10", "exit": 0, "notes": "10/10 within 10 s" },
   { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro settings-weights x3 (unchanged)", "exit": 0, "notes": "3/3" },
   { "agent": "frontend-coder", "sha": "5087903", "date": "2026-11-02", "command": "maestro technique-resources x1 (unchanged)", "exit": 1, "notes": "add step passes; fails at delete: resourceEdit.delete below the fold, frame overlaps resourceEdit.save, tap lands on Save" },
-  { "agent": "tester", "sha": "224804c", "date": "2026-11-02", "command": "maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro", "exit": 1, "notes": "12/13 passed; library-merge failed at visible 'Merge undone' (probable flow class: search keyboard covers the toast; not re-run); iPhone 18 Pro, iOS 27.2" }
+  { "agent": "tester", "sha": "224804c", "date": "2026-11-02", "command": "maestro --device 921BC6C6-73E5-4BB2-A88F-CA9D7BFABD51 test -e METRO_URL=http://localhost:8081 e2e/maestro", "exit": 1, "notes": "12/13 passed; library-merge failed at visible 'Merge undone' (probable flow class: search keyboard covers the toast; not re-run); iPhone 18 Pro, iOS 27.2" },
+  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "npx tsc --noEmit", "exit": 0, "notes": "F-02" },
+  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "TZ=UTC npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1740 passed, 0 failed (42 suites)" },
+  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "TZ=Europe/Amsterdam npx jest --watchAll=false", "exit": 0, "notes": "Tests: 1740 passed, 0 failed (42 suites)" },
+  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "node scripts/check-token-adherence.mjs", "exit": 0, "notes": "" },
+  { "agent": "frontend-coder", "sha": "7e59b4c", "date": "2026-11-02", "command": "maestro scratch: merge -> undo with search keyboard up x5", "exit": 0, "notes": "toast.undo visible and tappable, Merge undone shown, 5/5" }
 ]
